@@ -1,0 +1,29 @@
+server:
+  port: 8081
+
+spring:
+  cloud:
+    stream:
+      bindings:
+        worksChannel:
+          binder: rabbit
+          destination: work.exchange
+          group: testgroup
+  datasource:
+    url: jdbc:mysql://192.168.120.156:3306/test
+    username: huhu
+    password: test
+  jpa:
+    database: MYSQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+
+self:
+  abc: test1 
+  def: test2
