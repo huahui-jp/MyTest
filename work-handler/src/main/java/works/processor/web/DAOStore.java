@@ -18,6 +18,17 @@ public class DAOStore {
 	@Autowired
 	private ActionJobDAO actionJobDAO;
 
+	@Autowired
+	private ActionJobHistoryDAO actionJobHistoryDAO;
+	
+	public ActionJobHistoryDAO getActionJobHistoryDAO() {
+		return actionJobHistoryDAO;
+	}
+
+	public void setActionJobHistoryDAO(ActionJobHistoryDAO actionJobHistoryDAO) {
+		this.actionJobHistoryDAO = actionJobHistoryDAO;
+	}
+
 	public ResourceDAO getResourceDAO() {
 		return resourceDAO;
 	}

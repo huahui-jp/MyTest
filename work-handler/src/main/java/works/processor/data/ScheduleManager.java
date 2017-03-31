@@ -39,8 +39,6 @@ public class ScheduleManager {
 		Resource resource = resourceDAO.findOne(dataSource.getResourceId());
 		
 		JobScheduler sched = new JobScheduler(gSchedulerFactory.getScheduler());
-
-		
     }
 
     public void initAllSchedule() throws SchedulerException, ParseException {
@@ -79,6 +77,24 @@ public class ScheduleManager {
 		}
     }
 
+    public void addJob(int jobId) {
+    
+    	ScheduleJobDAO jobDao = (ScheduleJobDAO) DaoTools.getDAO(ScheduleJobDAO.class);
+    	ScheduleJob job = jobDao.findOne(jobId);
+    	
+    	addJob(job);
+    }
+
+    public void addJob(ScheduleJob job) {
+    	
+    	DataSourceDAO dataSourceDAO = (DataSourceDAO) DaoTools.getDAO(DataSourceDAO.class);
+    	DataSource dataSource = dataSourceDAO.findOne(job.getDataSourceId());
+    	
+    	ResourceDAO resourceDAO = (ResourceDAO) DaoTools.getDAO(ResourceDAO.class);
+    	
+    }
+
+    
     public void getNextSchedule(int cnt) {
 
     	for( int i = 0; i < scheduleList.size(); i++ ) {

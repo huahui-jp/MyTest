@@ -33,6 +33,9 @@ public class ActionJobHistory {
 	@Column(nullable=true)
 	private int updateCnt;
 	
+	@Column(nullable=false, length=1)
+	private String deleteFlg;
+	
 	@Column(nullable=true)
 	private int errorCnt;
 	
@@ -91,4 +94,14 @@ public class ActionJobHistory {
 	public void setErrorCnt(int errorCnt) {
 		this.errorCnt = errorCnt;
 	}
+
+	public String getDeleteFlg() {
+		return deleteFlg;
+	}
+
+	public void setDeleteFlg(String deleteFlg) {
+		this.deleteFlg = deleteFlg;
+	}
+	
+	
 }

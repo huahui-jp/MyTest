@@ -119,6 +119,12 @@ public class ViewControl {
 		return storeDao.getActionJobDAO().findOne(actionJobId);
 	}
 
+	@RequestMapping("/actionJobHistory")
+	public List<ActionJobHistory> getActionJobHistory(@RequestParam("ActionJobId") int actionJobId)
+	{
+		return storeDao.getActionJobHistoryDAO().findByActionJobId(actionJobId);
+	}
+	
 	@RequestMapping("/actionJobList")
 	public Iterable<ActionJob> getActionJobList(@RequestParam("WithNoValid") int validFlg)
 	{
@@ -131,6 +137,7 @@ public class ViewControl {
 			return storeDao.getActionJobDAO().findAll();
 		}		
 	}
+
 	
 	@RequestMapping("/testDao")
 	public int testDao() {
