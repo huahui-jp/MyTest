@@ -6,6 +6,8 @@ var Store = require('./store');
 var Router = require('react-router');
 var TabbedArea = require('react-bootstrap').TabbedArea;
 var TabPane = require('react-bootstrap').TabPane;
+var dbActionJobListPage = require('../demo-nrap/dbActionJobList/page');
+
 
 var { Route, DefaultRoute, RouteHandler, Link } = Router;
 
@@ -26,7 +28,9 @@ var tabPage = React.createClass({
     render() {
         return (
             <TabbedArea activeKey={this.state.key} onSelect={this.handleSelect}>
-                <TabPane eventKey={1} tab='Tab 1'>TabPane 1 content</TabPane>
+                <TabPane eventKey={1} tab='Tab 1'>
+                    <iframe src="http://localhost:9100/#/dbActionJobDetailPage/edit&1"></iframe>
+                </TabPane>
                 <TabPane eventKey={2} tab='Tab 2'>TabPane 2 content</TabPane>
             </TabbedArea>
         );

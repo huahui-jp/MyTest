@@ -1,39 +1,43 @@
+/**
+ * actionJobHisList.store.js
+ * 
+ * actionJob履历管理List画面
+ * 
+ * @author zhoujiang
+ */
 var Reflux = require('reflux');
 var Actions = require('./actions');
-var tools = require('../../common/tools');
 var httpUtil = require('../../common/httpUtil'); 
-var constants = require('../../common/constants.js');
 var navigationUtil = require('../../common/navigationUtil'); 
 var http = require('http');
+var constants = require('../../common/constants.js');
 
 'use strict';
 
-var pageSize = 20;//TODO 暂时还不能修改
-var message = "";
 
 var store = Reflux.createStore({
     listenables: [Actions],
+    _cache: [], //数据缓存
     searchParams : { //默认查询条件
         currentPage: 0,
         querystring: "",
         refresh: true, //是否后台刷新数据
-        columns: ["resourceName", "tableNameView", "tableName"],
+        columns: ["actionJobHistoryId", "actionJobId", "startTime","startError","endTime","updateCnt","errorCnt"],
         pageSize: constants.PAGE_SIZE
     },
-    _cache: [], //数据缓存
-    onSearchResource: function() {
-        httpUtil.doGet({path:"/resourceList?WithNoValid=0&ResourceFlg=1"},function(result){
-            store.trigger({
-                resourceList: JSON.parse(result.resultStr)
-            }); 
-        });    
-    },
+    /**
+     * 查询资源列表数据
+     * 
+     * @param currentPage 当前页数 
+     * @param querystring  查询条件
+     * @param refresh 是否后台更新数据
+     */
     onSearch: function(params) {
         this.searchParams.currentPage = params.currentPage;
         this.searchParams.querystring = params.querystring;
 
         if(this.searchParams.refresh){//从后台刷新数据
-        httpUtil.doGet({path:"/tableMappingList?WithNoValid=0"},
+        httpUtil.doGet({path:"/actionJobHistory?ActionJobId="+params.actionJobId},
             function(result){
                 var json = JSON.parse(result.resultStr);
                 store._cache = json;
@@ -42,15 +46,11 @@ var store = Reflux.createStore({
             });
 
         }else{//不刷新数据，仅用当前数据过滤
+            // console.log("---------------do not refresh-----------------");
             store.doRefreshTable(store.searchParams);
         }
-            
-             
     },
-    onDelete: function (ids) {
-        // console.log("delete Obj",ids);
-        // TODO 
-    },
+    /*-------------------------------------非action事件-------------------------------------*/
     /**
      * 刷新table数据
      */
@@ -62,7 +62,7 @@ var store = Reflux.createStore({
             rowsTotoal: filterData.rowsTotoal,
             currentPage: filterData.currentPage
         });
-    },
+    }
 });
 
 module.exports = store;

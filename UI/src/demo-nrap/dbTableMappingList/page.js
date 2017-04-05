@@ -41,20 +41,13 @@ var page = React.createClass({
             Actions.searchResource();
 
             Actions.search({
-                page: 0,
-                querystring: "",
-                refresh: true //是否后台刷新数据
+                currentPage: 0,
+                querystring: ""
             });
             return {list: []};
 
         },
         onStatusChange: function (listData) {
-            console.log("---onStatusChange-----resourceList---------",listData.resourceList);
-            console.log("---onStatusChange-----rows---------",listData.rows);
-            console.log("---onStatusChange-----rowsTotoal---------",listData.rowsTotoal);
-            console.log("---onStatusChange-----deleteOk---------",listData.deleteOk);
-            console.log("---onStatusChange-----currentPage---------",listData.currentPage);
-            console.log("---onStatusChange-----msg---------",listData.msg);
 
 
             //动态添加option到select资源名称中
@@ -219,26 +212,11 @@ var page = React.createClass({
         },
 
         _onNavigationBtnClick: function (pageNo, navigationInfo) {
-            //Gritter.add({
-            //    title: "分页事件演示",
-            //    text: "前往页码：" + page + "，每页记录数：" + navigationInfo.pageSize + "，共 " + navigationInfo.pages + " 页"
-            //});
             Actions.search({
-                page: pageNo,
-                querystring: this.state.querystring,
-                refresh: false //true:后台分页 false:后台分页
+                currentPage: pageNo,
+                querystring: this.state.querystring
             });
 
-        },
-        _handleKeyUp: function (evt) {
-            console.log("_handleKeyUp--->"+evt.which);
-            //if (evt.which === 13) {//Enter键
-                Actions.search({
-                    page: 0,
-                    querystring: this.state.querystring,
-                    refresh:false
-                });
-            // }
         },
 
         _handleDeleteClick: function (param) {  
@@ -295,6 +273,10 @@ var page = React.createClass({
                 +this.state.tableNameView);
         },
         selectResource: function() {
+                Actions.search({
+                page: this.state.currentPage,
+                querystring: this.state.querystring
+            });
 
 
         },
@@ -332,7 +314,7 @@ var page = React.createClass({
                             <div className="col-xs-6">
                                 <Link className="btn btn-sm btn-white btn-info btn-round" to="/dbColumnMappingListPage/add&-1&-1&-1&-1">
                                     <i className="ace-icon fa fa-plus-circle blue bigger-120 "></i>
-                                    新增0123
+                                    新增
                                 </Link>
                             &nbsp;
                                 <button className="btn btn-sm btn-white btn-default btn-round" onClick={this._handleEditClick}>

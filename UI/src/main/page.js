@@ -28,6 +28,10 @@ var ResourceDetailPage = require('../demo-nrap/resourceDetail/page');
 var DbTableMappingListPage = require('../demo-nrap/dbTableMappingList/page');
 var DbColumnMappingListPage = require('../demo-nrap/dbColumnMappingList/page');
 
+var DBActionJobListPage = require('../demo-nrap/dbActionJobList/page');
+var DBActionJobHisListPage = require('../demo-nrap/dbActionJobHisList/page');
+var DBActionJobDetailPage = require('../demo-nrap/dbActionJobDetail/page');
+
 var { Route, DefaultRoute, RouteHandler, Link } = Router;
 
 'use strict';
@@ -48,7 +52,11 @@ var breadcrumbsMap = {
     "/resourceDetailPage": [{name: "国铁云服务平台"}, {name: "资源管理", url: "/resourceListPage"}, {name: "资源详细页面", url: ""}],
 
     "/dbTableMappingListPage": [{name: "国铁云服务平台"}, {name: "dbTableMapping管理", url: "/dbTableMappingListPage"}],
-    "/dbColumnMappingListPage": [{name: "国铁云服务平台"}, {name: "dbTableMapping管理", url: "/dbTableMappingListPage"}, {name: "dbColumnMapping列表画面", url: ""}]
+    "/dbColumnMappingListPage": [{name: "国铁云服务平台"}, {name: "dbTableMapping管理", url: "/dbTableMappingListPage"}, {name: "dbColumnMapping列表画面", url: ""}],
+
+    "/dbActionJobListPage": [{name: "国铁云服务平台"}, {name: "dbActionJob管理", url: "/dbActionJobListPage"}],
+    "/dbActionJobHisListPage": [{name: "国铁云服务平台"}, {name: "dbActionJob管理", url: "/dbActionJobListPage"}, {name: "dbActionJob履历", url: ""}],
+    "/dbActionJobDetailPage": [{name: "国铁云服务平台"}, {name: "dbActionJob管理", url: "/dbActionJobListPage"}, {name: "dbActionJob详细", url: ""}]
 };
 
 var App = React.createClass({
@@ -138,6 +146,9 @@ var routes = (
         <Route name="resourceDetailPage" path="/resourceDetailPage/:mode&:resourceId" handler={ResourceDetailPage} />
         <Route name="dbTableMappingListPage" path="/dbTableMappingListPage" handler={DbTableMappingListPage} />
         <Route name="dbColumnMappingListPage" path="/dbColumnMappingListPage/:mode&:resourceId&:tableMappingId&:tableName&:tableNameView" handler={DbColumnMappingListPage} />
+        <Route name="dbActionJobListPage" path="/dbActionJobListPage" handler={DBActionJobListPage} />
+        <Route name="dbActionJobHisListPage" path="/dbActionJobHisListPage/:actionJobId" handler={DBActionJobHisListPage} />
+        <Route name="dbActionJobDetailPage" path="/dbActionJobDetailPage/:mode&:actionJobId" handler={DBActionJobDetailPage } />
 
 
     </Route>

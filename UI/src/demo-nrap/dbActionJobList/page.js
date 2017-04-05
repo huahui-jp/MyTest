@@ -1,7 +1,7 @@
 /**
- * resourceList.page.js
+ * actionJobList.page.js
  * 
- * 资源管理List画面
+ * ActionJob管理List画面
  * 
  * @author zhoujiang
  */
@@ -82,7 +82,7 @@ var page = React.createClass({
     /**
      * 删除按钮事件
      */
-    _handleDeleteResourceClick: function (param) {
+    _handleDeleteClick: function (param) {
         //console.log("_handleDeleteClick",param);
         var selectedString = $("#selectedRowIds")[0].innerHTML;
         if (_.isUndefined(selectedString) || _.isEmpty(selectedString)) {
@@ -92,16 +92,7 @@ var page = React.createClass({
         }
         bootbox.confirm("确认删除吗？", function (result) {
             if (result) {
-                //判断是否有子数据
-                if(hasChildNum>0){
-                    bootbox.confirm("有关联的TableMapping,确认删除吗？", function (result) {
-                        if (result) {
-                            Actions.delete(selectedString);
-                        }
-                    });
-                }else{
-                    Actions.delete(selectedString);
-                }
+                Actions.delete(selectedString); 
             }
         });
     },
@@ -115,7 +106,19 @@ var page = React.createClass({
             //this.handleToggle();
             return;
         }
-        PageRouterActions.navigateTo('#/resourceDetailPage/edit&'+selectedString);
+        PageRouterActions.navigateTo('#/dbActionJobDetailPage/edit&'+selectedString);
+    },
+    /**
+     * 查看履历按钮事件
+     */
+    _handleHisListClick: function () {
+        var selectedString = $("#selectedRowIds")[0].innerHTML;
+        if (_.isUndefined(selectedString) || _.isEmpty(selectedString) || selectedString.indexOf(",")>-1) {
+            messageUtil.addGritter({text: "请选择一条记录！"});
+            //this.handleToggle();
+            return;
+        }
+        PageRouterActions.navigateTo('#/dbActionJobHisListPage/'+selectedString);
     },
     /*-----------------------------------table相关事件-----------------------------*/
     /**
@@ -126,31 +129,11 @@ var page = React.createClass({
         return this.state.rows[rowIndex];
     },
     /**
-     * 点击行的事件
-     */
-    _onRowClick: function (event, rowId, rowData, checked) {
-        // console.log("_onRowClick--->"+rowData);
-        //选中的记录有有没有hasChild为true的
-        if(typeof checked === "undefined"){
-            checked = false;
-        }
-        if(rowData.hasChild){
-            if(!checked){//当前行如果被选中,统计hasChild的数量
-                hasChildNum ++;
-            }else{
-                hasChildNum --;
-            }
-            messageUtil.addGritter({text: hasChildNum});
-        }
-    },
-    /**
      * 双击行的事件
      */
     _onRowDblClick: function (event, rowId, rowData, checked) {
         messageUtil.addGritter({text: rowData.resourceName});
         //TODO 弹出Detail画面
-        //http://localhost:9100#/resourceDetailPage/edit&1
-        window.open("http://localhost:9100#/resourceDetailPage/edit&1");
 
     },
     /**
@@ -180,28 +163,27 @@ var page = React.createClass({
             onRowClick: this._onRowClick, //记录行单击事件
             onRowDblClick: this._onRowDblClick, //记录行双击事件
             onNavigationBtnClick: this._onNavigationBtnClick, //分页事件
-            rowIdColumn: "resourceId", //唯一标识每行记录的字段
+            rowIdColumn: "actionJobId", //唯一标识每行记录的字段
             rowSelected: true,//选择一行是否触发checkbox
-            id: "demoList"
+            id: "actionJobList"
         }, [
             <Column dataKey="checkbox" label="" inputType="checkbox"/>,
             <Column dataKey="id" label="ID" hidden={true} />,
-            <Column label="资源ID" dataKey="resourceId" width={50} />,
-            <Column label="资源名称" dataKey="resourceName" />,
-            <Column label="资源种类"  dataKey="resourceType" width={50} cellRender={this.typeCellRender} />,
-            <Column label="数据库连接" dataKey="dbLink" width={100} />,
-            <Column label="用户名" dataKey="dbUser" />,
-            <Column label="密码" dataKey="dbPasswd"  cellRender={this.passwdCellRender}/>,
-            // <Column label="有效" dataKey="deleteFlg" cellRender={this.deleteFlgCellRender}/>,
-            <Column label="子数据" dataKey="hasChild" width={50} cellRender={this.childCellRender}/>,
-            <Column label="连接" dataKey="connectStatus" cellRender={this.connectCellRender}/>]);
+            <Column label="JOBID" dataKey="actionJobId" width={50}/>,
+            <Column label="tableId" dataKey="tableMappingId" hidden={true}/>,
+            <Column label="JOB种类"  dataKey="actionJobType" width={50} cellRender={this.typeCellRender} />,
+            <Column label="更新数量" dataKey="batchUpdateCnt" width={100} />,
+            <Column label="消息通道名称" dataKey="messageChannelName" />,
+            <Column label="保存履历" dataKey="enableSaveHistory"  cellRender={this.enSaveHisCellRender}/>,
+            <Column label="主键名称" dataKey="keyColumn" width={50} cellRender={this.childCellRender}/>,
+            <Column label="运行状态" dataKey="runStatus" width={50} />]);
 
         return (
             <div className="row ">
                 <div className="col-xs-12 dataTables_wrapper  form-inline">
                     <div className="row" style={{"paddingBottom": "0px"}}>
                         <div className="col-xs-6">
-                            <Link className="btn btn-sm btn-white btn-info btn-round" to="/resourceDetailPage/add&-1">
+                            <Link className="btn btn-sm btn-white btn-info btn-round" to="/dbActionJobDetailPage/add&-1">
                                 <i className="ace-icon fa fa-plus-circle blue bigger-120 "></i>
                                 新增
                             </Link>
@@ -211,9 +193,14 @@ var page = React.createClass({
                                 修改
                             </button>
                         &nbsp;
-                            <button className="btn btn-sm btn-white btn-warning btn-round" onClick={this._handleDeleteResourceClick}>
+                            <button className="btn btn-sm btn-white btn-warning btn-round" onClick={this._handleDeleteClick}>
                                 <i className="ace-icon fa fa-trash-o bigger-120 orange"></i>
                                 删除 
+                            </button>
+                        &nbsp;
+                            <button className="btn btn-sm btn-white btn-warning btn-round" onClick={this._handleHisListClick}>
+                                <i className="ace-icon fa fa-trash-o bigger-120 orange"></i>
+                                查看履历 
                             </button>
                         </div>
                         <div className="col-xs-6">
@@ -238,54 +225,30 @@ var page = React.createClass({
         return xuhao;
     },
     /**
-     * 转换字段内容：资源种类
+     * 转换字段内容：ActionJob种类
      */
     typeCellRender: function (cellData, cellDataKey, rowData, cellIndex, rowIndex) {
 
-        var res = rowData["resourceType"];
-        if(res === "01"){
-            return "DB";
-        }else if(res === "02"){
-            return "GEMFIRE";
+        var res = rowData["actionJobType"];
+        if(res === "1"){
+            return "常时";
+        }else if(res === "2"){
+            return "定时";
         }
         return res;
     },
     /**
-     * 转换列内容:密码
+     * 转换字段内容：是否保存履历
      */
-    passwdCellRender: function (cellData,
-                              cellDataKey,
-                              rowData,
-                              cellIndex,
-                              rowIndex) {
+    enSaveHisCellRender: function (cellData, cellDataKey, rowData, cellIndex, rowIndex) {
 
-        var passwd = rowData["dbPasswd"] || "";
-        var res = "";
-        for(var i=0;i<passwd.length;i++){
-            res+="●"; 
-        } 
-        
-        return res;
-    },
-    /**
-     * 转换列内容:测试连接
-     */
-    connectCellRender: function(cellData,
-                              cellDataKey,
-                              rowData,
-                              cellIndex,
-                              rowIndex){
-        //查询连接状态,如果成功/失败显示对应的图标
-        if(typeof rowData["connectStatus"] === "undefined"){
-            return <span className="label label-sm label-warning">connecting</span>;
-        }else{
-            var connectStatus = rowData["connectStatus"];
-            if(connectStatus === "Success..."){ 
-                return <span className="label label-sm label-success">{connectStatus}</span>;
-            }else{
-                return <span className="label label-sm label-danger">{connectStatus}</span>;
-            }
+        var res = rowData["enableSaveHistory"];
+        if(res === "1"){
+            return "是";
+        }else if(res === "0"){
+            return "否";
         }
+        return res;
     },
     _handleToggle: function () {
         this.setState({

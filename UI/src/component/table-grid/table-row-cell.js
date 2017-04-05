@@ -36,8 +36,10 @@ var page = React.createClass({
 
     _onSelectChange: function (e) {
         // console.log("_onSelectChange---->"+this.props.rowId+"/"+this.props.cellDataKey+"/"+e.target.value);
-        this.state.text = e.target.value;//获取输入的数据并更新到input对象
-        Actions.updMyTableData(this.props.rowId,this.props.cellDataKey,e.target.value);//调用Action来更新store中的数据
+        
+        var index = e.target.options.selectedIndex;
+        this.state.text = e.target.options[index].innerText;//获取输入的数据并更新到input对象
+        Actions.updMyTableData(this.props.rowId,this.props.cellDataKey,this.state.text);//调用Action来更新store中的数据
     },
 
     render: function () {

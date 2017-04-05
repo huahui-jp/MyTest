@@ -19,16 +19,20 @@ webpackJsonp([1],[
 	var DemoFixedDataTablePage = __webpack_require__(320);
 	var DemoBootstrapTablePage = __webpack_require__(424);
 	var DemoListPage = __webpack_require__(425);
-	var DemoListPage2 = __webpack_require__(437);
-	var DemoDetailPage = __webpack_require__(440);
-	var MyTodoPage = __webpack_require__(443);
-	var MyDonePage = __webpack_require__(446);
-	var MyHistoryPage = __webpack_require__(449);
-	var BlankPage = __webpack_require__(452);
+	var ReactBootstrapTablePage = __webpack_require__(648);
+	var DemoListPage2 = __webpack_require__(649);
+	var DemoDetailPage = __webpack_require__(652);
+	var MyTodoPage = __webpack_require__(655);
+	var MyDonePage = __webpack_require__(658);
+	var MyHistoryPage = __webpack_require__(661);
+	var BlankPage = __webpack_require__(664);
 	var State = __webpack_require__(199).State;
 
-	var ResourceListPage = __webpack_require__(454);
-	var ResourceDetailPage = __webpack_require__(496);
+	var ResourceListPage = __webpack_require__(666);
+	var ResourceDetailPage = __webpack_require__(708);
+
+	var DbTableMappingListPage = __webpack_require__(711);
+	var DbColumnMappingListPage = __webpack_require__(714);
 
 	var Route = Router.Route;
 	var DefaultRoute = Router.DefaultRoute;
@@ -48,9 +52,12 @@ webpackJsonp([1],[
 	    "/demoListPage2": [{ name: "演示系统" }, { name: "列表页面2", url: "/demoListPage2" }],
 	    "/demoFixedDataTablePage": [{ name: "演示系统" }, { name: "列表页面(FixedDataTable)", url: "/demoFixedDataTablePage" }],
 	    "/demoBootstrapTablePage": [{ name: "演示系统" }, { name: "列表页面(BootstrapTable)", url: "/demoBootstrapTablePage" }],
-
+	    "/reactBootstrapTablePage": [{ name: "演示系统" }, { name: "列表页面(ReactBootstrapTable)", url: "/reactBootstrapTablePage" }],
 	    "/resourceListPage": [{ name: "国铁云服务平台" }, { name: "资源管理", url: "/resourceListPage" }],
-	    "/resourceDetailPage": [{ name: "国铁云服务平台" }, { name: "资源管理", url: "/resourceListPage" }, { name: "资源详细页面", url: "" }]
+	    "/resourceDetailPage": [{ name: "国铁云服务平台" }, { name: "资源管理", url: "/resourceListPage" }, { name: "资源详细页面", url: "" }],
+
+	    "/dbTableMappingListPage": [{ name: "国铁云服务平台" }, { name: "dbTableMapping管理", url: "/dbTableMappingListPage" }],
+	    "/dbColumnMappingListPage": [{ name: "国铁云服务平台" }, { name: "dbTableMapping管理", url: "/dbTableMappingListPage" }, { name: "dbColumnMapping列表画面", url: "" }]
 	};
 
 	var App = React.createClass({
@@ -128,9 +135,12 @@ webpackJsonp([1],[
 	    React.createElement(Route, { name: 'demoListPage2', path: '/demoListPage2', handler: DemoListPage2 }),
 	    React.createElement(Route, { name: 'demoFixedDataTablePage', path: '/demoFixedDataTablePage', handler: DemoFixedDataTablePage }),
 	    React.createElement(Route, { name: 'demoBootstrapTablePage', path: '/demoBootstrapTablePage', handler: DemoBootstrapTablePage }),
+	    React.createElement(Route, { name: 'reactBootstrapTablePage', path: '/reactBootstrapTablePage', handler: ReactBootstrapTablePage }),
 	    React.createElement(Route, { name: 'demoDetailPage', path: '/demoDetailPage/:id', handler: DemoDetailPage }),
 	    React.createElement(Route, { name: 'resourceListPage', path: '/resourceListPage', handler: ResourceListPage }),
-	    React.createElement(Route, { name: 'resourceDetailPage', path: '/resourceDetailPage/:mode&:resourceId', handler: ResourceDetailPage })
+	    React.createElement(Route, { name: 'resourceDetailPage', path: '/resourceDetailPage/:mode&:resourceId', handler: ResourceDetailPage }),
+	    React.createElement(Route, { name: 'dbTableMappingListPage', path: '/dbTableMappingListPage', handler: DbTableMappingListPage }),
+	    React.createElement(Route, { name: 'dbColumnMappingListPage', path: '/dbColumnMappingListPage/:mode&:resourceId&:tableMappingId&:tableName&:tableNameView', handler: DbColumnMappingListPage })
 	);
 
 	Router.run(routes, function (Handler, state) {
@@ -8012,7 +8022,7 @@ webpackJsonp([1],[
 	                                        Link,
 	                                        { to: '/resourceListPage' },
 	                                        React.createElement('i', { className: 'menu-icon fa fa-caret-right' }),
-	                                        '资源管理'
+	                                        '资源列表画面'
 	                                    ),
 	                                    React.createElement('b', { className: 'arrow' })
 	                                ),
@@ -8021,22 +8031,30 @@ webpackJsonp([1],[
 	                                    { className: '' },
 	                                    React.createElement(
 	                                        Link,
-	                                        { to: '/resourceDetailPage/0' },
+	                                        { to: '/resourceDetailPage/add&-1' },
 	                                        React.createElement('i', { className: 'menu-icon fa fa-caret-right' }),
-	                                        '资源管理编辑页面'
-	                                    ),
-	                                    React.createElement('b', { className: 'arrow' })
+	                                        '资源编辑页面(Add)'
+	                                    )
 	                                ),
 	                                React.createElement(
 	                                    'li',
 	                                    { className: '' },
 	                                    React.createElement(
-	                                        'a',
-	                                        { href: '#' },
+	                                        Link,
+	                                        { to: '/dbTableMappingListPage' },
 	                                        React.createElement('i', { className: 'menu-icon fa fa-caret-right' }),
-	                                        'Mapping管理'
-	                                    ),
-	                                    React.createElement('b', { className: 'arrow' })
+	                                        'DBTableMapping列表'
+	                                    )
+	                                ),
+	                                React.createElement(
+	                                    'li',
+	                                    { className: '' },
+	                                    React.createElement(
+	                                        Link,
+	                                        { to: '/dbColumnMappingListPage/add&9&-1' },
+	                                        React.createElement('i', { className: 'menu-icon fa fa-caret-right' }),
+	                                        'DBTable编辑(Add)'
+	                                    )
 	                                ),
 	                                React.createElement(
 	                                    'li',
@@ -8458,6 +8476,17 @@ webpackJsonp([1],[
 	                                { to: '/demoBootstrapTablePage' },
 	                                React.createElement('i', { className: 'menu-icon fa fa-caret-right' }),
 	                                '列表页面(BootstrapTable)'
+	                            ),
+	                            React.createElement('b', { className: 'arrow' })
+	                        ),
+	                        React.createElement(
+	                            'li',
+	                            { className: '' },
+	                            React.createElement(
+	                                Link,
+	                                { to: '/reactBootstrapTablePage' },
+	                                React.createElement('i', { className: 'menu-icon fa fa-caret-right' }),
+	                                '列表页面(ReactBootstrapTable)'
 	                            ),
 	                            React.createElement('b', { className: 'arrow' })
 	                        ),
@@ -74841,7 +74870,7 @@ webpackJsonp([1],[
 	    render: function render() {
 	        return React.createElement(
 	            'div',
-	            { className: 'row ' },
+	            { className: 'row' },
 	            React.createElement(
 	                'div',
 	                { className: 'col-xs-12 dataTables_wrapper  form-inline' },
@@ -75433,6 +75462,11 @@ webpackJsonp([1],[
 	var Modal = __webpack_require__(246).Modal;
 	var Button = __webpack_require__(246).Button;
 
+	var ReactDOM = __webpack_require__(437);
+	var ReactBsTable = __webpack_require__(438);
+	var BootstrapTable = ReactBsTable.BootstrapTable;
+	var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
+
 	var Route = Router.Route;
 	var DefaultRoute = Router.DefaultRoute;
 	var RouteHandler = Router.RouteHandler;
@@ -75645,51 +75679,62 @@ webpackJsonp([1],[
 
 	        //console.log("state", this.state);
 
-	        this.table = React.createElement(Table, {
-	            rowGetter: this.rowGetter, //获得记录数据，每页都从0开始
-	            rowsTotoal: this.state.rowsTotoal, //记录总数
-	            currentPage: this.state.currentPage, //当前页码，从0开始
-	            headerDataGetter: this._headerDataGetter, //表头格式化方法
-	            onRowClick: this._onRowClick, //记录行单击事件
-	            onRowDblClick: this._onRowDblClick, //记录行双击事件
-	            onNavigationBtnClick: this._onNavigationBtnClick, //分页事件
-	            rowIdColumn: "id", //唯一标识每行记录的字段
-	            rowSelected: true, //选择一行是否触发checkbox
-	            id: "demo-list"
-	        }, [React.createElement(Column, {
-	            dataKey: 'checkbox',
-	            label: ''
-	        }), React.createElement(Column, {
-	            dataKey: '',
-	            label: '序号',
-	            cellRender: this._xuhaoCellRender
-	        }), React.createElement(Column, {
-	            dataKey: 'id',
-	            label: 'ID',
-	            hidden: false
-	        }), React.createElement(Column, {
-	            dataKey: 'firstName',
-	            label: '姓名',
-	            cellRender: this.nameCellRender
-	        }), React.createElement(Column, {
-	            dataKey: 'street',
-	            label: '街道',
-	            width: 50
-	        }), React.createElement(Column, {
-	            dataKey: 'city',
-	            label: '城市',
-	            width: 100
-	        }), React.createElement(Column, {
-	            dataKey: '_date',
-	            label: '日期',
-	            cellRender: this.dateCellRender
-	        }), React.createElement(Column, {
-	            label: '邮政编码',
-	            dataKey: 'zipCode'
-	        }), React.createElement(Column, {
-	            label: '邮件',
-	            dataKey: 'email'
-	        })]);
+	        // this.table = React.createElement(Table, {
+	        //     rowGetter: this.rowGetter,//获得记录数据，每页都从0开始
+	        //     rowsTotoal: this.state.rowsTotoal, //记录总数
+	        //     currentPage: this.state.currentPage, //当前页码，从0开始
+	        //     headerDataGetter: this._headerDataGetter, //表头格式化方法
+	        //     onRowClick: this._onRowClick, //记录行单击事件
+	        //     onRowDblClick: this._onRowDblClick, //记录行双击事件
+	        //     onNavigationBtnClick: this._onNavigationBtnClick, //分页事件
+	        //     rowIdColumn: "id", //唯一标识每行记录的字段
+	        //     rowSelected: true,//选择一行是否触发checkbox
+	        //     id: "demo-list"
+	        // }, [
+	        //     <Column
+	        //         dataKey="checkbox"
+	        //         label=""
+	        //     />,
+	        //     <Column
+	        //         dataKey=""
+	        //         label="序号"
+	        //         cellRender={this._xuhaoCellRender}
+	        //     />,
+	        //     <Column
+	        //         dataKey="id"
+	        //         label="ID"
+	        //         hidden={false}
+	        //     />, <Column
+	        //         dataKey="firstName"
+	        //         label="姓名"
+	        //         cellRender={this.nameCellRender}
+	        //     />,
+	        //     <Column
+	        //         dataKey="street"
+	        //         label="街道"
+	        //         width={50}
+	        //     />,
+
+	        //     <Column
+	        //         dataKey="city"
+	        //         label="城市"
+	        //         width={100}
+	        //     />,
+	        //     <Column
+	        //         dataKey="_date"
+	        //         label="日期"
+	        //         cellRender={this.dateCellRender}
+	        //     />,
+	        //     <Column
+	        //         label="邮政编码"
+	        //         dataKey="zipCode"
+	        //     />,
+	        //     <Column
+	        //         label="邮件"
+	        //         dataKey="email"
+	        //     />]);
+
+	        this.table = React.createElement(BootstrapTable, { data: this.state.rows }, React.createElement(TableHeaderColumn, { isKey: true, dataField: 'id' }, 'Product ID'), React.createElement(TableHeaderColumn, { dataField: 'street' }, 'Product Name'), React.createElement(TableHeaderColumn, { dataField: 'city' }, 'Product Price'));
 
 	        return React.createElement(
 	            'div',
@@ -75745,7 +75790,7 @@ webpackJsonp([1],[
 /* 426 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
 
 	var React = __webpack_require__(1);
 	var shallowEqual = __webpack_require__(139);
@@ -75761,6 +75806,10 @@ webpackJsonp([1],[
 	var Store = __webpack_require__(431);
 
 	'use strict';
+
+	var golMyTableDate;
+
+	global.golMyTableDate; //TODO
 
 	var page = React.createClass({
 	    displayName: 'page',
@@ -75892,10 +75941,12 @@ webpackJsonp([1],[
 	        var rowsCount = this.navigationInfo.rowsCount;
 
 	        var rowIds = [];
+	        var myTableData = []; //定义Table数据
 	        for (var i = 0; i < rowsCount; ++i) {
 	            var rowData = rowGetter(i);
 	            var rowId = rowData[this.props.rowIdColumn];
 	            rowIds[i] = rowId;
+	            myTableData.push(rowData); //生成Table数据
 	            rows.push(React.createElement(TableRow, {
 	                rowIdColumn: this.props.rowIdColumn,
 	                key: i,
@@ -75908,9 +75959,17 @@ webpackJsonp([1],[
 	                rowSelected: this.props.rowSelected
 	            }));
 	        }
+	        // this.state.tableState.myTableData = myTableData;
+	        Actions.initMyTableData(myTableData); //把table数据保存到store中
+	        // console.log("initMyTableData----->"+myTableData);
+
 	        var selectedRowIds = null;
 	        if (this.state.tableState.selectedRowIds) {
 	            selectedRowIds = _(this.state.tableState.selectedRowIds).toString();
+	        }
+	        var myTableDataString = null;
+	        if (global.golMyTableDate) {
+	            myTableDataString = JSON.stringify(global.golMyTableDate);
 	        }
 	        //console.log("selectedRowIds in render",selectedRowIds);
 	        return React.createElement(
@@ -75918,7 +75977,7 @@ webpackJsonp([1],[
 	            null,
 	            React.createElement(
 	                'div',
-	                { id: this.props.id, className: 'row', style: { "paddingBottom": "2px" } },
+	                { id: this.props.id, className: 'row', style: ({ "width": "550px" }, { "height": "500px" }, { "overflow": "auto" }) },
 	                React.createElement(
 	                    'table',
 	                    { className: 'table table-striped table-bordered table-hover dataTable' },
@@ -75941,6 +76000,11 @@ webpackJsonp([1],[
 	                    'div',
 	                    { id: 'selectedRowIds', style: { display: "none" } },
 	                    selectedRowIds
+	                ),
+	                React.createElement(
+	                    'div',
+	                    { id: 'myTableDataString', ref: 'myTableDataString', style: { display: "none" } },
+	                    myTableDataString
 	                )
 	            ),
 	            React.createElement(TableFooter, { navigationInfo: this.navigationInfo })
@@ -75949,6 +76013,7 @@ webpackJsonp([1],[
 	});
 	module.exports = page;
 	/*必须包括tbody标签，否则会在翻页的时候报错*/
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 /* 427 */
@@ -75959,7 +76024,7 @@ webpackJsonp([1],[
 	var Reflux = __webpack_require__(173);
 	'use strict';
 
-	var actions = Reflux.createActions(["rowCheckboxClick", "headerCheckboxClick", "cleanCheckArray", "init", "sendNavigationInfo"]);
+	var actions = Reflux.createActions(["rowCheckboxClick", "headerCheckboxClick", "cleanCheckArray", "init", "sendNavigationInfo", "updMyTableData", "initMyTableData"]);
 
 	module.exports = actions;
 
@@ -76116,7 +76181,7 @@ webpackJsonp([1],[
 /* 431 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
 
 	var Reflux = __webpack_require__(173);
 	var Actions = __webpack_require__(427);
@@ -76134,6 +76199,8 @@ webpackJsonp([1],[
 
 	    tableKey: null,
 
+	    myTableData: [],
+
 	    _trigger: function _trigger() {
 	        var selectedRowIds = [];
 	        for (var prop in this.checkedMap) {
@@ -76141,11 +76208,12 @@ webpackJsonp([1],[
 	                selectedRowIds.push(prop);
 	            }
 	        }
-	        //console.log("selectedRowIds",selectedRowIds);
+	        // console.log("selectedRowIds",selectedRowIds);
 	        this.trigger({
 	            headerChecked: this.headerChecked,
 	            checkedMap: this.checkedMap,
-	            selectedRowIds: selectedRowIds
+	            selectedRowIds: selectedRowIds,
+	            myTableData: this.myTableDataString
 	        });
 	    },
 
@@ -76165,7 +76233,7 @@ webpackJsonp([1],[
 
 	    onRowCheckboxClick: function onRowCheckboxClick(checked, rowId) {
 	        this.checkedMap[rowId] = checked;
-	        //console.log("onRowCheckboxClick-> "+rowId);
+	        // console.log("onRowCheckboxClick-> "+rowId);
 	        this._trigger();
 	    },
 
@@ -76180,10 +76248,28 @@ webpackJsonp([1],[
 	    onInit: function onInit(tableKey, navigationInfo) {
 	        this.navigationInfo = navigationInfo;
 	        this.tableKey = tableKey;
+	    },
+	    onInitMyTableData: function onInitMyTableData(e) {
+	        // this.myTableData = e;
+	        global.golMyTableDate = e;
+	        // console.log("onInitMyTableData myTableData===>"+global.golMyTableDate);
+	        // this._trigger();
+	    },
+	    onUpdMyTableData: function onUpdMyTableData(rowId, key, data) {
+	        //rowcell的onChange事件更新TableData
+	        // console.log("onUpdRowData--->"+rowId+"--"+key+"---"+data);
+	        // console.log("onUpdMyTableData myTableData===>"+global.golMyTableDate);
+	        // this.myTableData[rowId][key] = data;//更新数据
+	        if (global.golMyTableDate) {
+	            global.golMyTableDate[rowId][key] = data;
+	        }
+
+	        // this._trigger();
 	    }
 	});
 
 	module.exports = store;
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 /* 432 */
@@ -76499,7 +76585,7 @@ webpackJsonp([1],[
 	        var _title = config.title || "信息";
 	        var _time = config.time || "3000";
 	        var _class_name = config.class_name || "gritter-info gritter-light";
-	        $.gritter.add({
+	        $.gritter.add({ // TODO Tomcat下面暴挫
 	            title: _title,
 	            text: config.text,
 	            sticky: config.sticky,
@@ -76553,6 +76639,7 @@ webpackJsonp([1],[
 	    /*number*/rowIndex, rowIdColumn, navigationInfo) /*object*/{
 	        var cellRender = columnProps.cellRender || this._renderToString;
 	        var cellDataKey = columnProps.dataKey;
+	        var cellInputType = columnProps.inputType;
 	        var hidden = columnProps.hidden;
 	        var cellData;
 
@@ -76563,6 +76650,7 @@ webpackJsonp([1],[
 	        return React.createElement(TableCell, {
 	            cellData: cellData,
 	            cellDataKey: cellDataKey,
+	            cellInputType: cellInputType,
 	            cellRender: cellRender,
 	            key: key,
 	            rowData: rowData,
@@ -76639,7 +76727,9 @@ webpackJsonp([1],[
 	var page = React.createClass({
 	    displayName: 'page',
 
-	    mixins: [ReactComponentWithPureRenderMixin, Reflux.connect(Store, "tableState")],
+	    mixins: [ReactComponentWithPureRenderMixin,
+	    // React.addons.LinkedStateMixin,
+	    Reflux.connect(Store, "tableState")],
 
 	    getInitialState: function getInitialState() /*object*/{
 	        return {
@@ -76655,23 +76745,32 @@ webpackJsonp([1],[
 	        Actions.rowCheckboxClick(nextChecked, this.props.rowId);
 	    },
 
+	    _onTextChange: function _onTextChange(e) {
+	        // console.log(this.parent.parent.refs.myTableDataString.value);
+	        // console.log("_onTextChange---->"+this.props.rowId+"/"+this.props.cellDataKey+"/"+e.target.value);
+	        this.state.text = e.target.value; //获取输入的数据并更新到input对象
+	        Actions.updMyTableData(this.props.rowId, this.props.cellDataKey, e.target.value); //调用Action来更新store中的数据
+	    },
+
+	    _onSelectChange: function _onSelectChange(e) {
+	        // console.log("_onSelectChange---->"+this.props.rowId+"/"+this.props.cellDataKey+"/"+e.target.value);
+	        this.state.text = e.target.value; //获取输入的数据并更新到input对象
+	        Actions.updMyTableData(this.props.rowId, this.props.cellDataKey, e.target.value); //调用Action来更新store中的数据
+	    },
+
 	    render: function render() {
 
+	        var rowcell = null;
 	        var checkbox = null;
 	        var key = this.props.cellDataKey;
 	        var rowIdColumn = this.props.rowIdColumn;
 	        var centerClass = "";
 	        var checked = false;
 	        var checkedMap = this.state.tableState.checkedMap;
+	        var cellInputType = this.props.cellInputType;
 	        var rowId = this.props.rowId;
 
 	        this.state.checked = checkedMap && checkedMap[rowId];
-
-	        if (key === "checkbox") {
-	            this.state.rowId = this.props.cellData;
-	            checkbox = React.createElement('input', { type: 'checkbox', className: 'ace', checked: this.state.checked, onChange: this._onCheckboxChange });
-	            centerClass = "center";
-	        }
 
 	        var style = {
 	            width: this.props.width,
@@ -76683,18 +76782,46 @@ webpackJsonp([1],[
 	        var content = null;
 
 	        if (this.props.cellRender) {
+	            // console.log("-----------cellRender---    ------------>>>>"
+	            // +this.props.cellData+"/"+this.props.cellDataKey+"/"+this.props.rowData+"/"+this.props.cellIndex+"/"+this.props.rowIndex);
 	            content = this.props.cellRender(this.props.cellData, this.props.cellDataKey, this.props.rowData, this.props.cellIndex, this.props.rowIndex);
+	        }
+	        // if(key === "checkbox"){
+	        //     this.state.rowId = this.props.cellData;
+	        //     rowcell = <input type="checkbox" className="ace" checked={this.state.checked} onChange={this._onCheckboxChange}/>
+	        //     centerClass = "center";
+	        // }
+	        if (typeof cellInputType == "undefined") {
+	            rowcell = React.createElement(
+	                'span',
+	                { className: 'lbl' },
+	                content
+	            );
+	        }
+	        if (cellInputType === "checkbox") {
+	            this.state.rowId = this.props.cellData;
+	            rowcell = React.createElement('input', { type: 'checkbox', className: 'ace', checked: this.state.checked, onChange: this._onCheckboxChange });
+	            centerClass = "center";
+	        }
+	        if (cellInputType === "text") {
+	            this.state.rowId = this.props.cellData;
+	            this.state.text = this.props.cellData;
+	            // console.log("text    this.linkState('rowId')=="+this.linkState('rowId'));
+	            rowcell = React.createElement('input', { type: 'text', id: key, defaultValue: this.state.text, onChange: this._onTextChange });
+	        }
+	        if (cellInputType === "select") {
+	            rowcell = React.createElement(
+	                'select',
+	                { id: key, width: 50, onChange: this._onSelectChange },
+	                this.props.rowData
+	            );
 	        }
 
 	        return React.createElement(
 	            'td',
 	            { className: centerClass, key: key, style: style },
-	            checkbox,
-	            React.createElement(
-	                'span',
-	                { className: 'lbl' },
-	                content
-	            )
+	            rowcell,
+	            React.createElement('span', { className: 'lbl' })
 	        );
 	    }
 	});
@@ -76730,12 +76857,16661 @@ webpackJsonp([1],[
 
 	'use strict';
 
+	module.exports = __webpack_require__(42);
+
+
+/***/ },
+/* 438 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.SizePerPageDropDown = exports.ButtonGroup = exports.SearchField = exports.ClearSearchButton = exports.ExportCSVButton = exports.ShowSelectedOnlyButton = exports.DeleteButton = exports.InsertButton = exports.InsertModalFooter = exports.InsertModalBody = exports.InsertModalHeader = exports.TableHeaderColumn = exports.BootstrapTable = undefined;
+
+	var _BootstrapTable = __webpack_require__(439);
+
+	var _BootstrapTable2 = _interopRequireDefault(_BootstrapTable);
+
+	var _TableHeaderColumn = __webpack_require__(641);
+
+	var _TableHeaderColumn2 = _interopRequireDefault(_TableHeaderColumn);
+
+	var _InsertModalHeader = __webpack_require__(624);
+
+	var _InsertModalHeader2 = _interopRequireDefault(_InsertModalHeader);
+
+	var _InsertModalBody = __webpack_require__(626);
+
+	var _InsertModalBody2 = _interopRequireDefault(_InsertModalBody);
+
+	var _InsertModalFooter = __webpack_require__(625);
+
+	var _InsertModalFooter2 = _interopRequireDefault(_InsertModalFooter);
+
+	var _InsertButton = __webpack_require__(627);
+
+	var _InsertButton2 = _interopRequireDefault(_InsertButton);
+
+	var _DeleteButton = __webpack_require__(628);
+
+	var _DeleteButton2 = _interopRequireDefault(_DeleteButton);
+
+	var _ExportCSVButton = __webpack_require__(629);
+
+	var _ExportCSVButton2 = _interopRequireDefault(_ExportCSVButton);
+
+	var _ShowSelectedOnlyButton = __webpack_require__(630);
+
+	var _ShowSelectedOnlyButton2 = _interopRequireDefault(_ShowSelectedOnlyButton);
+
+	var _ClearSearchButton = __webpack_require__(632);
+
+	var _ClearSearchButton2 = _interopRequireDefault(_ClearSearchButton);
+
+	var _SearchField = __webpack_require__(631);
+
+	var _SearchField2 = _interopRequireDefault(_SearchField);
+
+	var _ButtonGroup = __webpack_require__(647);
+
+	var _ButtonGroup2 = _interopRequireDefault(_ButtonGroup);
+
+	var _SizePerPageDropDown = __webpack_require__(612);
+
+	var _SizePerPageDropDown2 = _interopRequireDefault(_SizePerPageDropDown);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	if (typeof window !== 'undefined') {
+	  window.BootstrapTable = _BootstrapTable2.default;
+	  window.TableHeaderColumn = _TableHeaderColumn2.default;
+	  window.InsertModalHeader = _InsertModalHeader2.default;
+	  window.InsertModalBody = _InsertModalBody2.default;
+	  window.InsertModalFooter = _InsertModalFooter2.default;
+	  window.InsertButton = _InsertButton2.default;
+	  window.DeleteButton = _DeleteButton2.default;
+	  window.ShowSelectedOnlyButton = _ShowSelectedOnlyButton2.default;
+	  window.ExportCSVButton = _ExportCSVButton2.default;
+	  window.ClearSearchButton = _ClearSearchButton2.default;
+	  window.SearchField = _SearchField2.default;
+	  window.ButtonGroup = _ButtonGroup2.default;
+	  window.SizePerPageDropDown = _SizePerPageDropDown2.default;
+	}
+	exports.BootstrapTable = _BootstrapTable2.default;
+	exports.TableHeaderColumn = _TableHeaderColumn2.default;
+	exports.InsertModalHeader = _InsertModalHeader2.default;
+	exports.InsertModalBody = _InsertModalBody2.default;
+	exports.InsertModalFooter = _InsertModalFooter2.default;
+	exports.InsertButton = _InsertButton2.default;
+	exports.DeleteButton = _DeleteButton2.default;
+	exports.ShowSelectedOnlyButton = _ShowSelectedOnlyButton2.default;
+	exports.ExportCSVButton = _ExportCSVButton2.default;
+	exports.ClearSearchButton = _ClearSearchButton2.default;
+	exports.SearchField = _SearchField2.default;
+	exports.ButtonGroup = _ButtonGroup2.default;
+	exports.SizePerPageDropDown = _SizePerPageDropDown2.default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+	}();
+
+	;
+
+/***/ },
+/* 439 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(440);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	var _TableHeader = __webpack_require__(442);
+
+	var _TableHeader2 = _interopRequireDefault(_TableHeader);
+
+	var _TableBody = __webpack_require__(444);
+
+	var _TableBody2 = _interopRequireDefault(_TableBody);
+
+	var _PaginationList = __webpack_require__(610);
+
+	var _PaginationList2 = _interopRequireDefault(_PaginationList);
+
+	var _ToolBar = __webpack_require__(613);
+
+	var _ToolBar2 = _interopRequireDefault(_ToolBar);
+
+	var _TableFilter = __webpack_require__(633);
+
+	var _TableFilter2 = _interopRequireDefault(_TableFilter);
+
+	var _TableDataStore = __webpack_require__(634);
+
+	var _util = __webpack_require__(445);
+
+	var _util2 = _interopRequireDefault(_util);
+
+	var _csv_export_util = __webpack_require__(635);
+
+	var _csv_export_util2 = _interopRequireDefault(_csv_export_util);
+
+	var _Filter = __webpack_require__(639);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* eslint no-alert: 0 */
+	/* eslint max-len: 0 */
+
+
+	var BootstrapTable = function (_Component) {
+	  _inherits(BootstrapTable, _Component);
+
+	  function BootstrapTable(props) {
+	    _classCallCheck(this, BootstrapTable);
+
+	    var _this = _possibleConstructorReturn(this, (BootstrapTable.__proto__ || Object.getPrototypeOf(BootstrapTable)).call(this, props));
+
+	    _this.handleSort = function () {
+	      return _this.__handleSort__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleExpandRow = function () {
+	      return _this.__handleExpandRow__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handlePaginationData = function () {
+	      return _this.__handlePaginationData__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleMouseLeave = function () {
+	      return _this.__handleMouseLeave__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleMouseEnter = function () {
+	      return _this.__handleMouseEnter__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleRowMouseOut = function () {
+	      return _this.__handleRowMouseOut__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleRowMouseOver = function () {
+	      return _this.__handleRowMouseOver__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleNavigateCell = function () {
+	      return _this.__handleNavigateCell__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleRowClick = function () {
+	      return _this.__handleRowClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleRowDoubleClick = function () {
+	      return _this.__handleRowDoubleClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleSelectAllRow = function () {
+	      return _this.__handleSelectAllRow__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleShowOnlySelected = function () {
+	      return _this.__handleShowOnlySelected__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleSelectRow = function () {
+	      return _this.__handleSelectRow__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleAddRow = function () {
+	      return _this.__handleAddRow__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.getPageByRowKey = function () {
+	      return _this.__getPageByRowKey__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleDropRow = function () {
+	      return _this.__handleDropRow__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleFilterData = function () {
+	      return _this.__handleFilterData__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleExportCSV = function () {
+	      return _this.__handleExportCSV__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleSearch = function () {
+	      return _this.__handleSearch__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this._scrollTop = function () {
+	      return _this.___scrollTop__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this._scrollHeader = function () {
+	      return _this.___scrollHeader__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.isIE = false;
+	    _this._attachCellEditFunc();
+	    if (_util2.default.canUseDOM()) {
+	      _this.isIE = document.documentMode;
+	    }
+	    _this.store = new _TableDataStore.TableDataStore(_this.props.data ? _this.props.data.slice() : []);
+
+	    _this.initTable(_this.props);
+
+	    if (_this.props.selectRow && _this.props.selectRow.selected) {
+	      var copy = _this.props.selectRow.selected.slice();
+	      _this.store.setSelectedRowKey(copy);
+	    }
+	    var currPage = _Const2.default.PAGE_START_INDEX;
+	    if (typeof _this.props.options.page !== 'undefined') {
+	      currPage = _this.props.options.page;
+	    } else if (typeof _this.props.options.pageStartIndex !== 'undefined') {
+	      currPage = _this.props.options.pageStartIndex;
+	    }
+
+	    _this._adjustHeaderWidth = _this._adjustHeaderWidth.bind(_this);
+	    _this._adjustHeight = _this._adjustHeight.bind(_this);
+	    _this._adjustTable = _this._adjustTable.bind(_this);
+
+	    _this.state = {
+	      data: _this.getTableData(),
+	      currPage: currPage,
+	      expanding: _this.props.options.expanding || [],
+	      sizePerPage: _this.props.options.sizePerPage || _Const2.default.SIZE_PER_PAGE_LIST[0],
+	      selectedRowKeys: _this.store.getSelectedRowKeys(),
+	      reset: false,
+	      x: _this.props.keyBoardNav ? 0 : -1,
+	      y: _this.props.keyBoardNav ? 0 : -1
+	    };
+	    return _this;
+	  }
+
+	  _createClass(BootstrapTable, [{
+	    key: 'initTable',
+	    value: function initTable(props) {
+	      var _this2 = this;
+
+	      var keyField = props.keyField;
+
+
+	      var isKeyFieldDefined = typeof keyField === 'string' && keyField.length;
+	      _react2.default.Children.forEach(props.children, function (column) {
+	        if (column.props.isKey) {
+	          if (keyField) {
+	            throw new Error('Error. Multiple key column be detected in TableHeaderColumn.');
+	          }
+	          keyField = column.props.dataField;
+	        }
+	        if (column.props.filter) {
+	          // a column contains a filter
+	          if (!_this2.filter) {
+	            // first time create the filter on the BootstrapTable
+	            _this2.filter = new _Filter.Filter();
+	          }
+	          // pass the filter to column with filter
+	          column.props.filter.emitter = _this2.filter;
+	        }
+	      });
+
+	      if (this.filter) {
+	        this.filter.removeAllListeners('onFilterChange');
+	        this.filter.on('onFilterChange', function (currentFilter) {
+	          _this2.handleFilterData(currentFilter);
+	        });
+	      }
+
+	      console.log("bootstrap-table  this.getColumnsDescription");
+	      this.colInfos = this.getColumnsDescription(props).reduce(function (prev, curr) {
+	        prev[curr.name] = curr;
+	        return prev;
+	      }, {});
+
+	      if (!isKeyFieldDefined && !keyField) {
+	        throw new Error('Error. No any key column defined in TableHeaderColumn.\n            Use \'isKey={true}\' to specify a unique column after version 0.5.4.');
+	      }
+
+	      this.store.setProps({
+	        isPagination: props.pagination,
+	        keyField: keyField,
+	        colInfos: this.colInfos,
+	        multiColumnSearch: props.multiColumnSearch,
+	        multiColumnSort: props.multiColumnSort,
+	        remote: this.props.remote
+	      });
+	    }
+	  }, {
+	    key: 'getTableData',
+	    value: function getTableData() {
+	      var result = [];
+	      var _props = this.props,
+	          options = _props.options,
+	          pagination = _props.pagination;
+
+	      var sortName = options.defaultSortName || options.sortName;
+	      var sortOrder = options.defaultSortOrder || options.sortOrder;
+	      var searchText = options.defaultSearch;
+	      if (sortName && sortOrder) {
+	        this.store.setSortInfo(sortOrder, sortName);
+	        this.store.sort();
+	      }
+
+	      if (searchText) {
+	        this.store.search(searchText);
+	      }
+
+	      if (pagination) {
+	        var page = void 0;
+	        var sizePerPage = void 0;
+	        if (this.store.isChangedPage()) {
+	          sizePerPage = this.state.sizePerPage;
+	          page = this.state.currPage;
+	        } else {
+	          sizePerPage = options.sizePerPage || _Const2.default.SIZE_PER_PAGE_LIST[0];
+	          page = options.page || 1;
+	        }
+	        result = this.store.page(page, sizePerPage).get();
+	      } else {
+	        result = this.store.get();
+	      }
+	      return result;
+	    }
+	  }, {
+	    key: 'getColumnsDescription',
+	    value: function getColumnsDescription(_ref) {
+	      var children = _ref.children;
+
+	      var rowCount = 0;
+	      _react2.default.Children.forEach(children, function (column) {
+	        if (Number(column.props.row) > rowCount) {
+	          rowCount = Number(column.props.row);
+	        }
+	      });
+	      return _react2.default.Children.map(children, function (column, i) {
+	        var rowIndex = column.props.row ? Number(column.props.row) : 0;
+	        var rowSpan = column.props.rowSpan ? Number(column.props.rowSpan) : 1;
+	        if (rowSpan + rowIndex === rowCount + 1) {
+	          return {
+	            name: column.props.dataField,
+	            align: column.props.dataAlign,
+	            sort: column.props.dataSort,
+	            format: column.props.dataFormat,
+	            formatExtraData: column.props.formatExtraData,
+	            filterFormatted: column.props.filterFormatted,
+	            filterValue: column.props.filterValue,
+	            editable: column.props.editable,
+	            customEditor: column.props.customEditor,
+	            hidden: column.props.hidden,
+	            hiddenOnInsert: column.props.hiddenOnInsert,
+	            searchable: column.props.searchable,
+	            className: column.props.columnClassName,
+	            editClassName: column.props.editColumnClassName,
+	            invalidEditColumnClassName: column.props.invalidEditColumnClassName,
+	            columnTitle: column.props.columnTitle,
+	            width: column.props.width,
+	            text: column.props.headerText || column.props.children,
+	            sortFunc: column.props.sortFunc,
+	            sortFuncExtraData: column.props.sortFuncExtraData,
+	            export: column.props.export,
+	            expandable: column.props.expandable,
+	            index: i,
+	            attrs: column.props.tdAttr,
+	            style: column.props.tdStyle
+	          };
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'reset',
+	    value: function reset() {
+	      this.store.clean();
+	      this.setState({
+	        data: this.getTableData(),
+	        currPage: 1,
+	        expanding: [],
+	        sizePerPage: _Const2.default.SIZE_PER_PAGE_LIST[0],
+	        selectedRowKeys: this.store.getSelectedRowKeys(),
+	        reset: true
+	      });
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      this.initTable(nextProps);
+	      var options = nextProps.options,
+	          selectRow = nextProps.selectRow;
+
+
+	      this.store.setData(nextProps.data.slice());
+
+	      // from #481
+	      var page = this.state.currPage;
+	      if (this.props.options.page !== options.page) {
+	        page = options.page;
+	      }
+	      // from #481
+	      var sizePerPage = this.state.sizePerPage;
+	      if (this.props.options.sizePerPage !== options.sizePerPage) {
+	        sizePerPage = options.sizePerPage;
+	      }
+
+	      if (this.isRemoteDataSource()) {
+	        var data = nextProps.data.slice();
+	        if (nextProps.pagination && !this.allowRemote(_Const2.default.REMOTE_PAGE)) {
+	          data = this.store.page(page, sizePerPage).get();
+	        }
+	        this.setState({
+	          data: data,
+	          currPage: page,
+	          sizePerPage: sizePerPage,
+	          reset: false
+	        });
+	      } else {
+	        // #125
+	        // remove !options.page for #709
+	        if (page > Math.ceil(nextProps.data.length / sizePerPage)) {
+	          page = 1;
+	        }
+	        var sortList = this.store.getSortInfo();
+	        var sortField = options.sortName;
+	        var sortOrder = options.sortOrder;
+	        if (sortField && sortOrder) {
+	          this.store.setSortInfo(sortOrder, sortField);
+	          this.store.sort();
+	        } else if (sortList.length > 0) {
+	          this.store.sort();
+	        }
+	        var _data = this.store.page(page, sizePerPage).get();
+	        this.setState({
+	          data: _data,
+	          currPage: page,
+	          sizePerPage: sizePerPage,
+	          reset: false
+	        });
+	      }
+
+	      if (selectRow && selectRow.selected) {
+	        // set default select rows to store.
+	        var copy = selectRow.selected.slice();
+	        this.store.setSelectedRowKey(copy);
+	        this.setState({
+	          selectedRowKeys: copy,
+	          reset: false
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this._adjustTable();
+	      window.addEventListener('resize', this._adjustTable);
+	      this.refs.body.refs.container.addEventListener('scroll', this._scrollHeader);
+	      if (this.props.scrollTop) {
+	        this._scrollTop();
+	      }
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      window.removeEventListener('resize', this._adjustTable);
+	      this.refs.body.refs.container.removeEventListener('scroll', this._scrollHeader);
+	      if (this.filter) {
+	        this.filter.removeAllListeners('onFilterChange');
+	      }
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      this._adjustTable();
+	      this._attachCellEditFunc();
+	      if (this.props.options.afterTableComplete) {
+	        this.props.options.afterTableComplete();
+	      }
+	    }
+	  }, {
+	    key: '_attachCellEditFunc',
+	    value: function _attachCellEditFunc() {
+	      var cellEdit = this.props.cellEdit;
+
+	      if (cellEdit) {
+	        this.props.cellEdit.__onCompleteEdit__ = this.handleEditCell.bind(this);
+	        if (cellEdit.mode !== _Const2.default.CELL_EDIT_NONE) {
+	          this.props.selectRow.clickToSelect = false;
+	        }
+	      }
+	    }
+
+	    /**
+	     * Returns true if in the current configuration,
+	     * the datagrid should load its data remotely.
+	     *
+	     * @param  {Object}  [props] Optional. If not given, this.props will be used
+	     * @return {Boolean}
+	     */
+
+	  }, {
+	    key: 'isRemoteDataSource',
+	    value: function isRemoteDataSource(props) {
+	      var _ref2 = props || this.props,
+	          remote = _ref2.remote;
+
+	      return remote === true || typeof remote === 'function';
+	    }
+
+	    /**
+	     * Returns true if this action can be handled remote store
+	     * From #990, Sometimes, we need some actions as remote, some actions are handled by default
+	     * so function will tell you the target action is can be handled as remote or not.
+	     * @param  {String}  [action] Required.
+	     * @param  {Object}  [props] Optional. If not given, this.props will be used
+	     * @return {Boolean}
+	     */
+
+	  }, {
+	    key: 'allowRemote',
+	    value: function allowRemote(action, props) {
+	      var _ref3 = props || this.props,
+	          remote = _ref3.remote;
+
+	      if (typeof remote === 'function') {
+	        var remoteObj = remote(_Const2.default.REMOTE);
+	        return remoteObj[action];
+	      } else {
+	        return remote;
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var style = {
+	        height: this.props.height,
+	        maxHeight: this.props.maxHeight
+	      };
+
+	      var columns = this.getColumnsDescription(this.props);
+	      var sortList = this.store.getSortInfo();
+	      var pagination = this.renderPagination();
+	      var toolBar = this.renderToolBar();
+	      var tableFilter = this.renderTableFilter(columns);
+	      var isSelectAll = this.isSelectAll();
+	      var expandColumnOptions = this.props.expandColumnOptions;
+	      if (typeof expandColumnOptions.expandColumnBeforeSelectColumn === 'undefined') {
+	        expandColumnOptions.expandColumnBeforeSelectColumn = true;
+	      }
+	      var colGroups = _util2.default.renderColGroup(columns, this.props.selectRow, expandColumnOptions);
+	      var sortIndicator = this.props.options.sortIndicator;
+	      if (typeof this.props.options.sortIndicator === 'undefined') sortIndicator = true;
+	      var _props$options$pagina = this.props.options.paginationPosition,
+	          paginationPosition = _props$options$pagina === undefined ? _Const2.default.PAGINATION_POS_BOTTOM : _props$options$pagina;
+
+	      var showPaginationOnTop = paginationPosition !== _Const2.default.PAGINATION_POS_BOTTOM;
+	      var showPaginationOnBottom = paginationPosition !== _Const2.default.PAGINATION_POS_TOP;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: (0, _classnames2.default)('react-bs-table-container', this.props.className, this.props.containerClass),
+	          style: this.props.containerStyle },
+	        toolBar,
+	        showPaginationOnTop ? pagination : null,
+	        _react2.default.createElement(
+	          'div',
+	          { ref: 'table',
+	            className: (0, _classnames2.default)('react-bs-table', this.props.tableContainerClass),
+	            style: _extends({}, style, this.props.tableStyle),
+	            onMouseEnter: this.handleMouseEnter,
+	            onMouseLeave: this.handleMouseLeave },
+	          _react2.default.createElement(
+	            _TableHeader2.default,
+	            {
+	              ref: 'header',
+	              colGroups: colGroups,
+	              headerContainerClass: this.props.headerContainerClass,
+	              tableHeaderClass: this.props.tableHeaderClass,
+	              style: this.props.headerStyle,
+	              rowSelectType: this.props.selectRow.mode,
+	              customComponent: this.props.selectRow.customComponent,
+	              hideSelectColumn: this.props.selectRow.hideSelectColumn,
+	              sortList: sortList,
+	              sortIndicator: sortIndicator,
+	              onSort: this.handleSort,
+	              onSelectAllRow: this.handleSelectAllRow,
+	              bordered: this.props.bordered,
+	              condensed: this.props.condensed,
+	              isFiltered: this.filter ? true : false,
+	              isSelectAll: isSelectAll,
+	              reset: this.state.reset,
+	              expandColumnVisible: expandColumnOptions.expandColumnVisible,
+	              expandColumnComponent: expandColumnOptions.expandColumnComponent,
+	              expandColumnBeforeSelectColumn: expandColumnOptions.expandColumnBeforeSelectColumn },
+	            this.props.children
+	          ),
+	          _react2.default.createElement(_TableBody2.default, { ref: 'body',
+	            bodyContainerClass: this.props.bodyContainerClass,
+	            tableBodyClass: this.props.tableBodyClass,
+	            style: _extends({}, style, this.props.bodyStyle),
+	            data: this.state.data,
+	            expandComponent: this.props.expandComponent,
+	            expandableRow: this.props.expandableRow,
+	            expandRowBgColor: this.props.options.expandRowBgColor,
+	            expandBy: this.props.options.expandBy || _Const2.default.EXPAND_BY_ROW,
+	            columns: columns,
+	            trClassName: this.props.trClassName,
+	            striped: this.props.striped,
+	            bordered: this.props.bordered,
+	            hover: this.props.hover,
+	            keyField: this.store.getKeyField(),
+	            condensed: this.props.condensed,
+	            selectRow: this.props.selectRow,
+	            expandColumnOptions: this.props.expandColumnOptions,
+	            cellEdit: this.props.cellEdit,
+	            selectedRowKeys: this.state.selectedRowKeys,
+	            onRowClick: this.handleRowClick,
+	            onRowDoubleClick: this.handleRowDoubleClick,
+	            onRowMouseOver: this.handleRowMouseOver,
+	            onRowMouseOut: this.handleRowMouseOut,
+	            onSelectRow: this.handleSelectRow,
+	            noDataText: this.props.options.noDataText,
+	            withoutNoDataText: this.props.options.withoutNoDataText,
+	            expanding: this.state.expanding,
+	            onExpand: this.handleExpandRow,
+	            beforeShowError: this.props.options.beforeShowError,
+	            keyBoardNav: this.props.keyBoardNav,
+	            onNavigateCell: this.handleNavigateCell,
+	            x: this.state.x,
+	            y: this.state.y })
+	        ),
+	        tableFilter,
+	        showPaginationOnBottom ? pagination : null
+	      );
+	    }
+	  }, {
+	    key: 'isSelectAll',
+	    value: function isSelectAll() {
+	      if (this.store.isEmpty()) return false;
+	      var unselectable = this.props.selectRow.unselectable;
+	      var defaultSelectRowKeys = this.store.getSelectedRowKeys();
+	      var allRowKeys = this.store.getAllRowkey();
+
+	      if (defaultSelectRowKeys.length === 0) return false;
+	      var match = 0;
+	      var noFound = 0;
+	      var unSelectableCnt = 0;
+	      defaultSelectRowKeys.forEach(function (selected) {
+	        if (allRowKeys.indexOf(selected) !== -1) match++;else noFound++;
+	        if (unselectable && unselectable.indexOf(selected) !== -1) unSelectableCnt++;
+	      });
+
+	      if (noFound === defaultSelectRowKeys.length) return false;
+	      if (match === allRowKeys.length) {
+	        return true;
+	      } else {
+	        if (unselectable && match <= unSelectableCnt && unSelectableCnt === unselectable.length) return false;else return 'indeterminate';
+	      }
+	      // return (match === allRowKeys.length) ? true : 'indeterminate';
+	    }
+	  }, {
+	    key: 'cleanSelected',
+	    value: function cleanSelected() {
+	      this.store.setSelectedRowKey([]);
+	      this.setState({
+	        selectedRowKeys: [],
+	        reset: false
+	      });
+	    }
+	  }, {
+	    key: '__handleSort__REACT_HOT_LOADER__',
+	    value: function __handleSort__REACT_HOT_LOADER__(order, sortField) {
+	      if (this.props.options.onSortChange) {
+	        this.props.options.onSortChange(sortField, order, this.props);
+	      }
+	      this.store.setSortInfo(order, sortField);
+	      if (this.allowRemote(_Const2.default.REMOTE_SORT)) {
+	        return;
+	      }
+
+	      var result = this.store.sort().get();
+	      this.setState({
+	        data: result,
+	        reset: false
+	      });
+	    }
+	  }, {
+	    key: '__handleExpandRow__REACT_HOT_LOADER__',
+	    value: function __handleExpandRow__REACT_HOT_LOADER__(expanding) {
+	      var _this3 = this;
+
+	      this.setState({ expanding: expanding, reset: false }, function () {
+	        _this3._adjustHeaderWidth();
+	      });
+	    }
+	  }, {
+	    key: '__handlePaginationData__REACT_HOT_LOADER__',
+	    value: function __handlePaginationData__REACT_HOT_LOADER__(page, sizePerPage) {
+	      var _props$options = this.props.options,
+	          onPageChange = _props$options.onPageChange,
+	          pageStartIndex = _props$options.pageStartIndex;
+
+	      if (onPageChange) {
+	        onPageChange(page, sizePerPage);
+	      }
+
+	      this.setState({
+	        currPage: page,
+	        sizePerPage: sizePerPage,
+	        reset: false
+	      });
+
+	      if (this.allowRemote(_Const2.default.REMOTE_PAGE)) {
+	        return;
+	      }
+
+	      // We calculate an offset here in order to properly fetch the indexed data,
+	      // despite the page start index not always being 1
+	      var normalizedPage = void 0;
+	      if (pageStartIndex !== undefined) {
+	        var offset = Math.abs(_Const2.default.PAGE_START_INDEX - pageStartIndex);
+	        normalizedPage = page + offset;
+	      } else {
+	        normalizedPage = page;
+	      }
+
+	      var result = this.store.page(normalizedPage, sizePerPage).get();
+
+	      this.setState({ data: result, reset: false });
+	    }
+	  }, {
+	    key: '__handleMouseLeave__REACT_HOT_LOADER__',
+	    value: function __handleMouseLeave__REACT_HOT_LOADER__() {
+	      if (this.props.options.onMouseLeave) {
+	        this.props.options.onMouseLeave();
+	      }
+	    }
+	  }, {
+	    key: '__handleMouseEnter__REACT_HOT_LOADER__',
+	    value: function __handleMouseEnter__REACT_HOT_LOADER__() {
+	      if (this.props.options.onMouseEnter) {
+	        this.props.options.onMouseEnter();
+	      }
+	    }
+	  }, {
+	    key: '__handleRowMouseOut__REACT_HOT_LOADER__',
+	    value: function __handleRowMouseOut__REACT_HOT_LOADER__(row, event) {
+	      if (this.props.options.onRowMouseOut) {
+	        this.props.options.onRowMouseOut(row, event);
+	      }
+	    }
+	  }, {
+	    key: '__handleRowMouseOver__REACT_HOT_LOADER__',
+	    value: function __handleRowMouseOver__REACT_HOT_LOADER__(row, event) {
+	      if (this.props.options.onRowMouseOver) {
+	        this.props.options.onRowMouseOver(row, event);
+	      }
+	    }
+	  }, {
+	    key: '__handleNavigateCell__REACT_HOT_LOADER__',
+	    value: function __handleNavigateCell__REACT_HOT_LOADER__(_ref4) {
+	      var offSetX = _ref4.x,
+	          offSetY = _ref4.y,
+	          lastEditCell = _ref4.lastEditCell;
+	      var pagination = this.props.pagination;
+	      var _state = this.state,
+	          x = _state.x,
+	          y = _state.y,
+	          currPage = _state.currPage;
+
+	      x += offSetX;
+	      y += offSetY;
+	      // currPage += 1;
+	      // console.log(currPage);
+
+	      var columns = this.store.getColInfos();
+	      var visibleRowSize = this.state.data.length;
+	      var visibleColumnSize = Object.keys(columns).filter(function (k) {
+	        return !columns[k].hidden;
+	      }).length;
+
+	      if (y >= visibleRowSize) {
+	        currPage++;
+	        var lastPage = pagination ? this.refs.pagination.getLastPage() : -1;
+	        if (currPage <= lastPage) {
+	          this.handlePaginationData(currPage, this.state.sizePerPage);
+	        } else {
+	          return;
+	        }
+	        y = 0;
+	      } else if (y < 0) {
+	        currPage--;
+	        if (currPage > 0) {
+	          this.handlePaginationData(currPage, this.state.sizePerPage);
+	        } else {
+	          return;
+	        }
+	        y = visibleRowSize - 1;
+	      } else if (x >= visibleColumnSize) {
+	        if (y + 1 === visibleRowSize) {
+	          currPage++;
+	          var _lastPage = pagination ? this.refs.pagination.getLastPage() : -1;
+	          if (currPage <= _lastPage) {
+	            this.handlePaginationData(currPage, this.state.sizePerPage);
+	          } else {
+	            return;
+	          }
+	          y = 0;
+	        } else {
+	          y++;
+	        }
+	        x = lastEditCell ? 1 : 0;
+	      } else if (x < 0) {
+	        x = visibleColumnSize - 1;
+	        if (y === 0) {
+	          currPage--;
+	          if (currPage > 0) {
+	            this.handlePaginationData(currPage, this.state.sizePerPage);
+	          } else {
+	            return;
+	          }
+	          y = this.state.sizePerPage - 1;
+	        } else {
+	          y--;
+	        }
+	      }
+	      this.setState({
+	        x: x, y: y, currPage: currPage, reset: false
+	      });
+	    }
+	  }, {
+	    key: '__handleRowClick__REACT_HOT_LOADER__',
+	    value: function __handleRowClick__REACT_HOT_LOADER__(row, rowIndex, cellIndex) {
+	      var _props2 = this.props,
+	          options = _props2.options,
+	          keyBoardNav = _props2.keyBoardNav;
+
+	      if (options.onRowClick) {
+	        options.onRowClick(row);
+	      }
+	      if (keyBoardNav) {
+	        var _ref5 = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav : {},
+	            clickToNav = _ref5.clickToNav;
+
+	        clickToNav = clickToNav === false ? clickToNav : true;
+	        if (clickToNav) {
+	          this.setState({
+	            x: cellIndex,
+	            y: rowIndex,
+	            reset: false
+	          });
+	        }
+	      }
+	    }
+	  }, {
+	    key: '__handleRowDoubleClick__REACT_HOT_LOADER__',
+	    value: function __handleRowDoubleClick__REACT_HOT_LOADER__(row) {
+	      if (this.props.options.onRowDoubleClick) {
+	        this.props.options.onRowDoubleClick(row);
+	      }
+	    }
+	  }, {
+	    key: '__handleSelectAllRow__REACT_HOT_LOADER__',
+	    value: function __handleSelectAllRow__REACT_HOT_LOADER__(e) {
+	      var isSelected = e.currentTarget.checked;
+	      var keyField = this.store.getKeyField();
+	      var _props$selectRow = this.props.selectRow,
+	          onSelectAll = _props$selectRow.onSelectAll,
+	          unselectable = _props$selectRow.unselectable,
+	          selected = _props$selectRow.selected;
+
+	      var selectedRowKeys = [];
+	      var result = true;
+	      var rows = isSelected ? this.store.get() : this.store.getRowByKey(this.state.selectedRowKeys);
+
+	      if (unselectable && unselectable.length > 0) {
+	        if (isSelected) {
+	          rows = rows.filter(function (r) {
+	            return unselectable.indexOf(r[keyField]) === -1 || selected && selected.indexOf(r[keyField]) !== -1;
+	          });
+	        } else {
+	          rows = rows.filter(function (r) {
+	            return unselectable.indexOf(r[keyField]) === -1;
+	          });
+	        }
+	      }
+
+	      if (onSelectAll) {
+	        result = this.props.selectRow.onSelectAll(isSelected, rows);
+	      }
+
+	      if (typeof result == 'undefined' || result !== false) {
+	        if (isSelected) {
+	          selectedRowKeys = Array.isArray(result) ? result : rows.map(function (r) {
+	            return r[keyField];
+	          });
+	        } else {
+	          if (unselectable && selected) {
+	            selectedRowKeys = selected.filter(function (r) {
+	              return unselectable.indexOf(r) > -1;
+	            });
+	          }
+	        }
+
+	        this.store.setSelectedRowKey(selectedRowKeys);
+	        this.setState({ selectedRowKeys: selectedRowKeys, reset: false });
+	      }
+	    }
+	  }, {
+	    key: '__handleShowOnlySelected__REACT_HOT_LOADER__',
+	    value: function __handleShowOnlySelected__REACT_HOT_LOADER__() {
+	      this.store.ignoreNonSelected();
+	      var result = void 0;
+	      if (this.props.pagination) {
+	        result = this.store.page(1, this.state.sizePerPage).get();
+	      } else {
+	        result = this.store.get();
+	      }
+	      this.setState({
+	        data: result,
+	        reset: false,
+	        currPage: this.props.options.pageStartIndex || _Const2.default.PAGE_START_INDEX
+	      });
+	    }
+	  }, {
+	    key: '__handleSelectRow__REACT_HOT_LOADER__',
+	    value: function __handleSelectRow__REACT_HOT_LOADER__(row, isSelected, e) {
+	      var result = true;
+	      var currSelected = this.store.getSelectedRowKeys();
+	      var rowKey = row[this.store.getKeyField()];
+	      var selectRow = this.props.selectRow;
+
+	      if (selectRow.onSelect) {
+	        result = selectRow.onSelect(row, isSelected, e);
+	      }
+
+	      if (typeof result === 'undefined' || result !== false) {
+	        if (selectRow.mode === _Const2.default.ROW_SELECT_SINGLE) {
+	          currSelected = isSelected ? [rowKey] : [];
+	        } else {
+	          if (isSelected) {
+	            currSelected.push(rowKey);
+	          } else {
+	            currSelected = currSelected.filter(function (key) {
+	              return rowKey !== key;
+	            });
+	          }
+	        }
+
+	        this.store.setSelectedRowKey(currSelected);
+	        this.setState({
+	          selectedRowKeys: currSelected,
+	          reset: false
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'handleEditCell',
+	    value: function handleEditCell(newVal, rowIndex, colIndex) {
+	      var onCellEdit = this.props.options.onCellEdit;
+	      var _props$cellEdit = this.props.cellEdit,
+	          beforeSaveCell = _props$cellEdit.beforeSaveCell,
+	          afterSaveCell = _props$cellEdit.afterSaveCell;
+
+	      var columns = this.getColumnsDescription(this.props);
+	      var fieldName = columns[colIndex].name;
+
+	      if (beforeSaveCell) {
+	        var isValid = beforeSaveCell(this.state.data[rowIndex], fieldName, newVal);
+	        if (!isValid && typeof isValid !== 'undefined') {
+	          this.setState({
+	            data: this.store.get(),
+	            reset: false
+	          });
+	          return;
+	        }
+	      }
+
+	      if (onCellEdit) {
+	        newVal = onCellEdit(this.state.data[rowIndex], fieldName, newVal);
+	      }
+
+	      if (this.allowRemote(_Const2.default.REMOTE_CELL_EDIT)) {
+	        if (afterSaveCell) {
+	          afterSaveCell(this.state.data[rowIndex], fieldName, newVal);
+	        }
+	        return;
+	      }
+
+	      var result = this.store.edit(newVal, rowIndex, fieldName).get();
+	      this.setState({
+	        data: result,
+	        reset: false
+	      });
+
+	      if (afterSaveCell) {
+	        afterSaveCell(this.state.data[rowIndex], fieldName, newVal);
+	      }
+	    }
+	  }, {
+	    key: 'handleAddRowAtBegin',
+	    value: function handleAddRowAtBegin(newObj) {
+	      try {
+	        this.store.addAtBegin(newObj);
+	      } catch (e) {
+	        return e;
+	      }
+	      this._handleAfterAddingRow(newObj, true);
+	    }
+	  }, {
+	    key: '__handleAddRow__REACT_HOT_LOADER__',
+	    value: function __handleAddRow__REACT_HOT_LOADER__(newObj) {
+	      var onAddRow = this.props.options.onAddRow;
+
+	      if (onAddRow) {
+	        var colInfos = this.store.getColInfos();
+	        onAddRow(newObj, colInfos);
+	      }
+
+	      if (this.allowRemote(_Const2.default.REMOTE_INSERT_ROW)) {
+	        if (this.props.options.afterInsertRow) {
+	          this.props.options.afterInsertRow(newObj);
+	        }
+	        return null;
+	      }
+
+	      try {
+	        this.store.add(newObj);
+	      } catch (e) {
+	        return e.message;
+	      }
+	      this._handleAfterAddingRow(newObj, false);
+	    }
+	  }, {
+	    key: 'getSizePerPage',
+	    value: function getSizePerPage() {
+	      return this.state.sizePerPage;
+	    }
+	  }, {
+	    key: 'getCurrentPage',
+	    value: function getCurrentPage() {
+	      return this.state.currPage;
+	    }
+	  }, {
+	    key: 'getTableDataIgnorePaging',
+	    value: function getTableDataIgnorePaging() {
+	      return this.store.getCurrentDisplayData();
+	    }
+	  }, {
+	    key: '__getPageByRowKey__REACT_HOT_LOADER__',
+	    value: function __getPageByRowKey__REACT_HOT_LOADER__(rowKey) {
+	      var sizePerPage = this.state.sizePerPage;
+
+	      var currentData = this.store.getCurrentDisplayData();
+	      var keyField = this.store.getKeyField();
+	      var result = currentData.findIndex(function (x) {
+	        return x[keyField] === rowKey;
+	      });
+	      if (result > -1) {
+	        return parseInt(result / sizePerPage, 10) + 1;
+	      } else {
+	        return result;
+	      }
+	    }
+	  }, {
+	    key: '__handleDropRow__REACT_HOT_LOADER__',
+	    value: function __handleDropRow__REACT_HOT_LOADER__(rowKeys) {
+	      var _this4 = this;
+
+	      var dropRowKeys = rowKeys ? rowKeys : this.store.getSelectedRowKeys();
+	      // add confirm before the delete action if that option is set.
+	      if (dropRowKeys && dropRowKeys.length > 0) {
+	        if (this.props.options.handleConfirmDeleteRow) {
+	          this.props.options.handleConfirmDeleteRow(function () {
+	            _this4.deleteRow(dropRowKeys);
+	          }, dropRowKeys);
+	        } else if (confirm('Are you sure you want to delete?')) {
+	          this.deleteRow(dropRowKeys);
+	        }
+	      }
+	    }
+	  }, {
+	    key: 'deleteRow',
+	    value: function deleteRow(dropRowKeys) {
+	      var onDeleteRow = this.props.options.onDeleteRow;
+
+	      if (onDeleteRow) {
+	        onDeleteRow(dropRowKeys);
+	      }
+
+	      this.store.setSelectedRowKey([]); // clear selected row key
+
+	      if (this.allowRemote(_Const2.default.REMOTE_DROP_ROW)) {
+	        if (this.props.options.afterDeleteRow) {
+	          this.props.options.afterDeleteRow(dropRowKeys);
+	        }
+	        return;
+	      }
+
+	      this.store.remove(dropRowKeys); // remove selected Row
+	      var result = void 0;
+	      if (this.props.pagination) {
+	        var sizePerPage = this.state.sizePerPage;
+
+	        var currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
+	        var currPage = this.state.currPage;
+
+	        if (currPage > currLastPage) currPage = currLastPage;
+	        result = this.store.page(currPage, sizePerPage).get();
+	        this.setState({
+	          data: result,
+	          selectedRowKeys: this.store.getSelectedRowKeys(),
+	          currPage: currPage,
+	          reset: false
+	        });
+	      } else {
+	        result = this.store.get();
+	        this.setState({
+	          data: result,
+	          reset: false,
+	          selectedRowKeys: this.store.getSelectedRowKeys()
+	        });
+	      }
+	      if (this.props.options.afterDeleteRow) {
+	        this.props.options.afterDeleteRow(dropRowKeys);
+	      }
+	    }
+	  }, {
+	    key: '__handleFilterData__REACT_HOT_LOADER__',
+	    value: function __handleFilterData__REACT_HOT_LOADER__(filterObj) {
+	      var onFilterChange = this.props.options.onFilterChange;
+
+	      if (onFilterChange) {
+	        var colInfos = this.store.getColInfos();
+	        onFilterChange(filterObj, colInfos);
+	      }
+
+	      this.setState({
+	        currPage: this.props.options.pageStartIndex || _Const2.default.PAGE_START_INDEX,
+	        reset: false
+	      });
+
+	      if (this.allowRemote(_Const2.default.REMOTE_FILTER)) {
+	        if (this.props.options.afterColumnFilter) {
+	          this.props.options.afterColumnFilter(filterObj, this.store.getDataIgnoringPagination());
+	        }
+	        return;
+	      }
+
+	      this.store.filter(filterObj);
+
+	      var sortList = this.store.getSortInfo();
+
+	      if (sortList.length > 0) {
+	        this.store.sort();
+	      }
+
+	      var result = void 0;
+
+	      if (this.props.pagination) {
+	        var sizePerPage = this.state.sizePerPage;
+
+	        result = this.store.page(1, sizePerPage).get();
+	      } else {
+	        result = this.store.get();
+	      }
+	      if (this.props.options.afterColumnFilter) {
+	        this.props.options.afterColumnFilter(filterObj, this.store.getDataIgnoringPagination());
+	      }
+	      this.setState({
+	        data: result,
+	        reset: false
+	      });
+	    }
+	  }, {
+	    key: '__handleExportCSV__REACT_HOT_LOADER__',
+	    value: function __handleExportCSV__REACT_HOT_LOADER__() {
+	      var result = {};
+
+	      var csvFileName = this.props.csvFileName;
+	      var onExportToCSV = this.props.options.onExportToCSV;
+
+	      if (onExportToCSV) {
+	        result = onExportToCSV();
+	      } else {
+	        result = this.store.getDataIgnoringPagination();
+	      }
+
+	      var keys = [];
+	      this.props.children.map(function (column) {
+	        if (column.props.export === true || typeof column.props.export === 'undefined' && column.props.hidden === false) {
+	          keys.push({
+	            field: column.props.dataField,
+	            format: column.props.csvFormat,
+	            extraData: column.props.csvFormatExtraData,
+	            header: column.props.csvHeader || column.props.dataField,
+	            row: Number(column.props.row) || 0,
+	            rowSpan: Number(column.props.rowSpan) || 1,
+	            colSpan: Number(column.props.colSpan) || 1
+	          });
+	        }
+	      });
+
+	      if (typeof csvFileName === 'function') {
+	        csvFileName = csvFileName();
+	      }
+
+	      (0, _csv_export_util2.default)(result, keys, csvFileName);
+	    }
+	  }, {
+	    key: '__handleSearch__REACT_HOT_LOADER__',
+	    value: function __handleSearch__REACT_HOT_LOADER__(searchText) {
+	      // Set search field if this function being called outside
+	      // but it's not necessary if calling fron inside.
+	      if (this.refs.toolbar) {
+	        this.refs.toolbar.setSearchInput(searchText);
+	      }
+	      var onSearchChange = this.props.options.onSearchChange;
+
+	      if (onSearchChange) {
+	        var colInfos = this.store.getColInfos();
+	        onSearchChange(searchText, colInfos, this.props.multiColumnSearch);
+	      }
+
+	      this.setState({
+	        currPage: this.props.options.pageStartIndex || _Const2.default.PAGE_START_INDEX,
+	        reset: false
+	      });
+
+	      if (this.allowRemote(_Const2.default.REMOTE_SEARCH)) {
+	        if (this.props.options.afterSearch) {
+	          this.props.options.afterSearch(searchText, this.store.getDataIgnoringPagination());
+	        }
+	        return;
+	      }
+
+	      this.store.search(searchText);
+
+	      var sortList = this.store.getSortInfo();
+
+	      if (sortList.length > 0) {
+	        this.store.sort();
+	      }
+
+	      var result = void 0;
+	      if (this.props.pagination) {
+	        var sizePerPage = this.state.sizePerPage;
+
+	        result = this.store.page(1, sizePerPage).get();
+	      } else {
+	        result = this.store.get();
+	      }
+	      if (this.props.options.afterSearch) {
+	        this.props.options.afterSearch(searchText, this.store.getDataIgnoringPagination());
+	      }
+	      this.setState({
+	        data: result,
+	        reset: false
+	      });
+	    }
+	  }, {
+	    key: 'renderPagination',
+	    value: function renderPagination() {
+	      if (this.props.pagination) {
+	        var dataSize = void 0;
+	        if (this.allowRemote(_Const2.default.REMOTE_PAGE)) {
+	          dataSize = this.props.fetchInfo.dataTotalSize;
+	        } else {
+	          dataSize = this.store.getDataNum();
+	        }
+	        var options = this.props.options;
+
+	        var withFirstAndLast = options.withFirstAndLast === undefined ? true : options.withFirstAndLast;
+	        if (Math.ceil(dataSize / this.state.sizePerPage) <= 1 && this.props.ignoreSinglePage) return null;
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'react-bs-table-pagination' },
+	          _react2.default.createElement(_PaginationList2.default, {
+	            ref: 'pagination',
+	            withFirstAndLast: withFirstAndLast,
+	            alwaysShowAllBtns: options.alwaysShowAllBtns,
+	            currPage: this.state.currPage,
+	            changePage: this.handlePaginationData,
+	            sizePerPage: this.state.sizePerPage,
+	            sizePerPageList: options.sizePerPageList || _Const2.default.SIZE_PER_PAGE_LIST,
+	            pageStartIndex: options.pageStartIndex,
+	            paginationShowsTotal: options.paginationShowsTotal,
+	            paginationSize: options.paginationSize || _Const2.default.PAGINATION_SIZE,
+	            dataSize: dataSize,
+	            onSizePerPageList: options.onSizePerPageList,
+	            prePage: options.prePage || _Const2.default.PRE_PAGE,
+	            nextPage: options.nextPage || _Const2.default.NEXT_PAGE,
+	            firstPage: options.firstPage || _Const2.default.FIRST_PAGE,
+	            lastPage: options.lastPage || _Const2.default.LAST_PAGE,
+	            prePageTitle: options.prePageTitle || _Const2.default.PRE_PAGE_TITLE,
+	            nextPageTitle: options.nextPageTitle || _Const2.default.NEXT_PAGE_TITLE,
+	            firstPageTitle: options.firstPageTitle || _Const2.default.FIRST_PAGE_TITLE,
+	            lastPageTitle: options.lastPageTitle || _Const2.default.LAST_PAGE_TITLE,
+	            hideSizePerPage: options.hideSizePerPage,
+	            sizePerPageDropDown: options.sizePerPageDropDown,
+	            hidePageListOnlyOnePage: options.hidePageListOnlyOnePage,
+	            paginationPanel: options.paginationPanel,
+	            open: false })
+	        );
+	      }
+	      return null;
+	    }
+	  }, {
+	    key: 'renderToolBar',
+	    value: function renderToolBar() {
+	      var _props3 = this.props,
+	          exportCSV = _props3.exportCSV,
+	          selectRow = _props3.selectRow,
+	          insertRow = _props3.insertRow,
+	          deleteRow = _props3.deleteRow,
+	          search = _props3.search,
+	          children = _props3.children;
+
+	      var enableShowOnlySelected = selectRow && selectRow.showOnlySelected;
+	      var print = typeof this.props.options.printToolBar === 'undefined' ? true : this.props.options.printToolBar;
+	      if (enableShowOnlySelected || insertRow || deleteRow || search || exportCSV || this.props.options.searchPanel || this.props.options.btnGroup || this.props.options.toolBar) {
+	        var columns = void 0;
+	        if (Array.isArray(children)) {
+	          columns = children.map(function (column, r) {
+	            var props = column.props;
+
+	            return {
+	              name: props.headerText || props.children,
+	              field: props.dataField,
+	              hiddenOnInsert: props.hiddenOnInsert,
+	              // when you want same auto generate value and not allow edit, example ID field
+	              autoValue: props.autoValue || false,
+	              // for create editor, no params for column.editable() indicate that editor for new row
+	              editable: props.editable && typeof props.editable === 'function' ? props.editable() : props.editable,
+	              format: props.dataFormat ? function (value) {
+	                return props.dataFormat(value, null, props.formatExtraData, r).replace(/<.*?>/g, '');
+	              } : false
+	            };
+	          });
+	        } else {
+	          columns = [{
+	            name: children.props.headerText || children.props.children,
+	            field: children.props.dataField,
+	            editable: children.props.editable,
+	            hiddenOnInsert: children.props.hiddenOnInsert
+	          }];
+	        }
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'react-bs-table-tool-bar ' + (print ? '' : 'hidden-print') },
+	          _react2.default.createElement(_ToolBar2.default, {
+	            ref: 'toolbar',
+	            defaultSearch: this.props.options.defaultSearch,
+	            clearSearch: this.props.options.clearSearch,
+	            searchPosition: this.props.options.searchPosition,
+	            searchDelayTime: this.props.options.searchDelayTime,
+	            enableInsert: insertRow,
+	            enableDelete: deleteRow,
+	            enableSearch: search,
+	            enableExportCSV: exportCSV,
+	            enableShowOnlySelected: enableShowOnlySelected,
+	            columns: columns,
+	            searchPlaceholder: this.props.searchPlaceholder,
+	            exportCSVText: this.props.options.exportCSVText,
+	            insertText: this.props.options.insertText,
+	            deleteText: this.props.options.deleteText,
+	            saveText: this.props.options.saveText,
+	            closeText: this.props.options.closeText,
+	            ignoreEditable: this.props.options.ignoreEditable,
+	            onAddRow: this.handleAddRow,
+	            onDropRow: this.handleDropRow,
+	            onSearch: this.handleSearch,
+	            onExportCSV: this.handleExportCSV,
+	            onShowOnlySelected: this.handleShowOnlySelected,
+	            insertModalHeader: this.props.options.insertModalHeader,
+	            insertModalFooter: this.props.options.insertModalFooter,
+	            insertModalBody: this.props.options.insertModalBody,
+	            insertModal: this.props.options.insertModal,
+	            insertBtn: this.props.options.insertBtn,
+	            deleteBtn: this.props.options.deleteBtn,
+	            showSelectedOnlyBtn: this.props.options.showSelectedOnlyBtn,
+	            exportCSVBtn: this.props.options.exportCSVBtn,
+	            clearSearchBtn: this.props.options.clearSearchBtn,
+	            searchField: this.props.options.searchField,
+	            searchPanel: this.props.options.searchPanel,
+	            btnGroup: this.props.options.btnGroup,
+	            toolBar: this.props.options.toolBar,
+	            reset: this.state.reset })
+	        );
+	      } else {
+	        return null;
+	      }
+	    }
+	  }, {
+	    key: 'renderTableFilter',
+	    value: function renderTableFilter(columns) {
+	      if (this.props.columnFilter) {
+	        return _react2.default.createElement(_TableFilter2.default, { columns: columns,
+	          rowSelectType: this.props.selectRow.mode,
+	          onFilter: this.handleFilterData });
+	      } else {
+	        return null;
+	      }
+	    }
+	  }, {
+	    key: '___scrollTop__REACT_HOT_LOADER__',
+	    value: function ___scrollTop__REACT_HOT_LOADER__() {
+	      var scrollTop = this.props.scrollTop;
+
+	      if (scrollTop === _Const2.default.SCROLL_TOP) {
+	        this.refs.body.refs.container.scrollTop = 0;
+	      } else if (scrollTop === _Const2.default.SCROLL_BOTTOM) {
+	        this.refs.body.refs.container.scrollTop = this.refs.body.refs.container.scrollHeight;
+	      } else if (typeof scrollTop === 'number' && !isNaN(scrollTop)) {
+	        this.refs.body.refs.container.scrollTop = scrollTop;
+	      }
+	    }
+	  }, {
+	    key: '___scrollHeader__REACT_HOT_LOADER__',
+	    value: function ___scrollHeader__REACT_HOT_LOADER__(e) {
+	      this.refs.header.refs.container.scrollLeft = e.currentTarget.scrollLeft;
+	    }
+	  }, {
+	    key: '_adjustTable',
+	    value: function _adjustTable() {
+	      this._adjustHeight();
+	      if (!this.props.printable) {
+	        this._adjustHeaderWidth();
+	      }
+	    }
+	  }, {
+	    key: '_adjustHeaderWidth',
+	    value: function _adjustHeaderWidth() {
+	      var header = this.refs.header.getHeaderColGrouop();
+	      var tbody = this.refs.body.refs.tbody;
+	      var bodyHeader = this.refs.body.getHeaderColGrouop();
+	      var firstRow = tbody.childNodes[0];
+	      var isScroll = tbody.parentNode.getBoundingClientRect().height > tbody.parentNode.parentNode.getBoundingClientRect().height;
+
+	      var scrollBarWidth = isScroll ? _util2.default.getScrollBarWidth() : 0;
+	      if (firstRow && this.store.getDataNum()) {
+	        if (isScroll) {
+	          var cells = firstRow.childNodes;
+	          for (var i = 0; i < cells.length; i++) {
+	            var cell = cells[i];
+	            var computedStyle = window.getComputedStyle(cell);
+	            var width = parseFloat(computedStyle.width.replace('px', ''));
+	            if (this.isIE) {
+	              var paddingLeftWidth = parseFloat(computedStyle.paddingLeft.replace('px', ''));
+	              var paddingRightWidth = parseFloat(computedStyle.paddingRight.replace('px', ''));
+	              var borderRightWidth = parseFloat(computedStyle.borderRightWidth.replace('px', ''));
+	              var borderLeftWidth = parseFloat(computedStyle.borderLeftWidth.replace('px', ''));
+	              width = width + paddingLeftWidth + paddingRightWidth + borderRightWidth + borderLeftWidth;
+	            }
+	            var lastPadding = cells.length - 1 === i ? scrollBarWidth : 0;
+	            if (width <= 0) {
+	              width = 120;
+	              cell.width = width + lastPadding + 'px';
+	            }
+	            var result = width + lastPadding + 'px';
+	            header[i].style.width = result;
+	            header[i].style.minWidth = result;
+	            if (cells.length - 1 === i) {
+	              bodyHeader[i].style.width = width + 'px';
+	              bodyHeader[i].style.minWidth = width + 'px';
+	            } else {
+	              bodyHeader[i].style.width = result;
+	              bodyHeader[i].style.minWidth = result;
+	            }
+	          }
+	        }
+	      } else {
+	        _react2.default.Children.forEach(this.props.children, function (child, i) {
+	          if (child.props.width) {
+	            header[i].style.width = child.props.width + 'px';
+	            header[i].style.minWidth = child.props.width + 'px';
+	          }
+	        });
+	      }
+	    }
+	  }, {
+	    key: '_adjustHeight',
+	    value: function _adjustHeight() {
+	      var height = this.props.height;
+	      var maxHeight = this.props.maxHeight;
+
+	      if (typeof height === 'number' && !isNaN(height) || height.indexOf('%') === -1) {
+	        this.refs.body.refs.container.style.height = parseFloat(height, 10) - this.refs.header.refs.container.offsetHeight + 'px';
+	      }
+	      if (maxHeight) {
+	        maxHeight = typeof maxHeight === 'number' ? maxHeight : parseInt(maxHeight.replace('px', ''), 10);
+
+	        this.refs.body.refs.container.style.maxHeight = maxHeight - this.refs.header.refs.container.offsetHeight + 'px';
+	      }
+	    }
+	  }, {
+	    key: '_handleAfterAddingRow',
+	    value: function _handleAfterAddingRow(newObj, atTheBeginning) {
+	      var result = void 0;
+	      if (this.props.pagination) {
+	        // if pagination is enabled and inserting row at the end,
+	        // change page to the last page
+	        // otherwise, change it to the first page
+	        var sizePerPage = this.state.sizePerPage;
+
+
+	        if (atTheBeginning) {
+	          var firstPage = this.props.options.pageStartIndex || _Const2.default.PAGE_START_INDEX;
+	          result = this.store.page(firstPage, sizePerPage).get();
+	          this.setState({
+	            data: result,
+	            currPage: firstPage,
+	            reset: false
+	          });
+	        } else {
+	          var currLastPage = Math.ceil(this.store.getDataNum() / sizePerPage);
+	          result = this.store.page(currLastPage, sizePerPage).get();
+	          this.setState({
+	            data: result,
+	            currPage: currLastPage,
+	            reset: false
+	          });
+	        }
+	      } else {
+	        result = this.store.get();
+	        this.setState({
+	          data: result,
+	          reset: false
+	        });
+	      }
+
+	      if (this.props.options.afterInsertRow) {
+	        this.props.options.afterInsertRow(newObj);
+	      }
+	    }
+	  }]);
+
+	  return BootstrapTable;
+	}(_react.Component);
+
+	BootstrapTable.propTypes = {
+	  keyField: _react.PropTypes.string,
+	  height: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
+	  maxHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
+	  data: _react.PropTypes.oneOfType([_react.PropTypes.array, _react.PropTypes.object]),
+	  remote: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.func]), // remote data, default is false
+	  scrollTop: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
+	  striped: _react.PropTypes.bool,
+	  bordered: _react.PropTypes.bool,
+	  hover: _react.PropTypes.bool,
+	  condensed: _react.PropTypes.bool,
+	  pagination: _react.PropTypes.bool,
+	  printable: _react.PropTypes.bool,
+	  keyBoardNav: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.object]),
+	  searchPlaceholder: _react.PropTypes.string,
+	  selectRow: _react.PropTypes.shape({
+	    mode: _react.PropTypes.oneOf([_Const2.default.ROW_SELECT_NONE, _Const2.default.ROW_SELECT_SINGLE, _Const2.default.ROW_SELECT_MULTI]),
+	    customComponent: _react.PropTypes.func,
+	    bgColor: _react.PropTypes.string,
+	    selected: _react.PropTypes.array,
+	    onSelect: _react.PropTypes.func,
+	    onSelectAll: _react.PropTypes.func,
+	    clickToSelect: _react.PropTypes.bool,
+	    hideSelectColumn: _react.PropTypes.bool,
+	    clickToSelectAndEditCell: _react.PropTypes.bool,
+	    clickToExpand: _react.PropTypes.bool,
+	    showOnlySelected: _react.PropTypes.bool,
+	    unselectable: _react.PropTypes.array,
+	    columnWidth: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string])
+	  }),
+	  cellEdit: _react.PropTypes.shape({
+	    mode: _react.PropTypes.string,
+	    blurToSave: _react.PropTypes.bool,
+	    beforeSaveCell: _react.PropTypes.func,
+	    afterSaveCell: _react.PropTypes.func,
+	    nonEditableRows: _react.PropTypes.func
+	  }),
+	  insertRow: _react.PropTypes.bool,
+	  deleteRow: _react.PropTypes.bool,
+	  search: _react.PropTypes.bool,
+	  columnFilter: _react.PropTypes.bool,
+	  trClassName: _react.PropTypes.any,
+	  tableStyle: _react.PropTypes.object,
+	  containerStyle: _react.PropTypes.object,
+	  headerStyle: _react.PropTypes.object,
+	  bodyStyle: _react.PropTypes.object,
+	  containerClass: _react.PropTypes.string,
+	  tableContainerClass: _react.PropTypes.string,
+	  headerContainerClass: _react.PropTypes.string,
+	  bodyContainerClass: _react.PropTypes.string,
+	  tableHeaderClass: _react.PropTypes.string,
+	  tableBodyClass: _react.PropTypes.string,
+	  options: _react.PropTypes.shape({
+	    clearSearch: _react.PropTypes.bool,
+	    sortName: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.array]),
+	    sortOrder: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.array]),
+	    defaultSortName: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.array]),
+	    defaultSortOrder: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.array]),
+	    sortIndicator: _react.PropTypes.bool,
+	    afterTableComplete: _react.PropTypes.func,
+	    afterDeleteRow: _react.PropTypes.func,
+	    afterInsertRow: _react.PropTypes.func,
+	    afterSearch: _react.PropTypes.func,
+	    afterColumnFilter: _react.PropTypes.func,
+	    onRowClick: _react.PropTypes.func,
+	    onRowDoubleClick: _react.PropTypes.func,
+	    page: _react.PropTypes.number,
+	    pageStartIndex: _react.PropTypes.number,
+	    paginationShowsTotal: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.func]),
+	    sizePerPageList: _react.PropTypes.array,
+	    sizePerPage: _react.PropTypes.number,
+	    paginationSize: _react.PropTypes.number,
+	    paginationPosition: _react.PropTypes.oneOf([_Const2.default.PAGINATION_POS_TOP, _Const2.default.PAGINATION_POS_BOTTOM, _Const2.default.PAGINATION_POS_BOTH]),
+	    hideSizePerPage: _react.PropTypes.bool,
+	    hidePageListOnlyOnePage: _react.PropTypes.bool,
+	    alwaysShowAllBtns: _react.PropTypes.bool,
+	    withFirstAndLast: _react.PropTypes.bool,
+	    onSortChange: _react.PropTypes.func,
+	    onPageChange: _react.PropTypes.func,
+	    onSizePerPageList: _react.PropTypes.func,
+	    onFilterChange: _react2.default.PropTypes.func,
+	    onSearchChange: _react2.default.PropTypes.func,
+	    onAddRow: _react2.default.PropTypes.func,
+	    onExportToCSV: _react2.default.PropTypes.func,
+	    onCellEdit: _react2.default.PropTypes.func,
+	    noDataText: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object]),
+	    withoutNoDataText: _react2.default.PropTypes.bool,
+	    handleConfirmDeleteRow: _react.PropTypes.func,
+	    prePage: _react.PropTypes.string,
+	    nextPage: _react.PropTypes.string,
+	    firstPage: _react.PropTypes.string,
+	    lastPage: _react.PropTypes.string,
+	    prePageTitle: _react.PropTypes.string,
+	    nextPageTitle: _react.PropTypes.string,
+	    firstPageTitle: _react.PropTypes.string,
+	    lastPageTitle: _react.PropTypes.string,
+	    searchDelayTime: _react.PropTypes.number,
+	    exportCSVText: _react.PropTypes.string,
+	    insertText: _react.PropTypes.string,
+	    deleteText: _react.PropTypes.string,
+	    saveText: _react.PropTypes.string,
+	    closeText: _react.PropTypes.string,
+	    ignoreEditable: _react.PropTypes.bool,
+	    defaultSearch: _react.PropTypes.string,
+	    insertModalHeader: _react.PropTypes.func,
+	    insertModalBody: _react.PropTypes.func,
+	    insertModalFooter: _react.PropTypes.func,
+	    insertModal: _react.PropTypes.func,
+	    insertBtn: _react.PropTypes.func,
+	    deleteBtn: _react.PropTypes.func,
+	    showSelectedOnlyBtn: _react.PropTypes.func,
+	    exportCSVBtn: _react.PropTypes.func,
+	    clearSearchBtn: _react.PropTypes.func,
+	    searchField: _react.PropTypes.func,
+	    searchPanel: _react.PropTypes.func,
+	    btnGroup: _react.PropTypes.func,
+	    toolBar: _react.PropTypes.func,
+	    sizePerPageDropDown: _react.PropTypes.func,
+	    paginationPanel: _react.PropTypes.func,
+	    searchPosition: _react.PropTypes.string,
+	    expandRowBgColor: _react.PropTypes.string,
+	    expandBy: _react.PropTypes.string,
+	    expanding: _react.PropTypes.array,
+	    beforeShowError: _react.PropTypes.func,
+	    printToolBar: _react.PropTypes.bool
+	  }),
+	  fetchInfo: _react.PropTypes.shape({
+	    dataTotalSize: _react.PropTypes.number
+	  }),
+	  exportCSV: _react.PropTypes.bool,
+	  csvFileName: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
+	  ignoreSinglePage: _react.PropTypes.bool,
+	  expandableRow: _react.PropTypes.func,
+	  expandComponent: _react.PropTypes.func,
+	  expandColumnOptions: _react.PropTypes.shape({
+	    columnWidth: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]),
+	    expandColumnVisible: _react.PropTypes.bool,
+	    expandColumnComponent: _react.PropTypes.func,
+	    expandColumnBeforeSelectColumn: _react.PropTypes.bool
+	  })
+	};
+	BootstrapTable.defaultProps = {
+	  scrollTop: undefined,
+	  expandComponent: undefined,
+	  expandableRow: undefined,
+	  expandColumnOptions: {
+	    expandColumnVisible: false,
+	    expandColumnComponent: undefined,
+	    expandColumnBeforeSelectColumn: true
+	  },
+	  height: '100%',
+	  maxHeight: undefined,
+	  striped: false,
+	  bordered: true,
+	  hover: false,
+	  condensed: false,
+	  pagination: false,
+	  printable: false,
+	  keyBoardNav: false,
+	  searchPlaceholder: undefined,
+	  selectRow: {
+	    mode: _Const2.default.ROW_SELECT_NONE,
+	    bgColor: _Const2.default.ROW_SELECT_BG_COLOR,
+	    selected: [],
+	    onSelect: undefined,
+	    onSelectAll: undefined,
+	    clickToSelect: false,
+	    hideSelectColumn: false,
+	    clickToSelectAndEditCell: false,
+	    clickToExpand: false,
+	    showOnlySelected: false,
+	    unselectable: [],
+	    customComponent: undefined
+	  },
+	  cellEdit: {
+	    mode: _Const2.default.CELL_EDIT_NONE,
+	    blurToSave: false,
+	    beforeSaveCell: undefined,
+	    afterSaveCell: undefined,
+	    nonEditableRows: undefined
+	  },
+	  insertRow: false,
+	  deleteRow: false,
+	  search: false,
+	  multiColumnSearch: false,
+	  multiColumnSort: 1,
+	  columnFilter: false,
+	  trClassName: '',
+	  tableStyle: undefined,
+	  containerStyle: undefined,
+	  headerStyle: undefined,
+	  bodyStyle: undefined,
+	  containerClass: null,
+	  tableContainerClass: null,
+	  headerContainerClass: null,
+	  bodyContainerClass: null,
+	  tableHeaderClass: null,
+	  tableBodyClass: null,
+	  options: {
+	    clearSearch: false,
+	    sortName: undefined,
+	    sortOrder: undefined,
+	    defaultSortName: undefined,
+	    defaultSortOrder: undefined,
+	    sortIndicator: true,
+	    afterTableComplete: undefined,
+	    afterDeleteRow: undefined,
+	    afterInsertRow: undefined,
+	    afterSearch: undefined,
+	    afterColumnFilter: undefined,
+	    onRowClick: undefined,
+	    onRowDoubleClick: undefined,
+	    onMouseLeave: undefined,
+	    onMouseEnter: undefined,
+	    onRowMouseOut: undefined,
+	    onRowMouseOver: undefined,
+	    page: undefined,
+	    paginationShowsTotal: false,
+	    sizePerPageList: _Const2.default.SIZE_PER_PAGE_LIST,
+	    sizePerPage: undefined,
+	    paginationSize: _Const2.default.PAGINATION_SIZE,
+	    paginationPosition: _Const2.default.PAGINATION_POS_BOTTOM,
+	    hideSizePerPage: false,
+	    hidePageListOnlyOnePage: false,
+	    alwaysShowAllBtns: false,
+	    withFirstAndLast: true,
+	    onSizePerPageList: undefined,
+	    noDataText: undefined,
+	    withoutNoDataText: false,
+	    handleConfirmDeleteRow: undefined,
+	    prePage: _Const2.default.PRE_PAGE,
+	    nextPage: _Const2.default.NEXT_PAGE,
+	    firstPage: _Const2.default.FIRST_PAGE,
+	    lastPage: _Const2.default.LAST_PAGE,
+	    prePageTitle: _Const2.default.PRE_PAGE_TITLE,
+	    nextPageTitle: _Const2.default.NEXT_PAGE_TITLE,
+	    firstPageTitle: _Const2.default.FIRST_PAGE_TITLE,
+	    lastPageTitle: _Const2.default.LAST_PAGE_TITLE,
+	    pageStartIndex: undefined,
+	    searchDelayTime: undefined,
+	    exportCSVText: _Const2.default.EXPORT_CSV_TEXT,
+	    insertText: _Const2.default.INSERT_BTN_TEXT,
+	    deleteText: _Const2.default.DELETE_BTN_TEXT,
+	    saveText: _Const2.default.SAVE_BTN_TEXT,
+	    closeText: _Const2.default.CLOSE_BTN_TEXT,
+	    ignoreEditable: false,
+	    defaultSearch: '',
+	    insertModalHeader: undefined,
+	    insertModalBody: undefined,
+	    insertModalFooter: undefined,
+	    insertModal: undefined,
+	    insertBtn: undefined,
+	    deleteBtn: undefined,
+	    showSelectedOnlyBtn: undefined,
+	    exportCSVBtn: undefined,
+	    clearSearchBtn: undefined,
+	    searchField: undefined,
+	    searchPanel: undefined,
+	    btnGroup: undefined,
+	    toolBar: undefined,
+	    sizePerPageDropDown: undefined,
+	    paginationPanel: undefined,
+	    searchPosition: 'right',
+	    expandRowBgColor: undefined,
+	    expandBy: _Const2.default.EXPAND_BY_ROW,
+	    expanding: [],
+	    beforeShowError: undefined,
+	    printToolBar: true
+	  },
+	  fetchInfo: {
+	    dataTotalSize: 0
+	  },
+	  exportCSV: false,
+	  csvFileName: 'spreadsheet.csv',
+	  ignoreSinglePage: false
+	};
+
+	var _default = BootstrapTable;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(BootstrapTable, 'BootstrapTable', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/BootstrapTable.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/BootstrapTable.js');
+	}();
+
+	;
+
+/***/ },
+/* 440 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
+
+	(function () {
+		'use strict';
+
+		var hasOwn = {}.hasOwnProperty;
+
+		function classNames () {
+			var classes = [];
+
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+
+				var argType = typeof arg;
+
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
+
+			return classes.join(' ');
+		}
+
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
+
+
+/***/ },
+/* 441 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var CONST_VAR = {
+	  SORT_DESC: 'desc',
+	  SORT_ASC: 'asc',
+	  SIZE_PER_PAGE: 10,
+	  NEXT_PAGE: '>',
+	  NEXT_PAGE_TITLE: 'next page',
+	  LAST_PAGE: '>>',
+	  LAST_PAGE_TITLE: 'last page',
+	  PRE_PAGE: '<',
+	  PRE_PAGE_TITLE: 'previous page',
+	  FIRST_PAGE: '<<',
+	  FIRST_PAGE_TITLE: 'first page',
+	  PAGE_START_INDEX: 1,
+	  ROW_SELECT_BG_COLOR: '',
+	  ROW_SELECT_NONE: 'none',
+	  ROW_SELECT_SINGLE: 'radio',
+	  ROW_SELECT_MULTI: 'checkbox',
+	  CELL_EDIT_NONE: 'none',
+	  CELL_EDIT_CLICK: 'click',
+	  CELL_EDIT_DBCLICK: 'dbclick',
+	  SIZE_PER_PAGE_LIST: [10, 25, 30, 50],
+	  PAGINATION_SIZE: 5,
+	  PAGINATION_POS_TOP: 'top',
+	  PAGINATION_POS_BOTTOM: 'bottom',
+	  PAGINATION_POS_BOTH: 'both',
+	  NO_DATA_TEXT: 'There is no data to display',
+	  SHOW_ONLY_SELECT: 'Show Selected Only',
+	  SHOW_ALL: 'Show All',
+	  EXPORT_CSV_TEXT: 'Export to CSV',
+	  INSERT_BTN_TEXT: 'New',
+	  DELETE_BTN_TEXT: 'Delete',
+	  SAVE_BTN_TEXT: 'Save',
+	  CLOSE_BTN_TEXT: 'Close',
+	  FILTER_DELAY: 500,
+	  SCROLL_TOP: 'Top',
+	  SCROLL_BOTTOM: 'Bottom',
+	  FILTER_TYPE: {
+	    TEXT: 'TextFilter',
+	    REGEX: 'RegexFilter',
+	    SELECT: 'SelectFilter',
+	    NUMBER: 'NumberFilter',
+	    DATE: 'DateFilter',
+	    CUSTOM: 'CustomFilter'
+	  },
+	  FILTER_COND_EQ: 'eq',
+	  FILTER_COND_LIKE: 'like',
+	  EXPAND_BY_ROW: 'row',
+	  EXPAND_BY_COL: 'column',
+	  CANCEL_TOASTR: 'Pressed ESC can cancel',
+	  REMOTE_SORT: 'sort',
+	  REMOTE_PAGE: 'pagination',
+	  REMOTE_CELL_EDIT: 'cellEdit',
+	  REMOTE_INSERT_ROW: 'insertRow',
+	  REMOTE_DROP_ROW: 'dropRow',
+	  REMOTE_FILTER: 'filter',
+	  REMOTE_SEARCH: 'search',
+	  REMOTE_EXPORT_CSV: 'exportCSV'
+	};
+
+	CONST_VAR.REMOTE = {};
+	CONST_VAR.REMOTE[CONST_VAR.REMOTE_SORT] = false;
+	CONST_VAR.REMOTE[CONST_VAR.REMOTE_PAGE] = false;
+	CONST_VAR.REMOTE[CONST_VAR.REMOTE_CELL_EDIT] = false;
+	CONST_VAR.REMOTE[CONST_VAR.REMOTE_INSERT_ROW] = false;
+	CONST_VAR.REMOTE[CONST_VAR.REMOTE_DROP_ROW] = false;
+	CONST_VAR.REMOTE[CONST_VAR.REMOTE_FILTER] = false;
+	CONST_VAR.REMOTE[CONST_VAR.REMOTE_SEARCH] = false;
+	CONST_VAR.REMOTE[CONST_VAR.REMOTE_EXPORT_CSV] = false;
+
+	var _default = CONST_VAR;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(CONST_VAR, 'CONST_VAR', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/Const.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/Const.js');
+	}();
+
+	;
+
+/***/ },
+/* 442 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(437);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	var _classnames = __webpack_require__(440);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _SelectRowHeaderColumn = __webpack_require__(443);
+
+	var _SelectRowHeaderColumn2 = _interopRequireDefault(_SelectRowHeaderColumn);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Checkbox = function (_Component) {
+	  _inherits(Checkbox, _Component);
+
+	  function Checkbox() {
+	    _classCallCheck(this, Checkbox);
+
+	    return _possibleConstructorReturn(this, (Checkbox.__proto__ || Object.getPrototypeOf(Checkbox)).apply(this, arguments));
+	  }
+
+	  _createClass(Checkbox, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.update(this.props.checked);
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(props) {
+	      this.update(props.checked);
+	    }
+	  }, {
+	    key: 'update',
+	    value: function update(checked) {
+	      _reactDom2.default.findDOMNode(this).indeterminate = checked === 'indeterminate';
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement('input', { className: 'react-bs-select-all',
+	        type: 'checkbox',
+	        checked: this.props.checked,
+	        onChange: this.props.onChange });
+	    }
+	  }]);
+
+	  return Checkbox;
+	}(_react.Component);
+
+	function getSortOrder(sortList, field, enableSort) {
+	  if (!enableSort) return undefined;
+	  var result = sortList.filter(function (sortObj) {
+	    return sortObj.sortField === field;
+	  });
+	  if (result.length > 0) {
+	    return result[0].order;
+	  } else {
+	    return undefined;
+	  }
+	}
+
+	var TableHeader = function (_Component2) {
+	  _inherits(TableHeader, _Component2);
+
+	  function TableHeader() {
+	    var _ref;
+
+	    var _temp, _this2, _ret;
+
+	    _classCallCheck(this, TableHeader);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this2 = _possibleConstructorReturn(this, (_ref = TableHeader.__proto__ || Object.getPrototypeOf(TableHeader)).call.apply(_ref, [this].concat(args))), _this2), _this2.getHeaderColGrouop = function () {
+	      var _this3;
+
+	      return (_this3 = _this2).__getHeaderColGrouop__REACT_HOT_LOADER__.apply(_this3, arguments);
+	    }, _temp), _possibleConstructorReturn(_this2, _ret);
+	  }
+
+	  _createClass(TableHeader, [{
+	    key: 'render',
+	    value: function render() {
+	      var containerClasses = (0, _classnames2.default)('react-bs-container-header', 'table-header-wrapper', this.props.headerContainerClass);
+	      var tableClasses = (0, _classnames2.default)('table', 'table-hover', {
+	        'table-bordered': this.props.bordered,
+	        'table-condensed': this.props.condensed
+	      }, this.props.tableHeaderClass);
+
+	      var rowCount = Math.max.apply(Math, _toConsumableArray(_react2.default.Children.map(this.props.children, function (elm) {
+	        return elm.props.row ? Number(elm.props.row) : 0;
+	      })));
+
+	      var rows = [];
+	      var rowKey = 0;
+
+	      rows[0] = [];
+	      rows[0].push([this.props.expandColumnVisible && this.props.expandColumnBeforeSelectColumn && _react2.default.createElement(
+	        'th',
+	        { className: 'react-bs-table-expand-cell' },
+	        ' '
+	      )], [this.renderSelectRowHeader(rowCount + 1, rowKey++)], [this.props.expandColumnVisible && !this.props.expandColumnBeforeSelectColumn && _react2.default.createElement(
+	        'th',
+	        { className: 'react-bs-table-expand-cell' },
+	        ' '
+	      )]);
+	      var _props = this.props,
+	          sortIndicator = _props.sortIndicator,
+	          sortList = _props.sortList,
+	          onSort = _props.onSort,
+	          reset = _props.reset;
+
+
+	      _react2.default.Children.forEach(this.props.children, function (elm) {
+	        var _elm$props = elm.props,
+	            dataField = _elm$props.dataField,
+	            dataSort = _elm$props.dataSort;
+
+	        var sort = getSortOrder(sortList, dataField, dataSort);
+	        var rowIndex = elm.props.row ? Number(elm.props.row) : 0;
+	        var rowSpan = elm.props.rowSpan ? Number(elm.props.rowSpan) : 1;
+	        if (rows[rowIndex] === undefined) {
+	          rows[rowIndex] = [];
+	        }
+	        if (rowSpan + rowIndex === rowCount + 1) {
+	          rows[rowIndex].push(_react2.default.cloneElement(elm, { reset: reset, key: rowKey++, onSort: onSort, sort: sort, sortIndicator: sortIndicator, isOnlyHead: false }));
+	        } else {
+	          rows[rowIndex].push(_react2.default.cloneElement(elm, { key: rowKey++, isOnlyHead: true }));
+	        }
+	      });
+
+	      var trs = rows.map(function (row, indexRow) {
+	        return _react2.default.createElement(
+	          'tr',
+	          { key: indexRow },
+	          row
+	        );
+	      });
+
+	      return _react2.default.createElement(
+	        'div',
+	        { ref: 'container', className: containerClasses, style: this.props.style },
+	        _react2.default.createElement(
+	          'table',
+	          { className: tableClasses },
+	          _react2.default.cloneElement(this.props.colGroups, { ref: 'headerGrp' }),
+	          _react2.default.createElement(
+	            'thead',
+	            { ref: 'header' },
+	            trs
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: '__getHeaderColGrouop__REACT_HOT_LOADER__',
+	    value: function __getHeaderColGrouop__REACT_HOT_LOADER__() {
+	      return this.refs.headerGrp.childNodes;
+	    }
+	  }, {
+	    key: 'renderSelectRowHeader',
+	    value: function renderSelectRowHeader(rowCount, rowKey) {
+	      if (this.props.hideSelectColumn) {
+	        return null;
+	      } else if (this.props.customComponent) {
+	        var CustomComponent = this.props.customComponent;
+	        return _react2.default.createElement(
+	          _SelectRowHeaderColumn2.default,
+	          { key: rowKey, rowCount: rowCount },
+	          _react2.default.createElement(CustomComponent, { type: 'checkbox', checked: this.props.isSelectAll,
+	            indeterminate: this.props.isSelectAll === 'indeterminate', disabled: false,
+	            onChange: this.props.onSelectAllRow, rowIndex: 'Header' })
+	        );
+	      } else if (this.props.rowSelectType === _Const2.default.ROW_SELECT_SINGLE) {
+	        return _react2.default.createElement(_SelectRowHeaderColumn2.default, { key: rowKey, rowCount: rowCount });
+	      } else if (this.props.rowSelectType === _Const2.default.ROW_SELECT_MULTI) {
+	        return _react2.default.createElement(
+	          _SelectRowHeaderColumn2.default,
+	          { key: rowKey, rowCount: rowCount },
+	          _react2.default.createElement(Checkbox, {
+	            onChange: this.props.onSelectAllRow,
+	            checked: this.props.isSelectAll })
+	        );
+	      } else {
+	        return null;
+	      }
+	    }
+	  }]);
+
+	  return TableHeader;
+	}(_react.Component);
+
+	TableHeader.propTypes = {
+	  headerContainerClass: _react.PropTypes.string,
+	  tableHeaderClass: _react.PropTypes.string,
+	  style: _react.PropTypes.object,
+	  rowSelectType: _react.PropTypes.string,
+	  onSort: _react.PropTypes.func,
+	  onSelectAllRow: _react.PropTypes.func,
+	  sortList: _react.PropTypes.array,
+	  hideSelectColumn: _react.PropTypes.bool,
+	  bordered: _react.PropTypes.bool,
+	  condensed: _react.PropTypes.bool,
+	  isFiltered: _react.PropTypes.bool,
+	  isSelectAll: _react.PropTypes.oneOf([true, 'indeterminate', false]),
+	  sortIndicator: _react.PropTypes.bool,
+	  customComponent: _react.PropTypes.func,
+	  colGroups: _react.PropTypes.element,
+	  reset: _react.PropTypes.bool,
+	  expandColumnVisible: _react.PropTypes.bool,
+	  expandColumnComponent: _react.PropTypes.func,
+	  expandColumnBeforeSelectColumn: _react.PropTypes.bool
+	};
+
+	var _default = TableHeader;
+	exports.default = _default;
+	;
+
+	var _temp2 = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(Checkbox, 'Checkbox', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableHeader.js');
+
+	  __REACT_HOT_LOADER__.register(getSortOrder, 'getSortOrder', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableHeader.js');
+
+	  __REACT_HOT_LOADER__.register(TableHeader, 'TableHeader', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableHeader.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableHeader.js');
+	}();
+
+	;
+
+/***/ },
+/* 443 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SelectRowHeaderColumn = function (_Component) {
+	  _inherits(SelectRowHeaderColumn, _Component);
+
+	  function SelectRowHeaderColumn() {
+	    _classCallCheck(this, SelectRowHeaderColumn);
+
+	    return _possibleConstructorReturn(this, (SelectRowHeaderColumn.__proto__ || Object.getPrototypeOf(SelectRowHeaderColumn)).apply(this, arguments));
+	  }
+
+	  _createClass(SelectRowHeaderColumn, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'th',
+	        { rowSpan: this.props.rowCount, style: { textAlign: 'center' },
+	          'data-is-only-head': false },
+	        this.props.children
+	      );
+	    }
+	  }]);
+
+	  return SelectRowHeaderColumn;
+	}(_react.Component);
+
+	SelectRowHeaderColumn.propTypes = {
+	  children: _react.PropTypes.node,
+	  rowCount: _react.PropTypes.number
+	};
+	var _default = SelectRowHeaderColumn;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(SelectRowHeaderColumn, 'SelectRowHeaderColumn', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/SelectRowHeaderColumn.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/SelectRowHeaderColumn.js');
+	}();
+
+	;
+
+/***/ },
+/* 444 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _util = __webpack_require__(445);
+
+	var _util2 = _interopRequireDefault(_util);
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	var _TableRow = __webpack_require__(446);
+
+	var _TableRow2 = _interopRequireDefault(_TableRow);
+
+	var _TableColumn = __webpack_require__(447);
+
+	var _TableColumn2 = _interopRequireDefault(_TableColumn);
+
+	var _TableEditColumn = __webpack_require__(448);
+
+	var _TableEditColumn2 = _interopRequireDefault(_TableEditColumn);
+
+	var _classnames = __webpack_require__(440);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _ExpandComponent = __webpack_require__(609);
+
+	var _ExpandComponent2 = _interopRequireDefault(_ExpandComponent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var isFun = function isFun(obj) {
+	  return obj && typeof obj === 'function';
+	};
+
+	var TableBody = function (_Component) {
+	  _inherits(TableBody, _Component);
+
+	  function TableBody(props) {
+	    _classCallCheck(this, TableBody);
+
+	    var _this = _possibleConstructorReturn(this, (TableBody.__proto__ || Object.getPrototypeOf(TableBody)).call(this, props));
+
+	    _this.handleCellKeyDown = function () {
+	      return _this.__handleCellKeyDown__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleRowMouseOut = function () {
+	      return _this.__handleRowMouseOut__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleRowMouseOver = function () {
+	      return _this.__handleRowMouseOver__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleRowClick = function () {
+	      return _this.__handleRowClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleRowDoubleClick = function () {
+	      return _this.__handleRowDoubleClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleSelectRow = function () {
+	      return _this.__handleSelectRow__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleSelectRowColumChange = function () {
+	      return _this.__handleSelectRowColumChange__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleClickCell = function () {
+	      return _this.__handleClickCell__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleEditCell = function () {
+	      return _this.__handleEditCell__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleCompleteEditCell = function () {
+	      return _this.__handleCompleteEditCell__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleClickonSelectColumn = function () {
+	      return _this.__handleClickonSelectColumn__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.getHeaderColGrouop = function () {
+	      return _this.__getHeaderColGrouop__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.state = {
+	      currEditCell: null
+	    };
+	    return _this;
+	  }
+
+	  _createClass(TableBody, [{
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          cellEdit = _props.cellEdit,
+	          beforeShowError = _props.beforeShowError,
+	          x = _props.x,
+	          y = _props.y,
+	          keyBoardNav = _props.keyBoardNav;
+
+	      var tableClasses = (0, _classnames2.default)('table', {
+	        'table-striped': this.props.striped,
+	        'table-bordered': this.props.bordered,
+	        'table-hover': this.props.hover,
+	        'table-condensed': this.props.condensed
+	      }, this.props.tableBodyClass);
+
+	      var noneditableRows = cellEdit.nonEditableRows && cellEdit.nonEditableRows() || [];
+	      var unselectable = this.props.selectRow.unselectable || [];
+	      var isSelectRowDefined = this._isSelectRowDefined();
+	      var tableHeader = _util2.default.renderColGroup(this.props.columns, this.props.selectRow, this.props.expandColumnOptions);
+	      var inputType = this.props.selectRow.mode === _Const2.default.ROW_SELECT_SINGLE ? 'radio' : 'checkbox';
+	      var CustomComponent = this.props.selectRow.customComponent;
+	      var enableKeyBoardNav = keyBoardNav === true || (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object';
+	      var customEditAndNavStyle = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav.customStyleOnEditCell : null;
+	      var customNavStyle = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav.customStyle : null;
+	      var ExpandColumnCustomComponent = this.props.expandColumnOptions.expandColumnComponent;
+	      var expandColSpan = this.props.columns.filter(function (col) {
+	        return !col.hidden;
+	      }).length;
+	      if (isSelectRowDefined && !this.props.selectRow.hideSelectColumn) {
+	        expandColSpan += 1;
+	      }
+	      var tabIndex = 1;
+	      if (this.props.expandColumnOptions.expandColumnVisible) {
+	        expandColSpan += 1;
+	      }
+
+	      var tableRows = this.props.data.map(function (data, r) {
+	        var tableColumns = this.props.columns.map(function (column, i) {
+	          var fieldValue = data[column.name];
+	          var isFocusCell = r === y && i === x;
+	          if (column.name !== this.props.keyField && // Key field can't be edit
+	          column.editable && // column is editable? default is true, user can set it false
+	          this.state.currEditCell !== null && this.state.currEditCell.rid === r && this.state.currEditCell.cid === i && noneditableRows.indexOf(data[this.props.keyField]) === -1) {
+	            var editable = column.editable;
+	            var format = column.format ? function (value) {
+	              return column.format(value, data, column.formatExtraData, r).replace(/<.*?>/g, '');
+	            } : false;
+	            if (isFun(column.editable)) {
+	              editable = column.editable(fieldValue, data, r, i);
+	            }
+
+	            return _react2.default.createElement(_TableEditColumn2.default, {
+	              completeEdit: this.handleCompleteEditCell
+	              // add by bluespring for column editor customize
+	              , editable: editable,
+	              customEditor: column.customEditor,
+	              format: column.format ? format : false,
+	              key: i,
+	              blurToSave: cellEdit.blurToSave,
+	              onTab: this.handleEditCell,
+	              rowIndex: r,
+	              colIndex: i,
+	              row: data,
+	              fieldValue: fieldValue,
+	              className: column.editClassName,
+	              invalidColumnClassName: column.invalidEditColumnClassName,
+	              beforeShowError: beforeShowError,
+	              isFocus: isFocusCell,
+	              customStyleWithNav: customEditAndNavStyle });
+	          } else {
+	            // add by bluespring for className customize
+	            var columnChild = fieldValue && fieldValue.toString();
+	            var columnTitle = null;
+	            var tdClassName = column.className;
+	            if (isFun(column.className)) {
+	              tdClassName = column.className(fieldValue, data, r, i);
+	            }
+
+	            if (typeof column.format !== 'undefined') {
+	              var formattedValue = column.format(fieldValue, data, column.formatExtraData, r);
+	              if (!_react2.default.isValidElement(formattedValue)) {
+	                columnChild = _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: formattedValue } });
+	              } else {
+	                columnChild = formattedValue;
+	                columnTitle = column.columnTitle && formattedValue ? formattedValue.toString() : null;
+	              }
+	            } else {
+	              columnTitle = column.columnTitle && fieldValue ? fieldValue.toString() : null;
+	            }
+	            return _react2.default.createElement(
+	              _TableColumn2.default,
+	              { key: i,
+	                rIndex: r,
+	                dataAlign: column.align,
+	                className: tdClassName,
+	                columnTitle: columnTitle,
+	                cellEdit: cellEdit,
+	                hidden: column.hidden,
+	                onEdit: this.handleEditCell,
+	                width: column.width,
+	                onClick: this.handleClickCell,
+	                attrs: column.attrs,
+	                style: column.style,
+	                tabIndex: tabIndex++ + '',
+	                isFocus: isFocusCell,
+	                keyBoardNav: enableKeyBoardNav,
+	                onKeyDown: this.handleCellKeyDown,
+	                customNavStyle: customNavStyle,
+	                row: data },
+	              columnChild
+	            );
+	          }
+	        }, this);
+	        var key = data[this.props.keyField];
+	        var disable = unselectable.indexOf(key) !== -1;
+	        var selected = this.props.selectedRowKeys.indexOf(key) !== -1;
+	        var selectRowColumn = isSelectRowDefined && !this.props.selectRow.hideSelectColumn ? this.renderSelectRowColumn(selected, inputType, disable, CustomComponent, r, data) : null;
+	        var expandedRowColumn = this.renderExpandRowColumn(this.props.expandableRow && this.props.expandableRow(data), this.props.expanding.indexOf(key) > -1, ExpandColumnCustomComponent, r, data);
+	        // add by bluespring for className customize
+	        var trClassName = this.props.trClassName;
+	        if (isFun(this.props.trClassName)) {
+	          trClassName = this.props.trClassName(data, r);
+	        }
+	        var result = [_react2.default.createElement(
+	          _TableRow2.default,
+	          { isSelected: selected, key: key, className: trClassName,
+	            index: r,
+	            selectRow: isSelectRowDefined ? this.props.selectRow : undefined,
+	            enableCellEdit: cellEdit.mode !== _Const2.default.CELL_EDIT_NONE,
+	            onRowClick: this.handleRowClick,
+	            onRowDoubleClick: this.handleRowDoubleClick,
+	            onRowMouseOver: this.handleRowMouseOver,
+	            onRowMouseOut: this.handleRowMouseOut,
+	            onSelectRow: this.handleSelectRow,
+	            onExpandRow: this.handleClickCell,
+	            unselectableRow: disable },
+	          this.props.expandColumnOptions.expandColumnVisible && this.props.expandColumnOptions.expandColumnBeforeSelectColumn && expandedRowColumn,
+	          selectRowColumn,
+	          this.props.expandColumnOptions.expandColumnVisible && !this.props.expandColumnOptions.expandColumnBeforeSelectColumn && expandedRowColumn,
+	          tableColumns
+	        )];
+
+	        if (this.props.expandableRow && this.props.expandableRow(data)) {
+	          result.push(_react2.default.createElement(
+	            _ExpandComponent2.default,
+	            {
+	              key: key + '-expand',
+	              className: trClassName,
+	              bgColor: this.props.expandRowBgColor || this.props.selectRow.bgColor || undefined,
+	              hidden: !(this.props.expanding.indexOf(key) > -1),
+	              colSpan: expandColSpan,
+	              width: "100%" },
+	            this.props.expandComponent(data)
+	          ));
+	        }
+	        return result;
+	      }, this);
+
+	      if (tableRows.length === 0 && !this.props.withoutNoDataText) {
+	        var colSpan = this.props.columns.filter(function (c) {
+	          return !c.hidden;
+	        }).length + (isSelectRowDefined ? 1 : 0);
+	        tableRows = [_react2.default.createElement(
+	          _TableRow2.default,
+	          { key: '##table-empty##' },
+	          _react2.default.createElement(
+	            'td',
+	            { 'data-toggle': 'collapse',
+	              colSpan: colSpan,
+	              className: 'react-bs-table-no-data' },
+	            this.props.noDataText || _Const2.default.NO_DATA_TEXT
+	          )
+	        )];
+	      }
+
+	      return _react2.default.createElement(
+	        'div',
+	        { ref: 'container',
+	          className: (0, _classnames2.default)('react-bs-container-body', this.props.bodyContainerClass),
+	          style: this.props.style },
+	        _react2.default.createElement(
+	          'table',
+	          { className: tableClasses },
+	          _react2.default.cloneElement(tableHeader, { ref: 'header' }),
+	          _react2.default.createElement(
+	            'tbody',
+	            { ref: 'tbody' },
+	            tableRows
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: '__handleCellKeyDown__REACT_HOT_LOADER__',
+	    value: function __handleCellKeyDown__REACT_HOT_LOADER__(e, lastEditCell) {
+	      e.preventDefault();
+	      var _props2 = this.props,
+	          keyBoardNav = _props2.keyBoardNav,
+	          onNavigateCell = _props2.onNavigateCell,
+	          cellEdit = _props2.cellEdit;
+
+	      var offset = void 0;
+	      if (e.keyCode === 37) {
+	        offset = { x: -1, y: 0 };
+	      } else if (e.keyCode === 38) {
+	        offset = { x: 0, y: -1 };
+	      } else if (e.keyCode === 39 || e.keyCode === 9) {
+	        offset = { x: 1, y: 0 };
+	        if (e.keyCode === 9 && lastEditCell) {
+	          offset = _extends({}, offset, {
+	            lastEditCell: lastEditCell
+	          });
+	        }
+	      } else if (e.keyCode === 40) {
+	        offset = { x: 0, y: 1 };
+	      } else if (e.keyCode === 13) {
+	        var enterToEdit = (typeof keyBoardNav === 'undefined' ? 'undefined' : _typeof(keyBoardNav)) === 'object' ? keyBoardNav.enterToEdit : false;
+	        if (cellEdit && enterToEdit) {
+	          this.handleEditCell(e.target.parentElement.rowIndex + 1, e.currentTarget.cellIndex, '', e);
+	        }
+	      }
+	      if (offset && keyBoardNav) {
+	        onNavigateCell(offset);
+	      }
+	    }
+	  }, {
+	    key: '__handleRowMouseOut__REACT_HOT_LOADER__',
+	    value: function __handleRowMouseOut__REACT_HOT_LOADER__(rowIndex, event) {
+	      var targetRow = this.props.data[rowIndex];
+	      this.props.onRowMouseOut(targetRow, event);
+	    }
+	  }, {
+	    key: '__handleRowMouseOver__REACT_HOT_LOADER__',
+	    value: function __handleRowMouseOver__REACT_HOT_LOADER__(rowIndex, event) {
+	      var targetRow = this.props.data[rowIndex];
+	      this.props.onRowMouseOver(targetRow, event);
+	    }
+	  }, {
+	    key: '__handleRowClick__REACT_HOT_LOADER__',
+	    value: function __handleRowClick__REACT_HOT_LOADER__(rowIndex, cellIndex) {
+	      var onRowClick = this.props.onRowClick;
+
+	      if (this._isSelectRowDefined()) cellIndex--;
+	      if (this._isExpandColumnVisible()) cellIndex--;
+	      onRowClick(this.props.data[rowIndex - 1], rowIndex - 1, cellIndex);
+	    }
+	  }, {
+	    key: '__handleRowDoubleClick__REACT_HOT_LOADER__',
+	    value: function __handleRowDoubleClick__REACT_HOT_LOADER__(rowIndex) {
+	      var onRowDoubleClick = this.props.onRowDoubleClick;
+
+	      var targetRow = this.props.data[rowIndex];
+	      onRowDoubleClick(targetRow);
+	    }
+	  }, {
+	    key: '__handleSelectRow__REACT_HOT_LOADER__',
+	    value: function __handleSelectRow__REACT_HOT_LOADER__(rowIndex, isSelected, e) {
+	      var selectedRow = void 0;
+	      var _props3 = this.props,
+	          data = _props3.data,
+	          onSelectRow = _props3.onSelectRow;
+
+	      data.forEach(function (row, i) {
+	        if (i === rowIndex - 1) {
+	          selectedRow = row;
+	          return false;
+	        }
+	      });
+	      onSelectRow(selectedRow, isSelected, e);
+	    }
+	  }, {
+	    key: '__handleSelectRowColumChange__REACT_HOT_LOADER__',
+	    value: function __handleSelectRowColumChange__REACT_HOT_LOADER__(e, rowIndex) {
+	      if (!this.props.selectRow.clickToSelect || !this.props.selectRow.clickToSelectAndEditCell) {
+	        this.handleSelectRow(rowIndex + 1, e.currentTarget.checked, e);
+	      }
+	    }
+	  }, {
+	    key: '__handleClickCell__REACT_HOT_LOADER__',
+	    value: function __handleClickCell__REACT_HOT_LOADER__(rowIndex) {
+	      var _this2 = this;
+
+	      var columnIndex = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -1;
+	      var _props4 = this.props,
+	          columns = _props4.columns,
+	          keyField = _props4.keyField,
+	          expandBy = _props4.expandBy,
+	          expandableRow = _props4.expandableRow,
+	          clickToExpand = _props4.selectRow.clickToExpand;
+
+	      var selectRowAndExpand = this._isSelectRowDefined() && !clickToExpand ? false : true;
+	      columnIndex = this._isSelectRowDefined() ? columnIndex - 1 : columnIndex;
+	      columnIndex = this._isExpandColumnVisible() ? columnIndex - 1 : columnIndex;
+	      if (expandableRow && selectRowAndExpand && (expandBy === _Const2.default.EXPAND_BY_ROW ||
+	      /* Below will allow expanding trigger by clicking on selection column
+	      if configure as expanding by column */
+	      expandBy === _Const2.default.EXPAND_BY_COL && columnIndex < 0 || expandBy === _Const2.default.EXPAND_BY_COL && columns[columnIndex].expandable)) {
+	        (function () {
+	          var rowKey = _this2.props.data[rowIndex - 1][keyField];
+	          var expanding = _this2.props.expanding;
+	          if (expanding.indexOf(rowKey) > -1) {
+	            expanding = expanding.filter(function (k) {
+	              return k !== rowKey;
+	            });
+	          } else {
+	            expanding.push(rowKey);
+	          }
+	          _this2.props.onExpand(expanding);
+	        })();
+	      }
+	    }
+	  }, {
+	    key: '__handleEditCell__REACT_HOT_LOADER__',
+	    value: function __handleEditCell__REACT_HOT_LOADER__(rowIndex, columnIndex, action, e) {
+	      var defineSelectRow = this._isSelectRowDefined();
+	      var expandColumnVisible = this._isExpandColumnVisible();
+	      if (defineSelectRow) {
+	        columnIndex--;
+	        if (this.props.selectRow.hideSelectColumn) columnIndex++;
+	      }
+	      if (expandColumnVisible) {
+	        columnIndex--;
+	      }
+	      rowIndex--;
+
+	      if (action === 'tab') {
+	        if (defineSelectRow) columnIndex++;
+	        if (expandColumnVisible) columnIndex++;
+	        this.handleCompleteEditCell(e.target.value, rowIndex, columnIndex - 1);
+	        if (columnIndex >= this.props.columns.length) {
+	          rowIndex = rowIndex + 1;
+	          columnIndex = 1;
+	          this.handleCellKeyDown(e, true);
+	        } else {
+	          this.handleCellKeyDown(e);
+	        }
+	      }
+
+	      var stateObj = {
+	        currEditCell: {
+	          rid: rowIndex,
+	          cid: columnIndex
+	        }
+	      };
+
+	      if (this.props.selectRow.clickToSelectAndEditCell && this.props.cellEdit.mode !== _Const2.default.CELL_EDIT_DBCLICK) {
+	        var selected = this.props.selectedRowKeys.indexOf(this.props.data[rowIndex][this.props.keyField]) !== -1;
+	        this.handleSelectRow(rowIndex + 1, !selected, e);
+	      }
+	      this.setState(stateObj);
+	    }
+	  }, {
+	    key: '__handleCompleteEditCell__REACT_HOT_LOADER__',
+	    value: function __handleCompleteEditCell__REACT_HOT_LOADER__(newVal, rowIndex, columnIndex) {
+	      this.setState({ currEditCell: null });
+	      if (newVal !== null) {
+	        this.props.cellEdit.__onCompleteEdit__(newVal, rowIndex, columnIndex);
+	      }
+	    }
+	  }, {
+	    key: '__handleClickonSelectColumn__REACT_HOT_LOADER__',
+	    value: function __handleClickonSelectColumn__REACT_HOT_LOADER__(e, isSelect, rowIndex, row) {
+	      e.stopPropagation();
+	      if (e.target.tagName === 'TD' && (this.props.selectRow.clickToSelect || this.props.selectRow.clickToSelectAndEditCell)) {
+	        var unselectable = this.props.selectRow.unselectable || [];
+	        if (unselectable.indexOf(row[this.props.keyField]) === -1) {
+	          this.handleSelectRow(rowIndex + 1, isSelect, e);
+	          this.handleClickCell(rowIndex + 1);
+	        }
+	      }
+	    }
+	  }, {
+	    key: 'renderSelectRowColumn',
+	    value: function renderSelectRowColumn(selected, inputType, disabled) {
+	      var CustomComponent = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+
+	      var _this3 = this;
+
+	      var rowIndex = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+	      var row = arguments[5];
+
+	      return _react2.default.createElement(
+	        'td',
+	        { onClick: function onClick(e) {
+	            _this3.handleClickonSelectColumn(e, !selected, rowIndex, row);
+	          }, style: { textAlign: 'center' } },
+	        CustomComponent ? _react2.default.createElement(CustomComponent, { type: inputType, checked: selected, disabled: disabled,
+	          rowIndex: rowIndex,
+	          onChange: function onChange(e) {
+	            return _this3.handleSelectRowColumChange(e, rowIndex);
+	          } }) : _react2.default.createElement('input', { type: inputType, checked: selected, disabled: disabled,
+	          onChange: function onChange(e) {
+	            return _this3.handleSelectRowColumChange(e, rowIndex);
+	          } })
+	      );
+	    }
+	  }, {
+	    key: 'renderExpandRowColumn',
+	    value: function renderExpandRowColumn(isExpandableRow, isExpanded, CustomComponent) {
+	      var _this4 = this;
+
+	      var rowIndex = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+
+	      var content = null;
+	      if (CustomComponent) {
+	        content = _react2.default.createElement(CustomComponent, { isExpandableRow: isExpandableRow, isExpanded: isExpanded });
+	      } else if (isExpandableRow) {
+	        content = isExpanded ? _react2.default.createElement('span', { className: 'glyphicon glyphicon-minus' }) : _react2.default.createElement('span', { className: 'glyphicon glyphicon-plus' });
+	      } else {
+	        content = ' ';
+	      }
+
+	      return _react2.default.createElement(
+	        'td',
+	        {
+	          className: 'react-bs-table-expand-cell',
+	          onClick: function onClick() {
+	            return _this4.handleClickCell(rowIndex + 1);
+	          } },
+	        content
+	      );
+	    }
+	  }, {
+	    key: '_isSelectRowDefined',
+	    value: function _isSelectRowDefined() {
+	      return this.props.selectRow.mode === _Const2.default.ROW_SELECT_SINGLE || this.props.selectRow.mode === _Const2.default.ROW_SELECT_MULTI;
+	    }
+	  }, {
+	    key: '_isExpandColumnVisible',
+	    value: function _isExpandColumnVisible() {
+	      return this.props.expandColumnOptions.expandColumnVisible;
+	    }
+	  }, {
+	    key: '__getHeaderColGrouop__REACT_HOT_LOADER__',
+	    value: function __getHeaderColGrouop__REACT_HOT_LOADER__() {
+	      return this.refs.header.childNodes;
+	    }
+	  }]);
+
+	  return TableBody;
+	}(_react.Component);
+
+	TableBody.propTypes = {
+	  data: _react.PropTypes.array,
+	  columns: _react.PropTypes.array,
+	  striped: _react.PropTypes.bool,
+	  bordered: _react.PropTypes.bool,
+	  hover: _react.PropTypes.bool,
+	  condensed: _react.PropTypes.bool,
+	  keyField: _react.PropTypes.string,
+	  selectedRowKeys: _react.PropTypes.array,
+	  onRowClick: _react.PropTypes.func,
+	  onRowDoubleClick: _react.PropTypes.func,
+	  onSelectRow: _react.PropTypes.func,
+	  noDataText: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object]),
+	  withoutNoDataText: _react.PropTypes.bool,
+	  style: _react.PropTypes.object,
+	  tableBodyClass: _react.PropTypes.string,
+	  bodyContainerClass: _react.PropTypes.string,
+	  expandableRow: _react.PropTypes.func,
+	  expandComponent: _react.PropTypes.func,
+	  expandRowBgColor: _react.PropTypes.string,
+	  expandBy: _react.PropTypes.string,
+	  expanding: _react.PropTypes.array,
+	  onExpand: _react.PropTypes.func,
+	  beforeShowError: _react.PropTypes.func,
+	  keyBoardNav: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.object]),
+	  x: _react.PropTypes.number,
+	  y: _react.PropTypes.number,
+	  onNavigateCell: _react.PropTypes.func
+	};
+	var _default = TableBody;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(isFun, 'isFun', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableBody.js');
+
+	  __REACT_HOT_LOADER__.register(TableBody, 'TableBody', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableBody.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableBody.js');
+	}();
+
+	;
+
+/***/ },
+/* 445 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	var _classnames = __webpack_require__(440);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var _default = {
+	  renderReactSortCaret: function renderReactSortCaret(order) {
+	    var orderClass = (0, _classnames2.default)('order', {
+	      'dropup': order === _Const2.default.SORT_ASC
+	    });
+	    return _react2.default.createElement(
+	      'span',
+	      { className: orderClass },
+	      _react2.default.createElement('span', { className: 'caret', style: { margin: '10px 5px' } })
+	    );
+	  },
+	  getScrollBarWidth: function getScrollBarWidth() {
+	    var inner = document.createElement('p');
+	    inner.style.width = '100%';
+	    inner.style.height = '200px';
+
+	    var outer = document.createElement('div');
+	    outer.style.position = 'absolute';
+	    outer.style.top = '0px';
+	    outer.style.left = '0px';
+	    outer.style.visibility = 'hidden';
+	    outer.style.width = '200px';
+	    outer.style.height = '150px';
+	    outer.style.overflow = 'hidden';
+	    outer.appendChild(inner);
+
+	    document.body.appendChild(outer);
+	    var w1 = inner.getBoundingClientRect().width;
+	    outer.style.overflow = 'scroll';
+	    var w2 = inner.getBoundingClientRect().width;
+
+	    if (w1 === w2) w2 = outer.clientWidth;
+
+	    document.body.removeChild(outer);
+
+	    return w1 - w2;
+	  },
+	  canUseDOM: function canUseDOM() {
+	    return typeof window !== 'undefined' && typeof window.document !== 'undefined';
+	  },
+	  renderColGroup: function renderColGroup(columns, selectRow) {
+	    var expandColumnOptions = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+	    var selectRowHeader = null;
+	    var expandRowHeader = null;
+	    var isSelectRowDefined = selectRow.mode === _Const2.default.ROW_SELECT_SINGLE || selectRow.mode === _Const2.default.ROW_SELECT_MULTI;
+	    if (isSelectRowDefined) {
+	      var style = {
+	        width: selectRow.columnWidth || '30px',
+	        minWidth: selectRow.columnWidth || '30px'
+	      };
+	      if (!selectRow.hideSelectColumn) {
+	        selectRowHeader = _react2.default.createElement('col', { key: 'select-col', style: style });
+	      }
+	    }
+	    if (expandColumnOptions.expandColumnVisible) {
+	      var _style = {
+	        width: expandColumnOptions.columnWidth || 30,
+	        minWidth: expandColumnOptions.columnWidth || 30
+	      };
+	      expandRowHeader = _react2.default.createElement('col', { key: 'expand-col', style: _style });
+	    }
+	    var theader = columns.map(function (column, i) {
+	      var style = {
+	        display: column.hidden ? 'none' : null
+	      };
+	      if (column.width) {
+	        var width = !isNaN(column.width) ? column.width + 'px' : column.width;
+	        style.width = width;
+	        /** add min-wdth to fix user assign column width
+	        not eq offsetWidth in large column table **/
+	        style.minWidth = width;
+	      }
+	      return _react2.default.createElement('col', { style: style, key: i, className: column.className });
+	    });
+
+	    return _react2.default.createElement(
+	      'colgroup',
+	      null,
+	      expandColumnOptions.expandColumnVisible && expandColumnOptions.expandColumnBeforeSelectColumn && expandRowHeader,
+	      selectRowHeader,
+	      expandColumnOptions.expandColumnVisible && !expandColumnOptions.expandColumnBeforeSelectColumn && expandRowHeader,
+	      theader
+	    );
+	  }
+	}; /* eslint react/display-name: 0 */
+
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/util.js');
+	}();
+
+	;
+
+/***/ },
+/* 446 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _classnames = __webpack_require__(440);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TableRow = function (_Component) {
+	  _inherits(TableRow, _Component);
+
+	  function TableRow(props) {
+	    _classCallCheck(this, TableRow);
+
+	    var _this = _possibleConstructorReturn(this, (TableRow.__proto__ || Object.getPrototypeOf(TableRow)).call(this, props));
+
+	    _this.rowClick = function () {
+	      return _this.__rowClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.expandRow = function () {
+	      return _this.__expandRow__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.rowDoubleClick = function () {
+	      return _this.__rowDoubleClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.rowMouseOut = function () {
+	      return _this.__rowMouseOut__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.rowMouseOver = function () {
+	      return _this.__rowMouseOver__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.clickNum = 0;
+	    return _this;
+	  }
+
+	  _createClass(TableRow, [{
+	    key: '__rowClick__REACT_HOT_LOADER__',
+	    value: function __rowClick__REACT_HOT_LOADER__(e) {
+	      var _this2 = this;
+
+	      var rowIndex = this.props.index + 1;
+	      var cellIndex = e.target.cellIndex;
+	      if (this.props.onRowClick) this.props.onRowClick(rowIndex, cellIndex);
+	      var _props = this.props,
+	          selectRow = _props.selectRow,
+	          unselectableRow = _props.unselectableRow,
+	          isSelected = _props.isSelected,
+	          onSelectRow = _props.onSelectRow,
+	          onExpandRow = _props.onExpandRow;
+
+	      if (selectRow) {
+	        if (selectRow.clickToSelect && !unselectableRow) {
+	          onSelectRow(rowIndex, !isSelected, e);
+	        } else if (selectRow.clickToSelectAndEditCell && !unselectableRow) {
+	          this.clickNum++;
+	          /** if clickToSelectAndEditCell is enabled,
+	           *  there should be a delay to prevent a selection changed when
+	           *  user dblick to edit cell on same row but different cell
+	          **/
+	          setTimeout(function () {
+	            if (_this2.clickNum === 1) {
+	              onSelectRow(rowIndex, !isSelected, e);
+	              onExpandRow(rowIndex, cellIndex);
+	            }
+	            _this2.clickNum = 0;
+	          }, 200);
+	        } else {
+	          this.expandRow(rowIndex, cellIndex);
+	        }
+	      }
+	    }
+	  }, {
+	    key: '__expandRow__REACT_HOT_LOADER__',
+	    value: function __expandRow__REACT_HOT_LOADER__(rowIndex, cellIndex) {
+	      var _this3 = this;
+
+	      this.clickNum++;
+	      setTimeout(function () {
+	        if (_this3.clickNum === 1) {
+	          _this3.props.onExpandRow(rowIndex, cellIndex);
+	        }
+	        _this3.clickNum = 0;
+	      }, 200);
+	    }
+	  }, {
+	    key: '__rowDoubleClick__REACT_HOT_LOADER__',
+	    value: function __rowDoubleClick__REACT_HOT_LOADER__(e) {
+	      if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'SELECT' && e.target.tagName !== 'TEXTAREA') {
+	        if (this.props.onRowDoubleClick) {
+	          this.props.onRowDoubleClick(this.props.index);
+	        }
+	      }
+	    }
+	  }, {
+	    key: '__rowMouseOut__REACT_HOT_LOADER__',
+	    value: function __rowMouseOut__REACT_HOT_LOADER__(e) {
+	      var rowIndex = this.props.index;
+	      if (this.props.onRowMouseOut) {
+	        this.props.onRowMouseOut(rowIndex, e);
+	      }
+	    }
+	  }, {
+	    key: '__rowMouseOver__REACT_HOT_LOADER__',
+	    value: function __rowMouseOver__REACT_HOT_LOADER__(e) {
+	      var rowIndex = this.props.index;
+	      if (this.props.onRowMouseOver) {
+	        this.props.onRowMouseOver(rowIndex, e);
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      this.clickNum = 0;
+	      var trCss = {
+	        style: {
+	          backgroundColor: this.props.isSelected ? this.props.selectRow.bgColor : null
+	        },
+	        className: (0, _classnames2.default)(this.props.isSelected ? this.props.selectRow.className : null, this.props.className)
+	      };
+
+	      return _react2.default.createElement(
+	        'tr',
+	        _extends({}, trCss, {
+	          onMouseOver: this.rowMouseOver,
+	          onMouseOut: this.rowMouseOut,
+	          onClick: this.rowClick,
+	          onDoubleClick: this.rowDoubleClick }),
+	        this.props.children
+	      );
+	    }
+	  }]);
+
+	  return TableRow;
+	}(_react.Component);
+
+	TableRow.propTypes = {
+	  index: _react.PropTypes.number,
+	  isSelected: _react.PropTypes.bool,
+	  enableCellEdit: _react.PropTypes.bool,
+	  onRowClick: _react.PropTypes.func,
+	  onRowDoubleClick: _react.PropTypes.func,
+	  onSelectRow: _react.PropTypes.func,
+	  onExpandRow: _react.PropTypes.func,
+	  onRowMouseOut: _react.PropTypes.func,
+	  onRowMouseOver: _react.PropTypes.func,
+	  unselectableRow: _react.PropTypes.bool
+	};
+	TableRow.defaultProps = {
+	  onRowClick: undefined,
+	  onRowDoubleClick: undefined
+	};
+	var _default = TableRow;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(TableRow, 'TableRow', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableRow.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableRow.js');
+	}();
+
+	;
+
+/***/ },
+/* 447 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(437);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TableColumn = function (_Component) {
+	  _inherits(TableColumn, _Component);
+
+	  function TableColumn(props) {
+	    _classCallCheck(this, TableColumn);
+
+	    var _this = _possibleConstructorReturn(this, (TableColumn.__proto__ || Object.getPrototypeOf(TableColumn)).call(this, props));
+
+	    _this.handleCellEdit = function () {
+	      return _this.__handleCellEdit__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleCellClick = function () {
+	      return _this.__handleCellClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleKeyDown = function () {
+	      return _this.__handleKeyDown__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    return _this;
+	  }
+	  /* eslint no-unused-vars: [0, { "args": "after-used" }] */
+
+
+	  _createClass(TableColumn, [{
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      var children = this.props.children;
+
+	      var shouldUpdated = this.props.width !== nextProps.width || this.props.className !== nextProps.className || this.props.hidden !== nextProps.hidden || this.props.dataAlign !== nextProps.dataAlign || this.props.isFocus !== nextProps.isFocus || (typeof children === 'undefined' ? 'undefined' : _typeof(children)) !== _typeof(nextProps.children) || ('' + this.props.onEdit).toString() !== ('' + nextProps.onEdit).toString();
+
+	      if (shouldUpdated) {
+	        return shouldUpdated;
+	      }
+
+	      if ((typeof children === 'undefined' ? 'undefined' : _typeof(children)) === 'object' && children !== null && children.props !== null) {
+	        if (children.props.type === 'checkbox' || children.props.type === 'radio') {
+	          shouldUpdated = shouldUpdated || children.props.type !== nextProps.children.props.type || children.props.checked !== nextProps.children.props.checked || children.props.disabled !== nextProps.children.props.disabled;
+	        } else {
+	          shouldUpdated = true;
+	        }
+	      } else {
+	        shouldUpdated = shouldUpdated || children !== nextProps.children;
+	      }
+
+	      if (shouldUpdated) {
+	        return shouldUpdated;
+	      }
+
+	      if (!(this.props.cellEdit && nextProps.cellEdit)) {
+	        return false;
+	      } else {
+	        return shouldUpdated || this.props.cellEdit.mode !== nextProps.cellEdit.mode;
+	      }
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var dom = _reactDom2.default.findDOMNode(this);
+	      if (this.props.isFocus) {
+	        dom.focus();
+	      } else {
+	        dom.blur();
+	      }
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      var dom = _reactDom2.default.findDOMNode(this);
+	      if (this.props.isFocus) {
+	        dom.focus();
+	      } else {
+	        dom.blur();
+	      }
+	    }
+	  }, {
+	    key: '__handleCellEdit__REACT_HOT_LOADER__',
+	    value: function __handleCellEdit__REACT_HOT_LOADER__(e) {
+	      if (this.props.cellEdit.mode === _Const2.default.CELL_EDIT_DBCLICK) {
+	        if (document.selection && document.selection.empty) {
+	          document.selection.empty();
+	        } else if (window.getSelection) {
+	          var sel = window.getSelection();
+	          sel.removeAllRanges();
+	        }
+	      }
+	      this.props.onEdit(this.props.rIndex + 1, e.currentTarget.cellIndex, e);
+	      if (this.props.cellEdit.mode !== _Const2.default.CELL_EDIT_DBCLICK) {
+	        this.props.onClick(this.props.rIndex + 1, e.currentTarget.cellIndex, e);
+	      }
+	    }
+	  }, {
+	    key: '__handleCellClick__REACT_HOT_LOADER__',
+	    value: function __handleCellClick__REACT_HOT_LOADER__(e) {
+	      var _props = this.props,
+	          onClick = _props.onClick,
+	          rIndex = _props.rIndex;
+
+	      if (onClick) {
+	        onClick(rIndex + 1, e.currentTarget.cellIndex, e);
+	      }
+	    }
+	  }, {
+	    key: '__handleKeyDown__REACT_HOT_LOADER__',
+	    value: function __handleKeyDown__REACT_HOT_LOADER__(e) {
+	      if (this.props.keyBoardNav) {
+	        this.props.onKeyDown(e);
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props2 = this.props,
+	          children = _props2.children,
+	          columnTitle = _props2.columnTitle,
+	          dataAlign = _props2.dataAlign,
+	          hidden = _props2.hidden,
+	          cellEdit = _props2.cellEdit,
+	          attrs = _props2.attrs,
+	          style = _props2.style,
+	          isFocus = _props2.isFocus,
+	          keyBoardNav = _props2.keyBoardNav,
+	          tabIndex = _props2.tabIndex,
+	          customNavStyle = _props2.customNavStyle,
+	          row = _props2.row;
+	      var className = this.props.className;
+
+
+	      var tdStyle = _extends({
+	        textAlign: dataAlign,
+	        display: hidden ? 'none' : null
+	      }, style);
+
+	      var opts = {};
+
+	      if (cellEdit) {
+	        if (cellEdit.mode === _Const2.default.CELL_EDIT_CLICK) {
+	          opts.onClick = this.handleCellEdit;
+	        } else if (cellEdit.mode === _Const2.default.CELL_EDIT_DBCLICK) {
+	          opts.onDoubleClick = this.handleCellEdit;
+	        } else {
+	          opts.onClick = this.handleCellClick;
+	        }
+	      }
+
+	      if (keyBoardNav && isFocus) {
+	        opts.onKeyDown = this.handleKeyDown;
+	      }
+
+	      if (isFocus) {
+	        if (customNavStyle) {
+	          var cusmtStyle = typeof customNavStyle === 'function' ? customNavStyle(children, row) : customNavStyle;
+	          tdStyle = _extends({}, tdStyle, cusmtStyle);
+	        } else {
+	          className = className + ' default-focus-cell';
+	        }
+	      }
+	      return _react2.default.createElement(
+	        'td',
+	        _extends({ tabIndex: tabIndex, style: tdStyle,
+	          title: columnTitle,
+	          className: className
+	        }, opts, attrs),
+	        typeof children === 'boolean' ? children.toString() : children
+	      );
+	    }
+	  }]);
+
+	  return TableColumn;
+	}(_react.Component);
+
+	TableColumn.propTypes = {
+	  rIndex: _react.PropTypes.number,
+	  dataAlign: _react.PropTypes.string,
+	  hidden: _react.PropTypes.bool,
+	  className: _react.PropTypes.string,
+	  columnTitle: _react.PropTypes.string,
+	  children: _react.PropTypes.node,
+	  onClick: _react.PropTypes.func,
+	  attrs: _react.PropTypes.object,
+	  style: _react.PropTypes.object,
+	  isFocus: _react.PropTypes.bool,
+	  onKeyDown: _react.PropTypes.func,
+	  tabIndex: _react.PropTypes.string,
+	  keyBoardNav: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.object]),
+	  customNavStyle: _react.PropTypes.oneOfType([_react.PropTypes.func, _react.PropTypes.object]),
+	  row: _react.PropTypes.any /* only used on custom styling for navigation */
+	};
+
+	TableColumn.defaultProps = {
+	  dataAlign: 'left',
+	  hidden: false,
+	  className: '',
+	  isFocus: false,
+	  keyBoardNav: false
+	};
+	var _default = TableColumn;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(TableColumn, 'TableColumn', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableColumn.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableColumn.js');
+	}();
+
+	;
+
+/***/ },
+/* 448 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(437);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _Editor = __webpack_require__(449);
+
+	var _Editor2 = _interopRequireDefault(_Editor);
+
+	var _Notification = __webpack_require__(450);
+
+	var _Notification2 = _interopRequireDefault(_Notification);
+
+	var _classnames = __webpack_require__(440);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TableEditColumn = function (_Component) {
+	  _inherits(TableEditColumn, _Component);
+
+	  function TableEditColumn(props) {
+	    _classCallCheck(this, TableEditColumn);
+
+	    var _this = _possibleConstructorReturn(this, (TableEditColumn.__proto__ || Object.getPrototypeOf(TableEditColumn)).call(this, props));
+
+	    _this.handleKeyPress = function () {
+	      return _this.__handleKeyPress__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleBlur = function () {
+	      return _this.__handleBlur__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleCustomUpdate = function () {
+	      return _this.__handleCustomUpdate__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.notifyToastr = function () {
+	      return _this.__notifyToastr__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleClick = function () {
+	      return _this.__handleClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.timeouteClear = 0;
+	    var _this$props = _this.props,
+	        fieldValue = _this$props.fieldValue,
+	        row = _this$props.row,
+	        className = _this$props.className;
+
+	    _this.state = {
+	      shakeEditor: false,
+	      className: typeof className === 'function' ? className(fieldValue, row) : className
+	    };
+	    return _this;
+	  }
+
+	  _createClass(TableEditColumn, [{
+	    key: '__handleKeyPress__REACT_HOT_LOADER__',
+	    value: function __handleKeyPress__REACT_HOT_LOADER__(e) {
+	      if (e.keyCode === 13) {
+	        // Pressed ENTER
+	        var value = e.currentTarget.type === 'checkbox' ? this._getCheckBoxValue(e) : e.currentTarget.value;
+
+	        if (!this.validator(value)) {
+	          return;
+	        }
+	        this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
+	      } else if (e.keyCode === 27) {
+	        this.props.completeEdit(null, this.props.rowIndex, this.props.colIndex);
+	      } else if (e.keyCode === 9) {
+	        this.props.onTab(this.props.rowIndex + 1, this.props.colIndex + 1, 'tab', e);
+	        e.preventDefault();
+	      } else if (e.type === 'click' && !this.props.blurToSave) {
+	        // textarea click save button
+	        var _value = e.target.parentElement.firstChild.value;
+	        if (!this.validator(_value)) {
+	          return;
+	        }
+	        this.props.completeEdit(_value, this.props.rowIndex, this.props.colIndex);
+	      }
+	    }
+	  }, {
+	    key: '__handleBlur__REACT_HOT_LOADER__',
+	    value: function __handleBlur__REACT_HOT_LOADER__(e) {
+	      e.stopPropagation();
+	      if (this.props.blurToSave) {
+	        var value = e.currentTarget.type === 'checkbox' ? this._getCheckBoxValue(e) : e.currentTarget.value;
+	        if (!this.validator(value)) {
+	          return;
+	        }
+	        this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
+	      }
+	    }
+	  }, {
+	    key: '__handleCustomUpdate__REACT_HOT_LOADER__',
+
+
+	    // modified by iuculanop
+	    // BEGIN
+	    value: function __handleCustomUpdate__REACT_HOT_LOADER__(value) {
+	      if (!this.validator(value)) {
+	        return;
+	      }
+	      this.props.completeEdit(value, this.props.rowIndex, this.props.colIndex);
+	    }
+	  }, {
+	    key: 'validator',
+	    value: function validator(value) {
+	      var ts = this;
+	      var valid = true;
+	      if (ts.props.editable.validator) {
+	        var input = ts.refs.inputRef;
+	        var checkVal = ts.props.editable.validator(value, this.props.row);
+	        var responseType = typeof checkVal === 'undefined' ? 'undefined' : _typeof(checkVal);
+	        if (responseType !== 'object' && checkVal !== true) {
+	          valid = false;
+	          this.notifyToastr('error', checkVal, _Const2.default.CANCEL_TOASTR);
+	        } else if (responseType === 'object' && checkVal.isValid !== true) {
+	          valid = false;
+	          this.notifyToastr(checkVal.notification.type, checkVal.notification.msg, checkVal.notification.title);
+	        }
+	        if (!valid) {
+	          // animate input
+	          ts.clearTimeout();
+	          var _props = this.props,
+	              invalidColumnClassName = _props.invalidColumnClassName,
+	              row = _props.row;
+
+	          var className = typeof invalidColumnClassName === 'function' ? invalidColumnClassName(value, row) : invalidColumnClassName;
+	          ts.setState({ shakeEditor: true, className: className });
+	          ts.timeouteClear = setTimeout(function () {
+	            ts.setState({ shakeEditor: false });
+	          }, 300);
+	          input.focus();
+	          return valid;
+	        }
+	      }
+	      return valid;
+	    }
+	    // END
+
+	  }, {
+	    key: '__notifyToastr__REACT_HOT_LOADER__',
+	    value: function __notifyToastr__REACT_HOT_LOADER__(type, message, title) {
+	      var toastr = true;
+	      var beforeShowError = this.props.beforeShowError;
+
+	      if (beforeShowError) {
+	        toastr = beforeShowError(type, message, title);
+	      }
+	      if (toastr) {
+	        this.refs.notifier.notice(type, message, title);
+	      }
+	    }
+	  }, {
+	    key: 'clearTimeout',
+	    value: function (_clearTimeout) {
+	      function clearTimeout() {
+	        return _clearTimeout.apply(this, arguments);
+	      }
+
+	      clearTimeout.toString = function () {
+	        return _clearTimeout.toString();
+	      };
+
+	      return clearTimeout;
+	    }(function () {
+	      if (this.timeouteClear !== 0) {
+	        clearTimeout(this.timeouteClear);
+	        this.timeouteClear = 0;
+	      }
+	    })
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.refs.inputRef.focus();
+	      var dom = _reactDom2.default.findDOMNode(this);
+	      if (this.props.isFocus) {
+	        dom.focus();
+	      } else {
+	        dom.blur();
+	      }
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      var dom = _reactDom2.default.findDOMNode(this);
+	      if (this.props.isFocus) {
+	        dom.focus();
+	      } else {
+	        dom.blur();
+	      }
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      this.clearTimeout();
+	    }
+	  }, {
+	    key: '__handleClick__REACT_HOT_LOADER__',
+	    value: function __handleClick__REACT_HOT_LOADER__(e) {
+	      if (e.target.tagName !== 'TD') {
+	        e.stopPropagation();
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props2 = this.props,
+	          editable = _props2.editable,
+	          format = _props2.format,
+	          customEditor = _props2.customEditor,
+	          isFocus = _props2.isFocus,
+	          customStyleWithNav = _props2.customStyleWithNav,
+	          row = _props2.row;
+	      var shakeEditor = this.state.shakeEditor;
+
+	      var attr = {
+	        ref: 'inputRef',
+	        onKeyDown: this.handleKeyPress,
+	        onBlur: this.handleBlur
+	      };
+	      var style = { position: 'relative' };
+	      var fieldValue = this.props.fieldValue;
+	      var className = this.state.className;
+	      // put placeholder if exist
+
+	      editable.placeholder && (attr.placeholder = editable.placeholder);
+
+	      var editorClass = (0, _classnames2.default)({ 'animated': shakeEditor, 'shake': shakeEditor });
+	      var cellEditor = void 0;
+	      if (customEditor) {
+	        var customEditorProps = _extends({
+	          row: row
+	        }, attr, {
+	          defaultValue: fieldValue || ''
+	        }, customEditor.customEditorParameters);
+	        cellEditor = customEditor.getElement(this.handleCustomUpdate, customEditorProps);
+	      } else {
+	        fieldValue = fieldValue === 0 ? '0' : fieldValue;
+	        cellEditor = (0, _Editor2.default)(editable, attr, format, editorClass, fieldValue || '');
+	      }
+
+	      if (isFocus) {
+	        if (customStyleWithNav) {
+	          var customStyle = typeof customStyleWithNav === 'function' ? customStyleWithNav(fieldValue, row) : customStyleWithNav;
+	          style = _extends({}, style, customStyle);
+	        } else {
+	          className = className + ' default-focus-cell';
+	        }
+	      }
+
+	      return _react2.default.createElement(
+	        'td',
+	        { ref: 'td',
+	          style: style,
+	          className: className,
+	          onClick: this.handleClick },
+	        cellEditor,
+	        _react2.default.createElement(_Notification2.default, { ref: 'notifier' })
+	      );
+	    }
+	  }, {
+	    key: '_getCheckBoxValue',
+	    value: function _getCheckBoxValue(e) {
+	      var value = '';
+	      var values = e.currentTarget.value.split(':');
+	      value = e.currentTarget.checked ? values[0] : values[1];
+	      return value;
+	    }
+	  }]);
+
+	  return TableEditColumn;
+	}(_react.Component);
+
+	TableEditColumn.propTypes = {
+	  completeEdit: _react.PropTypes.func,
+	  rowIndex: _react.PropTypes.number,
+	  colIndex: _react.PropTypes.number,
+	  blurToSave: _react.PropTypes.bool,
+	  editable: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.object]),
+	  format: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.func]),
+	  row: _react.PropTypes.any,
+	  fieldValue: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.bool, _react.PropTypes.number, _react.PropTypes.array, _react.PropTypes.object]),
+	  className: _react.PropTypes.any,
+	  beforeShowError: _react.PropTypes.func,
+	  isFocus: _react.PropTypes.bool,
+	  customStyleWithNav: _react.PropTypes.oneOfType([_react.PropTypes.func, _react.PropTypes.object])
+	};
+
+	var _default = TableEditColumn;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(TableEditColumn, 'TableEditColumn', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableEditColumn.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableEditColumn.js');
+	}();
+
+	;
+
+/***/ },
+/* 449 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var editor = function editor(editable, attr, format, editorClass, defaultValue, ignoreEditable) {
+	  if (editable === true || editable === false && ignoreEditable || typeof editable === 'string') {
+	    // simple declare
+	    var type = editable ? 'text' : editable;
+	    return _react2.default.createElement('input', _extends({}, attr, { type: type, defaultValue: defaultValue,
+	      className: (editorClass || '') + ' form-control editor edit-text' }));
+	  } else if (!editable) {
+	    var _type = editable ? 'text' : editable;
+	    return _react2.default.createElement('input', _extends({}, attr, { type: _type, defaultValue: defaultValue,
+	      disabled: 'disabled',
+	      className: (editorClass || '') + ' form-control editor edit-text' }));
+	  } else if (editable && (editable.type === undefined || editable.type === null || editable.type.trim() === '')) {
+	    var _type2 = editable ? 'text' : editable;
+	    return _react2.default.createElement('input', _extends({}, attr, { type: _type2, defaultValue: defaultValue,
+	      className: (editorClass || '') + ' form-control editor edit-text' }));
+	  } else if (editable.type) {
+	    // standard declare
+	    // put style if exist
+	    editable.style && (attr.style = editable.style);
+	    // put class if exist
+	    attr.className = (editorClass || '') + ' form-control editor edit-' + editable.type + (editable.className ? ' ' + editable.className : '');
+
+	    if (editable.type === 'select') {
+	      // process select input
+	      var options = [];
+	      var values = editable.options.values;
+	      if (Array.isArray(values)) {
+	        (function () {
+	          // only can use arrray data for options
+	          var rowValue = void 0;
+	          options = values.map(function (d, i) {
+	            rowValue = format ? format(d) : d;
+	            return _react2.default.createElement(
+	              'option',
+	              { key: 'option' + i, value: d },
+	              rowValue
+	            );
+	          });
+	        })();
+	      }
+	      return _react2.default.createElement(
+	        'select',
+	        _extends({}, attr, { defaultValue: defaultValue }),
+	        options
+	      );
+	    } else if (editable.type === 'textarea') {
+	      var _ret2 = function () {
+	        // process textarea input
+	        // put other if exist
+	        editable.cols && (attr.cols = editable.cols);
+	        editable.rows && (attr.rows = editable.rows);
+	        var saveBtn = void 0;
+	        var keyUpHandler = attr.onKeyDown;
+	        if (keyUpHandler) {
+	          attr.onKeyDown = function (e) {
+	            if (e.keyCode !== 13) {
+	              // not Pressed ENTER
+	              keyUpHandler(e);
+	            }
+	          };
+	          saveBtn = _react2.default.createElement(
+	            'button',
+	            {
+	              className: 'btn btn-info btn-xs textarea-save-btn',
+	              onClick: keyUpHandler },
+	            'save'
+	          );
+	        }
+	        return {
+	          v: _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement('textarea', _extends({}, attr, { defaultValue: defaultValue })),
+	            saveBtn
+	          )
+	        };
+	      }();
+
+	      if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
+	    } else if (editable.type === 'checkbox') {
+	      var _values = 'true:false';
+	      if (editable.options && editable.options.values) {
+	        // values = editable.options.values.split(':');
+	        _values = editable.options.values;
+	      }
+	      attr.className = attr.className.replace('form-control', '');
+	      attr.className += ' checkbox pull-right';
+
+	      var checked = defaultValue && defaultValue.toString() === _values.split(':')[0] ? true : false;
+
+	      return _react2.default.createElement('input', _extends({}, attr, { type: 'checkbox',
+	        value: _values, defaultChecked: checked }));
+	    } else if (editable.type === 'datetime') {
+	      return _react2.default.createElement('input', _extends({}, attr, { type: 'datetime-local', defaultValue: defaultValue }));
+	    } else {
+	      // process other input type. as password,url,email...
+	      return _react2.default.createElement('input', _extends({}, attr, { type: 'text', defaultValue: defaultValue }));
+	    }
+	  }
+	  // default return for other case of editable
+	  return _react2.default.createElement('input', _extends({}, attr, { type: 'text',
+	    className: (editorClass || '') + ' form-control editor edit-text' }));
+	};
+
+	var _default = editor;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(editor, 'editor', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/Editor.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/Editor.js');
+	}();
+
+	;
+
+/***/ },
+/* 450 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactToastr = __webpack_require__(451);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ToastrMessageFactory = _react2.default.createFactory(_reactToastr.ToastMessage.animation);
+
+	var Notification = function (_Component) {
+	  _inherits(Notification, _Component);
+
+	  function Notification() {
+	    _classCallCheck(this, Notification);
+
+	    return _possibleConstructorReturn(this, (Notification.__proto__ || Object.getPrototypeOf(Notification)).apply(this, arguments));
+	  }
+
+	  _createClass(Notification, [{
+	    key: 'notice',
+
+	    // allow type is success,info,warning,error
+	    value: function notice(type, msg, title) {
+	      this.refs.toastr[type](msg, title, {
+	        mode: 'single',
+	        timeOut: 5000,
+	        extendedTimeOut: 1000,
+	        showAnimation: 'animated  bounceIn',
+	        hideAnimation: 'animated bounceOut'
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(_reactToastr.ToastContainer, { ref: 'toastr',
+	        toastMessageFactory: ToastrMessageFactory,
+	        id: 'toast-container',
+	        className: 'toast-top-right' });
+	    }
+	  }]);
+
+	  return Notification;
+	}(_react.Component);
+
+	var _default = Notification;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(ToastrMessageFactory, 'ToastrMessageFactory', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/Notification.js');
+
+	  __REACT_HOT_LOADER__.register(Notification, 'Notification', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/Notification.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/Notification.js');
+	}();
+
+	;
+
+/***/ },
+/* 451 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.ToastMessage = exports.ToastContainer = undefined;
+
+	var _ToastContainer = __webpack_require__(452);
+
+	var _ToastContainer2 = _interopRequireDefault(_ToastContainer);
+
+	var _ToastMessage = __webpack_require__(604);
+
+	var _ToastMessage2 = _interopRequireDefault(_ToastMessage);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.ToastContainer = _ToastContainer2.default;
+	exports.ToastMessage = _ToastMessage2.default;
+
+/***/ },
+/* 452 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _omit2 = __webpack_require__(453);
+
+	var _omit3 = _interopRequireDefault(_omit2);
+
+	var _includes2 = __webpack_require__(592);
+
+	var _includes3 = _interopRequireDefault(_includes2);
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactAddonsUpdate = __webpack_require__(603);
+
+	var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
+
+	var _ToastMessage = __webpack_require__(604);
+
+	var _ToastMessage2 = _interopRequireDefault(_ToastMessage);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ToastContainer = function (_Component) {
+	  _inherits(ToastContainer, _Component);
+
+	  function ToastContainer() {
+	    var _ref;
+
+	    var _temp, _this, _ret;
+
+	    _classCallCheck(this, ToastContainer);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ToastContainer.__proto__ || Object.getPrototypeOf(ToastContainer)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+	      toasts: [],
+	      toastId: 0,
+	      messageList: []
+	    }, _this._handle_toast_remove = _this._handle_toast_remove.bind(_this), _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+
+	  _createClass(ToastContainer, [{
+	    key: "error",
+	    value: function error(message, title, optionsOverride) {
+	      this._notify(this.props.toastType.error, message, title, optionsOverride);
+	    }
+	  }, {
+	    key: "info",
+	    value: function info(message, title, optionsOverride) {
+	      this._notify(this.props.toastType.info, message, title, optionsOverride);
+	    }
+	  }, {
+	    key: "success",
+	    value: function success(message, title, optionsOverride) {
+	      this._notify(this.props.toastType.success, message, title, optionsOverride);
+	    }
+	  }, {
+	    key: "warning",
+	    value: function warning(message, title, optionsOverride) {
+	      this._notify(this.props.toastType.warning, message, title, optionsOverride);
+	    }
+	  }, {
+	    key: "clear",
+	    value: function clear() {
+	      var _this2 = this;
+
+	      Object.keys(this.refs).forEach(function (key) {
+	        _this2.refs[key].hideToast(false);
+	      });
+	    }
+	  }, {
+	    key: "_notify",
+	    value: function _notify(type, message, title) {
+	      var _this3 = this;
+
+	      var optionsOverride = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+
+	      if (this.props.preventDuplicates) {
+	        if ((0, _includes3.default)(this.state.messageList, message)) {
+	          return;
+	        }
+	      }
+	      var key = this.state.toastId++;
+	      var toastId = key;
+	      var newToast = (0, _reactAddonsUpdate2.default)(optionsOverride, {
+	        $merge: {
+	          type: type,
+	          title: title,
+	          message: message,
+	          toastId: toastId,
+	          key: key,
+	          ref: "toasts__" + key,
+	          handleOnClick: function handleOnClick(e) {
+	            if ("function" === typeof optionsOverride.handleOnClick) {
+	              optionsOverride.handleOnClick();
+	            }
+	            return _this3._handle_toast_on_click(e);
+	          },
+	          handleRemove: this._handle_toast_remove
+	        }
+	      });
+	      var toastOperation = _defineProperty({}, "" + (this.props.newestOnTop ? "$unshift" : "$push"), [newToast]);
+
+	      var messageOperation = _defineProperty({}, "" + (this.props.newestOnTop ? "$unshift" : "$push"), [message]);
+
+	      var nextState = (0, _reactAddonsUpdate2.default)(this.state, {
+	        toasts: toastOperation,
+	        messageList: messageOperation
+	      });
+	      this.setState(nextState);
+	    }
+	  }, {
+	    key: "_handle_toast_on_click",
+	    value: function _handle_toast_on_click(event) {
+	      this.props.onClick(event);
+	      if (event.defaultPrevented) {
+	        return;
+	      }
+	      event.preventDefault();
+	      event.stopPropagation();
+	    }
+	  }, {
+	    key: "_handle_toast_remove",
+	    value: function _handle_toast_remove(toastId) {
+	      var _this4 = this;
+
+	      if (this.props.preventDuplicates) {
+	        this.state.previousMessage = "";
+	      }
+	      var operationName = "" + (this.props.newestOnTop ? "reduceRight" : "reduce");
+	      this.state.toasts[operationName](function (found, toast, index) {
+	        if (found || toast.toastId !== toastId) {
+	          return false;
+	        }
+	        _this4.setState((0, _reactAddonsUpdate2.default)(_this4.state, {
+	          toasts: { $splice: [[index, 1]] },
+	          messageList: { $splice: [[index, 1]] }
+	        }));
+	        return true;
+	      }, false);
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this5 = this;
+
+	      var divProps = (0, _omit3.default)(this.props, ["toastType", "toastMessageFactory", "preventDuplicates", "newestOnTop"]);
+
+	      return _react2.default.createElement(
+	        "div",
+	        _extends({}, divProps, { "aria-live": "polite", role: "alert" }),
+	        this.state.toasts.map(function (toast) {
+	          return _this5.props.toastMessageFactory(toast);
+	        })
+	      );
+	    }
+	  }]);
+
+	  return ToastContainer;
+	}(_react.Component);
+
+	ToastContainer.propTypes = {
+	  toastType: _react.PropTypes.shape({
+	    error: _react.PropTypes.string,
+	    info: _react.PropTypes.string,
+	    success: _react.PropTypes.string,
+	    warning: _react.PropTypes.string
+	  }).isRequired,
+	  id: _react.PropTypes.string.isRequired,
+	  toastMessageFactory: _react.PropTypes.func.isRequired,
+	  preventDuplicates: _react.PropTypes.bool.isRequired,
+	  newestOnTop: _react.PropTypes.bool.isRequired,
+	  onClick: _react.PropTypes.func.isRequired
+	};
+	ToastContainer.defaultProps = {
+	  toastType: {
+	    error: "error",
+	    info: "info",
+	    success: "success",
+	    warning: "warning"
+	  },
+	  id: "toast-container",
+	  toastMessageFactory: _react2.default.createFactory(_ToastMessage2.default.animation),
+	  preventDuplicates: true,
+	  newestOnTop: true,
+	  onClick: function onClick() {}
+	};
+	exports.default = ToastContainer;
+
+/***/ },
+/* 453 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var arrayMap = __webpack_require__(454),
+	    baseClone = __webpack_require__(455),
+	    baseUnset = __webpack_require__(565),
+	    castPath = __webpack_require__(566),
+	    copyObject = __webpack_require__(505),
+	    customOmitClone = __webpack_require__(579),
+	    flatRest = __webpack_require__(581),
+	    getAllKeysIn = __webpack_require__(542);
+
+	/** Used to compose bitmasks for cloning. */
+	var CLONE_DEEP_FLAG = 1,
+	    CLONE_FLAT_FLAG = 2,
+	    CLONE_SYMBOLS_FLAG = 4;
+
+	/**
+	 * The opposite of `_.pick`; this method creates an object composed of the
+	 * own and inherited enumerable property paths of `object` that are not omitted.
+	 *
+	 * **Note:** This method is considerably slower than `_.pick`.
+	 *
+	 * @static
+	 * @since 0.1.0
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The source object.
+	 * @param {...(string|string[])} [paths] The property paths to omit.
+	 * @returns {Object} Returns the new object.
+	 * @example
+	 *
+	 * var object = { 'a': 1, 'b': '2', 'c': 3 };
+	 *
+	 * _.omit(object, ['a', 'c']);
+	 * // => { 'b': '2' }
+	 */
+	var omit = flatRest(function(object, paths) {
+	  var result = {};
+	  if (object == null) {
+	    return result;
+	  }
+	  var isDeep = false;
+	  paths = arrayMap(paths, function(path) {
+	    path = castPath(path, object);
+	    isDeep || (isDeep = path.length > 1);
+	    return path;
+	  });
+	  copyObject(object, getAllKeysIn(object), result);
+	  if (isDeep) {
+	    result = baseClone(result, CLONE_DEEP_FLAG | CLONE_FLAT_FLAG | CLONE_SYMBOLS_FLAG, customOmitClone);
+	  }
+	  var length = paths.length;
+	  while (length--) {
+	    baseUnset(result, paths[length]);
+	  }
+	  return result;
+	});
+
+	module.exports = omit;
+
+
+/***/ },
+/* 454 */
+/***/ function(module, exports) {
+
+	/**
+	 * A specialized version of `_.map` for arrays without support for iteratee
+	 * shorthands.
+	 *
+	 * @private
+	 * @param {Array} [array] The array to iterate over.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @returns {Array} Returns the new mapped array.
+	 */
+	function arrayMap(array, iteratee) {
+	  var index = -1,
+	      length = array == null ? 0 : array.length,
+	      result = Array(length);
+
+	  while (++index < length) {
+	    result[index] = iteratee(array[index], index, array);
+	  }
+	  return result;
+	}
+
+	module.exports = arrayMap;
+
+
+/***/ },
+/* 455 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Stack = __webpack_require__(456),
+	    arrayEach = __webpack_require__(500),
+	    assignValue = __webpack_require__(501),
+	    baseAssign = __webpack_require__(504),
+	    baseAssignIn = __webpack_require__(526),
+	    cloneBuffer = __webpack_require__(530),
+	    copyArray = __webpack_require__(531),
+	    copySymbols = __webpack_require__(532),
+	    copySymbolsIn = __webpack_require__(536),
+	    getAllKeys = __webpack_require__(540),
+	    getAllKeysIn = __webpack_require__(542),
+	    getTag = __webpack_require__(543),
+	    initCloneArray = __webpack_require__(548),
+	    initCloneByTag = __webpack_require__(549),
+	    initCloneObject = __webpack_require__(563),
+	    isArray = __webpack_require__(512),
+	    isBuffer = __webpack_require__(513),
+	    isObject = __webpack_require__(480),
+	    keys = __webpack_require__(506);
+
+	/** Used to compose bitmasks for cloning. */
+	var CLONE_DEEP_FLAG = 1,
+	    CLONE_FLAT_FLAG = 2,
+	    CLONE_SYMBOLS_FLAG = 4;
+
+	/** `Object#toString` result references. */
+	var argsTag = '[object Arguments]',
+	    arrayTag = '[object Array]',
+	    boolTag = '[object Boolean]',
+	    dateTag = '[object Date]',
+	    errorTag = '[object Error]',
+	    funcTag = '[object Function]',
+	    genTag = '[object GeneratorFunction]',
+	    mapTag = '[object Map]',
+	    numberTag = '[object Number]',
+	    objectTag = '[object Object]',
+	    regexpTag = '[object RegExp]',
+	    setTag = '[object Set]',
+	    stringTag = '[object String]',
+	    symbolTag = '[object Symbol]',
+	    weakMapTag = '[object WeakMap]';
+
+	var arrayBufferTag = '[object ArrayBuffer]',
+	    dataViewTag = '[object DataView]',
+	    float32Tag = '[object Float32Array]',
+	    float64Tag = '[object Float64Array]',
+	    int8Tag = '[object Int8Array]',
+	    int16Tag = '[object Int16Array]',
+	    int32Tag = '[object Int32Array]',
+	    uint8Tag = '[object Uint8Array]',
+	    uint8ClampedTag = '[object Uint8ClampedArray]',
+	    uint16Tag = '[object Uint16Array]',
+	    uint32Tag = '[object Uint32Array]';
+
+	/** Used to identify `toStringTag` values supported by `_.clone`. */
+	var cloneableTags = {};
+	cloneableTags[argsTag] = cloneableTags[arrayTag] =
+	cloneableTags[arrayBufferTag] = cloneableTags[dataViewTag] =
+	cloneableTags[boolTag] = cloneableTags[dateTag] =
+	cloneableTags[float32Tag] = cloneableTags[float64Tag] =
+	cloneableTags[int8Tag] = cloneableTags[int16Tag] =
+	cloneableTags[int32Tag] = cloneableTags[mapTag] =
+	cloneableTags[numberTag] = cloneableTags[objectTag] =
+	cloneableTags[regexpTag] = cloneableTags[setTag] =
+	cloneableTags[stringTag] = cloneableTags[symbolTag] =
+	cloneableTags[uint8Tag] = cloneableTags[uint8ClampedTag] =
+	cloneableTags[uint16Tag] = cloneableTags[uint32Tag] = true;
+	cloneableTags[errorTag] = cloneableTags[funcTag] =
+	cloneableTags[weakMapTag] = false;
+
+	/**
+	 * The base implementation of `_.clone` and `_.cloneDeep` which tracks
+	 * traversed objects.
+	 *
+	 * @private
+	 * @param {*} value The value to clone.
+	 * @param {boolean} bitmask The bitmask flags.
+	 *  1 - Deep clone
+	 *  2 - Flatten inherited properties
+	 *  4 - Clone symbols
+	 * @param {Function} [customizer] The function to customize cloning.
+	 * @param {string} [key] The key of `value`.
+	 * @param {Object} [object] The parent object of `value`.
+	 * @param {Object} [stack] Tracks traversed objects and their clone counterparts.
+	 * @returns {*} Returns the cloned value.
+	 */
+	function baseClone(value, bitmask, customizer, key, object, stack) {
+	  var result,
+	      isDeep = bitmask & CLONE_DEEP_FLAG,
+	      isFlat = bitmask & CLONE_FLAT_FLAG,
+	      isFull = bitmask & CLONE_SYMBOLS_FLAG;
+
+	  if (customizer) {
+	    result = object ? customizer(value, key, object, stack) : customizer(value);
+	  }
+	  if (result !== undefined) {
+	    return result;
+	  }
+	  if (!isObject(value)) {
+	    return value;
+	  }
+	  var isArr = isArray(value);
+	  if (isArr) {
+	    result = initCloneArray(value);
+	    if (!isDeep) {
+	      return copyArray(value, result);
+	    }
+	  } else {
+	    var tag = getTag(value),
+	        isFunc = tag == funcTag || tag == genTag;
+
+	    if (isBuffer(value)) {
+	      return cloneBuffer(value, isDeep);
+	    }
+	    if (tag == objectTag || tag == argsTag || (isFunc && !object)) {
+	      result = (isFlat || isFunc) ? {} : initCloneObject(value);
+	      if (!isDeep) {
+	        return isFlat
+	          ? copySymbolsIn(value, baseAssignIn(result, value))
+	          : copySymbols(value, baseAssign(result, value));
+	      }
+	    } else {
+	      if (!cloneableTags[tag]) {
+	        return object ? value : {};
+	      }
+	      result = initCloneByTag(value, tag, baseClone, isDeep);
+	    }
+	  }
+	  // Check for circular references and return its corresponding clone.
+	  stack || (stack = new Stack);
+	  var stacked = stack.get(value);
+	  if (stacked) {
+	    return stacked;
+	  }
+	  stack.set(value, result);
+
+	  var keysFunc = isFull
+	    ? (isFlat ? getAllKeysIn : getAllKeys)
+	    : (isFlat ? keysIn : keys);
+
+	  var props = isArr ? undefined : keysFunc(value);
+	  arrayEach(props || value, function(subValue, key) {
+	    if (props) {
+	      key = subValue;
+	      subValue = value[key];
+	    }
+	    // Recursively populate clone (susceptible to call stack limits).
+	    assignValue(result, key, baseClone(subValue, bitmask, customizer, key, value, stack));
+	  });
+	  return result;
+	}
+
+	module.exports = baseClone;
+
+
+/***/ },
+/* 456 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ListCache = __webpack_require__(457),
+	    stackClear = __webpack_require__(465),
+	    stackDelete = __webpack_require__(466),
+	    stackGet = __webpack_require__(467),
+	    stackHas = __webpack_require__(468),
+	    stackSet = __webpack_require__(469);
+
+	/**
+	 * Creates a stack cache object to store key-value pairs.
+	 *
+	 * @private
+	 * @constructor
+	 * @param {Array} [entries] The key-value pairs to cache.
+	 */
+	function Stack(entries) {
+	  var data = this.__data__ = new ListCache(entries);
+	  this.size = data.size;
+	}
+
+	// Add methods to `Stack`.
+	Stack.prototype.clear = stackClear;
+	Stack.prototype['delete'] = stackDelete;
+	Stack.prototype.get = stackGet;
+	Stack.prototype.has = stackHas;
+	Stack.prototype.set = stackSet;
+
+	module.exports = Stack;
+
+
+/***/ },
+/* 457 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var listCacheClear = __webpack_require__(458),
+	    listCacheDelete = __webpack_require__(459),
+	    listCacheGet = __webpack_require__(462),
+	    listCacheHas = __webpack_require__(463),
+	    listCacheSet = __webpack_require__(464);
+
+	/**
+	 * Creates an list cache object.
+	 *
+	 * @private
+	 * @constructor
+	 * @param {Array} [entries] The key-value pairs to cache.
+	 */
+	function ListCache(entries) {
+	  var index = -1,
+	      length = entries == null ? 0 : entries.length;
+
+	  this.clear();
+	  while (++index < length) {
+	    var entry = entries[index];
+	    this.set(entry[0], entry[1]);
+	  }
+	}
+
+	// Add methods to `ListCache`.
+	ListCache.prototype.clear = listCacheClear;
+	ListCache.prototype['delete'] = listCacheDelete;
+	ListCache.prototype.get = listCacheGet;
+	ListCache.prototype.has = listCacheHas;
+	ListCache.prototype.set = listCacheSet;
+
+	module.exports = ListCache;
+
+
+/***/ },
+/* 458 */
+/***/ function(module, exports) {
+
+	/**
+	 * Removes all key-value entries from the list cache.
+	 *
+	 * @private
+	 * @name clear
+	 * @memberOf ListCache
+	 */
+	function listCacheClear() {
+	  this.__data__ = [];
+	  this.size = 0;
+	}
+
+	module.exports = listCacheClear;
+
+
+/***/ },
+/* 459 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assocIndexOf = __webpack_require__(460);
+
+	/** Used for built-in method references. */
+	var arrayProto = Array.prototype;
+
+	/** Built-in value references. */
+	var splice = arrayProto.splice;
+
+	/**
+	 * Removes `key` and its value from the list cache.
+	 *
+	 * @private
+	 * @name delete
+	 * @memberOf ListCache
+	 * @param {string} key The key of the value to remove.
+	 * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+	 */
+	function listCacheDelete(key) {
+	  var data = this.__data__,
+	      index = assocIndexOf(data, key);
+
+	  if (index < 0) {
+	    return false;
+	  }
+	  var lastIndex = data.length - 1;
+	  if (index == lastIndex) {
+	    data.pop();
+	  } else {
+	    splice.call(data, index, 1);
+	  }
+	  --this.size;
+	  return true;
+	}
+
+	module.exports = listCacheDelete;
+
+
+/***/ },
+/* 460 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var eq = __webpack_require__(461);
+
+	/**
+	 * Gets the index at which the `key` is found in `array` of key-value pairs.
+	 *
+	 * @private
+	 * @param {Array} array The array to inspect.
+	 * @param {*} key The key to search for.
+	 * @returns {number} Returns the index of the matched value, else `-1`.
+	 */
+	function assocIndexOf(array, key) {
+	  var length = array.length;
+	  while (length--) {
+	    if (eq(array[length][0], key)) {
+	      return length;
+	    }
+	  }
+	  return -1;
+	}
+
+	module.exports = assocIndexOf;
+
+
+/***/ },
+/* 461 */
+/***/ function(module, exports) {
+
+	/**
+	 * Performs a
+	 * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+	 * comparison between two values to determine if they are equivalent.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to compare.
+	 * @param {*} other The other value to compare.
+	 * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+	 * @example
+	 *
+	 * var object = { 'a': 1 };
+	 * var other = { 'a': 1 };
+	 *
+	 * _.eq(object, object);
+	 * // => true
+	 *
+	 * _.eq(object, other);
+	 * // => false
+	 *
+	 * _.eq('a', 'a');
+	 * // => true
+	 *
+	 * _.eq('a', Object('a'));
+	 * // => false
+	 *
+	 * _.eq(NaN, NaN);
+	 * // => true
+	 */
+	function eq(value, other) {
+	  return value === other || (value !== value && other !== other);
+	}
+
+	module.exports = eq;
+
+
+/***/ },
+/* 462 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assocIndexOf = __webpack_require__(460);
+
+	/**
+	 * Gets the list cache value for `key`.
+	 *
+	 * @private
+	 * @name get
+	 * @memberOf ListCache
+	 * @param {string} key The key of the value to get.
+	 * @returns {*} Returns the entry value.
+	 */
+	function listCacheGet(key) {
+	  var data = this.__data__,
+	      index = assocIndexOf(data, key);
+
+	  return index < 0 ? undefined : data[index][1];
+	}
+
+	module.exports = listCacheGet;
+
+
+/***/ },
+/* 463 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assocIndexOf = __webpack_require__(460);
+
+	/**
+	 * Checks if a list cache value for `key` exists.
+	 *
+	 * @private
+	 * @name has
+	 * @memberOf ListCache
+	 * @param {string} key The key of the entry to check.
+	 * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+	 */
+	function listCacheHas(key) {
+	  return assocIndexOf(this.__data__, key) > -1;
+	}
+
+	module.exports = listCacheHas;
+
+
+/***/ },
+/* 464 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assocIndexOf = __webpack_require__(460);
+
+	/**
+	 * Sets the list cache `key` to `value`.
+	 *
+	 * @private
+	 * @name set
+	 * @memberOf ListCache
+	 * @param {string} key The key of the value to set.
+	 * @param {*} value The value to set.
+	 * @returns {Object} Returns the list cache instance.
+	 */
+	function listCacheSet(key, value) {
+	  var data = this.__data__,
+	      index = assocIndexOf(data, key);
+
+	  if (index < 0) {
+	    ++this.size;
+	    data.push([key, value]);
+	  } else {
+	    data[index][1] = value;
+	  }
+	  return this;
+	}
+
+	module.exports = listCacheSet;
+
+
+/***/ },
+/* 465 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ListCache = __webpack_require__(457);
+
+	/**
+	 * Removes all key-value entries from the stack.
+	 *
+	 * @private
+	 * @name clear
+	 * @memberOf Stack
+	 */
+	function stackClear() {
+	  this.__data__ = new ListCache;
+	  this.size = 0;
+	}
+
+	module.exports = stackClear;
+
+
+/***/ },
+/* 466 */
+/***/ function(module, exports) {
+
+	/**
+	 * Removes `key` and its value from the stack.
+	 *
+	 * @private
+	 * @name delete
+	 * @memberOf Stack
+	 * @param {string} key The key of the value to remove.
+	 * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+	 */
+	function stackDelete(key) {
+	  var data = this.__data__,
+	      result = data['delete'](key);
+
+	  this.size = data.size;
+	  return result;
+	}
+
+	module.exports = stackDelete;
+
+
+/***/ },
+/* 467 */
+/***/ function(module, exports) {
+
+	/**
+	 * Gets the stack value for `key`.
+	 *
+	 * @private
+	 * @name get
+	 * @memberOf Stack
+	 * @param {string} key The key of the value to get.
+	 * @returns {*} Returns the entry value.
+	 */
+	function stackGet(key) {
+	  return this.__data__.get(key);
+	}
+
+	module.exports = stackGet;
+
+
+/***/ },
+/* 468 */
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if a stack value for `key` exists.
+	 *
+	 * @private
+	 * @name has
+	 * @memberOf Stack
+	 * @param {string} key The key of the entry to check.
+	 * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+	 */
+	function stackHas(key) {
+	  return this.__data__.has(key);
+	}
+
+	module.exports = stackHas;
+
+
+/***/ },
+/* 469 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ListCache = __webpack_require__(457),
+	    Map = __webpack_require__(470),
+	    MapCache = __webpack_require__(485);
+
+	/** Used as the size to enable large array optimizations. */
+	var LARGE_ARRAY_SIZE = 200;
+
+	/**
+	 * Sets the stack `key` to `value`.
+	 *
+	 * @private
+	 * @name set
+	 * @memberOf Stack
+	 * @param {string} key The key of the value to set.
+	 * @param {*} value The value to set.
+	 * @returns {Object} Returns the stack cache instance.
+	 */
+	function stackSet(key, value) {
+	  var data = this.__data__;
+	  if (data instanceof ListCache) {
+	    var pairs = data.__data__;
+	    if (!Map || (pairs.length < LARGE_ARRAY_SIZE - 1)) {
+	      pairs.push([key, value]);
+	      this.size = ++data.size;
+	      return this;
+	    }
+	    data = this.__data__ = new MapCache(pairs);
+	  }
+	  data.set(key, value);
+	  this.size = data.size;
+	  return this;
+	}
+
+	module.exports = stackSet;
+
+
+/***/ },
+/* 470 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(471),
+	    root = __webpack_require__(476);
+
+	/* Built-in method references that are verified to be native. */
+	var Map = getNative(root, 'Map');
+
+	module.exports = Map;
+
+
+/***/ },
+/* 471 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseIsNative = __webpack_require__(472),
+	    getValue = __webpack_require__(484);
+
+	/**
+	 * Gets the native function at `key` of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {string} key The key of the method to get.
+	 * @returns {*} Returns the function if it's native, else `undefined`.
+	 */
+	function getNative(object, key) {
+	  var value = getValue(object, key);
+	  return baseIsNative(value) ? value : undefined;
+	}
+
+	module.exports = getNative;
+
+
+/***/ },
+/* 472 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isFunction = __webpack_require__(473),
+	    isMasked = __webpack_require__(481),
+	    isObject = __webpack_require__(480),
+	    toSource = __webpack_require__(483);
+
+	/**
+	 * Used to match `RegExp`
+	 * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+	 */
+	var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+
+	/** Used to detect host constructors (Safari). */
+	var reIsHostCtor = /^\[object .+?Constructor\]$/;
+
+	/** Used for built-in method references. */
+	var funcProto = Function.prototype,
+	    objectProto = Object.prototype;
+
+	/** Used to resolve the decompiled source of functions. */
+	var funcToString = funcProto.toString;
+
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+
+	/** Used to detect if a method is native. */
+	var reIsNative = RegExp('^' +
+	  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+	  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+	);
+
+	/**
+	 * The base implementation of `_.isNative` without bad shim checks.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a native function,
+	 *  else `false`.
+	 */
+	function baseIsNative(value) {
+	  if (!isObject(value) || isMasked(value)) {
+	    return false;
+	  }
+	  var pattern = isFunction(value) ? reIsNative : reIsHostCtor;
+	  return pattern.test(toSource(value));
+	}
+
+	module.exports = baseIsNative;
+
+
+/***/ },
+/* 473 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseGetTag = __webpack_require__(474),
+	    isObject = __webpack_require__(480);
+
+	/** `Object#toString` result references. */
+	var asyncTag = '[object AsyncFunction]',
+	    funcTag = '[object Function]',
+	    genTag = '[object GeneratorFunction]',
+	    proxyTag = '[object Proxy]';
+
+	/**
+	 * Checks if `value` is classified as a `Function` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+	 * @example
+	 *
+	 * _.isFunction(_);
+	 * // => true
+	 *
+	 * _.isFunction(/abc/);
+	 * // => false
+	 */
+	function isFunction(value) {
+	  if (!isObject(value)) {
+	    return false;
+	  }
+	  // The use of `Object#toString` avoids issues with the `typeof` operator
+	  // in Safari 9 which returns 'object' for typed arrays and other constructors.
+	  var tag = baseGetTag(value);
+	  return tag == funcTag || tag == genTag || tag == asyncTag || tag == proxyTag;
+	}
+
+	module.exports = isFunction;
+
+
+/***/ },
+/* 474 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Symbol = __webpack_require__(475),
+	    getRawTag = __webpack_require__(478),
+	    objectToString = __webpack_require__(479);
+
+	/** `Object#toString` result references. */
+	var nullTag = '[object Null]',
+	    undefinedTag = '[object Undefined]';
+
+	/** Built-in value references. */
+	var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+
+	/**
+	 * The base implementation of `getTag` without fallbacks for buggy environments.
+	 *
+	 * @private
+	 * @param {*} value The value to query.
+	 * @returns {string} Returns the `toStringTag`.
+	 */
+	function baseGetTag(value) {
+	  if (value == null) {
+	    return value === undefined ? undefinedTag : nullTag;
+	  }
+	  return (symToStringTag && symToStringTag in Object(value))
+	    ? getRawTag(value)
+	    : objectToString(value);
+	}
+
+	module.exports = baseGetTag;
+
+
+/***/ },
+/* 475 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var root = __webpack_require__(476);
+
+	/** Built-in value references. */
+	var Symbol = root.Symbol;
+
+	module.exports = Symbol;
+
+
+/***/ },
+/* 476 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var freeGlobal = __webpack_require__(477);
+
+	/** Detect free variable `self`. */
+	var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+	/** Used as a reference to the global object. */
+	var root = freeGlobal || freeSelf || Function('return this')();
+
+	module.exports = root;
+
+
+/***/ },
+/* 477 */
+/***/ function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
+	var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+
+	module.exports = freeGlobal;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 478 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Symbol = __webpack_require__(475);
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+
+	/**
+	 * Used to resolve the
+	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var nativeObjectToString = objectProto.toString;
+
+	/** Built-in value references. */
+	var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+
+	/**
+	 * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
+	 *
+	 * @private
+	 * @param {*} value The value to query.
+	 * @returns {string} Returns the raw `toStringTag`.
+	 */
+	function getRawTag(value) {
+	  var isOwn = hasOwnProperty.call(value, symToStringTag),
+	      tag = value[symToStringTag];
+
+	  try {
+	    value[symToStringTag] = undefined;
+	    var unmasked = true;
+	  } catch (e) {}
+
+	  var result = nativeObjectToString.call(value);
+	  if (unmasked) {
+	    if (isOwn) {
+	      value[symToStringTag] = tag;
+	    } else {
+	      delete value[symToStringTag];
+	    }
+	  }
+	  return result;
+	}
+
+	module.exports = getRawTag;
+
+
+/***/ },
+/* 479 */
+/***/ function(module, exports) {
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+
+	/**
+	 * Used to resolve the
+	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var nativeObjectToString = objectProto.toString;
+
+	/**
+	 * Converts `value` to a string using `Object.prototype.toString`.
+	 *
+	 * @private
+	 * @param {*} value The value to convert.
+	 * @returns {string} Returns the converted string.
+	 */
+	function objectToString(value) {
+	  return nativeObjectToString.call(value);
+	}
+
+	module.exports = objectToString;
+
+
+/***/ },
+/* 480 */
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is the
+	 * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+	 * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+	 * @example
+	 *
+	 * _.isObject({});
+	 * // => true
+	 *
+	 * _.isObject([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObject(_.noop);
+	 * // => true
+	 *
+	 * _.isObject(null);
+	 * // => false
+	 */
+	function isObject(value) {
+	  var type = typeof value;
+	  return value != null && (type == 'object' || type == 'function');
+	}
+
+	module.exports = isObject;
+
+
+/***/ },
+/* 481 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var coreJsData = __webpack_require__(482);
+
+	/** Used to detect methods masquerading as native. */
+	var maskSrcKey = (function() {
+	  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+	  return uid ? ('Symbol(src)_1.' + uid) : '';
+	}());
+
+	/**
+	 * Checks if `func` has its source masked.
+	 *
+	 * @private
+	 * @param {Function} func The function to check.
+	 * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+	 */
+	function isMasked(func) {
+	  return !!maskSrcKey && (maskSrcKey in func);
+	}
+
+	module.exports = isMasked;
+
+
+/***/ },
+/* 482 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var root = __webpack_require__(476);
+
+	/** Used to detect overreaching core-js shims. */
+	var coreJsData = root['__core-js_shared__'];
+
+	module.exports = coreJsData;
+
+
+/***/ },
+/* 483 */
+/***/ function(module, exports) {
+
+	/** Used for built-in method references. */
+	var funcProto = Function.prototype;
+
+	/** Used to resolve the decompiled source of functions. */
+	var funcToString = funcProto.toString;
+
+	/**
+	 * Converts `func` to its source code.
+	 *
+	 * @private
+	 * @param {Function} func The function to convert.
+	 * @returns {string} Returns the source code.
+	 */
+	function toSource(func) {
+	  if (func != null) {
+	    try {
+	      return funcToString.call(func);
+	    } catch (e) {}
+	    try {
+	      return (func + '');
+	    } catch (e) {}
+	  }
+	  return '';
+	}
+
+	module.exports = toSource;
+
+
+/***/ },
+/* 484 */
+/***/ function(module, exports) {
+
+	/**
+	 * Gets the value at `key` of `object`.
+	 *
+	 * @private
+	 * @param {Object} [object] The object to query.
+	 * @param {string} key The key of the property to get.
+	 * @returns {*} Returns the property value.
+	 */
+	function getValue(object, key) {
+	  return object == null ? undefined : object[key];
+	}
+
+	module.exports = getValue;
+
+
+/***/ },
+/* 485 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var mapCacheClear = __webpack_require__(486),
+	    mapCacheDelete = __webpack_require__(494),
+	    mapCacheGet = __webpack_require__(497),
+	    mapCacheHas = __webpack_require__(498),
+	    mapCacheSet = __webpack_require__(499);
+
+	/**
+	 * Creates a map cache object to store key-value pairs.
+	 *
+	 * @private
+	 * @constructor
+	 * @param {Array} [entries] The key-value pairs to cache.
+	 */
+	function MapCache(entries) {
+	  var index = -1,
+	      length = entries == null ? 0 : entries.length;
+
+	  this.clear();
+	  while (++index < length) {
+	    var entry = entries[index];
+	    this.set(entry[0], entry[1]);
+	  }
+	}
+
+	// Add methods to `MapCache`.
+	MapCache.prototype.clear = mapCacheClear;
+	MapCache.prototype['delete'] = mapCacheDelete;
+	MapCache.prototype.get = mapCacheGet;
+	MapCache.prototype.has = mapCacheHas;
+	MapCache.prototype.set = mapCacheSet;
+
+	module.exports = MapCache;
+
+
+/***/ },
+/* 486 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Hash = __webpack_require__(487),
+	    ListCache = __webpack_require__(457),
+	    Map = __webpack_require__(470);
+
+	/**
+	 * Removes all key-value entries from the map.
+	 *
+	 * @private
+	 * @name clear
+	 * @memberOf MapCache
+	 */
+	function mapCacheClear() {
+	  this.size = 0;
+	  this.__data__ = {
+	    'hash': new Hash,
+	    'map': new (Map || ListCache),
+	    'string': new Hash
+	  };
+	}
+
+	module.exports = mapCacheClear;
+
+
+/***/ },
+/* 487 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var hashClear = __webpack_require__(488),
+	    hashDelete = __webpack_require__(490),
+	    hashGet = __webpack_require__(491),
+	    hashHas = __webpack_require__(492),
+	    hashSet = __webpack_require__(493);
+
+	/**
+	 * Creates a hash object.
+	 *
+	 * @private
+	 * @constructor
+	 * @param {Array} [entries] The key-value pairs to cache.
+	 */
+	function Hash(entries) {
+	  var index = -1,
+	      length = entries == null ? 0 : entries.length;
+
+	  this.clear();
+	  while (++index < length) {
+	    var entry = entries[index];
+	    this.set(entry[0], entry[1]);
+	  }
+	}
+
+	// Add methods to `Hash`.
+	Hash.prototype.clear = hashClear;
+	Hash.prototype['delete'] = hashDelete;
+	Hash.prototype.get = hashGet;
+	Hash.prototype.has = hashHas;
+	Hash.prototype.set = hashSet;
+
+	module.exports = Hash;
+
+
+/***/ },
+/* 488 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var nativeCreate = __webpack_require__(489);
+
+	/**
+	 * Removes all key-value entries from the hash.
+	 *
+	 * @private
+	 * @name clear
+	 * @memberOf Hash
+	 */
+	function hashClear() {
+	  this.__data__ = nativeCreate ? nativeCreate(null) : {};
+	  this.size = 0;
+	}
+
+	module.exports = hashClear;
+
+
+/***/ },
+/* 489 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(471);
+
+	/* Built-in method references that are verified to be native. */
+	var nativeCreate = getNative(Object, 'create');
+
+	module.exports = nativeCreate;
+
+
+/***/ },
+/* 490 */
+/***/ function(module, exports) {
+
+	/**
+	 * Removes `key` and its value from the hash.
+	 *
+	 * @private
+	 * @name delete
+	 * @memberOf Hash
+	 * @param {Object} hash The hash to modify.
+	 * @param {string} key The key of the value to remove.
+	 * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+	 */
+	function hashDelete(key) {
+	  var result = this.has(key) && delete this.__data__[key];
+	  this.size -= result ? 1 : 0;
+	  return result;
+	}
+
+	module.exports = hashDelete;
+
+
+/***/ },
+/* 491 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var nativeCreate = __webpack_require__(489);
+
+	/** Used to stand-in for `undefined` hash values. */
+	var HASH_UNDEFINED = '__lodash_hash_undefined__';
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+
+	/**
+	 * Gets the hash value for `key`.
+	 *
+	 * @private
+	 * @name get
+	 * @memberOf Hash
+	 * @param {string} key The key of the value to get.
+	 * @returns {*} Returns the entry value.
+	 */
+	function hashGet(key) {
+	  var data = this.__data__;
+	  if (nativeCreate) {
+	    var result = data[key];
+	    return result === HASH_UNDEFINED ? undefined : result;
+	  }
+	  return hasOwnProperty.call(data, key) ? data[key] : undefined;
+	}
+
+	module.exports = hashGet;
+
+
+/***/ },
+/* 492 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var nativeCreate = __webpack_require__(489);
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+
+	/**
+	 * Checks if a hash value for `key` exists.
+	 *
+	 * @private
+	 * @name has
+	 * @memberOf Hash
+	 * @param {string} key The key of the entry to check.
+	 * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+	 */
+	function hashHas(key) {
+	  var data = this.__data__;
+	  return nativeCreate ? (data[key] !== undefined) : hasOwnProperty.call(data, key);
+	}
+
+	module.exports = hashHas;
+
+
+/***/ },
+/* 493 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var nativeCreate = __webpack_require__(489);
+
+	/** Used to stand-in for `undefined` hash values. */
+	var HASH_UNDEFINED = '__lodash_hash_undefined__';
+
+	/**
+	 * Sets the hash `key` to `value`.
+	 *
+	 * @private
+	 * @name set
+	 * @memberOf Hash
+	 * @param {string} key The key of the value to set.
+	 * @param {*} value The value to set.
+	 * @returns {Object} Returns the hash instance.
+	 */
+	function hashSet(key, value) {
+	  var data = this.__data__;
+	  this.size += this.has(key) ? 0 : 1;
+	  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
+	  return this;
+	}
+
+	module.exports = hashSet;
+
+
+/***/ },
+/* 494 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getMapData = __webpack_require__(495);
+
+	/**
+	 * Removes `key` and its value from the map.
+	 *
+	 * @private
+	 * @name delete
+	 * @memberOf MapCache
+	 * @param {string} key The key of the value to remove.
+	 * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+	 */
+	function mapCacheDelete(key) {
+	  var result = getMapData(this, key)['delete'](key);
+	  this.size -= result ? 1 : 0;
+	  return result;
+	}
+
+	module.exports = mapCacheDelete;
+
+
+/***/ },
+/* 495 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isKeyable = __webpack_require__(496);
+
+	/**
+	 * Gets the data for `map`.
+	 *
+	 * @private
+	 * @param {Object} map The map to query.
+	 * @param {string} key The reference key.
+	 * @returns {*} Returns the map data.
+	 */
+	function getMapData(map, key) {
+	  var data = map.__data__;
+	  return isKeyable(key)
+	    ? data[typeof key == 'string' ? 'string' : 'hash']
+	    : data.map;
+	}
+
+	module.exports = getMapData;
+
+
+/***/ },
+/* 496 */
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is suitable for use as unique object key.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+	 */
+	function isKeyable(value) {
+	  var type = typeof value;
+	  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
+	    ? (value !== '__proto__')
+	    : (value === null);
+	}
+
+	module.exports = isKeyable;
+
+
+/***/ },
+/* 497 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getMapData = __webpack_require__(495);
+
+	/**
+	 * Gets the map value for `key`.
+	 *
+	 * @private
+	 * @name get
+	 * @memberOf MapCache
+	 * @param {string} key The key of the value to get.
+	 * @returns {*} Returns the entry value.
+	 */
+	function mapCacheGet(key) {
+	  return getMapData(this, key).get(key);
+	}
+
+	module.exports = mapCacheGet;
+
+
+/***/ },
+/* 498 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getMapData = __webpack_require__(495);
+
+	/**
+	 * Checks if a map value for `key` exists.
+	 *
+	 * @private
+	 * @name has
+	 * @memberOf MapCache
+	 * @param {string} key The key of the entry to check.
+	 * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+	 */
+	function mapCacheHas(key) {
+	  return getMapData(this, key).has(key);
+	}
+
+	module.exports = mapCacheHas;
+
+
+/***/ },
+/* 499 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getMapData = __webpack_require__(495);
+
+	/**
+	 * Sets the map `key` to `value`.
+	 *
+	 * @private
+	 * @name set
+	 * @memberOf MapCache
+	 * @param {string} key The key of the value to set.
+	 * @param {*} value The value to set.
+	 * @returns {Object} Returns the map cache instance.
+	 */
+	function mapCacheSet(key, value) {
+	  var data = getMapData(this, key),
+	      size = data.size;
+
+	  data.set(key, value);
+	  this.size += data.size == size ? 0 : 1;
+	  return this;
+	}
+
+	module.exports = mapCacheSet;
+
+
+/***/ },
+/* 500 */
+/***/ function(module, exports) {
+
+	/**
+	 * A specialized version of `_.forEach` for arrays without support for
+	 * iteratee shorthands.
+	 *
+	 * @private
+	 * @param {Array} [array] The array to iterate over.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @returns {Array} Returns `array`.
+	 */
+	function arrayEach(array, iteratee) {
+	  var index = -1,
+	      length = array == null ? 0 : array.length;
+
+	  while (++index < length) {
+	    if (iteratee(array[index], index, array) === false) {
+	      break;
+	    }
+	  }
+	  return array;
+	}
+
+	module.exports = arrayEach;
+
+
+/***/ },
+/* 501 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseAssignValue = __webpack_require__(502),
+	    eq = __webpack_require__(461);
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+
+	/**
+	 * Assigns `value` to `key` of `object` if the existing value is not equivalent
+	 * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+	 * for equality comparisons.
+	 *
+	 * @private
+	 * @param {Object} object The object to modify.
+	 * @param {string} key The key of the property to assign.
+	 * @param {*} value The value to assign.
+	 */
+	function assignValue(object, key, value) {
+	  var objValue = object[key];
+	  if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) ||
+	      (value === undefined && !(key in object))) {
+	    baseAssignValue(object, key, value);
+	  }
+	}
+
+	module.exports = assignValue;
+
+
+/***/ },
+/* 502 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var defineProperty = __webpack_require__(503);
+
+	/**
+	 * The base implementation of `assignValue` and `assignMergeValue` without
+	 * value checks.
+	 *
+	 * @private
+	 * @param {Object} object The object to modify.
+	 * @param {string} key The key of the property to assign.
+	 * @param {*} value The value to assign.
+	 */
+	function baseAssignValue(object, key, value) {
+	  if (key == '__proto__' && defineProperty) {
+	    defineProperty(object, key, {
+	      'configurable': true,
+	      'enumerable': true,
+	      'value': value,
+	      'writable': true
+	    });
+	  } else {
+	    object[key] = value;
+	  }
+	}
+
+	module.exports = baseAssignValue;
+
+
+/***/ },
+/* 503 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(471);
+
+	var defineProperty = (function() {
+	  try {
+	    var func = getNative(Object, 'defineProperty');
+	    func({}, '', {});
+	    return func;
+	  } catch (e) {}
+	}());
+
+	module.exports = defineProperty;
+
+
+/***/ },
+/* 504 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var copyObject = __webpack_require__(505),
+	    keys = __webpack_require__(506);
+
+	/**
+	 * The base implementation of `_.assign` without support for multiple sources
+	 * or `customizer` functions.
+	 *
+	 * @private
+	 * @param {Object} object The destination object.
+	 * @param {Object} source The source object.
+	 * @returns {Object} Returns `object`.
+	 */
+	function baseAssign(object, source) {
+	  return object && copyObject(source, keys(source), object);
+	}
+
+	module.exports = baseAssign;
+
+
+/***/ },
+/* 505 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assignValue = __webpack_require__(501),
+	    baseAssignValue = __webpack_require__(502);
+
+	/**
+	 * Copies properties of `source` to `object`.
+	 *
+	 * @private
+	 * @param {Object} source The object to copy properties from.
+	 * @param {Array} props The property identifiers to copy.
+	 * @param {Object} [object={}] The object to copy properties to.
+	 * @param {Function} [customizer] The function to customize copied values.
+	 * @returns {Object} Returns `object`.
+	 */
+	function copyObject(source, props, object, customizer) {
+	  var isNew = !object;
+	  object || (object = {});
+
+	  var index = -1,
+	      length = props.length;
+
+	  while (++index < length) {
+	    var key = props[index];
+
+	    var newValue = customizer
+	      ? customizer(object[key], source[key], key, object, source)
+	      : undefined;
+
+	    if (newValue === undefined) {
+	      newValue = source[key];
+	    }
+	    if (isNew) {
+	      baseAssignValue(object, key, newValue);
+	    } else {
+	      assignValue(object, key, newValue);
+	    }
+	  }
+	  return object;
+	}
+
+	module.exports = copyObject;
+
+
+/***/ },
+/* 506 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var arrayLikeKeys = __webpack_require__(507),
+	    baseKeys = __webpack_require__(521),
+	    isArrayLike = __webpack_require__(525);
+
+	/**
+	 * Creates an array of the own enumerable property names of `object`.
+	 *
+	 * **Note:** Non-object values are coerced to objects. See the
+	 * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+	 * for more details.
+	 *
+	 * @static
+	 * @since 0.1.0
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 *   this.b = 2;
+	 * }
+	 *
+	 * Foo.prototype.c = 3;
+	 *
+	 * _.keys(new Foo);
+	 * // => ['a', 'b'] (iteration order is not guaranteed)
+	 *
+	 * _.keys('hi');
+	 * // => ['0', '1']
+	 */
+	function keys(object) {
+	  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
+	}
+
+	module.exports = keys;
+
+
+/***/ },
+/* 507 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseTimes = __webpack_require__(508),
+	    isArguments = __webpack_require__(509),
+	    isArray = __webpack_require__(512),
+	    isBuffer = __webpack_require__(513),
+	    isIndex = __webpack_require__(515),
+	    isTypedArray = __webpack_require__(516);
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+
+	/**
+	 * Creates an array of the enumerable property names of the array-like `value`.
+	 *
+	 * @private
+	 * @param {*} value The value to query.
+	 * @param {boolean} inherited Specify returning inherited property names.
+	 * @returns {Array} Returns the array of property names.
+	 */
+	function arrayLikeKeys(value, inherited) {
+	  var isArr = isArray(value),
+	      isArg = !isArr && isArguments(value),
+	      isBuff = !isArr && !isArg && isBuffer(value),
+	      isType = !isArr && !isArg && !isBuff && isTypedArray(value),
+	      skipIndexes = isArr || isArg || isBuff || isType,
+	      result = skipIndexes ? baseTimes(value.length, String) : [],
+	      length = result.length;
+
+	  for (var key in value) {
+	    if ((inherited || hasOwnProperty.call(value, key)) &&
+	        !(skipIndexes && (
+	           // Safari 9 has enumerable `arguments.length` in strict mode.
+	           key == 'length' ||
+	           // Node.js 0.10 has enumerable non-index properties on buffers.
+	           (isBuff && (key == 'offset' || key == 'parent')) ||
+	           // PhantomJS 2 has enumerable non-index properties on typed arrays.
+	           (isType && (key == 'buffer' || key == 'byteLength' || key == 'byteOffset')) ||
+	           // Skip index properties.
+	           isIndex(key, length)
+	        ))) {
+	      result.push(key);
+	    }
+	  }
+	  return result;
+	}
+
+	module.exports = arrayLikeKeys;
+
+
+/***/ },
+/* 508 */
+/***/ function(module, exports) {
+
+	/**
+	 * The base implementation of `_.times` without support for iteratee shorthands
+	 * or max array length checks.
+	 *
+	 * @private
+	 * @param {number} n The number of times to invoke `iteratee`.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @returns {Array} Returns the array of results.
+	 */
+	function baseTimes(n, iteratee) {
+	  var index = -1,
+	      result = Array(n);
+
+	  while (++index < n) {
+	    result[index] = iteratee(index);
+	  }
+	  return result;
+	}
+
+	module.exports = baseTimes;
+
+
+/***/ },
+/* 509 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseIsArguments = __webpack_require__(510),
+	    isObjectLike = __webpack_require__(511);
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+
+	/** Built-in value references. */
+	var propertyIsEnumerable = objectProto.propertyIsEnumerable;
+
+	/**
+	 * Checks if `value` is likely an `arguments` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+	 *  else `false`.
+	 * @example
+	 *
+	 * _.isArguments(function() { return arguments; }());
+	 * // => true
+	 *
+	 * _.isArguments([1, 2, 3]);
+	 * // => false
+	 */
+	var isArguments = baseIsArguments(function() { return arguments; }()) ? baseIsArguments : function(value) {
+	  return isObjectLike(value) && hasOwnProperty.call(value, 'callee') &&
+	    !propertyIsEnumerable.call(value, 'callee');
+	};
+
+	module.exports = isArguments;
+
+
+/***/ },
+/* 510 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseGetTag = __webpack_require__(474),
+	    isObjectLike = __webpack_require__(511);
+
+	/** `Object#toString` result references. */
+	var argsTag = '[object Arguments]';
+
+	/**
+	 * The base implementation of `_.isArguments`.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+	 */
+	function baseIsArguments(value) {
+	  return isObjectLike(value) && baseGetTag(value) == argsTag;
+	}
+
+	module.exports = baseIsArguments;
+
+
+/***/ },
+/* 511 */
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is object-like. A value is object-like if it's not `null`
+	 * and has a `typeof` result of "object".
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+	 * @example
+	 *
+	 * _.isObjectLike({});
+	 * // => true
+	 *
+	 * _.isObjectLike([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObjectLike(_.noop);
+	 * // => false
+	 *
+	 * _.isObjectLike(null);
+	 * // => false
+	 */
+	function isObjectLike(value) {
+	  return value != null && typeof value == 'object';
+	}
+
+	module.exports = isObjectLike;
+
+
+/***/ },
+/* 512 */
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is classified as an `Array` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+	 * @example
+	 *
+	 * _.isArray([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArray(document.body.children);
+	 * // => false
+	 *
+	 * _.isArray('abc');
+	 * // => false
+	 *
+	 * _.isArray(_.noop);
+	 * // => false
+	 */
+	var isArray = Array.isArray;
+
+	module.exports = isArray;
+
+
+/***/ },
+/* 513 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(476),
+	    stubFalse = __webpack_require__(514);
+
+	/** Detect free variable `exports`. */
+	var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
+
+	/** Detect free variable `module`. */
+	var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
+
+	/** Detect the popular CommonJS extension `module.exports`. */
+	var moduleExports = freeModule && freeModule.exports === freeExports;
+
+	/** Built-in value references. */
+	var Buffer = moduleExports ? root.Buffer : undefined;
+
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined;
+
+	/**
+	 * Checks if `value` is a buffer.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.3.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
+	 * @example
+	 *
+	 * _.isBuffer(new Buffer(2));
+	 * // => true
+	 *
+	 * _.isBuffer(new Uint8Array(2));
+	 * // => false
+	 */
+	var isBuffer = nativeIsBuffer || stubFalse;
+
+	module.exports = isBuffer;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(342)(module)))
+
+/***/ },
+/* 514 */
+/***/ function(module, exports) {
+
+	/**
+	 * This method returns `false`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.13.0
+	 * @category Util
+	 * @returns {boolean} Returns `false`.
+	 * @example
+	 *
+	 * _.times(2, _.stubFalse);
+	 * // => [false, false]
+	 */
+	function stubFalse() {
+	  return false;
+	}
+
+	module.exports = stubFalse;
+
+
+/***/ },
+/* 515 */
+/***/ function(module, exports) {
+
+	/** Used as references for various `Number` constants. */
+	var MAX_SAFE_INTEGER = 9007199254740991;
+
+	/** Used to detect unsigned integer values. */
+	var reIsUint = /^(?:0|[1-9]\d*)$/;
+
+	/**
+	 * Checks if `value` is a valid array-like index.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+	 * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+	 */
+	function isIndex(value, length) {
+	  length = length == null ? MAX_SAFE_INTEGER : length;
+	  return !!length &&
+	    (typeof value == 'number' || reIsUint.test(value)) &&
+	    (value > -1 && value % 1 == 0 && value < length);
+	}
+
+	module.exports = isIndex;
+
+
+/***/ },
+/* 516 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseIsTypedArray = __webpack_require__(517),
+	    baseUnary = __webpack_require__(519),
+	    nodeUtil = __webpack_require__(520);
+
+	/* Node.js helper references. */
+	var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
+
+	/**
+	 * Checks if `value` is classified as a typed array.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 3.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
+	 * @example
+	 *
+	 * _.isTypedArray(new Uint8Array);
+	 * // => true
+	 *
+	 * _.isTypedArray([]);
+	 * // => false
+	 */
+	var isTypedArray = nodeIsTypedArray ? baseUnary(nodeIsTypedArray) : baseIsTypedArray;
+
+	module.exports = isTypedArray;
+
+
+/***/ },
+/* 517 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseGetTag = __webpack_require__(474),
+	    isLength = __webpack_require__(518),
+	    isObjectLike = __webpack_require__(511);
+
+	/** `Object#toString` result references. */
+	var argsTag = '[object Arguments]',
+	    arrayTag = '[object Array]',
+	    boolTag = '[object Boolean]',
+	    dateTag = '[object Date]',
+	    errorTag = '[object Error]',
+	    funcTag = '[object Function]',
+	    mapTag = '[object Map]',
+	    numberTag = '[object Number]',
+	    objectTag = '[object Object]',
+	    regexpTag = '[object RegExp]',
+	    setTag = '[object Set]',
+	    stringTag = '[object String]',
+	    weakMapTag = '[object WeakMap]';
+
+	var arrayBufferTag = '[object ArrayBuffer]',
+	    dataViewTag = '[object DataView]',
+	    float32Tag = '[object Float32Array]',
+	    float64Tag = '[object Float64Array]',
+	    int8Tag = '[object Int8Array]',
+	    int16Tag = '[object Int16Array]',
+	    int32Tag = '[object Int32Array]',
+	    uint8Tag = '[object Uint8Array]',
+	    uint8ClampedTag = '[object Uint8ClampedArray]',
+	    uint16Tag = '[object Uint16Array]',
+	    uint32Tag = '[object Uint32Array]';
+
+	/** Used to identify `toStringTag` values of typed arrays. */
+	var typedArrayTags = {};
+	typedArrayTags[float32Tag] = typedArrayTags[float64Tag] =
+	typedArrayTags[int8Tag] = typedArrayTags[int16Tag] =
+	typedArrayTags[int32Tag] = typedArrayTags[uint8Tag] =
+	typedArrayTags[uint8ClampedTag] = typedArrayTags[uint16Tag] =
+	typedArrayTags[uint32Tag] = true;
+	typedArrayTags[argsTag] = typedArrayTags[arrayTag] =
+	typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] =
+	typedArrayTags[dataViewTag] = typedArrayTags[dateTag] =
+	typedArrayTags[errorTag] = typedArrayTags[funcTag] =
+	typedArrayTags[mapTag] = typedArrayTags[numberTag] =
+	typedArrayTags[objectTag] = typedArrayTags[regexpTag] =
+	typedArrayTags[setTag] = typedArrayTags[stringTag] =
+	typedArrayTags[weakMapTag] = false;
+
+	/**
+	 * The base implementation of `_.isTypedArray` without Node.js optimizations.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
+	 */
+	function baseIsTypedArray(value) {
+	  return isObjectLike(value) &&
+	    isLength(value.length) && !!typedArrayTags[baseGetTag(value)];
+	}
+
+	module.exports = baseIsTypedArray;
+
+
+/***/ },
+/* 518 */
+/***/ function(module, exports) {
+
+	/** Used as references for various `Number` constants. */
+	var MAX_SAFE_INTEGER = 9007199254740991;
+
+	/**
+	 * Checks if `value` is a valid array-like length.
+	 *
+	 * **Note:** This method is loosely based on
+	 * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+	 * @example
+	 *
+	 * _.isLength(3);
+	 * // => true
+	 *
+	 * _.isLength(Number.MIN_VALUE);
+	 * // => false
+	 *
+	 * _.isLength(Infinity);
+	 * // => false
+	 *
+	 * _.isLength('3');
+	 * // => false
+	 */
+	function isLength(value) {
+	  return typeof value == 'number' &&
+	    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+	}
+
+	module.exports = isLength;
+
+
+/***/ },
+/* 519 */
+/***/ function(module, exports) {
+
+	/**
+	 * The base implementation of `_.unary` without support for storing metadata.
+	 *
+	 * @private
+	 * @param {Function} func The function to cap arguments for.
+	 * @returns {Function} Returns the new capped function.
+	 */
+	function baseUnary(func) {
+	  return function(value) {
+	    return func(value);
+	  };
+	}
+
+	module.exports = baseUnary;
+
+
+/***/ },
+/* 520 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(477);
+
+	/** Detect free variable `exports`. */
+	var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
+
+	/** Detect free variable `module`. */
+	var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
+
+	/** Detect the popular CommonJS extension `module.exports`. */
+	var moduleExports = freeModule && freeModule.exports === freeExports;
+
+	/** Detect free variable `process` from Node.js. */
+	var freeProcess = moduleExports && freeGlobal.process;
+
+	/** Used to access faster Node.js helpers. */
+	var nodeUtil = (function() {
+	  try {
+	    return freeProcess && freeProcess.binding && freeProcess.binding('util');
+	  } catch (e) {}
+	}());
+
+	module.exports = nodeUtil;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(342)(module)))
+
+/***/ },
+/* 521 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isPrototype = __webpack_require__(522),
+	    nativeKeys = __webpack_require__(523);
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+
+	/**
+	 * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 */
+	function baseKeys(object) {
+	  if (!isPrototype(object)) {
+	    return nativeKeys(object);
+	  }
+	  var result = [];
+	  for (var key in Object(object)) {
+	    if (hasOwnProperty.call(object, key) && key != 'constructor') {
+	      result.push(key);
+	    }
+	  }
+	  return result;
+	}
+
+	module.exports = baseKeys;
+
+
+/***/ },
+/* 522 */
+/***/ function(module, exports) {
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+
+	/**
+	 * Checks if `value` is likely a prototype object.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
+	 */
+	function isPrototype(value) {
+	  var Ctor = value && value.constructor,
+	      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
+
+	  return value === proto;
+	}
+
+	module.exports = isPrototype;
+
+
+/***/ },
+/* 523 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var overArg = __webpack_require__(524);
+
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeKeys = overArg(Object.keys, Object);
+
+	module.exports = nativeKeys;
+
+
+/***/ },
+/* 524 */
+/***/ function(module, exports) {
+
+	/**
+	 * Creates a unary function that invokes `func` with its argument transformed.
+	 *
+	 * @private
+	 * @param {Function} func The function to wrap.
+	 * @param {Function} transform The argument transform.
+	 * @returns {Function} Returns the new function.
+	 */
+	function overArg(func, transform) {
+	  return function(arg) {
+	    return func(transform(arg));
+	  };
+	}
+
+	module.exports = overArg;
+
+
+/***/ },
+/* 525 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isFunction = __webpack_require__(473),
+	    isLength = __webpack_require__(518);
+
+	/**
+	 * Checks if `value` is array-like. A value is considered array-like if it's
+	 * not a function and has a `value.length` that's an integer greater than or
+	 * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+	 * @example
+	 *
+	 * _.isArrayLike([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArrayLike(document.body.children);
+	 * // => true
+	 *
+	 * _.isArrayLike('abc');
+	 * // => true
+	 *
+	 * _.isArrayLike(_.noop);
+	 * // => false
+	 */
+	function isArrayLike(value) {
+	  return value != null && isLength(value.length) && !isFunction(value);
+	}
+
+	module.exports = isArrayLike;
+
+
+/***/ },
+/* 526 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var copyObject = __webpack_require__(505),
+	    keysIn = __webpack_require__(527);
+
+	/**
+	 * The base implementation of `_.assignIn` without support for multiple sources
+	 * or `customizer` functions.
+	 *
+	 * @private
+	 * @param {Object} object The destination object.
+	 * @param {Object} source The source object.
+	 * @returns {Object} Returns `object`.
+	 */
+	function baseAssignIn(object, source) {
+	  return object && copyObject(source, keysIn(source), object);
+	}
+
+	module.exports = baseAssignIn;
+
+
+/***/ },
+/* 527 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var arrayLikeKeys = __webpack_require__(507),
+	    baseKeysIn = __webpack_require__(528),
+	    isArrayLike = __webpack_require__(525);
+
+	/**
+	 * Creates an array of the own and inherited enumerable property names of `object`.
+	 *
+	 * **Note:** Non-object values are coerced to objects.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 3.0.0
+	 * @category Object
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 *   this.b = 2;
+	 * }
+	 *
+	 * Foo.prototype.c = 3;
+	 *
+	 * _.keysIn(new Foo);
+	 * // => ['a', 'b', 'c'] (iteration order is not guaranteed)
+	 */
+	function keysIn(object) {
+	  return isArrayLike(object) ? arrayLikeKeys(object, true) : baseKeysIn(object);
+	}
+
+	module.exports = keysIn;
+
+
+/***/ },
+/* 528 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObject = __webpack_require__(480),
+	    isPrototype = __webpack_require__(522),
+	    nativeKeysIn = __webpack_require__(529);
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+
+	/**
+	 * The base implementation of `_.keysIn` which doesn't treat sparse arrays as dense.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 */
+	function baseKeysIn(object) {
+	  if (!isObject(object)) {
+	    return nativeKeysIn(object);
+	  }
+	  var isProto = isPrototype(object),
+	      result = [];
+
+	  for (var key in object) {
+	    if (!(key == 'constructor' && (isProto || !hasOwnProperty.call(object, key)))) {
+	      result.push(key);
+	    }
+	  }
+	  return result;
+	}
+
+	module.exports = baseKeysIn;
+
+
+/***/ },
+/* 529 */
+/***/ function(module, exports) {
+
+	/**
+	 * This function is like
+	 * [`Object.keys`](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+	 * except that it includes inherited enumerable properties.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 */
+	function nativeKeysIn(object) {
+	  var result = [];
+	  if (object != null) {
+	    for (var key in Object(object)) {
+	      result.push(key);
+	    }
+	  }
+	  return result;
+	}
+
+	module.exports = nativeKeysIn;
+
+
+/***/ },
+/* 530 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(476);
+
+	/** Detect free variable `exports`. */
+	var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
+
+	/** Detect free variable `module`. */
+	var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
+
+	/** Detect the popular CommonJS extension `module.exports`. */
+	var moduleExports = freeModule && freeModule.exports === freeExports;
+
+	/** Built-in value references. */
+	var Buffer = moduleExports ? root.Buffer : undefined,
+	    allocUnsafe = Buffer ? Buffer.allocUnsafe : undefined;
+
+	/**
+	 * Creates a clone of  `buffer`.
+	 *
+	 * @private
+	 * @param {Buffer} buffer The buffer to clone.
+	 * @param {boolean} [isDeep] Specify a deep clone.
+	 * @returns {Buffer} Returns the cloned buffer.
+	 */
+	function cloneBuffer(buffer, isDeep) {
+	  if (isDeep) {
+	    return buffer.slice();
+	  }
+	  var length = buffer.length,
+	      result = allocUnsafe ? allocUnsafe(length) : new buffer.constructor(length);
+
+	  buffer.copy(result);
+	  return result;
+	}
+
+	module.exports = cloneBuffer;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(342)(module)))
+
+/***/ },
+/* 531 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copies the values of `source` to `array`.
+	 *
+	 * @private
+	 * @param {Array} source The array to copy values from.
+	 * @param {Array} [array=[]] The array to copy values to.
+	 * @returns {Array} Returns `array`.
+	 */
+	function copyArray(source, array) {
+	  var index = -1,
+	      length = source.length;
+
+	  array || (array = Array(length));
+	  while (++index < length) {
+	    array[index] = source[index];
+	  }
+	  return array;
+	}
+
+	module.exports = copyArray;
+
+
+/***/ },
+/* 532 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var copyObject = __webpack_require__(505),
+	    getSymbols = __webpack_require__(533);
+
+	/**
+	 * Copies own symbols of `source` to `object`.
+	 *
+	 * @private
+	 * @param {Object} source The object to copy symbols from.
+	 * @param {Object} [object={}] The object to copy symbols to.
+	 * @returns {Object} Returns `object`.
+	 */
+	function copySymbols(source, object) {
+	  return copyObject(source, getSymbols(source), object);
+	}
+
+	module.exports = copySymbols;
+
+
+/***/ },
+/* 533 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var arrayFilter = __webpack_require__(534),
+	    stubArray = __webpack_require__(535);
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+
+	/** Built-in value references. */
+	var propertyIsEnumerable = objectProto.propertyIsEnumerable;
+
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeGetSymbols = Object.getOwnPropertySymbols;
+
+	/**
+	 * Creates an array of the own enumerable symbols of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of symbols.
+	 */
+	var getSymbols = !nativeGetSymbols ? stubArray : function(object) {
+	  if (object == null) {
+	    return [];
+	  }
+	  object = Object(object);
+	  return arrayFilter(nativeGetSymbols(object), function(symbol) {
+	    return propertyIsEnumerable.call(object, symbol);
+	  });
+	};
+
+	module.exports = getSymbols;
+
+
+/***/ },
+/* 534 */
+/***/ function(module, exports) {
+
+	/**
+	 * A specialized version of `_.filter` for arrays without support for
+	 * iteratee shorthands.
+	 *
+	 * @private
+	 * @param {Array} [array] The array to iterate over.
+	 * @param {Function} predicate The function invoked per iteration.
+	 * @returns {Array} Returns the new filtered array.
+	 */
+	function arrayFilter(array, predicate) {
+	  var index = -1,
+	      length = array == null ? 0 : array.length,
+	      resIndex = 0,
+	      result = [];
+
+	  while (++index < length) {
+	    var value = array[index];
+	    if (predicate(value, index, array)) {
+	      result[resIndex++] = value;
+	    }
+	  }
+	  return result;
+	}
+
+	module.exports = arrayFilter;
+
+
+/***/ },
+/* 535 */
+/***/ function(module, exports) {
+
+	/**
+	 * This method returns a new empty array.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.13.0
+	 * @category Util
+	 * @returns {Array} Returns the new empty array.
+	 * @example
+	 *
+	 * var arrays = _.times(2, _.stubArray);
+	 *
+	 * console.log(arrays);
+	 * // => [[], []]
+	 *
+	 * console.log(arrays[0] === arrays[1]);
+	 * // => false
+	 */
+	function stubArray() {
+	  return [];
+	}
+
+	module.exports = stubArray;
+
+
+/***/ },
+/* 536 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var copyObject = __webpack_require__(505),
+	    getSymbolsIn = __webpack_require__(537);
+
+	/**
+	 * Copies own and inherited symbols of `source` to `object`.
+	 *
+	 * @private
+	 * @param {Object} source The object to copy symbols from.
+	 * @param {Object} [object={}] The object to copy symbols to.
+	 * @returns {Object} Returns `object`.
+	 */
+	function copySymbolsIn(source, object) {
+	  return copyObject(source, getSymbolsIn(source), object);
+	}
+
+	module.exports = copySymbolsIn;
+
+
+/***/ },
+/* 537 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var arrayPush = __webpack_require__(538),
+	    getPrototype = __webpack_require__(539),
+	    getSymbols = __webpack_require__(533),
+	    stubArray = __webpack_require__(535);
+
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeGetSymbols = Object.getOwnPropertySymbols;
+
+	/**
+	 * Creates an array of the own and inherited enumerable symbols of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of symbols.
+	 */
+	var getSymbolsIn = !nativeGetSymbols ? stubArray : function(object) {
+	  var result = [];
+	  while (object) {
+	    arrayPush(result, getSymbols(object));
+	    object = getPrototype(object);
+	  }
+	  return result;
+	};
+
+	module.exports = getSymbolsIn;
+
+
+/***/ },
+/* 538 */
+/***/ function(module, exports) {
+
+	/**
+	 * Appends the elements of `values` to `array`.
+	 *
+	 * @private
+	 * @param {Array} array The array to modify.
+	 * @param {Array} values The values to append.
+	 * @returns {Array} Returns `array`.
+	 */
+	function arrayPush(array, values) {
+	  var index = -1,
+	      length = values.length,
+	      offset = array.length;
+
+	  while (++index < length) {
+	    array[offset + index] = values[index];
+	  }
+	  return array;
+	}
+
+	module.exports = arrayPush;
+
+
+/***/ },
+/* 539 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var overArg = __webpack_require__(524);
+
+	/** Built-in value references. */
+	var getPrototype = overArg(Object.getPrototypeOf, Object);
+
+	module.exports = getPrototype;
+
+
+/***/ },
+/* 540 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseGetAllKeys = __webpack_require__(541),
+	    getSymbols = __webpack_require__(533),
+	    keys = __webpack_require__(506);
+
+	/**
+	 * Creates an array of own enumerable property names and symbols of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names and symbols.
+	 */
+	function getAllKeys(object) {
+	  return baseGetAllKeys(object, keys, getSymbols);
+	}
+
+	module.exports = getAllKeys;
+
+
+/***/ },
+/* 541 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var arrayPush = __webpack_require__(538),
+	    isArray = __webpack_require__(512);
+
+	/**
+	 * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
+	 * `keysFunc` and `symbolsFunc` to get the enumerable property names and
+	 * symbols of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {Function} keysFunc The function to get the keys of `object`.
+	 * @param {Function} symbolsFunc The function to get the symbols of `object`.
+	 * @returns {Array} Returns the array of property names and symbols.
+	 */
+	function baseGetAllKeys(object, keysFunc, symbolsFunc) {
+	  var result = keysFunc(object);
+	  return isArray(object) ? result : arrayPush(result, symbolsFunc(object));
+	}
+
+	module.exports = baseGetAllKeys;
+
+
+/***/ },
+/* 542 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseGetAllKeys = __webpack_require__(541),
+	    getSymbolsIn = __webpack_require__(537),
+	    keysIn = __webpack_require__(527);
+
+	/**
+	 * Creates an array of own and inherited enumerable property names and
+	 * symbols of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names and symbols.
+	 */
+	function getAllKeysIn(object) {
+	  return baseGetAllKeys(object, keysIn, getSymbolsIn);
+	}
+
+	module.exports = getAllKeysIn;
+
+
+/***/ },
+/* 543 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var DataView = __webpack_require__(544),
+	    Map = __webpack_require__(470),
+	    Promise = __webpack_require__(545),
+	    Set = __webpack_require__(546),
+	    WeakMap = __webpack_require__(547),
+	    baseGetTag = __webpack_require__(474),
+	    toSource = __webpack_require__(483);
+
+	/** `Object#toString` result references. */
+	var mapTag = '[object Map]',
+	    objectTag = '[object Object]',
+	    promiseTag = '[object Promise]',
+	    setTag = '[object Set]',
+	    weakMapTag = '[object WeakMap]';
+
+	var dataViewTag = '[object DataView]';
+
+	/** Used to detect maps, sets, and weakmaps. */
+	var dataViewCtorString = toSource(DataView),
+	    mapCtorString = toSource(Map),
+	    promiseCtorString = toSource(Promise),
+	    setCtorString = toSource(Set),
+	    weakMapCtorString = toSource(WeakMap);
+
+	/**
+	 * Gets the `toStringTag` of `value`.
+	 *
+	 * @private
+	 * @param {*} value The value to query.
+	 * @returns {string} Returns the `toStringTag`.
+	 */
+	var getTag = baseGetTag;
+
+	// Fallback for data views, maps, sets, and weak maps in IE 11 and promises in Node.js < 6.
+	if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
+	    (Map && getTag(new Map) != mapTag) ||
+	    (Promise && getTag(Promise.resolve()) != promiseTag) ||
+	    (Set && getTag(new Set) != setTag) ||
+	    (WeakMap && getTag(new WeakMap) != weakMapTag)) {
+	  getTag = function(value) {
+	    var result = baseGetTag(value),
+	        Ctor = result == objectTag ? value.constructor : undefined,
+	        ctorString = Ctor ? toSource(Ctor) : '';
+
+	    if (ctorString) {
+	      switch (ctorString) {
+	        case dataViewCtorString: return dataViewTag;
+	        case mapCtorString: return mapTag;
+	        case promiseCtorString: return promiseTag;
+	        case setCtorString: return setTag;
+	        case weakMapCtorString: return weakMapTag;
+	      }
+	    }
+	    return result;
+	  };
+	}
+
+	module.exports = getTag;
+
+
+/***/ },
+/* 544 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(471),
+	    root = __webpack_require__(476);
+
+	/* Built-in method references that are verified to be native. */
+	var DataView = getNative(root, 'DataView');
+
+	module.exports = DataView;
+
+
+/***/ },
+/* 545 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(471),
+	    root = __webpack_require__(476);
+
+	/* Built-in method references that are verified to be native. */
+	var Promise = getNative(root, 'Promise');
+
+	module.exports = Promise;
+
+
+/***/ },
+/* 546 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(471),
+	    root = __webpack_require__(476);
+
+	/* Built-in method references that are verified to be native. */
+	var Set = getNative(root, 'Set');
+
+	module.exports = Set;
+
+
+/***/ },
+/* 547 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(471),
+	    root = __webpack_require__(476);
+
+	/* Built-in method references that are verified to be native. */
+	var WeakMap = getNative(root, 'WeakMap');
+
+	module.exports = WeakMap;
+
+
+/***/ },
+/* 548 */
+/***/ function(module, exports) {
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+
+	/**
+	 * Initializes an array clone.
+	 *
+	 * @private
+	 * @param {Array} array The array to clone.
+	 * @returns {Array} Returns the initialized clone.
+	 */
+	function initCloneArray(array) {
+	  var length = array.length,
+	      result = array.constructor(length);
+
+	  // Add properties assigned by `RegExp#exec`.
+	  if (length && typeof array[0] == 'string' && hasOwnProperty.call(array, 'index')) {
+	    result.index = array.index;
+	    result.input = array.input;
+	  }
+	  return result;
+	}
+
+	module.exports = initCloneArray;
+
+
+/***/ },
+/* 549 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var cloneArrayBuffer = __webpack_require__(550),
+	    cloneDataView = __webpack_require__(552),
+	    cloneMap = __webpack_require__(553),
+	    cloneRegExp = __webpack_require__(557),
+	    cloneSet = __webpack_require__(558),
+	    cloneSymbol = __webpack_require__(561),
+	    cloneTypedArray = __webpack_require__(562);
+
+	/** `Object#toString` result references. */
+	var boolTag = '[object Boolean]',
+	    dateTag = '[object Date]',
+	    mapTag = '[object Map]',
+	    numberTag = '[object Number]',
+	    regexpTag = '[object RegExp]',
+	    setTag = '[object Set]',
+	    stringTag = '[object String]',
+	    symbolTag = '[object Symbol]';
+
+	var arrayBufferTag = '[object ArrayBuffer]',
+	    dataViewTag = '[object DataView]',
+	    float32Tag = '[object Float32Array]',
+	    float64Tag = '[object Float64Array]',
+	    int8Tag = '[object Int8Array]',
+	    int16Tag = '[object Int16Array]',
+	    int32Tag = '[object Int32Array]',
+	    uint8Tag = '[object Uint8Array]',
+	    uint8ClampedTag = '[object Uint8ClampedArray]',
+	    uint16Tag = '[object Uint16Array]',
+	    uint32Tag = '[object Uint32Array]';
+
+	/**
+	 * Initializes an object clone based on its `toStringTag`.
+	 *
+	 * **Note:** This function only supports cloning values with tags of
+	 * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
+	 *
+	 * @private
+	 * @param {Object} object The object to clone.
+	 * @param {string} tag The `toStringTag` of the object to clone.
+	 * @param {Function} cloneFunc The function to clone values.
+	 * @param {boolean} [isDeep] Specify a deep clone.
+	 * @returns {Object} Returns the initialized clone.
+	 */
+	function initCloneByTag(object, tag, cloneFunc, isDeep) {
+	  var Ctor = object.constructor;
+	  switch (tag) {
+	    case arrayBufferTag:
+	      return cloneArrayBuffer(object);
+
+	    case boolTag:
+	    case dateTag:
+	      return new Ctor(+object);
+
+	    case dataViewTag:
+	      return cloneDataView(object, isDeep);
+
+	    case float32Tag: case float64Tag:
+	    case int8Tag: case int16Tag: case int32Tag:
+	    case uint8Tag: case uint8ClampedTag: case uint16Tag: case uint32Tag:
+	      return cloneTypedArray(object, isDeep);
+
+	    case mapTag:
+	      return cloneMap(object, isDeep, cloneFunc);
+
+	    case numberTag:
+	    case stringTag:
+	      return new Ctor(object);
+
+	    case regexpTag:
+	      return cloneRegExp(object);
+
+	    case setTag:
+	      return cloneSet(object, isDeep, cloneFunc);
+
+	    case symbolTag:
+	      return cloneSymbol(object);
+	  }
+	}
+
+	module.exports = initCloneByTag;
+
+
+/***/ },
+/* 550 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Uint8Array = __webpack_require__(551);
+
+	/**
+	 * Creates a clone of `arrayBuffer`.
+	 *
+	 * @private
+	 * @param {ArrayBuffer} arrayBuffer The array buffer to clone.
+	 * @returns {ArrayBuffer} Returns the cloned array buffer.
+	 */
+	function cloneArrayBuffer(arrayBuffer) {
+	  var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
+	  new Uint8Array(result).set(new Uint8Array(arrayBuffer));
+	  return result;
+	}
+
+	module.exports = cloneArrayBuffer;
+
+
+/***/ },
+/* 551 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var root = __webpack_require__(476);
+
+	/** Built-in value references. */
+	var Uint8Array = root.Uint8Array;
+
+	module.exports = Uint8Array;
+
+
+/***/ },
+/* 552 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var cloneArrayBuffer = __webpack_require__(550);
+
+	/**
+	 * Creates a clone of `dataView`.
+	 *
+	 * @private
+	 * @param {Object} dataView The data view to clone.
+	 * @param {boolean} [isDeep] Specify a deep clone.
+	 * @returns {Object} Returns the cloned data view.
+	 */
+	function cloneDataView(dataView, isDeep) {
+	  var buffer = isDeep ? cloneArrayBuffer(dataView.buffer) : dataView.buffer;
+	  return new dataView.constructor(buffer, dataView.byteOffset, dataView.byteLength);
+	}
+
+	module.exports = cloneDataView;
+
+
+/***/ },
+/* 553 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var addMapEntry = __webpack_require__(554),
+	    arrayReduce = __webpack_require__(555),
+	    mapToArray = __webpack_require__(556);
+
+	/** Used to compose bitmasks for cloning. */
+	var CLONE_DEEP_FLAG = 1;
+
+	/**
+	 * Creates a clone of `map`.
+	 *
+	 * @private
+	 * @param {Object} map The map to clone.
+	 * @param {Function} cloneFunc The function to clone values.
+	 * @param {boolean} [isDeep] Specify a deep clone.
+	 * @returns {Object} Returns the cloned map.
+	 */
+	function cloneMap(map, isDeep, cloneFunc) {
+	  var array = isDeep ? cloneFunc(mapToArray(map), CLONE_DEEP_FLAG) : mapToArray(map);
+	  return arrayReduce(array, addMapEntry, new map.constructor);
+	}
+
+	module.exports = cloneMap;
+
+
+/***/ },
+/* 554 */
+/***/ function(module, exports) {
+
+	/**
+	 * Adds the key-value `pair` to `map`.
+	 *
+	 * @private
+	 * @param {Object} map The map to modify.
+	 * @param {Array} pair The key-value pair to add.
+	 * @returns {Object} Returns `map`.
+	 */
+	function addMapEntry(map, pair) {
+	  // Don't return `map.set` because it's not chainable in IE 11.
+	  map.set(pair[0], pair[1]);
+	  return map;
+	}
+
+	module.exports = addMapEntry;
+
+
+/***/ },
+/* 555 */
+/***/ function(module, exports) {
+
+	/**
+	 * A specialized version of `_.reduce` for arrays without support for
+	 * iteratee shorthands.
+	 *
+	 * @private
+	 * @param {Array} [array] The array to iterate over.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @param {*} [accumulator] The initial value.
+	 * @param {boolean} [initAccum] Specify using the first element of `array` as
+	 *  the initial value.
+	 * @returns {*} Returns the accumulated value.
+	 */
+	function arrayReduce(array, iteratee, accumulator, initAccum) {
+	  var index = -1,
+	      length = array == null ? 0 : array.length;
+
+	  if (initAccum && length) {
+	    accumulator = array[++index];
+	  }
+	  while (++index < length) {
+	    accumulator = iteratee(accumulator, array[index], index, array);
+	  }
+	  return accumulator;
+	}
+
+	module.exports = arrayReduce;
+
+
+/***/ },
+/* 556 */
+/***/ function(module, exports) {
+
+	/**
+	 * Converts `map` to its key-value pairs.
+	 *
+	 * @private
+	 * @param {Object} map The map to convert.
+	 * @returns {Array} Returns the key-value pairs.
+	 */
+	function mapToArray(map) {
+	  var index = -1,
+	      result = Array(map.size);
+
+	  map.forEach(function(value, key) {
+	    result[++index] = [key, value];
+	  });
+	  return result;
+	}
+
+	module.exports = mapToArray;
+
+
+/***/ },
+/* 557 */
+/***/ function(module, exports) {
+
+	/** Used to match `RegExp` flags from their coerced string values. */
+	var reFlags = /\w*$/;
+
+	/**
+	 * Creates a clone of `regexp`.
+	 *
+	 * @private
+	 * @param {Object} regexp The regexp to clone.
+	 * @returns {Object} Returns the cloned regexp.
+	 */
+	function cloneRegExp(regexp) {
+	  var result = new regexp.constructor(regexp.source, reFlags.exec(regexp));
+	  result.lastIndex = regexp.lastIndex;
+	  return result;
+	}
+
+	module.exports = cloneRegExp;
+
+
+/***/ },
+/* 558 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var addSetEntry = __webpack_require__(559),
+	    arrayReduce = __webpack_require__(555),
+	    setToArray = __webpack_require__(560);
+
+	/** Used to compose bitmasks for cloning. */
+	var CLONE_DEEP_FLAG = 1;
+
+	/**
+	 * Creates a clone of `set`.
+	 *
+	 * @private
+	 * @param {Object} set The set to clone.
+	 * @param {Function} cloneFunc The function to clone values.
+	 * @param {boolean} [isDeep] Specify a deep clone.
+	 * @returns {Object} Returns the cloned set.
+	 */
+	function cloneSet(set, isDeep, cloneFunc) {
+	  var array = isDeep ? cloneFunc(setToArray(set), CLONE_DEEP_FLAG) : setToArray(set);
+	  return arrayReduce(array, addSetEntry, new set.constructor);
+	}
+
+	module.exports = cloneSet;
+
+
+/***/ },
+/* 559 */
+/***/ function(module, exports) {
+
+	/**
+	 * Adds `value` to `set`.
+	 *
+	 * @private
+	 * @param {Object} set The set to modify.
+	 * @param {*} value The value to add.
+	 * @returns {Object} Returns `set`.
+	 */
+	function addSetEntry(set, value) {
+	  // Don't return `set.add` because it's not chainable in IE 11.
+	  set.add(value);
+	  return set;
+	}
+
+	module.exports = addSetEntry;
+
+
+/***/ },
+/* 560 */
+/***/ function(module, exports) {
+
+	/**
+	 * Converts `set` to an array of its values.
+	 *
+	 * @private
+	 * @param {Object} set The set to convert.
+	 * @returns {Array} Returns the values.
+	 */
+	function setToArray(set) {
+	  var index = -1,
+	      result = Array(set.size);
+
+	  set.forEach(function(value) {
+	    result[++index] = value;
+	  });
+	  return result;
+	}
+
+	module.exports = setToArray;
+
+
+/***/ },
+/* 561 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Symbol = __webpack_require__(475);
+
+	/** Used to convert symbols to primitives and strings. */
+	var symbolProto = Symbol ? Symbol.prototype : undefined,
+	    symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
+
+	/**
+	 * Creates a clone of the `symbol` object.
+	 *
+	 * @private
+	 * @param {Object} symbol The symbol object to clone.
+	 * @returns {Object} Returns the cloned symbol object.
+	 */
+	function cloneSymbol(symbol) {
+	  return symbolValueOf ? Object(symbolValueOf.call(symbol)) : {};
+	}
+
+	module.exports = cloneSymbol;
+
+
+/***/ },
+/* 562 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var cloneArrayBuffer = __webpack_require__(550);
+
+	/**
+	 * Creates a clone of `typedArray`.
+	 *
+	 * @private
+	 * @param {Object} typedArray The typed array to clone.
+	 * @param {boolean} [isDeep] Specify a deep clone.
+	 * @returns {Object} Returns the cloned typed array.
+	 */
+	function cloneTypedArray(typedArray, isDeep) {
+	  var buffer = isDeep ? cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
+	  return new typedArray.constructor(buffer, typedArray.byteOffset, typedArray.length);
+	}
+
+	module.exports = cloneTypedArray;
+
+
+/***/ },
+/* 563 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseCreate = __webpack_require__(564),
+	    getPrototype = __webpack_require__(539),
+	    isPrototype = __webpack_require__(522);
+
+	/**
+	 * Initializes an object clone.
+	 *
+	 * @private
+	 * @param {Object} object The object to clone.
+	 * @returns {Object} Returns the initialized clone.
+	 */
+	function initCloneObject(object) {
+	  return (typeof object.constructor == 'function' && !isPrototype(object))
+	    ? baseCreate(getPrototype(object))
+	    : {};
+	}
+
+	module.exports = initCloneObject;
+
+
+/***/ },
+/* 564 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObject = __webpack_require__(480);
+
+	/** Built-in value references. */
+	var objectCreate = Object.create;
+
+	/**
+	 * The base implementation of `_.create` without support for assigning
+	 * properties to the created object.
+	 *
+	 * @private
+	 * @param {Object} proto The object to inherit from.
+	 * @returns {Object} Returns the new object.
+	 */
+	var baseCreate = (function() {
+	  function object() {}
+	  return function(proto) {
+	    if (!isObject(proto)) {
+	      return {};
+	    }
+	    if (objectCreate) {
+	      return objectCreate(proto);
+	    }
+	    object.prototype = proto;
+	    var result = new object;
+	    object.prototype = undefined;
+	    return result;
+	  };
+	}());
+
+	module.exports = baseCreate;
+
+
+/***/ },
+/* 565 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var castPath = __webpack_require__(566),
+	    last = __webpack_require__(574),
+	    parent = __webpack_require__(575),
+	    toKey = __webpack_require__(577);
+
+	/**
+	 * The base implementation of `_.unset`.
+	 *
+	 * @private
+	 * @param {Object} object The object to modify.
+	 * @param {Array|string} path The property path to unset.
+	 * @returns {boolean} Returns `true` if the property is deleted, else `false`.
+	 */
+	function baseUnset(object, path) {
+	  path = castPath(path, object);
+	  object = parent(object, path);
+	  return object == null || delete object[toKey(last(path))];
+	}
+
+	module.exports = baseUnset;
+
+
+/***/ },
+/* 566 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isArray = __webpack_require__(512),
+	    isKey = __webpack_require__(567),
+	    stringToPath = __webpack_require__(569),
+	    toString = __webpack_require__(572);
+
+	/**
+	 * Casts `value` to a path array if it's not one.
+	 *
+	 * @private
+	 * @param {*} value The value to inspect.
+	 * @param {Object} [object] The object to query keys on.
+	 * @returns {Array} Returns the cast property path array.
+	 */
+	function castPath(value, object) {
+	  if (isArray(value)) {
+	    return value;
+	  }
+	  return isKey(value, object) ? [value] : stringToPath(toString(value));
+	}
+
+	module.exports = castPath;
+
+
+/***/ },
+/* 567 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isArray = __webpack_require__(512),
+	    isSymbol = __webpack_require__(568);
+
+	/** Used to match property names within property paths. */
+	var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
+	    reIsPlainProp = /^\w*$/;
+
+	/**
+	 * Checks if `value` is a property name and not a property path.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @param {Object} [object] The object to query keys on.
+	 * @returns {boolean} Returns `true` if `value` is a property name, else `false`.
+	 */
+	function isKey(value, object) {
+	  if (isArray(value)) {
+	    return false;
+	  }
+	  var type = typeof value;
+	  if (type == 'number' || type == 'symbol' || type == 'boolean' ||
+	      value == null || isSymbol(value)) {
+	    return true;
+	  }
+	  return reIsPlainProp.test(value) || !reIsDeepProp.test(value) ||
+	    (object != null && value in Object(object));
+	}
+
+	module.exports = isKey;
+
+
+/***/ },
+/* 568 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseGetTag = __webpack_require__(474),
+	    isObjectLike = __webpack_require__(511);
+
+	/** `Object#toString` result references. */
+	var symbolTag = '[object Symbol]';
+
+	/**
+	 * Checks if `value` is classified as a `Symbol` primitive or object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+	 * @example
+	 *
+	 * _.isSymbol(Symbol.iterator);
+	 * // => true
+	 *
+	 * _.isSymbol('abc');
+	 * // => false
+	 */
+	function isSymbol(value) {
+	  return typeof value == 'symbol' ||
+	    (isObjectLike(value) && baseGetTag(value) == symbolTag);
+	}
+
+	module.exports = isSymbol;
+
+
+/***/ },
+/* 569 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var memoizeCapped = __webpack_require__(570);
+
+	/** Used to match property names within property paths. */
+	var reLeadingDot = /^\./,
+	    rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
+
+	/** Used to match backslashes in property paths. */
+	var reEscapeChar = /\\(\\)?/g;
+
+	/**
+	 * Converts `string` to a property path array.
+	 *
+	 * @private
+	 * @param {string} string The string to convert.
+	 * @returns {Array} Returns the property path array.
+	 */
+	var stringToPath = memoizeCapped(function(string) {
+	  var result = [];
+	  if (reLeadingDot.test(string)) {
+	    result.push('');
+	  }
+	  string.replace(rePropName, function(match, number, quote, string) {
+	    result.push(quote ? string.replace(reEscapeChar, '$1') : (number || match));
+	  });
+	  return result;
+	});
+
+	module.exports = stringToPath;
+
+
+/***/ },
+/* 570 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var memoize = __webpack_require__(571);
+
+	/** Used as the maximum memoize cache size. */
+	var MAX_MEMOIZE_SIZE = 500;
+
+	/**
+	 * A specialized version of `_.memoize` which clears the memoized function's
+	 * cache when it exceeds `MAX_MEMOIZE_SIZE`.
+	 *
+	 * @private
+	 * @param {Function} func The function to have its output memoized.
+	 * @returns {Function} Returns the new memoized function.
+	 */
+	function memoizeCapped(func) {
+	  var result = memoize(func, function(key) {
+	    if (cache.size === MAX_MEMOIZE_SIZE) {
+	      cache.clear();
+	    }
+	    return key;
+	  });
+
+	  var cache = result.cache;
+	  return result;
+	}
+
+	module.exports = memoizeCapped;
+
+
+/***/ },
+/* 571 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var MapCache = __webpack_require__(485);
+
+	/** Error message constants. */
+	var FUNC_ERROR_TEXT = 'Expected a function';
+
+	/**
+	 * Creates a function that memoizes the result of `func`. If `resolver` is
+	 * provided, it determines the cache key for storing the result based on the
+	 * arguments provided to the memoized function. By default, the first argument
+	 * provided to the memoized function is used as the map cache key. The `func`
+	 * is invoked with the `this` binding of the memoized function.
+	 *
+	 * **Note:** The cache is exposed as the `cache` property on the memoized
+	 * function. Its creation may be customized by replacing the `_.memoize.Cache`
+	 * constructor with one whose instances implement the
+	 * [`Map`](http://ecma-international.org/ecma-262/7.0/#sec-properties-of-the-map-prototype-object)
+	 * method interface of `clear`, `delete`, `get`, `has`, and `set`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Function
+	 * @param {Function} func The function to have its output memoized.
+	 * @param {Function} [resolver] The function to resolve the cache key.
+	 * @returns {Function} Returns the new memoized function.
+	 * @example
+	 *
+	 * var object = { 'a': 1, 'b': 2 };
+	 * var other = { 'c': 3, 'd': 4 };
+	 *
+	 * var values = _.memoize(_.values);
+	 * values(object);
+	 * // => [1, 2]
+	 *
+	 * values(other);
+	 * // => [3, 4]
+	 *
+	 * object.a = 2;
+	 * values(object);
+	 * // => [1, 2]
+	 *
+	 * // Modify the result cache.
+	 * values.cache.set(object, ['a', 'b']);
+	 * values(object);
+	 * // => ['a', 'b']
+	 *
+	 * // Replace `_.memoize.Cache`.
+	 * _.memoize.Cache = WeakMap;
+	 */
+	function memoize(func, resolver) {
+	  if (typeof func != 'function' || (resolver != null && typeof resolver != 'function')) {
+	    throw new TypeError(FUNC_ERROR_TEXT);
+	  }
+	  var memoized = function() {
+	    var args = arguments,
+	        key = resolver ? resolver.apply(this, args) : args[0],
+	        cache = memoized.cache;
+
+	    if (cache.has(key)) {
+	      return cache.get(key);
+	    }
+	    var result = func.apply(this, args);
+	    memoized.cache = cache.set(key, result) || cache;
+	    return result;
+	  };
+	  memoized.cache = new (memoize.Cache || MapCache);
+	  return memoized;
+	}
+
+	// Expose `MapCache`.
+	memoize.Cache = MapCache;
+
+	module.exports = memoize;
+
+
+/***/ },
+/* 572 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseToString = __webpack_require__(573);
+
+	/**
+	 * Converts `value` to a string. An empty string is returned for `null`
+	 * and `undefined` values. The sign of `-0` is preserved.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to convert.
+	 * @returns {string} Returns the converted string.
+	 * @example
+	 *
+	 * _.toString(null);
+	 * // => ''
+	 *
+	 * _.toString(-0);
+	 * // => '-0'
+	 *
+	 * _.toString([1, 2, 3]);
+	 * // => '1,2,3'
+	 */
+	function toString(value) {
+	  return value == null ? '' : baseToString(value);
+	}
+
+	module.exports = toString;
+
+
+/***/ },
+/* 573 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Symbol = __webpack_require__(475),
+	    arrayMap = __webpack_require__(454),
+	    isArray = __webpack_require__(512),
+	    isSymbol = __webpack_require__(568);
+
+	/** Used as references for various `Number` constants. */
+	var INFINITY = 1 / 0;
+
+	/** Used to convert symbols to primitives and strings. */
+	var symbolProto = Symbol ? Symbol.prototype : undefined,
+	    symbolToString = symbolProto ? symbolProto.toString : undefined;
+
+	/**
+	 * The base implementation of `_.toString` which doesn't convert nullish
+	 * values to empty strings.
+	 *
+	 * @private
+	 * @param {*} value The value to process.
+	 * @returns {string} Returns the string.
+	 */
+	function baseToString(value) {
+	  // Exit early for strings to avoid a performance hit in some environments.
+	  if (typeof value == 'string') {
+	    return value;
+	  }
+	  if (isArray(value)) {
+	    // Recursively convert values (susceptible to call stack limits).
+	    return arrayMap(value, baseToString) + '';
+	  }
+	  if (isSymbol(value)) {
+	    return symbolToString ? symbolToString.call(value) : '';
+	  }
+	  var result = (value + '');
+	  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+	}
+
+	module.exports = baseToString;
+
+
+/***/ },
+/* 574 */
+/***/ function(module, exports) {
+
+	/**
+	 * Gets the last element of `array`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Array
+	 * @param {Array} array The array to query.
+	 * @returns {*} Returns the last element of `array`.
+	 * @example
+	 *
+	 * _.last([1, 2, 3]);
+	 * // => 3
+	 */
+	function last(array) {
+	  var length = array == null ? 0 : array.length;
+	  return length ? array[length - 1] : undefined;
+	}
+
+	module.exports = last;
+
+
+/***/ },
+/* 575 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseGet = __webpack_require__(576),
+	    baseSlice = __webpack_require__(578);
+
+	/**
+	 * Gets the parent value at `path` of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {Array} path The path to get the parent value of.
+	 * @returns {*} Returns the parent value.
+	 */
+	function parent(object, path) {
+	  return path.length < 2 ? object : baseGet(object, baseSlice(path, 0, -1));
+	}
+
+	module.exports = parent;
+
+
+/***/ },
+/* 576 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var castPath = __webpack_require__(566),
+	    toKey = __webpack_require__(577);
+
+	/**
+	 * The base implementation of `_.get` without support for default values.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {Array|string} path The path of the property to get.
+	 * @returns {*} Returns the resolved value.
+	 */
+	function baseGet(object, path) {
+	  path = castPath(path, object);
+
+	  var index = 0,
+	      length = path.length;
+
+	  while (object != null && index < length) {
+	    object = object[toKey(path[index++])];
+	  }
+	  return (index && index == length) ? object : undefined;
+	}
+
+	module.exports = baseGet;
+
+
+/***/ },
+/* 577 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isSymbol = __webpack_require__(568);
+
+	/** Used as references for various `Number` constants. */
+	var INFINITY = 1 / 0;
+
+	/**
+	 * Converts `value` to a string key if it's not a string or symbol.
+	 *
+	 * @private
+	 * @param {*} value The value to inspect.
+	 * @returns {string|symbol} Returns the key.
+	 */
+	function toKey(value) {
+	  if (typeof value == 'string' || isSymbol(value)) {
+	    return value;
+	  }
+	  var result = (value + '');
+	  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+	}
+
+	module.exports = toKey;
+
+
+/***/ },
+/* 578 */
+/***/ function(module, exports) {
+
+	/**
+	 * The base implementation of `_.slice` without an iteratee call guard.
+	 *
+	 * @private
+	 * @param {Array} array The array to slice.
+	 * @param {number} [start=0] The start position.
+	 * @param {number} [end=array.length] The end position.
+	 * @returns {Array} Returns the slice of `array`.
+	 */
+	function baseSlice(array, start, end) {
+	  var index = -1,
+	      length = array.length;
+
+	  if (start < 0) {
+	    start = -start > length ? 0 : (length + start);
+	  }
+	  end = end > length ? length : end;
+	  if (end < 0) {
+	    end += length;
+	  }
+	  length = start > end ? 0 : ((end - start) >>> 0);
+	  start >>>= 0;
+
+	  var result = Array(length);
+	  while (++index < length) {
+	    result[index] = array[index + start];
+	  }
+	  return result;
+	}
+
+	module.exports = baseSlice;
+
+
+/***/ },
+/* 579 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isPlainObject = __webpack_require__(580);
+
+	/**
+	 * Used by `_.omit` to customize its `_.cloneDeep` use to only clone plain
+	 * objects.
+	 *
+	 * @private
+	 * @param {*} value The value to inspect.
+	 * @param {string} key The key of the property to inspect.
+	 * @returns {*} Returns the uncloned value or `undefined` to defer cloning to `_.cloneDeep`.
+	 */
+	function customOmitClone(value) {
+	  return isPlainObject(value) ? undefined : value;
+	}
+
+	module.exports = customOmitClone;
+
+
+/***/ },
+/* 580 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseGetTag = __webpack_require__(474),
+	    getPrototype = __webpack_require__(539),
+	    isObjectLike = __webpack_require__(511);
+
+	/** `Object#toString` result references. */
+	var objectTag = '[object Object]';
+
+	/** Used for built-in method references. */
+	var funcProto = Function.prototype,
+	    objectProto = Object.prototype;
+
+	/** Used to resolve the decompiled source of functions. */
+	var funcToString = funcProto.toString;
+
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+
+	/** Used to infer the `Object` constructor. */
+	var objectCtorString = funcToString.call(Object);
+
+	/**
+	 * Checks if `value` is a plain object, that is, an object created by the
+	 * `Object` constructor or one with a `[[Prototype]]` of `null`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.8.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 * }
+	 *
+	 * _.isPlainObject(new Foo);
+	 * // => false
+	 *
+	 * _.isPlainObject([1, 2, 3]);
+	 * // => false
+	 *
+	 * _.isPlainObject({ 'x': 0, 'y': 0 });
+	 * // => true
+	 *
+	 * _.isPlainObject(Object.create(null));
+	 * // => true
+	 */
+	function isPlainObject(value) {
+	  if (!isObjectLike(value) || baseGetTag(value) != objectTag) {
+	    return false;
+	  }
+	  var proto = getPrototype(value);
+	  if (proto === null) {
+	    return true;
+	  }
+	  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
+	  return typeof Ctor == 'function' && Ctor instanceof Ctor &&
+	    funcToString.call(Ctor) == objectCtorString;
+	}
+
+	module.exports = isPlainObject;
+
+
+/***/ },
+/* 581 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var flatten = __webpack_require__(582),
+	    overRest = __webpack_require__(585),
+	    setToString = __webpack_require__(587);
+
+	/**
+	 * A specialized version of `baseRest` which flattens the rest array.
+	 *
+	 * @private
+	 * @param {Function} func The function to apply a rest parameter to.
+	 * @returns {Function} Returns the new function.
+	 */
+	function flatRest(func) {
+	  return setToString(overRest(func, undefined, flatten), func + '');
+	}
+
+	module.exports = flatRest;
+
+
+/***/ },
+/* 582 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseFlatten = __webpack_require__(583);
+
+	/**
+	 * Flattens `array` a single level deep.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Array
+	 * @param {Array} array The array to flatten.
+	 * @returns {Array} Returns the new flattened array.
+	 * @example
+	 *
+	 * _.flatten([1, [2, [3, [4]], 5]]);
+	 * // => [1, 2, [3, [4]], 5]
+	 */
+	function flatten(array) {
+	  var length = array == null ? 0 : array.length;
+	  return length ? baseFlatten(array, 1) : [];
+	}
+
+	module.exports = flatten;
+
+
+/***/ },
+/* 583 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var arrayPush = __webpack_require__(538),
+	    isFlattenable = __webpack_require__(584);
+
+	/**
+	 * The base implementation of `_.flatten` with support for restricting flattening.
+	 *
+	 * @private
+	 * @param {Array} array The array to flatten.
+	 * @param {number} depth The maximum recursion depth.
+	 * @param {boolean} [predicate=isFlattenable] The function invoked per iteration.
+	 * @param {boolean} [isStrict] Restrict to values that pass `predicate` checks.
+	 * @param {Array} [result=[]] The initial result value.
+	 * @returns {Array} Returns the new flattened array.
+	 */
+	function baseFlatten(array, depth, predicate, isStrict, result) {
+	  var index = -1,
+	      length = array.length;
+
+	  predicate || (predicate = isFlattenable);
+	  result || (result = []);
+
+	  while (++index < length) {
+	    var value = array[index];
+	    if (depth > 0 && predicate(value)) {
+	      if (depth > 1) {
+	        // Recursively flatten arrays (susceptible to call stack limits).
+	        baseFlatten(value, depth - 1, predicate, isStrict, result);
+	      } else {
+	        arrayPush(result, value);
+	      }
+	    } else if (!isStrict) {
+	      result[result.length] = value;
+	    }
+	  }
+	  return result;
+	}
+
+	module.exports = baseFlatten;
+
+
+/***/ },
+/* 584 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Symbol = __webpack_require__(475),
+	    isArguments = __webpack_require__(509),
+	    isArray = __webpack_require__(512);
+
+	/** Built-in value references. */
+	var spreadableSymbol = Symbol ? Symbol.isConcatSpreadable : undefined;
+
+	/**
+	 * Checks if `value` is a flattenable `arguments` object or array.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is flattenable, else `false`.
+	 */
+	function isFlattenable(value) {
+	  return isArray(value) || isArguments(value) ||
+	    !!(spreadableSymbol && value && value[spreadableSymbol]);
+	}
+
+	module.exports = isFlattenable;
+
+
+/***/ },
+/* 585 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var apply = __webpack_require__(586);
+
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeMax = Math.max;
+
+	/**
+	 * A specialized version of `baseRest` which transforms the rest array.
+	 *
+	 * @private
+	 * @param {Function} func The function to apply a rest parameter to.
+	 * @param {number} [start=func.length-1] The start position of the rest parameter.
+	 * @param {Function} transform The rest array transform.
+	 * @returns {Function} Returns the new function.
+	 */
+	function overRest(func, start, transform) {
+	  start = nativeMax(start === undefined ? (func.length - 1) : start, 0);
+	  return function() {
+	    var args = arguments,
+	        index = -1,
+	        length = nativeMax(args.length - start, 0),
+	        array = Array(length);
+
+	    while (++index < length) {
+	      array[index] = args[start + index];
+	    }
+	    index = -1;
+	    var otherArgs = Array(start + 1);
+	    while (++index < start) {
+	      otherArgs[index] = args[index];
+	    }
+	    otherArgs[start] = transform(array);
+	    return apply(func, this, otherArgs);
+	  };
+	}
+
+	module.exports = overRest;
+
+
+/***/ },
+/* 586 */
+/***/ function(module, exports) {
+
+	/**
+	 * A faster alternative to `Function#apply`, this function invokes `func`
+	 * with the `this` binding of `thisArg` and the arguments of `args`.
+	 *
+	 * @private
+	 * @param {Function} func The function to invoke.
+	 * @param {*} thisArg The `this` binding of `func`.
+	 * @param {Array} args The arguments to invoke `func` with.
+	 * @returns {*} Returns the result of `func`.
+	 */
+	function apply(func, thisArg, args) {
+	  switch (args.length) {
+	    case 0: return func.call(thisArg);
+	    case 1: return func.call(thisArg, args[0]);
+	    case 2: return func.call(thisArg, args[0], args[1]);
+	    case 3: return func.call(thisArg, args[0], args[1], args[2]);
+	  }
+	  return func.apply(thisArg, args);
+	}
+
+	module.exports = apply;
+
+
+/***/ },
+/* 587 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseSetToString = __webpack_require__(588),
+	    shortOut = __webpack_require__(591);
+
+	/**
+	 * Sets the `toString` method of `func` to return `string`.
+	 *
+	 * @private
+	 * @param {Function} func The function to modify.
+	 * @param {Function} string The `toString` result.
+	 * @returns {Function} Returns `func`.
+	 */
+	var setToString = shortOut(baseSetToString);
+
+	module.exports = setToString;
+
+
+/***/ },
+/* 588 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var constant = __webpack_require__(589),
+	    defineProperty = __webpack_require__(503),
+	    identity = __webpack_require__(590);
+
+	/**
+	 * The base implementation of `setToString` without support for hot loop shorting.
+	 *
+	 * @private
+	 * @param {Function} func The function to modify.
+	 * @param {Function} string The `toString` result.
+	 * @returns {Function} Returns `func`.
+	 */
+	var baseSetToString = !defineProperty ? identity : function(func, string) {
+	  return defineProperty(func, 'toString', {
+	    'configurable': true,
+	    'enumerable': false,
+	    'value': constant(string),
+	    'writable': true
+	  });
+	};
+
+	module.exports = baseSetToString;
+
+
+/***/ },
+/* 589 */
+/***/ function(module, exports) {
+
+	/**
+	 * Creates a function that returns `value`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 2.4.0
+	 * @category Util
+	 * @param {*} value The value to return from the new function.
+	 * @returns {Function} Returns the new constant function.
+	 * @example
+	 *
+	 * var objects = _.times(2, _.constant({ 'a': 1 }));
+	 *
+	 * console.log(objects);
+	 * // => [{ 'a': 1 }, { 'a': 1 }]
+	 *
+	 * console.log(objects[0] === objects[1]);
+	 * // => true
+	 */
+	function constant(value) {
+	  return function() {
+	    return value;
+	  };
+	}
+
+	module.exports = constant;
+
+
+/***/ },
+/* 590 */
+/***/ function(module, exports) {
+
+	/**
+	 * This method returns the first argument it receives.
+	 *
+	 * @static
+	 * @since 0.1.0
+	 * @memberOf _
+	 * @category Util
+	 * @param {*} value Any value.
+	 * @returns {*} Returns `value`.
+	 * @example
+	 *
+	 * var object = { 'a': 1 };
+	 *
+	 * console.log(_.identity(object) === object);
+	 * // => true
+	 */
+	function identity(value) {
+	  return value;
+	}
+
+	module.exports = identity;
+
+
+/***/ },
+/* 591 */
+/***/ function(module, exports) {
+
+	/** Used to detect hot functions by number of calls within a span of milliseconds. */
+	var HOT_COUNT = 800,
+	    HOT_SPAN = 16;
+
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeNow = Date.now;
+
+	/**
+	 * Creates a function that'll short out and invoke `identity` instead
+	 * of `func` when it's called `HOT_COUNT` or more times in `HOT_SPAN`
+	 * milliseconds.
+	 *
+	 * @private
+	 * @param {Function} func The function to restrict.
+	 * @returns {Function} Returns the new shortable function.
+	 */
+	function shortOut(func) {
+	  var count = 0,
+	      lastCalled = 0;
+
+	  return function() {
+	    var stamp = nativeNow(),
+	        remaining = HOT_SPAN - (stamp - lastCalled);
+
+	    lastCalled = stamp;
+	    if (remaining > 0) {
+	      if (++count >= HOT_COUNT) {
+	        return arguments[0];
+	      }
+	    } else {
+	      count = 0;
+	    }
+	    return func.apply(undefined, arguments);
+	  };
+	}
+
+	module.exports = shortOut;
+
+
+/***/ },
+/* 592 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseIndexOf = __webpack_require__(593),
+	    isArrayLike = __webpack_require__(525),
+	    isString = __webpack_require__(597),
+	    toInteger = __webpack_require__(598),
+	    values = __webpack_require__(601);
+
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeMax = Math.max;
+
+	/**
+	 * Checks if `value` is in `collection`. If `collection` is a string, it's
+	 * checked for a substring of `value`, otherwise
+	 * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+	 * is used for equality comparisons. If `fromIndex` is negative, it's used as
+	 * the offset from the end of `collection`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Collection
+	 * @param {Array|Object|string} collection The collection to inspect.
+	 * @param {*} value The value to search for.
+	 * @param {number} [fromIndex=0] The index to search from.
+	 * @param- {Object} [guard] Enables use as an iteratee for methods like `_.reduce`.
+	 * @returns {boolean} Returns `true` if `value` is found, else `false`.
+	 * @example
+	 *
+	 * _.includes([1, 2, 3], 1);
+	 * // => true
+	 *
+	 * _.includes([1, 2, 3], 1, 2);
+	 * // => false
+	 *
+	 * _.includes({ 'a': 1, 'b': 2 }, 1);
+	 * // => true
+	 *
+	 * _.includes('abcd', 'bc');
+	 * // => true
+	 */
+	function includes(collection, value, fromIndex, guard) {
+	  collection = isArrayLike(collection) ? collection : values(collection);
+	  fromIndex = (fromIndex && !guard) ? toInteger(fromIndex) : 0;
+
+	  var length = collection.length;
+	  if (fromIndex < 0) {
+	    fromIndex = nativeMax(length + fromIndex, 0);
+	  }
+	  return isString(collection)
+	    ? (fromIndex <= length && collection.indexOf(value, fromIndex) > -1)
+	    : (!!length && baseIndexOf(collection, value, fromIndex) > -1);
+	}
+
+	module.exports = includes;
+
+
+/***/ },
+/* 593 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseFindIndex = __webpack_require__(594),
+	    baseIsNaN = __webpack_require__(595),
+	    strictIndexOf = __webpack_require__(596);
+
+	/**
+	 * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
+	 *
+	 * @private
+	 * @param {Array} array The array to inspect.
+	 * @param {*} value The value to search for.
+	 * @param {number} fromIndex The index to search from.
+	 * @returns {number} Returns the index of the matched value, else `-1`.
+	 */
+	function baseIndexOf(array, value, fromIndex) {
+	  return value === value
+	    ? strictIndexOf(array, value, fromIndex)
+	    : baseFindIndex(array, baseIsNaN, fromIndex);
+	}
+
+	module.exports = baseIndexOf;
+
+
+/***/ },
+/* 594 */
+/***/ function(module, exports) {
+
+	/**
+	 * The base implementation of `_.findIndex` and `_.findLastIndex` without
+	 * support for iteratee shorthands.
+	 *
+	 * @private
+	 * @param {Array} array The array to inspect.
+	 * @param {Function} predicate The function invoked per iteration.
+	 * @param {number} fromIndex The index to search from.
+	 * @param {boolean} [fromRight] Specify iterating from right to left.
+	 * @returns {number} Returns the index of the matched value, else `-1`.
+	 */
+	function baseFindIndex(array, predicate, fromIndex, fromRight) {
+	  var length = array.length,
+	      index = fromIndex + (fromRight ? 1 : -1);
+
+	  while ((fromRight ? index-- : ++index < length)) {
+	    if (predicate(array[index], index, array)) {
+	      return index;
+	    }
+	  }
+	  return -1;
+	}
+
+	module.exports = baseFindIndex;
+
+
+/***/ },
+/* 595 */
+/***/ function(module, exports) {
+
+	/**
+	 * The base implementation of `_.isNaN` without support for number objects.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
+	 */
+	function baseIsNaN(value) {
+	  return value !== value;
+	}
+
+	module.exports = baseIsNaN;
+
+
+/***/ },
+/* 596 */
+/***/ function(module, exports) {
+
+	/**
+	 * A specialized version of `_.indexOf` which performs strict equality
+	 * comparisons of values, i.e. `===`.
+	 *
+	 * @private
+	 * @param {Array} array The array to inspect.
+	 * @param {*} value The value to search for.
+	 * @param {number} fromIndex The index to search from.
+	 * @returns {number} Returns the index of the matched value, else `-1`.
+	 */
+	function strictIndexOf(array, value, fromIndex) {
+	  var index = fromIndex - 1,
+	      length = array.length;
+
+	  while (++index < length) {
+	    if (array[index] === value) {
+	      return index;
+	    }
+	  }
+	  return -1;
+	}
+
+	module.exports = strictIndexOf;
+
+
+/***/ },
+/* 597 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseGetTag = __webpack_require__(474),
+	    isArray = __webpack_require__(512),
+	    isObjectLike = __webpack_require__(511);
+
+	/** `Object#toString` result references. */
+	var stringTag = '[object String]';
+
+	/**
+	 * Checks if `value` is classified as a `String` primitive or object.
+	 *
+	 * @static
+	 * @since 0.1.0
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a string, else `false`.
+	 * @example
+	 *
+	 * _.isString('abc');
+	 * // => true
+	 *
+	 * _.isString(1);
+	 * // => false
+	 */
+	function isString(value) {
+	  return typeof value == 'string' ||
+	    (!isArray(value) && isObjectLike(value) && baseGetTag(value) == stringTag);
+	}
+
+	module.exports = isString;
+
+
+/***/ },
+/* 598 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var toFinite = __webpack_require__(599);
+
+	/**
+	 * Converts `value` to an integer.
+	 *
+	 * **Note:** This method is loosely based on
+	 * [`ToInteger`](http://www.ecma-international.org/ecma-262/7.0/#sec-tointeger).
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to convert.
+	 * @returns {number} Returns the converted integer.
+	 * @example
+	 *
+	 * _.toInteger(3.2);
+	 * // => 3
+	 *
+	 * _.toInteger(Number.MIN_VALUE);
+	 * // => 0
+	 *
+	 * _.toInteger(Infinity);
+	 * // => 1.7976931348623157e+308
+	 *
+	 * _.toInteger('3.2');
+	 * // => 3
+	 */
+	function toInteger(value) {
+	  var result = toFinite(value),
+	      remainder = result % 1;
+
+	  return result === result ? (remainder ? result - remainder : result) : 0;
+	}
+
+	module.exports = toInteger;
+
+
+/***/ },
+/* 599 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var toNumber = __webpack_require__(600);
+
+	/** Used as references for various `Number` constants. */
+	var INFINITY = 1 / 0,
+	    MAX_INTEGER = 1.7976931348623157e+308;
+
+	/**
+	 * Converts `value` to a finite number.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.12.0
+	 * @category Lang
+	 * @param {*} value The value to convert.
+	 * @returns {number} Returns the converted number.
+	 * @example
+	 *
+	 * _.toFinite(3.2);
+	 * // => 3.2
+	 *
+	 * _.toFinite(Number.MIN_VALUE);
+	 * // => 5e-324
+	 *
+	 * _.toFinite(Infinity);
+	 * // => 1.7976931348623157e+308
+	 *
+	 * _.toFinite('3.2');
+	 * // => 3.2
+	 */
+	function toFinite(value) {
+	  if (!value) {
+	    return value === 0 ? value : 0;
+	  }
+	  value = toNumber(value);
+	  if (value === INFINITY || value === -INFINITY) {
+	    var sign = (value < 0 ? -1 : 1);
+	    return sign * MAX_INTEGER;
+	  }
+	  return value === value ? value : 0;
+	}
+
+	module.exports = toFinite;
+
+
+/***/ },
+/* 600 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObject = __webpack_require__(480),
+	    isSymbol = __webpack_require__(568);
+
+	/** Used as references for various `Number` constants. */
+	var NAN = 0 / 0;
+
+	/** Used to match leading and trailing whitespace. */
+	var reTrim = /^\s+|\s+$/g;
+
+	/** Used to detect bad signed hexadecimal string values. */
+	var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+
+	/** Used to detect binary string values. */
+	var reIsBinary = /^0b[01]+$/i;
+
+	/** Used to detect octal string values. */
+	var reIsOctal = /^0o[0-7]+$/i;
+
+	/** Built-in method references without a dependency on `root`. */
+	var freeParseInt = parseInt;
+
+	/**
+	 * Converts `value` to a number.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to process.
+	 * @returns {number} Returns the number.
+	 * @example
+	 *
+	 * _.toNumber(3.2);
+	 * // => 3.2
+	 *
+	 * _.toNumber(Number.MIN_VALUE);
+	 * // => 5e-324
+	 *
+	 * _.toNumber(Infinity);
+	 * // => Infinity
+	 *
+	 * _.toNumber('3.2');
+	 * // => 3.2
+	 */
+	function toNumber(value) {
+	  if (typeof value == 'number') {
+	    return value;
+	  }
+	  if (isSymbol(value)) {
+	    return NAN;
+	  }
+	  if (isObject(value)) {
+	    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
+	    value = isObject(other) ? (other + '') : other;
+	  }
+	  if (typeof value != 'string') {
+	    return value === 0 ? value : +value;
+	  }
+	  value = value.replace(reTrim, '');
+	  var isBinary = reIsBinary.test(value);
+	  return (isBinary || reIsOctal.test(value))
+	    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
+	    : (reIsBadHex.test(value) ? NAN : +value);
+	}
+
+	module.exports = toNumber;
+
+
+/***/ },
+/* 601 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseValues = __webpack_require__(602),
+	    keys = __webpack_require__(506);
+
+	/**
+	 * Creates an array of the own enumerable string keyed property values of `object`.
+	 *
+	 * **Note:** Non-object values are coerced to objects.
+	 *
+	 * @static
+	 * @since 0.1.0
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property values.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 *   this.b = 2;
+	 * }
+	 *
+	 * Foo.prototype.c = 3;
+	 *
+	 * _.values(new Foo);
+	 * // => [1, 2] (iteration order is not guaranteed)
+	 *
+	 * _.values('hi');
+	 * // => ['h', 'i']
+	 */
+	function values(object) {
+	  return object == null ? [] : baseValues(object, keys(object));
+	}
+
+	module.exports = values;
+
+
+/***/ },
+/* 602 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var arrayMap = __webpack_require__(454);
+
+	/**
+	 * The base implementation of `_.values` and `_.valuesIn` which creates an
+	 * array of `object` property values corresponding to the property names
+	 * of `props`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {Array} props The property names to get values for.
+	 * @returns {Object} Returns the array of property values.
+	 */
+	function baseValues(object, props) {
+	  return arrayMap(props, function(key) {
+	    return object[key];
+	  });
+	}
+
+	module.exports = baseValues;
+
+
+/***/ },
+/* 603 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(171);
+
+/***/ },
+/* 604 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.jQuery = exports.animation = undefined;
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactAddonsUpdate = __webpack_require__(603);
+
+	var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
+
+	var _classnames = __webpack_require__(605);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _animationMixin = __webpack_require__(606);
+
+	var _animationMixin2 = _interopRequireDefault(_animationMixin);
+
+	var _jQueryMixin = __webpack_require__(608);
+
+	var _jQueryMixin2 = _interopRequireDefault(_jQueryMixin);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function noop() {}
+
+	var ToastMessageSpec = {
+	  displayName: "ToastMessage",
+
+	  getDefaultProps: function getDefaultProps() {
+	    var iconClassNames = {
+	      error: "toast-error",
+	      info: "toast-info",
+	      success: "toast-success",
+	      warning: "toast-warning"
+	    };
+
+	    return {
+	      className: "toast",
+	      iconClassNames: iconClassNames,
+	      titleClassName: "toast-title",
+	      messageClassName: "toast-message",
+	      tapToDismiss: true,
+	      closeButton: false
+	    };
+	  },
+	  handleOnClick: function handleOnClick(event) {
+	    this.props.handleOnClick(event);
+	    if (this.props.tapToDismiss) {
+	      this.hideToast(true);
+	    }
+	  },
+	  _handle_close_button_click: function _handle_close_button_click(event) {
+	    event.stopPropagation();
+	    this.hideToast(true);
+	  },
+	  _handle_remove: function _handle_remove() {
+	    this.props.handleRemove(this.props.toastId);
+	  },
+	  _render_close_button: function _render_close_button() {
+	    return this.props.closeButton ? _react2.default.createElement("button", {
+	      className: "toast-close-button", role: "button",
+	      onClick: this._handle_close_button_click,
+	      dangerouslySetInnerHTML: { __html: "&times;" }
+	    }) : false;
+	  },
+	  _render_title_element: function _render_title_element() {
+	    return this.props.title ? _react2.default.createElement(
+	      "div",
+	      { className: this.props.titleClassName },
+	      this.props.title
+	    ) : false;
+	  },
+	  _render_message_element: function _render_message_element() {
+	    return this.props.message ? _react2.default.createElement(
+	      "div",
+	      { className: this.props.messageClassName },
+	      this.props.message
+	    ) : false;
+	  },
+	  render: function render() {
+	    var iconClassName = this.props.iconClassName || this.props.iconClassNames[this.props.type];
+
+	    return _react2.default.createElement(
+	      "div",
+	      {
+	        className: (0, _classnames2.default)(this.props.className, iconClassName),
+	        style: this.props.style,
+	        onClick: this.handleOnClick,
+	        onMouseEnter: this.handleMouseEnter,
+	        onMouseLeave: this.handleMouseLeave
+	      },
+	      this._render_close_button(),
+	      this._render_title_element(),
+	      this._render_message_element()
+	    );
+	  }
+	};
+
+	var animation = exports.animation = _react2.default.createClass((0, _reactAddonsUpdate2.default)(ToastMessageSpec, {
+	  displayName: { $set: "ToastMessage.animation" },
+	  mixins: { $set: [_animationMixin2.default] }
+	}));
+
+	var jQuery = exports.jQuery = _react2.default.createClass((0, _reactAddonsUpdate2.default)(ToastMessageSpec, {
+	  displayName: { $set: "ToastMessage.jQuery" },
+	  mixins: { $set: [_jQueryMixin2.default] }
+	}));
+
+	/*
+	 * assign default noop functions
+	 */
+	ToastMessageSpec.handleMouseEnter = noop;
+	ToastMessageSpec.handleMouseLeave = noop;
+	ToastMessageSpec.hideToast = noop;
+
+	var ToastMessage = _react2.default.createClass(ToastMessageSpec);
+
+	ToastMessage.animation = animation;
+	ToastMessage.jQuery = jQuery;
+
+	exports.default = ToastMessage;
+
+/***/ },
+/* 605 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
+
+	(function () {
+		'use strict';
+
+		var hasOwn = {}.hasOwnProperty;
+
+		function classNames () {
+			var classes = [];
+
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+
+				var argType = typeof arg;
+
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
+
+			return classes.join(' ');
+		}
+
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
+
+
+/***/ },
+/* 606 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _ReactTransitionEvents = __webpack_require__(169);
+
+	var _ReactTransitionEvents2 = _interopRequireDefault(_ReactTransitionEvents);
+
+	var _reactDom = __webpack_require__(437);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _elementClass = __webpack_require__(607);
+
+	var _elementClass2 = _interopRequireDefault(_elementClass);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var TICK = 17;
+	var toString = Object.prototype.toString;
+	exports.default = {
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      transition: null, // some examples defined in index.scss (scale, fadeInOut, rotate)
+	      showAnimation: "animated bounceIn", // or other animations from animate.css
+	      hideAnimation: "animated bounceOut",
+	      timeOut: 5000,
+	      extendedTimeOut: 1000
+	    };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    this.classNameQueue = [];
+	    this.isHiding = false;
+	    this.intervalId = null;
+	  },
+	  componentDidMount: function componentDidMount() {
+	    var _this = this;
+
+	    this._is_mounted = true;
+	    this._show();
+	    var node = _reactDom2.default.findDOMNode(this);
+
+	    var onHideComplete = function onHideComplete() {
+	      if (_this.isHiding) {
+	        _this._set_is_hiding(false);
+	        _ReactTransitionEvents2.default.removeEndEventListener(node, onHideComplete);
+	        _this._handle_remove();
+	      }
+	    };
+	    _ReactTransitionEvents2.default.addEndEventListener(node, onHideComplete);
+
+	    if (this.props.timeOut > 0) {
+	      this._set_interval_id(setTimeout(this.hideToast, this.props.timeOut));
+	    }
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this._is_mounted = false;
+	    if (this.intervalId) {
+	      clearTimeout(this.intervalId);
+	    }
+	  },
+	  _set_transition: function _set_transition(hide) {
+	    var animationType = hide ? "leave" : "enter";
+	    var node = _reactDom2.default.findDOMNode(this);
+	    var className = this.props.transition + "-" + animationType;
+	    var activeClassName = className + "-active";
+
+	    var endListener = function endListener(e) {
+	      if (e && e.target !== node) {
+	        return;
+	      }
+
+	      var classList = (0, _elementClass2.default)(node);
+	      classList.remove(className);
+	      classList.remove(activeClassName);
+
+	      _ReactTransitionEvents2.default.removeEndEventListener(node, endListener);
+	    };
+
+	    _ReactTransitionEvents2.default.addEndEventListener(node, endListener);
+
+	    (0, _elementClass2.default)(node).add(className);
+
+	    // Need to do this to actually trigger a transition.
+	    this._queue_class(activeClassName);
+	  },
+	  _clear_transition: function _clear_transition(hide) {
+	    var node = _reactDom2.default.findDOMNode(this);
+	    var animationType = hide ? "leave" : "enter";
+	    var className = this.props.transition + "-" + animationType;
+	    var activeClassName = className + "-active";
+
+	    var classList = (0, _elementClass2.default)(node);
+	    classList.remove(className);
+	    classList.remove(activeClassName);
+	  },
+	  _set_animation: function _set_animation(hide) {
+	    var node = _reactDom2.default.findDOMNode(this);
+	    var animations = this._get_animation_classes(hide);
+	    var endListener = function endListener(e) {
+	      if (e && e.target !== node) {
+	        return;
+	      }
+
+	      animations.forEach(function (anim) {
+	        return (0, _elementClass2.default)(node).remove(anim);
+	      });
+
+	      _ReactTransitionEvents2.default.removeEndEventListener(node, endListener);
+	    };
+
+	    _ReactTransitionEvents2.default.addEndEventListener(node, endListener);
+
+	    animations.forEach(function (anim) {
+	      return (0, _elementClass2.default)(node).add(anim);
+	    });
+	  },
+	  _get_animation_classes: function _get_animation_classes(hide) {
+	    var animations = hide ? this.props.hideAnimation : this.props.showAnimation;
+	    if ("[object Array]" === toString.call(animations)) {
+	      return animations;
+	    } else if ("string" === typeof animations) {
+	      return animations.split(" ");
+	    }
+	  },
+	  _clear_animation: function _clear_animation(hide) {
+	    var node = _reactDom2.default.findDOMNode(this);
+	    var animations = this._get_animation_classes(hide);
+	    animations.forEach(function (animation) {
+	      return (0, _elementClass2.default)(node).remove(animation);
+	    });
+	  },
+	  _queue_class: function _queue_class(className) {
+	    this.classNameQueue.push(className);
+
+	    if (!this.timeout) {
+	      this.timeout = setTimeout(this._flush_class_name_queue, TICK);
+	    }
+	  },
+	  _flush_class_name_queue: function _flush_class_name_queue() {
+	    var _this2 = this;
+
+	    if (this._is_mounted) {
+	      (function () {
+	        var node = _reactDom2.default.findDOMNode(_this2);
+	        _this2.classNameQueue.forEach(function (className) {
+	          return (0, _elementClass2.default)(node).add(className);
+	        });
+	      })();
+	    }
+	    this.classNameQueue.length = 0;
+	    this.timeout = null;
+	  },
+	  _show: function _show() {
+	    if (this.props.transition) {
+	      this._set_transition();
+	    } else if (this.props.showAnimation) {
+	      this._set_animation();
+	    }
+	  },
+	  handleMouseEnter: function handleMouseEnter() {
+	    clearTimeout(this.intervalId);
+	    this._set_interval_id(null);
+	    if (this.isHiding) {
+	      this._set_is_hiding(false);
+
+	      if (this.props.hideAnimation) {
+	        this._clear_animation(true);
+	      } else if (this.props.transition) {
+	        this._clear_transition(true);
+	      }
+	    }
+	  },
+	  handleMouseLeave: function handleMouseLeave() {
+	    if (!this.isHiding && (this.props.timeOut > 0 || this.props.extendedTimeOut > 0)) {
+	      this._set_interval_id(setTimeout(this.hideToast, this.props.extendedTimeOut));
+	    }
+	  },
+	  hideToast: function hideToast(override) {
+	    if (this.isHiding || this.intervalId === null && !override) {
+	      return;
+	    }
+
+	    this._set_is_hiding(true);
+	    if (this.props.transition) {
+	      this._set_transition(true);
+	    } else if (this.props.hideAnimation) {
+	      this._set_animation(true);
+	    } else {
+	      this._handle_remove();
+	    }
+	  },
+	  _set_interval_id: function _set_interval_id(intervalId) {
+	    this.intervalId = intervalId;
+	  },
+	  _set_is_hiding: function _set_is_hiding(isHiding) {
+	    this.isHiding = isHiding;
+	  }
+	};
+
+/***/ },
+/* 607 */
+/***/ function(module, exports) {
+
+	module.exports = function(opts) {
+	  return new ElementClass(opts)
+	}
+
+	function indexOf(arr, prop) {
+	  if (arr.indexOf) return arr.indexOf(prop)
+	  for (var i = 0, len = arr.length; i < len; i++)
+	    if (arr[i] === prop) return i
+	  return -1
+	}
+
+	function ElementClass(opts) {
+	  if (!(this instanceof ElementClass)) return new ElementClass(opts)
+	  var self = this
+	  if (!opts) opts = {}
+
+	  // similar doing instanceof HTMLElement but works in IE8
+	  if (opts.nodeType) opts = {el: opts}
+
+	  this.opts = opts
+	  this.el = opts.el || document.body
+	  if (typeof this.el !== 'object') this.el = document.querySelector(this.el)
+	}
+
+	ElementClass.prototype.add = function(className) {
+	  var el = this.el
+	  if (!el) return
+	  if (el.className === "") return el.className = className
+	  var classes = el.className.split(' ')
+	  if (indexOf(classes, className) > -1) return classes
+	  classes.push(className)
+	  el.className = classes.join(' ')
+	  return classes
+	}
+
+	ElementClass.prototype.remove = function(className) {
+	  var el = this.el
+	  if (!el) return
+	  if (el.className === "") return
+	  var classes = el.className.split(' ')
+	  var idx = indexOf(classes, className)
+	  if (idx > -1) classes.splice(idx, 1)
+	  el.className = classes.join(' ')
+	  return classes
+	}
+
+	ElementClass.prototype.has = function(className) {
+	  var el = this.el
+	  if (!el) return
+	  var classes = el.className.split(' ')
+	  return indexOf(classes, className) > -1
+	}
+
+	ElementClass.prototype.toggle = function(className) {
+	  var el = this.el
+	  if (!el) return
+	  if (this.has(className)) this.remove(className)
+	  else this.add(className)
+	}
+
+
+/***/ },
+/* 608 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _reactDom = __webpack_require__(437);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function call_show_method($node, props) {
+	  $node[props.showMethod]({
+	    duration: props.showDuration,
+	    easing: props.showEasing
+	  });
+	}
+
+	exports.default = {
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      style: {
+	        display: "none" },
+	      showMethod: "fadeIn", // slideDown, and show are built into jQuery
+	      showDuration: 300,
+	      showEasing: "swing", // and linear are built into jQuery
+	      hideMethod: "fadeOut",
+	      hideDuration: 1000,
+	      hideEasing: "swing",
+	      //
+	      timeOut: 5000,
+	      extendedTimeOut: 1000
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      intervalId: null,
+	      isHiding: false
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    call_show_method(this._get_$_node(), this.props);
+	    if (this.props.timeOut > 0) {
+	      this._set_interval_id(setTimeout(this.hideToast, this.props.timeOut));
+	    }
+	  },
+	  handleMouseEnter: function handleMouseEnter() {
+	    clearTimeout(this.state.intervalId);
+	    this._set_interval_id(null);
+	    this._set_is_hiding(false);
+
+	    call_show_method(this._get_$_node().stop(true, true), this.props);
+	  },
+	  handleMouseLeave: function handleMouseLeave() {
+	    if (!this.state.isHiding && (this.props.timeOut > 0 || this.props.extendedTimeOut > 0)) {
+	      this._set_interval_id(setTimeout(this.hideToast, this.props.extendedTimeOut));
+	    }
+	  },
+	  hideToast: function hideToast(override) {
+	    if (this.state.isHiding || this.state.intervalId === null && !override) {
+	      return;
+	    }
+	    this.setState({ isHiding: true });
+
+	    this._get_$_node()[this.props.hideMethod]({
+	      duration: this.props.hideDuration,
+	      easing: this.props.hideEasing,
+	      complete: this._handle_remove
+	    });
+	  },
+	  _get_$_node: function _get_$_node() {
+	    /* eslint-disable no-undef */
+	    return jQuery(_reactDom2.default.findDOMNode(this));
+	    /* eslint-enable no-undef */
+	  },
+	  _set_interval_id: function _set_interval_id(intervalId) {
+	    this.setState({
+	      intervalId: intervalId
+	    });
+	  },
+	  _set_is_hiding: function _set_is_hiding(isHiding) {
+	    this.setState({
+	      isHiding: isHiding
+	    });
+	  }
+	};
+
+/***/ },
+/* 609 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(440);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* eslint max-len: 0 */
+
+
+	var ExpandComponent = function (_Component) {
+	  _inherits(ExpandComponent, _Component);
+
+	  function ExpandComponent() {
+	    _classCallCheck(this, ExpandComponent);
+
+	    return _possibleConstructorReturn(this, (ExpandComponent.__proto__ || Object.getPrototypeOf(ExpandComponent)).apply(this, arguments));
+	  }
+
+	  _createClass(ExpandComponent, [{
+	    key: 'render',
+	    value: function render() {
+	      var trCss = {
+	        style: {
+	          backgroundColor: this.props.bgColor
+	        },
+	        className: (0, _classnames2.default)(this.props.isSelected ? this.props.selectRow.className : null, this.props.className)
+	      };
+	      return _react2.default.createElement(
+	        'tr',
+	        _extends({ hidden: this.props.hidden, width: this.props.width }, trCss),
+	        _react2.default.createElement(
+	          'td',
+	          { colSpan: this.props.colSpan },
+	          this.props.children
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ExpandComponent;
+	}(_react.Component);
+
+	var _default = ExpandComponent;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(ExpandComponent, 'ExpandComponent', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/ExpandComponent.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/ExpandComponent.js');
+	}();
+
+	;
+
+/***/ },
+/* 610 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(440);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _PageButton = __webpack_require__(611);
+
+	var _PageButton2 = _interopRequireDefault(_PageButton);
+
+	var _SizePerPageDropDown = __webpack_require__(612);
+
+	var _SizePerPageDropDown2 = _interopRequireDefault(_SizePerPageDropDown);
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var PaginationList = function (_Component) {
+	  _inherits(PaginationList, _Component);
+
+	  function PaginationList(props) {
+	    _classCallCheck(this, PaginationList);
+
+	    var _this = _possibleConstructorReturn(this, (PaginationList.__proto__ || Object.getPrototypeOf(PaginationList)).call(this, props));
+
+	    _this.changePage = function () {
+	      return _this.__changePage__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.changeSizePerPage = function () {
+	      return _this.__changeSizePerPage__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.toggleDropDown = function () {
+	      return _this.__toggleDropDown__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.state = {
+	      open: _this.props.open
+	    };
+	    return _this;
+	  }
+
+	  _createClass(PaginationList, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps() {
+	      this.setState({ open: false });
+	    }
+	  }, {
+	    key: '__changePage__REACT_HOT_LOADER__',
+	    value: function __changePage__REACT_HOT_LOADER__(page) {
+	      var _props = this.props,
+	          pageStartIndex = _props.pageStartIndex,
+	          prePage = _props.prePage,
+	          currPage = _props.currPage,
+	          nextPage = _props.nextPage,
+	          lastPage = _props.lastPage,
+	          firstPage = _props.firstPage,
+	          sizePerPage = _props.sizePerPage;
+
+
+	      if (page === prePage) {
+	        page = currPage - 1 < pageStartIndex ? pageStartIndex : currPage - 1;
+	      } else if (page === nextPage) {
+	        page = currPage + 1 > this.lastPage ? this.lastPage : currPage + 1;
+	      } else if (page === lastPage) {
+	        page = this.lastPage;
+	      } else if (page === firstPage) {
+	        page = pageStartIndex;
+	      } else {
+	        page = parseInt(page, 10);
+	      }
+
+	      if (page !== currPage) {
+	        this.props.changePage(page, sizePerPage);
+	      }
+	    }
+	  }, {
+	    key: '__changeSizePerPage__REACT_HOT_LOADER__',
+	    value: function __changeSizePerPage__REACT_HOT_LOADER__(pageNum) {
+	      var selectSize = typeof pageNum === 'string' ? parseInt(pageNum, 10) : pageNum;
+	      var currPage = this.props.currPage;
+
+	      if (selectSize !== this.props.sizePerPage) {
+	        this.totalPages = Math.ceil(this.props.dataSize / selectSize);
+	        this.lastPage = this.props.pageStartIndex + this.totalPages - 1;
+	        if (currPage > this.lastPage) currPage = this.lastPage;
+	        this.props.changePage(currPage, selectSize);
+	        if (this.props.onSizePerPageList) {
+	          this.props.onSizePerPageList(selectSize);
+	        }
+	      } else {
+	        this.setState({ open: false });
+	      }
+	    }
+	  }, {
+	    key: '__toggleDropDown__REACT_HOT_LOADER__',
+	    value: function __toggleDropDown__REACT_HOT_LOADER__() {
+	      this.setState({
+	        open: !this.state.open
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props2 = this.props,
+	          currPage = _props2.currPage,
+	          dataSize = _props2.dataSize,
+	          sizePerPage = _props2.sizePerPage,
+	          sizePerPageList = _props2.sizePerPageList,
+	          paginationShowsTotal = _props2.paginationShowsTotal,
+	          pageStartIndex = _props2.pageStartIndex,
+	          paginationPanel = _props2.paginationPanel,
+	          hidePageListOnlyOnePage = _props2.hidePageListOnlyOnePage;
+
+	      this.totalPages = Math.ceil(dataSize / sizePerPage);
+	      this.lastPage = this.props.pageStartIndex + this.totalPages - 1;
+	      var pageBtns = this.makePage(typeof paginationPanel === 'function');
+	      var dropdown = this.makeDropDown();
+
+	      var offset = Math.abs(_Const2.default.PAGE_START_INDEX - pageStartIndex);
+	      var start = (currPage - pageStartIndex) * sizePerPage;
+	      start = dataSize === 0 ? 0 : start + 1;
+	      var to = Math.min(sizePerPage * (currPage + offset) - 1, dataSize);
+	      if (to >= dataSize) to--;
+	      var total = paginationShowsTotal ? _react2.default.createElement(
+	        'span',
+	        null,
+	        'Showing rows ',
+	        start,
+	        ' to\xA0',
+	        to + 1,
+	        ' of\xA0',
+	        dataSize
+	      ) : null;
+
+	      if (typeof paginationShowsTotal === 'function') {
+	        total = paginationShowsTotal(start, to + 1, dataSize);
+	      }
+
+	      var content = paginationPanel && paginationPanel({
+	        currPage: currPage,
+	        sizePerPage: sizePerPage,
+	        sizePerPageList: sizePerPageList,
+	        pageStartIndex: pageStartIndex,
+	        changePage: this.changePage,
+	        toggleDropDown: this.toggleDropDown,
+	        changeSizePerPage: this.changeSizePerPage,
+	        components: {
+	          totalText: total,
+	          sizePerPageDropdown: dropdown,
+	          pageList: pageBtns
+	        }
+	      });
+
+	      var hidePageList = hidePageListOnlyOnePage && this.totalPages === 1 ? 'none' : 'block';
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'row', style: { marginTop: 15 } },
+	        content || _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-md-6 col-xs-6 col-sm-6 col-lg-6' },
+	            total,
+	            sizePerPageList.length > 1 ? dropdown : null
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { style: { display: hidePageList },
+	              className: 'col-md-6 col-xs-6 col-sm-6 col-lg-6' },
+	            pageBtns
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'makeDropDown',
+	    value: function makeDropDown() {
+	      var _this2 = this;
+
+	      var dropdown = void 0;
+	      var dropdownProps = void 0;
+	      var sizePerPageText = '';
+	      var _props3 = this.props,
+	          sizePerPageDropDown = _props3.sizePerPageDropDown,
+	          hideSizePerPage = _props3.hideSizePerPage,
+	          sizePerPage = _props3.sizePerPage,
+	          sizePerPageList = _props3.sizePerPageList;
+
+	      if (sizePerPageDropDown) {
+	        dropdown = sizePerPageDropDown({
+	          open: this.state.open,
+	          hideSizePerPage: hideSizePerPage,
+	          currSizePerPage: sizePerPage,
+	          sizePerPageList: sizePerPageList,
+	          toggleDropDown: this.toggleDropDown,
+	          changeSizePerPage: this.changeSizePerPage
+	        });
+	        if (dropdown.type.name === _SizePerPageDropDown2.default.name) {
+	          dropdownProps = dropdown.props;
+	        } else {
+	          return dropdown;
+	        }
+	      }
+
+	      if (dropdownProps || !dropdown) {
+	        var sizePerPageOptions = sizePerPageList.map(function (_sizePerPage) {
+	          var pageText = _sizePerPage.text || _sizePerPage;
+	          var pageNum = _sizePerPage.value || _sizePerPage;
+	          if (sizePerPage === pageNum) sizePerPageText = pageText;
+	          return _react2.default.createElement(
+	            'li',
+	            { key: pageText, role: 'presentation' },
+	            _react2.default.createElement(
+	              'a',
+	              { role: 'menuitem',
+	                tabIndex: '-1', href: '#',
+	                'data-page': pageNum,
+	                onClick: function onClick(e) {
+	                  e.preventDefault();
+	                  _this2.changeSizePerPage(pageNum);
+	                } },
+	              pageText
+	            )
+	          );
+	        });
+	        dropdown = _react2.default.createElement(_SizePerPageDropDown2.default, _extends({
+	          open: this.state.open,
+	          hidden: hideSizePerPage,
+	          currSizePerPage: String(sizePerPageText),
+	          options: sizePerPageOptions,
+	          onClick: this.toggleDropDown
+	        }, dropdownProps));
+	      }
+	      return dropdown;
+	    }
+	  }, {
+	    key: 'makePage',
+	    value: function makePage() {
+	      var _this3 = this;
+
+	      var isCustomPagingPanel = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+	      var pages = this.getPages();
+	      var isStart = function isStart(page, _ref) {
+	        var currPage = _ref.currPage,
+	            pageStartIndex = _ref.pageStartIndex,
+	            firstPage = _ref.firstPage,
+	            prePage = _ref.prePage;
+	        return currPage === pageStartIndex && (page === firstPage || page === prePage);
+	      };
+	      var isEnd = function isEnd(page, _ref2) {
+	        var currPage = _ref2.currPage,
+	            nextPage = _ref2.nextPage,
+	            lastPage = _ref2.lastPage;
+	        return currPage === _this3.lastPage && (page === nextPage || page === lastPage);
+	      };
+	      var pageBtns = pages.filter(function (page) {
+	        if (this.props.alwaysShowAllBtns) {
+	          return true;
+	        }
+	        return isStart(page, this.props) || isEnd(page, this.props) ? false : true;
+	      }, this).map(function (page) {
+	        var isActive = page === this.props.currPage;
+	        var isDisabled = isStart(page, this.props) || isEnd(page, this.props) ? true : false;
+	        var title = page + '';
+
+	        if (page === this.props.nextPage) {
+	          title = this.props.nextPageTitle;
+	        } else if (page === this.props.prePage) {
+	          title = this.props.prePageTitle;
+	        } else if (page === this.props.firstPage) {
+	          title = this.props.firstPageTitle;
+	        } else if (page === this.props.lastPage) {
+	          title = this.props.lastPageTitle;
+	        }
+
+	        return _react2.default.createElement(
+	          _PageButton2.default,
+	          { key: page,
+	            title: title,
+	            changePage: this.changePage,
+	            active: isActive,
+	            disable: isDisabled },
+	          page
+	        );
+	      }, this);
+	      var classname = (0, _classnames2.default)(isCustomPagingPanel ? null : 'react-bootstrap-table-page-btns-ul', 'pagination');
+	      return _react2.default.createElement(
+	        'ul',
+	        { className: classname },
+	        pageBtns
+	      );
+	    }
+	  }, {
+	    key: 'getLastPage',
+	    value: function getLastPage() {
+	      return this.lastPage;
+	    }
+	  }, {
+	    key: 'getPages',
+	    value: function getPages() {
+	      var pages = void 0;
+	      var endPage = this.totalPages;
+	      if (endPage <= 0) return [];
+	      var startPage = Math.max(this.props.currPage - Math.floor(this.props.paginationSize / 2), this.props.pageStartIndex);
+	      endPage = startPage + this.props.paginationSize - 1;
+
+	      if (endPage > this.lastPage) {
+	        endPage = this.lastPage;
+	        startPage = endPage - this.props.paginationSize + 1;
+	      }
+
+	      if (startPage !== this.props.pageStartIndex && this.totalPages > this.props.paginationSize && this.props.withFirstAndLast) {
+	        pages = [this.props.firstPage, this.props.prePage];
+	      } else if (this.totalPages > 1 || this.props.alwaysShowAllBtns) {
+	        pages = [this.props.prePage];
+	      } else {
+	        pages = [];
+	      }
+
+	      for (var i = startPage; i <= endPage; i++) {
+	        if (i >= this.props.pageStartIndex) pages.push(i);
+	      }
+
+	      if (endPage <= this.lastPage) {
+	        pages.push(this.props.nextPage);
+	      }
+	      if (endPage !== this.totalPages && this.props.withFirstAndLast) {
+	        pages.push(this.props.lastPage);
+	      }
+
+	      return pages;
+	    }
+	  }]);
+
+	  return PaginationList;
+	}(_react.Component);
+
+	PaginationList.propTypes = {
+	  currPage: _react.PropTypes.number,
+	  sizePerPage: _react.PropTypes.number,
+	  dataSize: _react.PropTypes.number,
+	  changePage: _react.PropTypes.func,
+	  sizePerPageList: _react.PropTypes.array,
+	  paginationShowsTotal: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.func]),
+	  paginationSize: _react.PropTypes.number,
+	  onSizePerPageList: _react.PropTypes.func,
+	  prePage: _react.PropTypes.string,
+	  pageStartIndex: _react.PropTypes.number,
+	  hideSizePerPage: _react.PropTypes.bool,
+	  alwaysShowAllBtns: _react.PropTypes.bool,
+	  withFirstAndLast: _react.PropTypes.bool,
+	  sizePerPageDropDown: _react.PropTypes.func,
+	  paginationPanel: _react.PropTypes.func,
+	  prePageTitle: _react.PropTypes.string,
+	  nextPageTitle: _react.PropTypes.string,
+	  firstPageTitle: _react.PropTypes.string,
+	  lastPageTitle: _react.PropTypes.string,
+	  hidePageListOnlyOnePage: _react.PropTypes.bool
+	};
+
+	PaginationList.defaultProps = {
+	  sizePerPage: _Const2.default.SIZE_PER_PAGE,
+	  pageStartIndex: _Const2.default.PAGE_START_INDEX
+	};
+
+	var _default = PaginationList;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(PaginationList, 'PaginationList', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/pagination/PaginationList.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/pagination/PaginationList.js');
+	}();
+
+	;
+
+/***/ },
+/* 611 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(440);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var PageButton = function (_Component) {
+	  _inherits(PageButton, _Component);
+
+	  function PageButton(props) {
+	    _classCallCheck(this, PageButton);
+
+	    var _this = _possibleConstructorReturn(this, (PageButton.__proto__ || Object.getPrototypeOf(PageButton)).call(this, props));
+
+	    _this.pageBtnClick = function () {
+	      return _this.__pageBtnClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    return _this;
+	  }
+
+	  _createClass(PageButton, [{
+	    key: '__pageBtnClick__REACT_HOT_LOADER__',
+	    value: function __pageBtnClick__REACT_HOT_LOADER__(e) {
+	      e.preventDefault();
+	      this.props.changePage(e.currentTarget.textContent);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var classes = (0, _classnames2.default)({
+	        'active': this.props.active,
+	        'disabled': this.props.disable,
+	        'hidden': this.props.hidden,
+	        'page-item': true
+	      });
+	      return _react2.default.createElement(
+	        'li',
+	        { className: classes, title: this.props.title },
+	        _react2.default.createElement(
+	          'a',
+	          { href: '#', onClick: this.pageBtnClick, className: 'page-link' },
+	          this.props.children
+	        )
+	      );
+	    }
+	  }]);
+
+	  return PageButton;
+	}(_react.Component);
+
+	PageButton.propTypes = {
+	  title: _react.PropTypes.string,
+	  changePage: _react.PropTypes.func,
+	  active: _react.PropTypes.bool,
+	  disable: _react.PropTypes.bool,
+	  hidden: _react.PropTypes.bool,
+	  children: _react.PropTypes.node
+	};
+
+	var _default = PageButton;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(PageButton, 'PageButton', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/pagination/PageButton.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/pagination/PageButton.js');
+	}();
+
+	;
+
+/***/ },
+/* 612 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SizePerPageDropDown = function (_Component) {
+	  _inherits(SizePerPageDropDown, _Component);
+
+	  function SizePerPageDropDown() {
+	    _classCallCheck(this, SizePerPageDropDown);
+
+	    return _possibleConstructorReturn(this, (SizePerPageDropDown.__proto__ || Object.getPrototypeOf(SizePerPageDropDown)).apply(this, arguments));
+	  }
+
+	  _createClass(SizePerPageDropDown, [{
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          open = _props.open,
+	          hidden = _props.hidden,
+	          onClick = _props.onClick,
+	          options = _props.options,
+	          className = _props.className,
+	          variation = _props.variation,
+	          btnContextual = _props.btnContextual,
+	          currSizePerPage = _props.currSizePerPage;
+
+
+	      var openClass = open ? 'open' : '';
+	      var dropDownStyle = { visibility: hidden ? 'hidden' : 'visible' };
+
+	      return _react2.default.createElement(
+	        'span',
+	        { className: variation + ' ' + openClass + ' ' + className, style: dropDownStyle },
+	        _react2.default.createElement(
+	          'button',
+	          { className: 'btn ' + btnContextual + ' dropdown-toggle',
+	            id: 'pageDropDown', 'data-toggle': 'dropdown',
+	            'aria-expanded': open,
+	            onClick: onClick },
+	          currSizePerPage,
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            ' ',
+	            _react2.default.createElement('span', { className: 'caret' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'dropdown-menu', role: 'menu', 'aria-labelledby': 'pageDropDown' },
+	          options
+	        )
+	      );
+	    }
+	  }]);
+
+	  return SizePerPageDropDown;
+	}(_react.Component);
+
+	SizePerPageDropDown.propTypes = {
+	  open: _react.PropTypes.bool,
+	  hidden: _react.PropTypes.bool,
+	  btnContextual: _react.PropTypes.string,
+	  currSizePerPage: _react.PropTypes.string,
+	  options: _react.PropTypes.array,
+	  variation: _react.PropTypes.oneOf(['dropdown', 'dropup']),
+	  className: _react.PropTypes.string,
+	  onClick: _react.PropTypes.func
+	};
+	SizePerPageDropDown.defaultProps = {
+	  open: false,
+	  hidden: false,
+	  btnContextual: 'btn-default',
+	  variation: 'dropdown',
+	  className: ''
+	};
+
+	var _default = SizePerPageDropDown;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(SizePerPageDropDown, 'SizePerPageDropDown', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/pagination/SizePerPageDropDown.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/pagination/SizePerPageDropDown.js');
+	}();
+
+	;
+
+/***/ },
+/* 613 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactModal = __webpack_require__(614);
+
+	var _reactModal2 = _interopRequireDefault(_reactModal);
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	var _Notification = __webpack_require__(450);
+
+	var _Notification2 = _interopRequireDefault(_Notification);
+
+	var _InsertModal = __webpack_require__(623);
+
+	var _InsertModal2 = _interopRequireDefault(_InsertModal);
+
+	var _InsertButton = __webpack_require__(627);
+
+	var _InsertButton2 = _interopRequireDefault(_InsertButton);
+
+	var _DeleteButton = __webpack_require__(628);
+
+	var _DeleteButton2 = _interopRequireDefault(_DeleteButton);
+
+	var _ExportCSVButton = __webpack_require__(629);
+
+	var _ExportCSVButton2 = _interopRequireDefault(_ExportCSVButton);
+
+	var _ShowSelectedOnlyButton = __webpack_require__(630);
+
+	var _ShowSelectedOnlyButton2 = _interopRequireDefault(_ShowSelectedOnlyButton);
+
+	var _SearchField = __webpack_require__(631);
+
+	var _SearchField2 = _interopRequireDefault(_SearchField);
+
+	var _ClearSearchButton = __webpack_require__(632);
+
+	var _ClearSearchButton2 = _interopRequireDefault(_ClearSearchButton);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* eslint no-console: 0 */
+
+	// import classSet from 'classnames';
+
+	// import editor from '../Editor';
+
+
+	var ToolBar = function (_Component) {
+	  _inherits(ToolBar, _Component);
+
+	  function ToolBar(props) {
+	    var _arguments = arguments;
+
+	    _classCallCheck(this, ToolBar);
+
+	    var _this = _possibleConstructorReturn(this, (ToolBar.__proto__ || Object.getPrototypeOf(ToolBar)).call(this, props));
+
+	    _this.handleSaveBtnClick = function () {
+	      return _this.__handleSaveBtnClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleModalClose = function () {
+	      return _this.__handleModalClose__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleModalOpen = function () {
+	      return _this.__handleModalOpen__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleShowOnlyToggle = function () {
+	      return _this.__handleShowOnlyToggle__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleDropRowBtnClick = function () {
+	      return _this.__handleDropRowBtnClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleDebounce = function (func, wait, immediate) {
+	      var timeout = void 0;
+
+	      return function () {
+	        var later = function later() {
+	          timeout = null;
+
+	          if (!immediate) {
+	            func.apply(_this, _arguments);
+	          }
+	        };
+
+	        var callNow = immediate && !timeout;
+
+	        clearTimeout(timeout);
+
+	        timeout = setTimeout(later, wait || 0);
+
+	        if (callNow) {
+	          func.appy(_this, _arguments);
+	        }
+	      };
+	    };
+
+	    _this.handleKeyUp = function () {
+	      return _this.__handleKeyUp__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleExportCSV = function () {
+	      return _this.__handleExportCSV__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleClearBtnClick = function () {
+	      return _this.__handleClearBtnClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.timeouteClear = 0;
+	    _this.modalClassName;
+	    _this.state = {
+	      isInsertModalOpen: false,
+	      validateState: null,
+	      shakeEditor: false,
+	      showSelected: false
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ToolBar, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      var _this2 = this;
+
+	      var delay = this.props.searchDelayTime ? this.props.searchDelayTime : 0;
+	      this.debounceCallback = this.handleDebounce(function () {
+	        var seachInput = _this2.refs.seachInput;
+
+	        seachInput && _this2.props.onSearch(seachInput.getValue());
+	      }, delay);
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      if (nextProps.reset) {
+	        this.setSearchInput('');
+	      }
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      this.clearTimeout();
+	    }
+	  }, {
+	    key: 'setSearchInput',
+	    value: function setSearchInput(text) {
+	      var seachInput = this.refs.seachInput;
+
+	      if (seachInput && seachInput.value !== text) {
+	        seachInput.value = text;
+	      }
+	    }
+	  }, {
+	    key: 'clearTimeout',
+	    value: function (_clearTimeout) {
+	      function clearTimeout() {
+	        return _clearTimeout.apply(this, arguments);
+	      }
+
+	      clearTimeout.toString = function () {
+	        return _clearTimeout.toString();
+	      };
+
+	      return clearTimeout;
+	    }(function () {
+	      if (this.timeouteClear) {
+	        clearTimeout(this.timeouteClear);
+	        this.timeouteClear = 0;
+	      }
+	    })
+	  }, {
+	    key: 'validateNewRow',
+	    value: function validateNewRow(newRow) {
+	      var _this3 = this;
+
+	      var validateState = {};
+	      var isValid = true;
+	      var tempMsg = void 0;
+	      var responseType = void 0;
+
+	      this.props.columns.forEach(function (column) {
+	        if (column.editable && column.editable.validator) {
+	          // process validate
+	          tempMsg = column.editable.validator(newRow[column.field]);
+	          responseType = typeof tempMsg === 'undefined' ? 'undefined' : _typeof(tempMsg);
+	          if (responseType !== 'object' && tempMsg !== true) {
+	            _this3.refs.notifier.notice('error', 'Form validate errors, please checking!', 'Pressed ESC can cancel');
+	            isValid = false;
+	            validateState[column.field] = tempMsg;
+	          } else if (responseType === 'object' && tempMsg.isValid !== true) {
+	            _this3.refs.notifier.notice(tempMsg.notification.type, tempMsg.notification.msg, tempMsg.notification.title);
+	            isValid = false;
+	            validateState[column.field] = tempMsg.notification.msg;
+	          }
+	        }
+	      });
+
+	      if (isValid) {
+	        return true;
+	      } else {
+	        this.clearTimeout();
+	        // show error in form and shake it
+	        this.setState({ validateState: validateState, shakeEditor: true });
+	        this.timeouteClear = setTimeout(function () {
+	          _this3.setState({ shakeEditor: false });
+	        }, 300);
+	        return null;
+	      }
+	    }
+	  }, {
+	    key: '__handleSaveBtnClick__REACT_HOT_LOADER__',
+	    value: function __handleSaveBtnClick__REACT_HOT_LOADER__(newRow) {
+	      var _this4 = this;
+
+	      if (!this.validateNewRow(newRow)) {
+	        // validation fail
+	        return;
+	      }
+	      var msg = this.props.onAddRow(newRow);
+	      if (msg) {
+	        this.refs.notifier.notice('error', msg, 'Pressed ESC can cancel');
+	        this.clearTimeout();
+	        // shake form and hack prevent modal hide
+	        this.setState({
+	          shakeEditor: true,
+	          validateState: 'this is hack for prevent bootstrap modal hide'
+	        });
+	        // clear animate class
+	        this.timeouteClear = setTimeout(function () {
+	          _this4.setState({ shakeEditor: false });
+	        }, 300);
+	      } else {
+	        // reset state and hide modal hide
+	        this.setState({
+	          validateState: null,
+	          shakeEditor: false,
+	          isInsertModalOpen: false
+	        });
+	      }
+	    }
+	  }, {
+	    key: '__handleModalClose__REACT_HOT_LOADER__',
+	    value: function __handleModalClose__REACT_HOT_LOADER__() {
+	      this.setState({ isInsertModalOpen: false });
+	    }
+	  }, {
+	    key: '__handleModalOpen__REACT_HOT_LOADER__',
+	    value: function __handleModalOpen__REACT_HOT_LOADER__() {
+	      this.setState({ isInsertModalOpen: true });
+	    }
+	  }, {
+	    key: '__handleShowOnlyToggle__REACT_HOT_LOADER__',
+	    value: function __handleShowOnlyToggle__REACT_HOT_LOADER__() {
+	      this.setState({
+	        showSelected: !this.state.showSelected
+	      });
+	      this.props.onShowOnlySelected();
+	    }
+	  }, {
+	    key: '__handleDropRowBtnClick__REACT_HOT_LOADER__',
+	    value: function __handleDropRowBtnClick__REACT_HOT_LOADER__() {
+	      this.props.onDropRow();
+	    }
+	  }, {
+	    key: 'handleCloseBtn',
+	    value: function handleCloseBtn() {
+	      this.refs.warning.style.display = 'none';
+	    }
+	  }, {
+	    key: '__handleKeyUp__REACT_HOT_LOADER__',
+	    value: function __handleKeyUp__REACT_HOT_LOADER__(event) {
+	      event.persist();
+	      this.debounceCallback(event);
+	    }
+	  }, {
+	    key: '__handleExportCSV__REACT_HOT_LOADER__',
+	    value: function __handleExportCSV__REACT_HOT_LOADER__() {
+	      this.props.onExportCSV();
+	    }
+	  }, {
+	    key: '__handleClearBtnClick__REACT_HOT_LOADER__',
+	    value: function __handleClearBtnClick__REACT_HOT_LOADER__() {
+	      var seachInput = this.refs.seachInput;
+
+	      seachInput && seachInput.setValue('');
+	      this.props.onSearch('');
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      this.modalClassName = 'bs-table-modal-sm' + ToolBar.modalSeq++;
+	      var toolbar = null;
+	      var btnGroup = null;
+	      var insertBtn = null;
+	      var deleteBtn = null;
+	      var exportCSVBtn = null;
+	      var showSelectedOnlyBtn = null;
+
+	      if (this.props.enableInsert) {
+	        if (this.props.insertBtn) {
+	          insertBtn = this.renderCustomBtn(this.props.insertBtn, [this.handleModalOpen], _InsertButton2.default.name, 'onClick', this.handleModalOpen);
+	        } else {
+	          insertBtn = _react2.default.createElement(_InsertButton2.default, { btnText: this.props.insertText,
+	            onClick: this.handleModalOpen });
+	        }
+	      }
+
+	      if (this.props.enableDelete) {
+	        if (this.props.deleteBtn) {
+	          deleteBtn = this.renderCustomBtn(this.props.deleteBtn, [this.handleDropRowBtnClick], _DeleteButton2.default.name, 'onClick', this.handleDropRowBtnClick);
+	        } else {
+	          deleteBtn = _react2.default.createElement(_DeleteButton2.default, { btnText: this.props.deleteText,
+	            onClick: this.handleDropRowBtnClick });
+	        }
+	      }
+
+	      if (this.props.enableShowOnlySelected) {
+	        if (this.props.showSelectedOnlyBtn) {
+	          showSelectedOnlyBtn = this.renderCustomBtn(this.props.showSelectedOnlyBtn, [this.handleShowOnlyToggle, this.state.showSelected], _ShowSelectedOnlyButton2.default.name, 'onClick', this.handleShowOnlyToggle);
+	        } else {
+	          showSelectedOnlyBtn = _react2.default.createElement(_ShowSelectedOnlyButton2.default, { toggle: this.state.showSelected,
+	            onClick: this.handleShowOnlyToggle });
+	        }
+	      }
+
+	      if (this.props.enableExportCSV) {
+	        if (this.props.exportCSVBtn) {
+	          exportCSVBtn = this.renderCustomBtn(this.props.exportCSVBtn, [this.handleExportCSV], _ExportCSVButton2.default.name, 'onClick', this.handleExportCSV);
+	        } else {
+	          exportCSVBtn = _react2.default.createElement(_ExportCSVButton2.default, { btnText: this.props.exportCSVText,
+	            onClick: this.handleExportCSV });
+	        }
+	      }
+
+	      if (this.props.btnGroup) {
+	        btnGroup = this.props.btnGroup({
+	          exportCSVBtn: exportCSVBtn,
+	          insertBtn: insertBtn,
+	          deleteBtn: deleteBtn,
+	          showSelectedOnlyBtn: showSelectedOnlyBtn
+	        });
+	      } else {
+	        btnGroup = _react2.default.createElement(
+	          'div',
+	          { className: 'btn-group btn-group-sm', role: 'group' },
+	          exportCSVBtn,
+	          insertBtn,
+	          deleteBtn,
+	          showSelectedOnlyBtn
+	        );
+	      }
+
+	      var _renderSearchPanel = this.renderSearchPanel(),
+	          _renderSearchPanel2 = _slicedToArray(_renderSearchPanel, 3),
+	          searchPanel = _renderSearchPanel2[0],
+	          searchField = _renderSearchPanel2[1],
+	          clearBtn = _renderSearchPanel2[2];
+
+	      var modal = this.props.enableInsert ? this.renderInsertRowModal() : null;
+
+	      if (this.props.toolBar) {
+	        toolbar = this.props.toolBar({
+	          components: {
+	            exportCSVBtn: exportCSVBtn,
+	            insertBtn: insertBtn,
+	            deleteBtn: deleteBtn,
+	            showSelectedOnlyBtn: showSelectedOnlyBtn,
+	            searchPanel: searchPanel,
+	            btnGroup: btnGroup,
+	            searchField: searchField,
+	            clearBtn: clearBtn
+	          },
+	          event: {
+	            openInsertModal: this.handleModalOpen,
+	            closeInsertModal: this.handleModalClose,
+	            dropRow: this.handleDropRowBtnClick,
+	            showOnlyToogle: this.handleShowOnlyToggle,
+	            exportCSV: this.handleExportCSV,
+	            search: this.props.onSearch
+	          }
+	        });
+	      } else {
+	        toolbar = _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-xs-6 col-sm-6 col-md-6 col-lg-8' },
+	            this.props.searchPosition === 'left' ? searchPanel : btnGroup
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-xs-6 col-sm-6 col-md-6 col-lg-4' },
+	            this.props.searchPosition === 'left' ? btnGroup : searchPanel
+	          )
+	        );
+	      }
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        toolbar,
+	        _react2.default.createElement(_Notification2.default, { ref: 'notifier' }),
+	        modal
+	      );
+	    }
+	  }, {
+	    key: 'renderSearchPanel',
+	    value: function renderSearchPanel() {
+	      if (this.props.enableSearch) {
+	        var classNames = 'form-group form-group-sm react-bs-table-search-form';
+	        var clearBtn = null;
+	        var searchField = null;
+	        var searchPanel = null;
+	        if (this.props.clearSearch) {
+	          if (this.props.clearSearchBtn) {
+	            clearBtn = this.renderCustomBtn(this.props.clearSearchBtn, [this.handleClearBtnClick], _ClearSearchButton2.default.name, 'onClick', this.handleClearBtnClick); /* eslint max-len: 0*/
+	          } else {
+	            clearBtn = _react2.default.createElement(_ClearSearchButton2.default, { onClick: this.handleClearBtnClick });
+	          }
+	          classNames += ' input-group input-group-sm';
+	        }
+
+	        if (this.props.searchField) {
+	          searchField = this.props.searchField({
+	            search: this.handleKeyUp,
+	            defaultValue: this.props.defaultSearch,
+	            placeholder: this.props.searchPlaceholder
+	          });
+	          if (searchField.type.name === _SearchField2.default.name) {
+	            searchField = _react2.default.cloneElement(searchField, {
+	              ref: 'seachInput',
+	              onKeyUp: this.handleKeyUp
+	            });
+	          } else {
+	            searchField = _react2.default.cloneElement(searchField, {
+	              ref: 'seachInput'
+	            });
+	          }
+	        } else {
+	          searchField = _react2.default.createElement(_SearchField2.default, { ref: 'seachInput',
+	            defaultValue: this.props.defaultSearch,
+	            placeholder: this.props.searchPlaceholder,
+	            onKeyUp: this.handleKeyUp });
+	        }
+	        if (this.props.searchPanel) {
+	          searchPanel = this.props.searchPanel({
+	            searchField: searchField, clearBtn: clearBtn,
+	            search: this.props.onSearch,
+	            defaultValue: this.props.defaultSearch,
+	            placeholder: this.props.searchPlaceholder,
+	            clearBtnClick: this.handleClearBtnClick
+	          });
+	        } else {
+	          searchPanel = _react2.default.createElement(
+	            'div',
+	            { className: classNames },
+	            searchField,
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'input-group-btn' },
+	              clearBtn
+	            )
+	          );
+	        }
+	        return [searchPanel, searchField, clearBtn];
+	      } else {
+	        return [];
+	      }
+	    }
+	  }, {
+	    key: 'renderInsertRowModal',
+	    value: function renderInsertRowModal() {
+	      var validateState = this.state.validateState || {};
+	      var _props = this.props,
+	          columns = _props.columns,
+	          ignoreEditable = _props.ignoreEditable,
+	          insertModalHeader = _props.insertModalHeader,
+	          insertModalBody = _props.insertModalBody,
+	          insertModalFooter = _props.insertModalFooter,
+	          insertModal = _props.insertModal;
+
+
+	      var modal = void 0;
+	      modal = insertModal && insertModal(this.handleModalClose, this.handleSaveBtnClick, columns, validateState, ignoreEditable);
+
+	      if (!modal) {
+	        modal = _react2.default.createElement(_InsertModal2.default, {
+	          columns: columns,
+	          validateState: validateState,
+	          ignoreEditable: ignoreEditable,
+	          onModalClose: this.handleModalClose,
+	          onSave: this.handleSaveBtnClick,
+	          headerComponent: insertModalHeader,
+	          bodyComponent: insertModalBody,
+	          footerComponent: insertModalFooter });
+	      }
+
+	      return _react2.default.createElement(
+	        _reactModal2.default,
+	        { className: 'react-bs-insert-modal modal-dialog',
+	          isOpen: this.state.isInsertModalOpen,
+	          onRequestClose: this.handleModalClose,
+	          contentLabel: 'Modal' },
+	        modal
+	      );
+	    }
+	  }, {
+	    key: 'renderCustomBtn',
+	    value: function renderCustomBtn(cb, params, componentName, eventName, event) {
+	      var element = cb.apply(null, params);
+	      if (element.type.name === componentName && !element.props[eventName]) {
+	        var props = {};
+	        props[eventName] = event;
+	        element = _react2.default.cloneElement(element, props);
+	      }
+	      return element;
+	    }
+	  }]);
+
+	  return ToolBar;
+	}(_react.Component);
+
+	ToolBar.modalSeq = 0;
+
+
+	ToolBar.propTypes = {
+	  onAddRow: _react.PropTypes.func,
+	  onDropRow: _react.PropTypes.func,
+	  onShowOnlySelected: _react.PropTypes.func,
+	  enableInsert: _react.PropTypes.bool,
+	  enableDelete: _react.PropTypes.bool,
+	  enableSearch: _react.PropTypes.bool,
+	  enableShowOnlySelected: _react.PropTypes.bool,
+	  columns: _react.PropTypes.array,
+	  searchPlaceholder: _react.PropTypes.string,
+	  exportCSVText: _react.PropTypes.string,
+	  insertText: _react.PropTypes.string,
+	  deleteText: _react.PropTypes.string,
+	  saveText: _react.PropTypes.string,
+	  closeText: _react.PropTypes.string,
+	  clearSearch: _react.PropTypes.bool,
+	  ignoreEditable: _react.PropTypes.bool,
+	  defaultSearch: _react.PropTypes.string,
+	  insertModalHeader: _react.PropTypes.func,
+	  insertModalBody: _react.PropTypes.func,
+	  insertModalFooter: _react.PropTypes.func,
+	  insertModal: _react.PropTypes.func,
+	  insertBtn: _react.PropTypes.func,
+	  deleteBtn: _react.PropTypes.func,
+	  showSelectedOnlyBtn: _react.PropTypes.func,
+	  exportCSVBtn: _react.PropTypes.func,
+	  clearSearchBtn: _react.PropTypes.func,
+	  searchField: _react.PropTypes.func,
+	  searchPanel: _react.PropTypes.func,
+	  btnGroup: _react.PropTypes.func,
+	  toolBar: _react.PropTypes.func,
+	  searchPosition: _react.PropTypes.string,
+	  reset: _react.PropTypes.bool
+	};
+
+	ToolBar.defaultProps = {
+	  reset: false,
+	  enableInsert: false,
+	  enableDelete: false,
+	  enableSearch: false,
+	  enableShowOnlySelected: false,
+	  clearSearch: false,
+	  ignoreEditable: false,
+	  exportCSVText: _Const2.default.EXPORT_CSV_TEXT,
+	  insertText: _Const2.default.INSERT_BTN_TEXT,
+	  deleteText: _Const2.default.DELETE_BTN_TEXT,
+	  saveText: _Const2.default.SAVE_BTN_TEXT,
+	  closeText: _Const2.default.CLOSE_BTN_TEXT
+	};
+
+	var _default = ToolBar;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(ToolBar, 'ToolBar', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ToolBar.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ToolBar.js');
+	}();
+
+	;
+
+/***/ },
+/* 614 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(615);
+
+
+
+/***/ },
+/* 615 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(203);
+	var ReactDOM = __webpack_require__(437);
+	var ExecutionEnvironment = __webpack_require__(616);
+	var ModalPortal = React.createFactory(__webpack_require__(617));
+	var ariaAppHider = __webpack_require__(622);
+	var elementClass = __webpack_require__(607);
+	var renderSubtreeIntoContainer = __webpack_require__(437).unstable_renderSubtreeIntoContainer;
+	var Assign = __webpack_require__(621);
+
+	var SafeHTMLElement = ExecutionEnvironment.canUseDOM ? window.HTMLElement : {};
+	var AppElement = ExecutionEnvironment.canUseDOM ? document.body : {appendChild: function() {}};
+
+	function getParentElement(parentSelector) {
+	  return parentSelector();
+	}
+
+	var Modal = React.createClass({
+
+	  displayName: 'Modal',
+	  statics: {
+	    setAppElement: function(element) {
+	        AppElement = ariaAppHider.setElement(element);
+	    },
+	    injectCSS: function() {
+	      "production" !== ("development")
+	        && console.warn('React-Modal: injectCSS has been deprecated ' +
+	                        'and no longer has any effect. It will be removed in a later version');
+	    }
+	  },
+
+	  propTypes: {
+	    isOpen: React.PropTypes.bool.isRequired,
+	    style: React.PropTypes.shape({
+	      content: React.PropTypes.object,
+	      overlay: React.PropTypes.object
+	    }),
+	    portalClassName: React.PropTypes.string,
+	    appElement: React.PropTypes.instanceOf(SafeHTMLElement),
+	    onAfterOpen: React.PropTypes.func,
+	    onRequestClose: React.PropTypes.func,
+	    closeTimeoutMS: React.PropTypes.number,
+	    ariaHideApp: React.PropTypes.bool,
+	    shouldCloseOnOverlayClick: React.PropTypes.bool,
+	    parentSelector: React.PropTypes.func,
+	    role: React.PropTypes.string,
+	    contentLabel: React.PropTypes.string.isRequired
+	  },
+
+	  getDefaultProps: function () {
+	    return {
+	      isOpen: false,
+	      portalClassName: 'ReactModalPortal',
+	      ariaHideApp: true,
+	      closeTimeoutMS: 0,
+	      shouldCloseOnOverlayClick: true,
+	      parentSelector: function () { return document.body; }
+	    };
+	  },
+
+	  componentDidMount: function() {
+	    this.node = document.createElement('div');
+	    this.node.className = this.props.portalClassName;
+
+	    var parent = getParentElement(this.props.parentSelector);
+	    parent.appendChild(this.node);
+	    this.renderPortal(this.props);
+	  },
+
+	  componentWillReceiveProps: function(newProps) {
+	    var currentParent = getParentElement(this.props.parentSelector);
+	    var newParent = getParentElement(newProps.parentSelector);
+
+	    if(newParent !== currentParent) {
+	      currentParent.removeChild(this.node);
+	      newParent.appendChild(this.node);
+	    }
+
+	    this.renderPortal(newProps);
+	  },
+
+	  componentWillUnmount: function() {
+	    if (this.props.ariaHideApp) {
+	      ariaAppHider.show(this.props.appElement);
+	    }
+
+	    var state = this.portal.state;
+	    var now = Date.now();
+	    var closesAt = state.isOpen && this.props.closeTimeoutMS
+	      && (state.closesAt
+	        || now + this.props.closeTimeoutMS);
+
+	    if (closesAt) {
+	      if (!state.beforeClose) {
+	        this.portal.closeWithTimeout();
+	      }
+
+	      var that = this;
+	      setTimeout(function() { that.removePortal(); }, closesAt - now);
+	    } else {
+	      this.removePortal();
+	    }
+	  },
+
+	  removePortal: function() {
+	    ReactDOM.unmountComponentAtNode(this.node);
+	    var parent = getParentElement(this.props.parentSelector);
+	    parent.removeChild(this.node);
+	    elementClass(document.body).remove('ReactModal__Body--open');
+	  },
+
+	  renderPortal: function(props) {
+	    if (props.isOpen) {
+	      elementClass(document.body).add('ReactModal__Body--open');
+	    } else {
+	      elementClass(document.body).remove('ReactModal__Body--open');
+	    }
+
+	    if (props.ariaHideApp) {
+	      ariaAppHider.toggle(props.isOpen, props.appElement);
+	    }
+
+	    this.portal = renderSubtreeIntoContainer(this, ModalPortal(Assign({}, props, {defaultStyles: Modal.defaultStyles})), this.node);
+	  },
+
+	  render: function () {
+	    return React.DOM.noscript();
+	  }
+	});
+
+	Modal.defaultStyles = {
+	  overlay: {
+	    position        : 'fixed',
+	    top             : 0,
+	    left            : 0,
+	    right           : 0,
+	    bottom          : 0,
+	    backgroundColor : 'rgba(255, 255, 255, 0.75)'
+	  },
+	  content: {
+	    position                : 'absolute',
+	    top                     : '40px',
+	    left                    : '40px',
+	    right                   : '40px',
+	    bottom                  : '40px',
+	    border                  : '1px solid #ccc',
+	    background              : '#fff',
+	    overflow                : 'auto',
+	    WebkitOverflowScrolling : 'touch',
+	    borderRadius            : '4px',
+	    outline                 : 'none',
+	    padding                 : '20px'
+	  }
+	}
+
+	module.exports = Modal
+
+
+/***/ },
+/* 616 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2015 Jed Watson.
+	  Based on code that is Copyright 2013-2015, Facebook, Inc.
+	  All rights reserved.
+	*/
+
+	(function () {
+		'use strict';
+
+		var canUseDOM = !!(
+			typeof window !== 'undefined' &&
+			window.document &&
+			window.document.createElement
+		);
+
+		var ExecutionEnvironment = {
+
+			canUseDOM: canUseDOM,
+
+			canUseWorkers: typeof Worker !== 'undefined',
+
+			canUseEventListeners:
+				canUseDOM && !!(window.addEventListener || window.attachEvent),
+
+			canUseViewport: canUseDOM && !!window.screen
+
+		};
+
+		if (true) {
+			!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return ExecutionEnvironment;
+			}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else if (typeof module !== 'undefined' && module.exports) {
+			module.exports = ExecutionEnvironment;
+		} else {
+			window.ExecutionEnvironment = ExecutionEnvironment;
+		}
+
+	}());
+
+
+/***/ },
+/* 617 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(203);
+	var div = React.DOM.div;
+	var focusManager = __webpack_require__(618);
+	var scopeTab = __webpack_require__(620);
+	var Assign = __webpack_require__(621);
+
+	// so that our CSS is statically analyzable
+	var CLASS_NAMES = {
+	  overlay: {
+	    base: 'ReactModal__Overlay',
+	    afterOpen: 'ReactModal__Overlay--after-open',
+	    beforeClose: 'ReactModal__Overlay--before-close'
+	  },
+	  content: {
+	    base: 'ReactModal__Content',
+	    afterOpen: 'ReactModal__Content--after-open',
+	    beforeClose: 'ReactModal__Content--before-close'
+	  }
+	};
+
+	var ModalPortal = module.exports = React.createClass({
+
+	  displayName: 'ModalPortal',
+	  shouldClose: null,
+
+	  getDefaultProps: function() {
+	    return {
+	      style: {
+	        overlay: {},
+	        content: {}
+	      }
+	    };
+	  },
+
+	  getInitialState: function() {
+	    return {
+	      afterOpen: false,
+	      beforeClose: false
+	    };
+	  },
+
+	  componentDidMount: function() {
+	    // Focus needs to be set when mounting and already open
+	    if (this.props.isOpen) {
+	      this.setFocusAfterRender(true);
+	      this.open();
+	    }
+	  },
+
+	  componentWillUnmount: function() {
+	    clearTimeout(this.closeTimer);
+	  },
+
+	  componentWillReceiveProps: function(newProps) {
+	    // Focus only needs to be set once when the modal is being opened
+	    if (!this.props.isOpen && newProps.isOpen) {
+	      this.setFocusAfterRender(true);
+	      this.open();
+	    } else if (this.props.isOpen && !newProps.isOpen) {
+	      this.close();
+	    }
+	  },
+
+	  componentDidUpdate: function () {
+	    if (this.focusAfterRender) {
+	      this.focusContent();
+	      this.setFocusAfterRender(false);
+	    }
+	  },
+
+	  setFocusAfterRender: function (focus) {
+	    this.focusAfterRender = focus;
+	  },
+
+	  afterClose: function () {
+	    focusManager.returnFocus();
+	    focusManager.teardownScopedFocus();
+	  },
+
+	  open: function () {
+	    if (this.state.afterOpen && this.state.beforeClose) {
+	      clearTimeout(this.closeTimer);
+	      this.setState({ beforeClose: false });
+	    } else {
+	      focusManager.setupScopedFocus(this.node);
+	      focusManager.markForFocusLater();
+	      this.setState({isOpen: true}, function() {
+	        this.setState({afterOpen: true});
+
+	        if (this.props.isOpen && this.props.onAfterOpen) {
+	          this.props.onAfterOpen();
+	        }
+	      }.bind(this));
+	    }
+	  },
+
+	  close: function() {
+	    if (this.props.closeTimeoutMS > 0)
+	      this.closeWithTimeout();
+	    else
+	      this.closeWithoutTimeout();
+	  },
+
+	  focusContent: function() {
+	    // Don't steal focus from inner elements
+	    if (!this.contentHasFocus()) {
+	      this.refs.content.focus();
+	    }
+	  },
+
+	  closeWithTimeout: function() {
+	    var closesAt = Date.now() + this.props.closeTimeoutMS;
+	    this.setState({beforeClose: true, closesAt: closesAt}, function() {
+	      this.closeTimer = setTimeout(this.closeWithoutTimeout, this.state.closesAt - Date.now());
+	    }.bind(this));
+	  },
+
+	  closeWithoutTimeout: function() {
+	    this.setState({
+	      beforeClose: false,
+	      isOpen: false,
+	      afterOpen: false,
+	      closesAt: null
+	    }, this.afterClose);
+	  },
+
+	  handleKeyDown: function(event) {
+	    if (event.keyCode == 9 /*tab*/) scopeTab(this.refs.content, event);
+	    if (event.keyCode == 27 /*esc*/) {
+	      event.preventDefault();
+	      this.requestClose(event);
+	    }
+	  },
+
+	  handleOverlayOnClick: function (event) {
+	    if (this.shouldClose === null) {
+	      this.shouldClose = true;
+	    }
+
+	    if (this.shouldClose && this.props.shouldCloseOnOverlayClick) {
+	      if (this.ownerHandlesClose())
+	        this.requestClose(event);
+	      else
+	        this.focusContent();
+	    }
+	    this.shouldClose = null;
+	  },
+
+	  handleContentOnClick: function () {
+	    this.shouldClose = false;
+	  },
+
+	  requestClose: function(event) {
+	    if (this.ownerHandlesClose())
+	      this.props.onRequestClose(event);
+	  },
+
+	  ownerHandlesClose: function() {
+	    return this.props.onRequestClose;
+	  },
+
+	  shouldBeClosed: function() {
+	    return !this.state.isOpen && !this.state.beforeClose;
+	  },
+
+	  contentHasFocus: function() {
+	    return document.activeElement === this.refs.content || this.refs.content.contains(document.activeElement);
+	  },
+
+	  buildClassName: function(which, additional) {
+	    var className = CLASS_NAMES[which].base;
+	    if (this.state.afterOpen)
+	      className += ' '+CLASS_NAMES[which].afterOpen;
+	    if (this.state.beforeClose)
+	      className += ' '+CLASS_NAMES[which].beforeClose;
+	    return additional ? className + ' ' + additional : className;
+	  },
+
+	  render: function() {
+	    var contentStyles = (this.props.className) ? {} : this.props.defaultStyles.content;
+	    var overlayStyles = (this.props.overlayClassName) ? {} : this.props.defaultStyles.overlay;
+
+	    return this.shouldBeClosed() ? div() : (
+	      div({
+	        ref: "overlay",
+	        className: this.buildClassName('overlay', this.props.overlayClassName),
+	        style: Assign({}, overlayStyles, this.props.style.overlay || {}),
+	        onClick: this.handleOverlayOnClick
+	      },
+	        div({
+	          ref: "content",
+	          style: Assign({}, contentStyles, this.props.style.content || {}),
+	          className: this.buildClassName('content', this.props.className),
+	          tabIndex: "-1",
+	          onKeyDown: this.handleKeyDown,
+	          onClick: this.handleContentOnClick,
+	          role: this.props.role,
+	          "aria-label": this.props.contentLabel
+	        },
+	          this.props.children
+	        )
+	      )
+	    );
+	  }
+	});
+
+
+/***/ },
+/* 618 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var findTabbable = __webpack_require__(619);
+	var focusLaterElements = [];
+	var modalElement = null;
+	var needToFocus = false;
+
+	function handleBlur(event) {
+	  needToFocus = true;
+	}
+
+	function handleFocus(event) {
+	  if (needToFocus) {
+	    needToFocus = false;
+	    if (!modalElement) {
+	      return;
+	    }
+	    // need to see how jQuery shims document.on('focusin') so we don't need the
+	    // setTimeout, firefox doesn't support focusin, if it did, we could focus
+	    // the element outside of a setTimeout. Side-effect of this implementation
+	    // is that the document.body gets focus, and then we focus our element right
+	    // after, seems fine.
+	    setTimeout(function() {
+	      if (modalElement.contains(document.activeElement))
+	        return;
+	      var el = (findTabbable(modalElement)[0] || modalElement);
+	      el.focus();
+	    }, 0);
+	  }
+	}
+
+	exports.markForFocusLater = function() {
+	  focusLaterElements.push(document.activeElement);
+	};
+
+	exports.returnFocus = function() {
+	  var toFocus = null;
+	  try {
+	    toFocus = focusLaterElements.pop();
+	    toFocus.focus();
+	    return;
+	  }
+	  catch (e) {
+	    console.warn('You tried to return focus to '+toFocus+' but it is not in the DOM anymore');
+	  }
+	};
+
+	exports.setupScopedFocus = function(element) {
+	  modalElement = element;
+
+	  if (window.addEventListener) {
+	    window.addEventListener('blur', handleBlur, false);
+	    document.addEventListener('focus', handleFocus, true);
+	  } else {
+	    window.attachEvent('onBlur', handleBlur);
+	    document.attachEvent('onFocus', handleFocus);
+	  }
+	};
+
+	exports.teardownScopedFocus = function() {
+	  modalElement = null;
+
+	  if (window.addEventListener) {
+	    window.removeEventListener('blur', handleBlur);
+	    document.removeEventListener('focus', handleFocus);
+	  } else {
+	    window.detachEvent('onBlur', handleBlur);
+	    document.detachEvent('onFocus', handleFocus);
+	  }
+	};
+
+
+/***/ },
+/* 619 */
+/***/ function(module, exports) {
+
+	/*!
+	 * Adapted from jQuery UI core
+	 *
+	 * http://jqueryui.com
+	 *
+	 * Copyright 2014 jQuery Foundation and other contributors
+	 * Released under the MIT license.
+	 * http://jquery.org/license
+	 *
+	 * http://api.jqueryui.com/category/ui-core/
+	 */
+
+	function focusable(element, isTabIndexNotNaN) {
+	  var nodeName = element.nodeName.toLowerCase();
+	  return (/input|select|textarea|button|object/.test(nodeName) ?
+	    !element.disabled :
+	    "a" === nodeName ?
+	      element.href || isTabIndexNotNaN :
+	      isTabIndexNotNaN) && visible(element);
+	}
+
+	function hidden(el) {
+	  return (el.offsetWidth <= 0 && el.offsetHeight <= 0) ||
+	    el.style.display === 'none';
+	}
+
+	function visible(element) {
+	  while (element) {
+	    if (element === document.body) break;
+	    if (hidden(element)) return false;
+	    element = element.parentNode;
+	  }
+	  return true;
+	}
+
+	function tabbable(element) {
+	  var tabIndex = element.getAttribute('tabindex');
+	  if (tabIndex === null) tabIndex = undefined;
+	  var isTabIndexNaN = isNaN(tabIndex);
+	  return (isTabIndexNaN || tabIndex >= 0) && focusable(element, !isTabIndexNaN);
+	}
+
+	function findTabbableDescendants(element) {
+	  return [].slice.call(element.querySelectorAll('*'), 0).filter(function(el) {
+	    return tabbable(el);
+	  });
+	}
+
+	module.exports = findTabbableDescendants;
+
+
+
+/***/ },
+/* 620 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var findTabbable = __webpack_require__(619);
+
+	module.exports = function(node, event) {
+	  var tabbable = findTabbable(node);
+	  if (!tabbable.length) {
+	      event.preventDefault();
+	      return;
+	  }
+	  var finalTabbable = tabbable[event.shiftKey ? 0 : tabbable.length - 1];
+	  var leavingFinalTabbable = (
+	    finalTabbable === document.activeElement ||
+	    // handle immediate shift+tab after opening with mouse
+	    node === document.activeElement
+	  );
+	  if (!leavingFinalTabbable) return;
+	  event.preventDefault();
+	  var target = tabbable[event.shiftKey ? tabbable.length - 1 : 0];
+	  target.focus();
+	};
+
+
+/***/ },
+/* 621 */
+/***/ function(module, exports) {
+
+	/**
+	 * lodash (Custom Build) <https://lodash.com/>
+	 * Build: `lodash modularize exports="npm" -o ./`
+	 * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+	 * Released under MIT license <https://lodash.com/license>
+	 * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+	 * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 */
+
+	/** Used as references for various `Number` constants. */
+	var MAX_SAFE_INTEGER = 9007199254740991;
+
+	/** `Object#toString` result references. */
+	var argsTag = '[object Arguments]',
+	    funcTag = '[object Function]',
+	    genTag = '[object GeneratorFunction]';
+
+	/** Used to detect unsigned integer values. */
+	var reIsUint = /^(?:0|[1-9]\d*)$/;
+
+	/**
+	 * A faster alternative to `Function#apply`, this function invokes `func`
+	 * with the `this` binding of `thisArg` and the arguments of `args`.
+	 *
+	 * @private
+	 * @param {Function} func The function to invoke.
+	 * @param {*} thisArg The `this` binding of `func`.
+	 * @param {Array} args The arguments to invoke `func` with.
+	 * @returns {*} Returns the result of `func`.
+	 */
+	function apply(func, thisArg, args) {
+	  switch (args.length) {
+	    case 0: return func.call(thisArg);
+	    case 1: return func.call(thisArg, args[0]);
+	    case 2: return func.call(thisArg, args[0], args[1]);
+	    case 3: return func.call(thisArg, args[0], args[1], args[2]);
+	  }
+	  return func.apply(thisArg, args);
+	}
+
+	/**
+	 * The base implementation of `_.times` without support for iteratee shorthands
+	 * or max array length checks.
+	 *
+	 * @private
+	 * @param {number} n The number of times to invoke `iteratee`.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @returns {Array} Returns the array of results.
+	 */
+	function baseTimes(n, iteratee) {
+	  var index = -1,
+	      result = Array(n);
+
+	  while (++index < n) {
+	    result[index] = iteratee(index);
+	  }
+	  return result;
+	}
+
+	/**
+	 * Creates a unary function that invokes `func` with its argument transformed.
+	 *
+	 * @private
+	 * @param {Function} func The function to wrap.
+	 * @param {Function} transform The argument transform.
+	 * @returns {Function} Returns the new function.
+	 */
+	function overArg(func, transform) {
+	  return function(arg) {
+	    return func(transform(arg));
+	  };
+	}
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+
+	/**
+	 * Used to resolve the
+	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var objectToString = objectProto.toString;
+
+	/** Built-in value references. */
+	var propertyIsEnumerable = objectProto.propertyIsEnumerable;
+
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeKeys = overArg(Object.keys, Object),
+	    nativeMax = Math.max;
+
+	/** Detect if properties shadowing those on `Object.prototype` are non-enumerable. */
+	var nonEnumShadows = !propertyIsEnumerable.call({ 'valueOf': 1 }, 'valueOf');
+
+	/**
+	 * Creates an array of the enumerable property names of the array-like `value`.
+	 *
+	 * @private
+	 * @param {*} value The value to query.
+	 * @param {boolean} inherited Specify returning inherited property names.
+	 * @returns {Array} Returns the array of property names.
+	 */
+	function arrayLikeKeys(value, inherited) {
+	  // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
+	  // Safari 9 makes `arguments.length` enumerable in strict mode.
+	  var result = (isArray(value) || isArguments(value))
+	    ? baseTimes(value.length, String)
+	    : [];
+
+	  var length = result.length,
+	      skipIndexes = !!length;
+
+	  for (var key in value) {
+	    if ((inherited || hasOwnProperty.call(value, key)) &&
+	        !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
+	      result.push(key);
+	    }
+	  }
+	  return result;
+	}
+
+	/**
+	 * Assigns `value` to `key` of `object` if the existing value is not equivalent
+	 * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+	 * for equality comparisons.
+	 *
+	 * @private
+	 * @param {Object} object The object to modify.
+	 * @param {string} key The key of the property to assign.
+	 * @param {*} value The value to assign.
+	 */
+	function assignValue(object, key, value) {
+	  var objValue = object[key];
+	  if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) ||
+	      (value === undefined && !(key in object))) {
+	    object[key] = value;
+	  }
+	}
+
+	/**
+	 * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 */
+	function baseKeys(object) {
+	  if (!isPrototype(object)) {
+	    return nativeKeys(object);
+	  }
+	  var result = [];
+	  for (var key in Object(object)) {
+	    if (hasOwnProperty.call(object, key) && key != 'constructor') {
+	      result.push(key);
+	    }
+	  }
+	  return result;
+	}
+
+	/**
+	 * The base implementation of `_.rest` which doesn't validate or coerce arguments.
+	 *
+	 * @private
+	 * @param {Function} func The function to apply a rest parameter to.
+	 * @param {number} [start=func.length-1] The start position of the rest parameter.
+	 * @returns {Function} Returns the new function.
+	 */
+	function baseRest(func, start) {
+	  start = nativeMax(start === undefined ? (func.length - 1) : start, 0);
+	  return function() {
+	    var args = arguments,
+	        index = -1,
+	        length = nativeMax(args.length - start, 0),
+	        array = Array(length);
+
+	    while (++index < length) {
+	      array[index] = args[start + index];
+	    }
+	    index = -1;
+	    var otherArgs = Array(start + 1);
+	    while (++index < start) {
+	      otherArgs[index] = args[index];
+	    }
+	    otherArgs[start] = array;
+	    return apply(func, this, otherArgs);
+	  };
+	}
+
+	/**
+	 * Copies properties of `source` to `object`.
+	 *
+	 * @private
+	 * @param {Object} source The object to copy properties from.
+	 * @param {Array} props The property identifiers to copy.
+	 * @param {Object} [object={}] The object to copy properties to.
+	 * @param {Function} [customizer] The function to customize copied values.
+	 * @returns {Object} Returns `object`.
+	 */
+	function copyObject(source, props, object, customizer) {
+	  object || (object = {});
+
+	  var index = -1,
+	      length = props.length;
+
+	  while (++index < length) {
+	    var key = props[index];
+
+	    var newValue = customizer
+	      ? customizer(object[key], source[key], key, object, source)
+	      : undefined;
+
+	    assignValue(object, key, newValue === undefined ? source[key] : newValue);
+	  }
+	  return object;
+	}
+
+	/**
+	 * Creates a function like `_.assign`.
+	 *
+	 * @private
+	 * @param {Function} assigner The function to assign values.
+	 * @returns {Function} Returns the new assigner function.
+	 */
+	function createAssigner(assigner) {
+	  return baseRest(function(object, sources) {
+	    var index = -1,
+	        length = sources.length,
+	        customizer = length > 1 ? sources[length - 1] : undefined,
+	        guard = length > 2 ? sources[2] : undefined;
+
+	    customizer = (assigner.length > 3 && typeof customizer == 'function')
+	      ? (length--, customizer)
+	      : undefined;
+
+	    if (guard && isIterateeCall(sources[0], sources[1], guard)) {
+	      customizer = length < 3 ? undefined : customizer;
+	      length = 1;
+	    }
+	    object = Object(object);
+	    while (++index < length) {
+	      var source = sources[index];
+	      if (source) {
+	        assigner(object, source, index, customizer);
+	      }
+	    }
+	    return object;
+	  });
+	}
+
+	/**
+	 * Checks if `value` is a valid array-like index.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+	 * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+	 */
+	function isIndex(value, length) {
+	  length = length == null ? MAX_SAFE_INTEGER : length;
+	  return !!length &&
+	    (typeof value == 'number' || reIsUint.test(value)) &&
+	    (value > -1 && value % 1 == 0 && value < length);
+	}
+
+	/**
+	 * Checks if the given arguments are from an iteratee call.
+	 *
+	 * @private
+	 * @param {*} value The potential iteratee value argument.
+	 * @param {*} index The potential iteratee index or key argument.
+	 * @param {*} object The potential iteratee object argument.
+	 * @returns {boolean} Returns `true` if the arguments are from an iteratee call,
+	 *  else `false`.
+	 */
+	function isIterateeCall(value, index, object) {
+	  if (!isObject(object)) {
+	    return false;
+	  }
+	  var type = typeof index;
+	  if (type == 'number'
+	        ? (isArrayLike(object) && isIndex(index, object.length))
+	        : (type == 'string' && index in object)
+	      ) {
+	    return eq(object[index], value);
+	  }
+	  return false;
+	}
+
+	/**
+	 * Checks if `value` is likely a prototype object.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
+	 */
+	function isPrototype(value) {
+	  var Ctor = value && value.constructor,
+	      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
+
+	  return value === proto;
+	}
+
+	/**
+	 * Performs a
+	 * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+	 * comparison between two values to determine if they are equivalent.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to compare.
+	 * @param {*} other The other value to compare.
+	 * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+	 * @example
+	 *
+	 * var object = { 'a': 1 };
+	 * var other = { 'a': 1 };
+	 *
+	 * _.eq(object, object);
+	 * // => true
+	 *
+	 * _.eq(object, other);
+	 * // => false
+	 *
+	 * _.eq('a', 'a');
+	 * // => true
+	 *
+	 * _.eq('a', Object('a'));
+	 * // => false
+	 *
+	 * _.eq(NaN, NaN);
+	 * // => true
+	 */
+	function eq(value, other) {
+	  return value === other || (value !== value && other !== other);
+	}
+
+	/**
+	 * Checks if `value` is likely an `arguments` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+	 *  else `false`.
+	 * @example
+	 *
+	 * _.isArguments(function() { return arguments; }());
+	 * // => true
+	 *
+	 * _.isArguments([1, 2, 3]);
+	 * // => false
+	 */
+	function isArguments(value) {
+	  // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
+	  return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') &&
+	    (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
+	}
+
+	/**
+	 * Checks if `value` is classified as an `Array` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+	 * @example
+	 *
+	 * _.isArray([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArray(document.body.children);
+	 * // => false
+	 *
+	 * _.isArray('abc');
+	 * // => false
+	 *
+	 * _.isArray(_.noop);
+	 * // => false
+	 */
+	var isArray = Array.isArray;
+
+	/**
+	 * Checks if `value` is array-like. A value is considered array-like if it's
+	 * not a function and has a `value.length` that's an integer greater than or
+	 * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+	 * @example
+	 *
+	 * _.isArrayLike([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArrayLike(document.body.children);
+	 * // => true
+	 *
+	 * _.isArrayLike('abc');
+	 * // => true
+	 *
+	 * _.isArrayLike(_.noop);
+	 * // => false
+	 */
+	function isArrayLike(value) {
+	  return value != null && isLength(value.length) && !isFunction(value);
+	}
+
+	/**
+	 * This method is like `_.isArrayLike` except that it also checks if `value`
+	 * is an object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an array-like object,
+	 *  else `false`.
+	 * @example
+	 *
+	 * _.isArrayLikeObject([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArrayLikeObject(document.body.children);
+	 * // => true
+	 *
+	 * _.isArrayLikeObject('abc');
+	 * // => false
+	 *
+	 * _.isArrayLikeObject(_.noop);
+	 * // => false
+	 */
+	function isArrayLikeObject(value) {
+	  return isObjectLike(value) && isArrayLike(value);
+	}
+
+	/**
+	 * Checks if `value` is classified as a `Function` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+	 * @example
+	 *
+	 * _.isFunction(_);
+	 * // => true
+	 *
+	 * _.isFunction(/abc/);
+	 * // => false
+	 */
+	function isFunction(value) {
+	  // The use of `Object#toString` avoids issues with the `typeof` operator
+	  // in Safari 8-9 which returns 'object' for typed array and other constructors.
+	  var tag = isObject(value) ? objectToString.call(value) : '';
+	  return tag == funcTag || tag == genTag;
+	}
+
+	/**
+	 * Checks if `value` is a valid array-like length.
+	 *
+	 * **Note:** This method is loosely based on
+	 * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+	 * @example
+	 *
+	 * _.isLength(3);
+	 * // => true
+	 *
+	 * _.isLength(Number.MIN_VALUE);
+	 * // => false
+	 *
+	 * _.isLength(Infinity);
+	 * // => false
+	 *
+	 * _.isLength('3');
+	 * // => false
+	 */
+	function isLength(value) {
+	  return typeof value == 'number' &&
+	    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+	}
+
+	/**
+	 * Checks if `value` is the
+	 * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+	 * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+	 * @example
+	 *
+	 * _.isObject({});
+	 * // => true
+	 *
+	 * _.isObject([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObject(_.noop);
+	 * // => true
+	 *
+	 * _.isObject(null);
+	 * // => false
+	 */
+	function isObject(value) {
+	  var type = typeof value;
+	  return !!value && (type == 'object' || type == 'function');
+	}
+
+	/**
+	 * Checks if `value` is object-like. A value is object-like if it's not `null`
+	 * and has a `typeof` result of "object".
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+	 * @example
+	 *
+	 * _.isObjectLike({});
+	 * // => true
+	 *
+	 * _.isObjectLike([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObjectLike(_.noop);
+	 * // => false
+	 *
+	 * _.isObjectLike(null);
+	 * // => false
+	 */
+	function isObjectLike(value) {
+	  return !!value && typeof value == 'object';
+	}
+
+	/**
+	 * Assigns own enumerable string keyed properties of source objects to the
+	 * destination object. Source objects are applied from left to right.
+	 * Subsequent sources overwrite property assignments of previous sources.
+	 *
+	 * **Note:** This method mutates `object` and is loosely based on
+	 * [`Object.assign`](https://mdn.io/Object/assign).
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.10.0
+	 * @category Object
+	 * @param {Object} object The destination object.
+	 * @param {...Object} [sources] The source objects.
+	 * @returns {Object} Returns `object`.
+	 * @see _.assignIn
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 * }
+	 *
+	 * function Bar() {
+	 *   this.c = 3;
+	 * }
+	 *
+	 * Foo.prototype.b = 2;
+	 * Bar.prototype.d = 4;
+	 *
+	 * _.assign({ 'a': 0 }, new Foo, new Bar);
+	 * // => { 'a': 1, 'c': 3 }
+	 */
+	var assign = createAssigner(function(object, source) {
+	  if (nonEnumShadows || isPrototype(source) || isArrayLike(source)) {
+	    copyObject(source, keys(source), object);
+	    return;
+	  }
+	  for (var key in source) {
+	    if (hasOwnProperty.call(source, key)) {
+	      assignValue(object, key, source[key]);
+	    }
+	  }
+	});
+
+	/**
+	 * Creates an array of the own enumerable property names of `object`.
+	 *
+	 * **Note:** Non-object values are coerced to objects. See the
+	 * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+	 * for more details.
+	 *
+	 * @static
+	 * @since 0.1.0
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 *   this.b = 2;
+	 * }
+	 *
+	 * Foo.prototype.c = 3;
+	 *
+	 * _.keys(new Foo);
+	 * // => ['a', 'b'] (iteration order is not guaranteed)
+	 *
+	 * _.keys('hi');
+	 * // => ['0', '1']
+	 */
+	function keys(object) {
+	  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
+	}
+
+	module.exports = assign;
+
+
+/***/ },
+/* 622 */
+/***/ function(module, exports) {
+
+	var _element = typeof document !== 'undefined' ? document.body : null;
+
+	function setElement(element) {
+	  if (typeof element === 'string') {
+	    var el = document.querySelectorAll(element);
+	    element = 'length' in el ? el[0] : el;
+	  }
+	  _element = element || _element;
+	  return _element;
+	}
+
+	function hide(appElement) {
+	  validateElement(appElement);
+	  (appElement || _element).setAttribute('aria-hidden', 'true');
+	}
+
+	function show(appElement) {
+	  validateElement(appElement);
+	  (appElement || _element).removeAttribute('aria-hidden');
+	}
+
+	function toggle(shouldHide, appElement) {
+	  if (shouldHide)
+	    hide(appElement);
+	  else
+	    show(appElement);
+	}
+
+	function validateElement(appElement) {
+	  if (!appElement && !_element)
+	    throw new Error('react-modal: You must set an element with `Modal.setAppElement(el)` to make this accessible');
+	}
+
+	function resetForTesting() {
+	  _element = document.body;
+	}
+
+	exports.toggle = toggle;
+	exports.setElement = setElement;
+	exports.show = show;
+	exports.hide = hide;
+	exports.resetForTesting = resetForTesting;
+
+
+/***/ },
+/* 623 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _InsertModalHeader = __webpack_require__(624);
+
+	var _InsertModalHeader2 = _interopRequireDefault(_InsertModalHeader);
+
+	var _InsertModalFooter = __webpack_require__(625);
+
+	var _InsertModalFooter2 = _interopRequireDefault(_InsertModalFooter);
+
+	var _InsertModalBody = __webpack_require__(626);
+
+	var _InsertModalBody2 = _interopRequireDefault(_InsertModalBody);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* eslint no-console: 0 */
+
+	var defaultModalClassName = 'react-bs-table-insert-modal';
+
+	var InsertModal = function (_Component) {
+	  _inherits(InsertModal, _Component);
+
+	  function InsertModal() {
+	    var _ref;
+
+	    var _temp, _this, _ret;
+
+	    _classCallCheck(this, InsertModal);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = InsertModal.__proto__ || Object.getPrototypeOf(InsertModal)).call.apply(_ref, [this].concat(args))), _this), _this.handleSave = function () {
+	      var _this2;
+
+	      return (_this2 = _this).__handleSave__REACT_HOT_LOADER__.apply(_this2, arguments);
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+
+	  _createClass(InsertModal, [{
+	    key: '__handleSave__REACT_HOT_LOADER__',
+	    value: function __handleSave__REACT_HOT_LOADER__() {
+	      var bodyRefs = this.refs.body;
+	      if (bodyRefs.getFieldValue) {
+	        this.props.onSave(bodyRefs.getFieldValue());
+	      } else {
+	        console.error('Custom InsertModalBody should implement getFieldValue function\n        and should return an object presented as the new row that user input.');
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          headerComponent = _props.headerComponent,
+	          footerComponent = _props.footerComponent,
+	          bodyComponent = _props.bodyComponent;
+	      var _props2 = this.props,
+	          columns = _props2.columns,
+	          validateState = _props2.validateState,
+	          ignoreEditable = _props2.ignoreEditable,
+	          onModalClose = _props2.onModalClose;
+
+	      var bodyAttr = { columns: columns, validateState: validateState, ignoreEditable: ignoreEditable };
+
+	      bodyComponent = bodyComponent && bodyComponent(columns, validateState, ignoreEditable);
+
+	      headerComponent = headerComponent && headerComponent(onModalClose, this.handleSave);
+
+	      footerComponent = footerComponent && footerComponent(onModalClose, this.handleSave);
+
+	      if (bodyComponent) {
+	        bodyComponent = _react2.default.cloneElement(bodyComponent, { ref: 'body' });
+	      }
+
+	      if (headerComponent && headerComponent.type.name === _InsertModalHeader2.default.name) {
+	        var eventProps = {};
+	        if (!headerComponent.props.onModalClose) eventProps.onModalClose = onModalClose;
+	        if (!headerComponent.props.onSave) eventProps.onSave = this.handleSave;
+	        if (Object.keys(eventProps).length > 0) {
+	          headerComponent = _react2.default.cloneElement(headerComponent, eventProps);
+	        }
+	      } else if (headerComponent && headerComponent.type.name !== _InsertModalHeader2.default.name) {
+	        var className = headerComponent.props.className;
+
+	        if (typeof className === 'undefined' || className.indexOf('modal-header') === -1) {
+	          headerComponent = _react2.default.createElement(
+	            'div',
+	            { className: 'modal-header' },
+	            headerComponent
+	          );
+	        }
+	      }
+
+	      if (footerComponent && footerComponent.type.name === _InsertModalFooter2.default.name) {
+	        var _eventProps = {};
+	        if (!footerComponent.props.onModalClose) _eventProps.onModalClose = onModalClose;
+	        if (!footerComponent.props.onSave) _eventProps.onSave = this.handleSave;
+	        if (Object.keys(_eventProps).length > 0) {
+	          footerComponent = _react2.default.cloneElement(footerComponent, _eventProps);
+	        }
+	      } else if (footerComponent && footerComponent.type.name !== _InsertModalFooter2.default.name) {
+	        var _className = footerComponent.props.className;
+
+	        if (typeof _className === 'undefined' || _className.indexOf('modal-footer') === -1) {
+	          footerComponent = _react2.default.createElement(
+	            'div',
+	            { className: 'modal-footer' },
+	            footerComponent
+	          );
+	        }
+	      }
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'modal-content ' + defaultModalClassName },
+	        headerComponent || _react2.default.createElement(_InsertModalHeader2.default, {
+	          className: 'react-bs-table-inser-modal-header',
+	          onModalClose: onModalClose }),
+	        bodyComponent || _react2.default.createElement(_InsertModalBody2.default, _extends({ ref: 'body' }, bodyAttr)),
+	        footerComponent || _react2.default.createElement(_InsertModalFooter2.default, {
+	          className: 'react-bs-table-inser-modal-footer',
+	          onModalClose: onModalClose,
+	          onSave: this.handleSave })
+	      );
+	    }
+	  }]);
+
+	  return InsertModal;
+	}(_react.Component);
+
+	var _default = InsertModal;
+	exports.default = _default;
+
+	InsertModal.propTypes = {
+	  columns: _react.PropTypes.array.isRequired,
+	  validateState: _react.PropTypes.object.isRequired,
+	  ignoreEditable: _react.PropTypes.bool,
+	  headerComponent: _react.PropTypes.func,
+	  bodyComponent: _react.PropTypes.func,
+	  footerComponent: _react.PropTypes.func,
+	  onModalClose: _react.PropTypes.func,
+	  onSave: _react.PropTypes.func
+	};
+
+	InsertModal.defaultProps = {};
+	;
+
+	var _temp2 = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(defaultModalClassName, 'defaultModalClassName', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertModal.js');
+
+	  __REACT_HOT_LOADER__.register(InsertModal, 'InsertModal', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertModal.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertModal.js');
+	}();
+
+	;
+
+/***/ },
+/* 624 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var InsertModalHeader = function (_Component) {
+	  _inherits(InsertModalHeader, _Component);
+
+	  function InsertModalHeader() {
+	    var _ref;
+
+	    var _temp, _this, _ret;
+
+	    _classCallCheck(this, InsertModalHeader);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = InsertModalHeader.__proto__ || Object.getPrototypeOf(InsertModalHeader)).call.apply(_ref, [this].concat(args))), _this), _this.handleCloseBtnClick = function () {
+	      var _this2;
+
+	      return (_this2 = _this).__handleCloseBtnClick__REACT_HOT_LOADER__.apply(_this2, arguments);
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+
+	  _createClass(InsertModalHeader, [{
+	    key: '__handleCloseBtnClick__REACT_HOT_LOADER__',
+	    value: function __handleCloseBtnClick__REACT_HOT_LOADER__(e) {
+	      var _props = this.props,
+	          onModalClose = _props.onModalClose,
+	          beforeClose = _props.beforeClose;
+
+	      beforeClose && beforeClose(e);
+	      onModalClose();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props2 = this.props,
+	          title = _props2.title,
+	          hideClose = _props2.hideClose,
+	          className = _props2.className,
+	          children = _props2.children;
+
+
+	      var closeBtn = hideClose ? null : _react2.default.createElement(
+	        'button',
+	        { type: 'button',
+	          className: 'close', onClick: this.handleCloseBtnClick },
+	        _react2.default.createElement(
+	          'span',
+	          { 'aria-hidden': 'true' },
+	          '\xD7'
+	        ),
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'sr-only' },
+	          'Close'
+	        )
+	      );
+
+	      var content = children || _react2.default.createElement(
+	        'span',
+	        null,
+	        closeBtn,
+	        _react2.default.createElement(
+	          'h4',
+	          { className: 'modal-title' },
+	          title
+	        )
+	      );
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'modal-header ' + className },
+	        content
+	      );
+	    }
+	  }]);
+
+	  return InsertModalHeader;
+	}(_react.Component);
+
+	InsertModalHeader.propTypes = {
+	  className: _react.PropTypes.string,
+	  title: _react.PropTypes.string,
+	  onModalClose: _react.PropTypes.func,
+	  hideClose: _react.PropTypes.bool,
+	  beforeClose: _react.PropTypes.func
+	};
+	InsertModalHeader.defaultProps = {
+	  className: '',
+	  title: 'Add Row',
+	  onModalClose: undefined,
+	  hideClose: false,
+	  beforeClose: undefined
+	};
+
+	var _default = InsertModalHeader;
+	exports.default = _default;
+	;
+
+	var _temp2 = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(InsertModalHeader, 'InsertModalHeader', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertModalHeader.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertModalHeader.js');
+	}();
+
+	;
+
+/***/ },
+/* 625 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var InsertModalFooter = function (_Component) {
+	  _inherits(InsertModalFooter, _Component);
+
+	  function InsertModalFooter() {
+	    var _ref;
+
+	    var _temp, _this, _ret;
+
+	    _classCallCheck(this, InsertModalFooter);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = InsertModalFooter.__proto__ || Object.getPrototypeOf(InsertModalFooter)).call.apply(_ref, [this].concat(args))), _this), _this.handleCloseBtnClick = function () {
+	      var _this2;
+
+	      return (_this2 = _this).__handleCloseBtnClick__REACT_HOT_LOADER__.apply(_this2, arguments);
+	    }, _this.handleSaveBtnClick = function () {
+	      var _this3;
+
+	      return (_this3 = _this).__handleSaveBtnClick__REACT_HOT_LOADER__.apply(_this3, arguments);
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+
+	  _createClass(InsertModalFooter, [{
+	    key: '__handleCloseBtnClick__REACT_HOT_LOADER__',
+	    value: function __handleCloseBtnClick__REACT_HOT_LOADER__(e) {
+	      var _props = this.props,
+	          beforeClose = _props.beforeClose,
+	          onModalClose = _props.onModalClose;
+
+	      beforeClose && beforeClose(e);
+	      onModalClose();
+	    }
+	  }, {
+	    key: '__handleSaveBtnClick__REACT_HOT_LOADER__',
+	    value: function __handleSaveBtnClick__REACT_HOT_LOADER__(e) {
+	      var _props2 = this.props,
+	          beforeSave = _props2.beforeSave,
+	          onSave = _props2.onSave;
+
+	      beforeSave && beforeSave(e);
+	      onSave();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props3 = this.props,
+	          className = _props3.className,
+	          saveBtnText = _props3.saveBtnText,
+	          closeBtnText = _props3.closeBtnText,
+	          closeBtnContextual = _props3.closeBtnContextual,
+	          saveBtnContextual = _props3.saveBtnContextual,
+	          closeBtnClass = _props3.closeBtnClass,
+	          saveBtnClass = _props3.saveBtnClass,
+	          children = _props3.children;
+
+
+	      var content = children || _react2.default.createElement(
+	        'span',
+	        null,
+	        _react2.default.createElement(
+	          'button',
+	          {
+	            type: 'button',
+	            className: 'btn ' + closeBtnContextual + ' ' + closeBtnClass,
+	            onClick: this.handleCloseBtnClick },
+	          closeBtnText
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          {
+	            type: 'button',
+	            className: 'btn ' + saveBtnContextual + ' ' + saveBtnClass,
+	            onClick: this.handleSaveBtnClick },
+	          saveBtnText
+	        )
+	      );
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'modal-footer ' + className },
+	        content
+	      );
+	    }
+	  }]);
+
+	  return InsertModalFooter;
+	}(_react.Component);
+
+	InsertModalFooter.propTypes = {
+	  className: _react.PropTypes.string,
+	  saveBtnText: _react.PropTypes.string,
+	  closeBtnText: _react.PropTypes.string,
+	  closeBtnContextual: _react.PropTypes.string,
+	  saveBtnContextual: _react.PropTypes.string,
+	  closeBtnClass: _react.PropTypes.string,
+	  saveBtnClass: _react.PropTypes.string,
+	  beforeClose: _react.PropTypes.func,
+	  beforeSave: _react.PropTypes.func,
+	  onSave: _react.PropTypes.func,
+	  onModalClose: _react.PropTypes.func
+	};
+	InsertModalFooter.defaultProps = {
+	  className: '',
+	  saveBtnText: _Const2.default.SAVE_BTN_TEXT,
+	  closeBtnText: _Const2.default.CLOSE_BTN_TEXT,
+	  closeBtnContextual: 'btn-default',
+	  saveBtnContextual: 'btn-primary',
+	  closeBtnClass: '',
+	  saveBtnClass: '',
+	  beforeClose: undefined,
+	  beforeSave: undefined
+	};
+
+	var _default = InsertModalFooter;
+	exports.default = _default;
+	;
+
+	var _temp2 = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(InsertModalFooter, 'InsertModalFooter', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertModalFooter.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertModalFooter.js');
+	}();
+
+	;
+
+/***/ },
+/* 626 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Editor = __webpack_require__(449);
+
+	var _Editor2 = _interopRequireDefault(_Editor);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* eslint react/display-name: 0 */
+
+
+	var InsertModalBody = function (_Component) {
+	  _inherits(InsertModalBody, _Component);
+
+	  function InsertModalBody() {
+	    _classCallCheck(this, InsertModalBody);
+
+	    return _possibleConstructorReturn(this, (InsertModalBody.__proto__ || Object.getPrototypeOf(InsertModalBody)).apply(this, arguments));
+	  }
+
+	  _createClass(InsertModalBody, [{
+	    key: 'getFieldValue',
+	    value: function getFieldValue() {
+	      var _this2 = this;
+
+	      var newRow = {};
+	      this.props.columns.forEach(function (column, i) {
+	        var inputVal = void 0;
+	        if (column.autoValue) {
+	          // when you want same auto generate value and not allow edit, example ID field
+	          var time = new Date().getTime();
+	          inputVal = typeof column.autoValue === 'function' ? column.autoValue() : 'autovalue-' + time;
+	        } else if (column.hiddenOnInsert || !column.field) {
+	          inputVal = '';
+	        } else {
+	          var dom = _this2.refs[column.field + i];
+	          inputVal = dom.value;
+
+	          if (column.editable && column.editable.type === 'checkbox') {
+	            var values = inputVal.split(':');
+	            inputVal = dom.checked ? values[0] : values[1];
+	          }
+	        }
+	        newRow[column.field] = inputVal;
+	      }, this);
+	      return newRow;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          columns = _props.columns,
+	          validateState = _props.validateState,
+	          ignoreEditable = _props.ignoreEditable;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'modal-body' },
+	        columns.map(function (column, i) {
+	          var editable = column.editable,
+	              format = column.format,
+	              field = column.field,
+	              name = column.name,
+	              autoValue = column.autoValue,
+	              hiddenOnInsert = column.hiddenOnInsert;
+
+	          var attr = {
+	            ref: field + i,
+	            placeholder: editable.placeholder ? editable.placeholder : name
+	          };
+
+	          if (autoValue || hiddenOnInsert || !column.field) {
+	            // when you want same auto generate value
+	            // and not allow edit, for example ID field
+	            return null;
+	          }
+	          var error = validateState[field] ? _react2.default.createElement(
+	            'span',
+	            { className: 'help-block bg-danger' },
+	            validateState[field]
+	          ) : null;
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'form-group', key: field },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              name
+	            ),
+	            (0, _Editor2.default)(editable, attr, format, '', undefined, ignoreEditable),
+	            error
+	          );
+	        })
+	      );
+	    }
+	  }]);
+
+	  return InsertModalBody;
+	}(_react.Component);
+
+	InsertModalBody.propTypes = {
+	  columns: _react.PropTypes.array,
+	  validateState: _react.PropTypes.object,
+	  ignoreEditable: _react.PropTypes.bool
+	};
+
+	InsertModalBody.defaultProps = {
+	  validateState: {},
+	  ignoreEditable: false
+	};
+
+	var _default = InsertModalBody;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(InsertModalBody, 'InsertModalBody', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertModalBody.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertModalBody.js');
+	}();
+
+	;
+
+/***/ },
+/* 627 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var insertBtnDefaultClass = 'react-bs-table-add-btn';
+
+	var InsertButton = function (_Component) {
+	  _inherits(InsertButton, _Component);
+
+	  function InsertButton() {
+	    _classCallCheck(this, InsertButton);
+
+	    return _possibleConstructorReturn(this, (InsertButton.__proto__ || Object.getPrototypeOf(InsertButton)).apply(this, arguments));
+	  }
+
+	  _createClass(InsertButton, [{
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          btnContextual = _props.btnContextual,
+	          className = _props.className,
+	          onClick = _props.onClick,
+	          btnGlyphicon = _props.btnGlyphicon,
+	          btnText = _props.btnText,
+	          children = _props.children,
+	          rest = _objectWithoutProperties(_props, ['btnContextual', 'className', 'onClick', 'btnGlyphicon', 'btnText', 'children']);
+
+	      var content = children || _react2.default.createElement(
+	        'span',
+	        null,
+	        _react2.default.createElement('i', { className: 'glyphicon ' + btnGlyphicon }),
+	        btnText
+	      );
+	      return _react2.default.createElement(
+	        'button',
+	        _extends({ type: 'button',
+	          className: 'btn ' + btnContextual + ' ' + insertBtnDefaultClass + ' ' + className,
+	          onClick: onClick
+	        }, rest),
+	        content
+	      );
+	    }
+	  }]);
+
+	  return InsertButton;
+	}(_react.Component);
+
+	InsertButton.propTypes = {
+	  btnText: _react.PropTypes.string,
+	  btnContextual: _react.PropTypes.string,
+	  className: _react.PropTypes.string,
+	  onClick: _react.PropTypes.func,
+	  btnGlyphicon: _react.PropTypes.string
+	};
+	InsertButton.defaultProps = {
+	  btnText: _Const2.default.INSERT_BTN_TEXT,
+	  btnContextual: 'btn-info',
+	  className: '',
+	  onClick: undefined,
+	  btnGlyphicon: 'glyphicon-plus'
+	};
+
+	var _default = InsertButton;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(insertBtnDefaultClass, 'insertBtnDefaultClass', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertButton.js');
+
+	  __REACT_HOT_LOADER__.register(InsertButton, 'InsertButton', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertButton.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/InsertButton.js');
+	}();
+
+	;
+
+/***/ },
+/* 628 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var deleteBtnDefaultClass = 'react-bs-table-del-btn';
+
+	var DeleteButton = function (_Component) {
+	  _inherits(DeleteButton, _Component);
+
+	  function DeleteButton() {
+	    _classCallCheck(this, DeleteButton);
+
+	    return _possibleConstructorReturn(this, (DeleteButton.__proto__ || Object.getPrototypeOf(DeleteButton)).apply(this, arguments));
+	  }
+
+	  _createClass(DeleteButton, [{
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          btnContextual = _props.btnContextual,
+	          className = _props.className,
+	          onClick = _props.onClick,
+	          btnGlyphicon = _props.btnGlyphicon,
+	          btnText = _props.btnText,
+	          children = _props.children,
+	          rest = _objectWithoutProperties(_props, ['btnContextual', 'className', 'onClick', 'btnGlyphicon', 'btnText', 'children']);
+
+	      var content = children || _react2.default.createElement(
+	        'span',
+	        null,
+	        _react2.default.createElement('i', { className: 'glyphicon ' + btnGlyphicon }),
+	        ' ',
+	        btnText
+	      );
+	      return _react2.default.createElement(
+	        'button',
+	        _extends({ type: 'button',
+	          className: 'btn ' + btnContextual + ' ' + deleteBtnDefaultClass + ' ' + className,
+	          onClick: onClick
+	        }, rest),
+	        content
+	      );
+	    }
+	  }]);
+
+	  return DeleteButton;
+	}(_react.Component);
+
+	DeleteButton.propTypes = {
+	  btnText: _react.PropTypes.string,
+	  btnContextual: _react.PropTypes.string,
+	  className: _react.PropTypes.string,
+	  onClick: _react.PropTypes.func,
+	  btnGlyphicon: _react.PropTypes.string
+	};
+	DeleteButton.defaultProps = {
+	  btnText: _Const2.default.DELETE_BTN_TEXT,
+	  btnContextual: 'btn-warning',
+	  className: '',
+	  onClick: undefined,
+	  btnGlyphicon: 'glyphicon-trash'
+	};
+
+	var _default = DeleteButton;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(deleteBtnDefaultClass, 'deleteBtnDefaultClass', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/DeleteButton.js');
+
+	  __REACT_HOT_LOADER__.register(DeleteButton, 'DeleteButton', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/DeleteButton.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/DeleteButton.js');
+	}();
+
+	;
+
+/***/ },
+/* 629 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var exportCsvBtnDefaultClass = 'react-bs-table-csv-btn';
+
+	var ExportCSVButton = function (_Component) {
+	  _inherits(ExportCSVButton, _Component);
+
+	  function ExportCSVButton() {
+	    _classCallCheck(this, ExportCSVButton);
+
+	    return _possibleConstructorReturn(this, (ExportCSVButton.__proto__ || Object.getPrototypeOf(ExportCSVButton)).apply(this, arguments));
+	  }
+
+	  _createClass(ExportCSVButton, [{
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          btnContextual = _props.btnContextual,
+	          className = _props.className,
+	          onClick = _props.onClick,
+	          btnGlyphicon = _props.btnGlyphicon,
+	          btnText = _props.btnText,
+	          children = _props.children,
+	          rest = _objectWithoutProperties(_props, ['btnContextual', 'className', 'onClick', 'btnGlyphicon', 'btnText', 'children']);
+
+	      var content = children || _react2.default.createElement(
+	        'span',
+	        null,
+	        _react2.default.createElement('i', { className: 'glyphicon ' + btnGlyphicon }),
+	        ' ',
+	        btnText
+	      );
+	      return _react2.default.createElement(
+	        'button',
+	        _extends({ type: 'button',
+	          className: 'btn ' + btnContextual + ' ' + exportCsvBtnDefaultClass + ' ' + className + ' hidden-print',
+	          onClick: onClick
+	        }, rest),
+	        content
+	      );
+	    }
+	  }]);
+
+	  return ExportCSVButton;
+	}(_react.Component);
+
+	ExportCSVButton.propTypes = {
+	  btnText: _react.PropTypes.string,
+	  btnContextual: _react.PropTypes.string,
+	  className: _react.PropTypes.string,
+	  onClick: _react.PropTypes.func,
+	  btnGlyphicon: _react.PropTypes.string
+	};
+	ExportCSVButton.defaultProps = {
+	  btnText: _Const2.default.EXPORT_CSV_TEXT,
+	  btnContextual: 'btn-success',
+	  className: '',
+	  onClick: undefined,
+	  btnGlyphicon: 'glyphicon-export'
+	};
+
+	var _default = ExportCSVButton;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(exportCsvBtnDefaultClass, 'exportCsvBtnDefaultClass', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ExportCSVButton.js');
+
+	  __REACT_HOT_LOADER__.register(ExportCSVButton, 'ExportCSVButton', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ExportCSVButton.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ExportCSVButton.js');
+	}();
+
+	;
+
+/***/ },
+/* 630 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var showSelectedOnlyBtnDefaultClass = 'react-bs-table-show-sel-only-btn';
+
+	var ShowSelectedOnlyButton = function (_Component) {
+	  _inherits(ShowSelectedOnlyButton, _Component);
+
+	  function ShowSelectedOnlyButton() {
+	    _classCallCheck(this, ShowSelectedOnlyButton);
+
+	    return _possibleConstructorReturn(this, (ShowSelectedOnlyButton.__proto__ || Object.getPrototypeOf(ShowSelectedOnlyButton)).apply(this, arguments));
+	  }
+
+	  _createClass(ShowSelectedOnlyButton, [{
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          btnContextual = _props.btnContextual,
+	          className = _props.className,
+	          onClick = _props.onClick,
+	          toggle = _props.toggle,
+	          showAllText = _props.showAllText,
+	          showOnlySelectText = _props.showOnlySelectText,
+	          children = _props.children,
+	          rest = _objectWithoutProperties(_props, ['btnContextual', 'className', 'onClick', 'toggle', 'showAllText', 'showOnlySelectText', 'children']);
+
+	      var content = children || _react2.default.createElement(
+	        'span',
+	        null,
+	        toggle ? showOnlySelectText : showAllText
+	      );
+	      return _react2.default.createElement(
+	        'button',
+	        _extends({ type: 'button',
+	          'aria-pressed': 'false',
+	          'data-toggle': 'button',
+	          className: 'btn ' + btnContextual + ' ' + showSelectedOnlyBtnDefaultClass + ' ' + className,
+	          onClick: onClick
+	        }, rest),
+	        content
+	      );
+	    }
+	  }]);
+
+	  return ShowSelectedOnlyButton;
+	}(_react.Component);
+
+	ShowSelectedOnlyButton.propTypes = {
+	  showAllText: _react.PropTypes.string,
+	  showOnlySelectText: _react.PropTypes.string,
+	  toggle: _react.PropTypes.bool,
+	  btnContextual: _react.PropTypes.string,
+	  className: _react.PropTypes.string,
+	  onClick: _react.PropTypes.func
+	};
+	ShowSelectedOnlyButton.defaultProps = {
+	  showAllText: _Const2.default.SHOW_ALL,
+	  showOnlySelectText: _Const2.default.SHOW_ONLY_SELECT,
+	  toggle: false,
+	  btnContextual: 'btn-primary',
+	  className: '',
+	  onClick: undefined
+	};
+
+	var _default = ShowSelectedOnlyButton;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(showSelectedOnlyBtnDefaultClass, 'showSelectedOnlyBtnDefaultClass', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ShowSelectedOnlyButton.js');
+
+	  __REACT_HOT_LOADER__.register(ShowSelectedOnlyButton, 'ShowSelectedOnlyButton', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ShowSelectedOnlyButton.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ShowSelectedOnlyButton.js');
+	}();
+
+	;
+
+/***/ },
+/* 631 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(437);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SearchField = function (_Component) {
+	  _inherits(SearchField, _Component);
+
+	  function SearchField() {
+	    _classCallCheck(this, SearchField);
+
+	    return _possibleConstructorReturn(this, (SearchField.__proto__ || Object.getPrototypeOf(SearchField)).apply(this, arguments));
+	  }
+
+	  _createClass(SearchField, [{
+	    key: 'getValue',
+	    value: function getValue() {
+	      return _reactDom2.default.findDOMNode(this).value;
+	    }
+	  }, {
+	    key: 'setValue',
+	    value: function setValue(value) {
+	      _reactDom2.default.findDOMNode(this).value = value;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          className = _props.className,
+	          defaultValue = _props.defaultValue,
+	          placeholder = _props.placeholder,
+	          onKeyUp = _props.onKeyUp,
+	          rest = _objectWithoutProperties(_props, ['className', 'defaultValue', 'placeholder', 'onKeyUp']);
+
+	      return _react2.default.createElement('input', _extends({
+	        className: 'form-control ' + className,
+	        type: 'text',
+	        defaultValue: defaultValue,
+	        placeholder: placeholder || SearchField.defaultProps.placeholder,
+	        onKeyUp: onKeyUp,
+	        style: { zIndex: 0 }
+	      }, rest));
+	    }
+	  }]);
+
+	  return SearchField;
+	}(_react.Component);
+
+	SearchField.propTypes = {
+	  className: _react.PropTypes.string,
+	  defaultValue: _react.PropTypes.string,
+	  placeholder: _react.PropTypes.string,
+	  onKeyUp: _react.PropTypes.func
+	};
+	SearchField.defaultProps = {
+	  className: '',
+	  defaultValue: '',
+	  placeholder: 'Search',
+	  onKeyUp: undefined
+	};
+
+	var _default = SearchField;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(SearchField, 'SearchField', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/SearchField.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/SearchField.js');
+	}();
+
+	;
+
+/***/ },
+/* 632 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var clearBtnDefaultClass = 'react-bs-table-search-clear-btn';
+
+	var ClearSearchButton = function (_Component) {
+	  _inherits(ClearSearchButton, _Component);
+
+	  function ClearSearchButton() {
+	    _classCallCheck(this, ClearSearchButton);
+
+	    return _possibleConstructorReturn(this, (ClearSearchButton.__proto__ || Object.getPrototypeOf(ClearSearchButton)).apply(this, arguments));
+	  }
+
+	  _createClass(ClearSearchButton, [{
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          btnContextual = _props.btnContextual,
+	          className = _props.className,
+	          onClick = _props.onClick,
+	          btnText = _props.btnText,
+	          children = _props.children,
+	          rest = _objectWithoutProperties(_props, ['btnContextual', 'className', 'onClick', 'btnText', 'children']);
+
+	      var content = children || _react2.default.createElement(
+	        'span',
+	        null,
+	        btnText
+	      );
+	      return _react2.default.createElement(
+	        'button',
+	        _extends({ ref: 'btn',
+	          className: 'btn ' + btnContextual + ' ' + className + ' ' + clearBtnDefaultClass,
+	          type: 'button',
+	          onClick: onClick
+	        }, rest),
+	        content
+	      );
+	    }
+	  }]);
+
+	  return ClearSearchButton;
+	}(_react.Component);
+
+	ClearSearchButton.propTypes = {
+	  btnContextual: _react.PropTypes.string,
+	  className: _react.PropTypes.string,
+	  btnText: _react.PropTypes.string,
+	  onClick: _react.PropTypes.func
+	};
+	ClearSearchButton.defaultProps = {
+	  btnContextual: 'btn-default',
+	  className: '',
+	  btnText: 'Clear',
+	  onClick: undefined
+	};
+
+	var _default = ClearSearchButton;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(clearBtnDefaultClass, 'clearBtnDefaultClass', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ClearSearchButton.js');
+
+	  __REACT_HOT_LOADER__.register(ClearSearchButton, 'ClearSearchButton', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ClearSearchButton.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ClearSearchButton.js');
+	}();
+
+	;
+
+/***/ },
+/* 633 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	var _classnames = __webpack_require__(440);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TableFilter = function (_Component) {
+	  _inherits(TableFilter, _Component);
+
+	  function TableFilter(props) {
+	    _classCallCheck(this, TableFilter);
+
+	    var _this = _possibleConstructorReturn(this, (TableFilter.__proto__ || Object.getPrototypeOf(TableFilter)).call(this, props));
+
+	    _this.handleKeyUp = function () {
+	      return _this.__handleKeyUp__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.filterObj = {};
+	    return _this;
+	  }
+
+	  _createClass(TableFilter, [{
+	    key: '__handleKeyUp__REACT_HOT_LOADER__',
+	    value: function __handleKeyUp__REACT_HOT_LOADER__(e) {
+	      var _e$currentTarget = e.currentTarget,
+	          value = _e$currentTarget.value,
+	          name = _e$currentTarget.name;
+
+	      if (value.trim() === '') {
+	        delete this.filterObj[name];
+	      } else {
+	        this.filterObj[name] = value;
+	      }
+	      this.props.onFilter(this.filterObj);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          striped = _props.striped,
+	          condensed = _props.condensed,
+	          rowSelectType = _props.rowSelectType,
+	          columns = _props.columns;
+
+	      var tableClasses = (0, _classnames2.default)('table', {
+	        'table-striped': striped,
+	        'table-condensed': condensed
+	      });
+	      var selectRowHeader = null;
+
+	      if (rowSelectType === _Const2.default.ROW_SELECT_SINGLE || rowSelectType === _Const2.default.ROW_SELECT_MULTI) {
+	        var style = {
+	          width: 35,
+	          paddingLeft: 0,
+	          paddingRight: 0
+	        };
+	        selectRowHeader = _react2.default.createElement(
+	          'th',
+	          { style: style, key: -1 },
+	          'Filter'
+	        );
+	      }
+
+	      var filterField = columns.map(function (column) {
+	        var hidden = column.hidden,
+	            width = column.width,
+	            name = column.name;
+
+	        var thStyle = {
+	          display: hidden ? 'none' : null,
+	          width: width
+	        };
+	        return _react2.default.createElement(
+	          'th',
+	          { key: name, style: thStyle },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'th-inner table-header-column' },
+	            _react2.default.createElement('input', { size: '10', type: 'text',
+	              placeholder: name, name: name, onKeyUp: this.handleKeyUp })
+	          )
+	        );
+	      }, this);
+
+	      return _react2.default.createElement(
+	        'table',
+	        { className: tableClasses, style: { marginTop: 5 } },
+	        _react2.default.createElement(
+	          'thead',
+	          null,
+	          _react2.default.createElement(
+	            'tr',
+	            { style: { borderBottomStyle: 'hidden' } },
+	            selectRowHeader,
+	            filterField
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return TableFilter;
+	}(_react.Component);
+
+	TableFilter.propTypes = {
+	  columns: _react.PropTypes.array,
+	  rowSelectType: _react.PropTypes.string,
+	  onFilter: _react.PropTypes.func
+	};
+	var _default = TableFilter;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(TableFilter, 'TableFilter', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableFilter.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableFilter.js');
+	}();
+
+	;
+
+/***/ },
+/* 634 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.TableDataStore = undefined;
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /* eslint no-nested-ternary: 0 */
+	/* eslint guard-for-in: 0 */
+	/* eslint no-console: 0 */
+	/* eslint eqeqeq: 0 */
+	/* eslint one-var: 0 */
+
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var TableDataStore = function () {
+	  function TableDataStore(data) {
+	    _classCallCheck(this, TableDataStore);
+
+	    this.data = data;
+	    this.colInfos = null;
+	    this.filteredData = null;
+	    this.isOnFilter = false;
+	    this.filterObj = null;
+	    this.searchText = null;
+	    this.sortList = [];
+	    this.pageObj = {};
+	    this.selected = [];
+	    this.multiColumnSearch = false;
+	    this.multiColumnSort = 1;
+	    this.showOnlySelected = false;
+	    this.remote = false; // remote data
+	  }
+
+	  _createClass(TableDataStore, [{
+	    key: 'setProps',
+	    value: function setProps(props) {
+	      this.keyField = props.keyField;
+	      this.enablePagination = props.isPagination;
+	      this.colInfos = props.colInfos;
+	      this.remote = props.remote;
+	      this.multiColumnSearch = props.multiColumnSearch;
+	      this.multiColumnSort = props.multiColumnSort;
+	    }
+	  }, {
+	    key: 'clean',
+	    value: function clean() {
+	      this.filteredData = null;
+	      this.isOnFilter = false;
+	      this.filterObj = null;
+	      this.searchText = null;
+	      this.sortList = [];
+	      this.pageObj = {};
+	      this.selected = [];
+	    }
+	  }, {
+	    key: 'setData',
+	    value: function setData(data) {
+	      this.data = data;
+	      if (this.remote) {
+	        return;
+	      }
+
+	      this._refresh(true);
+	    }
+	  }, {
+	    key: 'getColInfos',
+	    value: function getColInfos() {
+	      return this.colInfos;
+	    }
+	  }, {
+	    key: 'getSortInfo',
+	    value: function getSortInfo() {
+	      return this.sortList;
+	    }
+	  }, {
+	    key: 'setSortInfo',
+	    value: function setSortInfo(order, sortField) {
+	      if ((typeof order === 'undefined' ? 'undefined' : _typeof(order)) !== (typeof sortField === 'undefined' ? 'undefined' : _typeof(sortField))) {
+	        throw new Error('The type of sort field and order should be both with String or Array');
+	      }
+	      if (Array.isArray(order) && Array.isArray(sortField)) {
+	        if (order.length !== sortField.length) {
+	          throw new Error('The length of sort fields and orders should be equivalent');
+	        }
+	        order = order.slice().reverse();
+	        this.sortList = sortField.slice().reverse().map(function (field, i) {
+	          return {
+	            order: order[i],
+	            sortField: field
+	          };
+	        });
+	        this.sortList = this.sortList.slice(0, this.multiColumnSort);
+	      } else {
+	        var sortObj = {
+	          order: order,
+	          sortField: sortField
+	        };
+
+	        if (this.multiColumnSort > 1) {
+	          var i = this.sortList.length - 1;
+	          var sortFieldInHistory = false;
+
+	          for (; i >= 0; i--) {
+	            if (this.sortList[i].sortField === sortField) {
+	              sortFieldInHistory = true;
+	              break;
+	            }
+	          }
+
+	          if (sortFieldInHistory) {
+	            if (i > 0) {
+	              this.sortList = this.sortList.slice(0, i);
+	            } else {
+	              this.sortList = this.sortList.slice(1);
+	            }
+	          }
+
+	          this.sortList.unshift(sortObj);
+	          this.sortList = this.sortList.slice(0, this.multiColumnSort);
+	        } else {
+	          this.sortList = [sortObj];
+	        }
+	      }
+	    }
+	  }, {
+	    key: 'setSelectedRowKey',
+	    value: function setSelectedRowKey(selectedRowKeys) {
+	      this.selected = selectedRowKeys;
+	    }
+	  }, {
+	    key: 'getRowByKey',
+	    value: function getRowByKey(keys) {
+	      var _this = this;
+
+	      return keys.map(function (key) {
+	        var result = _this.data.filter(function (d) {
+	          return d[_this.keyField] === key;
+	        });
+	        if (result.length !== 0) return result[0];
+	      });
+	    }
+	  }, {
+	    key: 'getSelectedRowKeys',
+	    value: function getSelectedRowKeys() {
+	      return this.selected;
+	    }
+	  }, {
+	    key: 'getCurrentDisplayData',
+	    value: function getCurrentDisplayData() {
+	      if (this.isOnFilter) return this.filteredData;else return this.data;
+	    }
+	  }, {
+	    key: '_refresh',
+	    value: function _refresh(skipSorting) {
+	      if (this.isOnFilter) {
+	        if (this.filterObj !== null) this.filter(this.filterObj);
+	        if (this.searchText !== null) this.search(this.searchText);
+	      }
+	      if (!skipSorting && this.sortList.length > 0) {
+	        this.sort();
+	      }
+	    }
+	  }, {
+	    key: 'ignoreNonSelected',
+	    value: function ignoreNonSelected() {
+	      var _this2 = this;
+
+	      this.showOnlySelected = !this.showOnlySelected;
+	      if (this.showOnlySelected) {
+	        this.isOnFilter = true;
+	        this.filteredData = this.data.filter(function (row) {
+	          var result = _this2.selected.find(function (x) {
+	            return row[_this2.keyField] === x;
+	          });
+	          return typeof result !== 'undefined' ? true : false;
+	        });
+	      } else {
+	        this.isOnFilter = false;
+	      }
+	    }
+	  }, {
+	    key: 'sort',
+	    value: function sort() {
+	      var currentDisplayData = this.getCurrentDisplayData();
+
+	      currentDisplayData = this._sort(currentDisplayData);
+
+	      return this;
+	    }
+	  }, {
+	    key: 'page',
+	    value: function page(_page, sizePerPage) {
+	      this.pageObj.end = _page * sizePerPage - 1;
+	      this.pageObj.start = this.pageObj.end - (sizePerPage - 1);
+	      return this;
+	    }
+	  }, {
+	    key: 'edit',
+	    value: function edit(newVal, rowIndex, fieldName) {
+	      var currentDisplayData = this.getCurrentDisplayData();
+	      var rowKeyCache = void 0;
+	      if (!this.enablePagination) {
+	        currentDisplayData[rowIndex][fieldName] = newVal;
+	        rowKeyCache = currentDisplayData[rowIndex][this.keyField];
+	      } else {
+	        currentDisplayData[this.pageObj.start + rowIndex][fieldName] = newVal;
+	        rowKeyCache = currentDisplayData[this.pageObj.start + rowIndex][this.keyField];
+	      }
+	      if (this.isOnFilter) {
+	        this.data.forEach(function (row) {
+	          if (row[this.keyField] === rowKeyCache) {
+	            row[fieldName] = newVal;
+	          }
+	        }, this);
+	        if (this.filterObj !== null) this.filter(this.filterObj);
+	        if (this.searchText !== null) this.search(this.searchText);
+	      }
+	      return this;
+	    }
+	  }, {
+	    key: 'addAtBegin',
+	    value: function addAtBegin(newObj) {
+	      if (!newObj[this.keyField] || newObj[this.keyField].toString() === '') {
+	        throw new Error(this.keyField + ' can\'t be empty value.');
+	      }
+	      var currentDisplayData = this.getCurrentDisplayData();
+	      currentDisplayData.forEach(function (row) {
+	        if (row[this.keyField].toString() === newObj[this.keyField].toString()) {
+	          throw new Error(this.keyField + ' ' + newObj[this.keyField] + ' already exists');
+	        }
+	      }, this);
+	      currentDisplayData.unshift(newObj);
+	      if (this.isOnFilter) {
+	        this.data.unshift(newObj);
+	      }
+	      this._refresh(false);
+	    }
+	  }, {
+	    key: 'add',
+	    value: function add(newObj) {
+	      if (!newObj[this.keyField] || newObj[this.keyField].toString() === '') {
+	        throw new Error(this.keyField + ' can\'t be empty value.');
+	      }
+	      var currentDisplayData = this.getCurrentDisplayData();
+	      currentDisplayData.forEach(function (row) {
+	        if (row[this.keyField].toString() === newObj[this.keyField].toString()) {
+	          throw new Error(this.keyField + ' ' + newObj[this.keyField] + ' already exists');
+	        }
+	      }, this);
+
+	      currentDisplayData.push(newObj);
+	      if (this.isOnFilter) {
+	        this.data.push(newObj);
+	      }
+	      this._refresh(false);
+	    }
+	  }, {
+	    key: 'remove',
+	    value: function remove(rowKey) {
+	      var _this3 = this;
+
+	      var currentDisplayData = this.getCurrentDisplayData();
+	      var result = currentDisplayData.filter(function (row) {
+	        return rowKey.indexOf(row[_this3.keyField]) === -1;
+	      });
+
+	      if (this.isOnFilter) {
+	        this.data = this.data.filter(function (row) {
+	          return rowKey.indexOf(row[_this3.keyField]) === -1;
+	        });
+	        this.filteredData = result;
+	      } else {
+	        this.data = result;
+	      }
+	    }
+	  }, {
+	    key: 'filter',
+	    value: function filter(filterObj) {
+	      if (Object.keys(filterObj).length === 0) {
+	        this.filteredData = null;
+	        this.isOnFilter = false;
+	        this.filterObj = null;
+	        if (this.searchText) this._search(this.data);
+	      } else {
+	        var source = this.data;
+	        this.filterObj = filterObj;
+	        if (this.searchText) {
+	          this._search(source);
+	          source = this.filteredData;
+	        }
+	        this._filter(source);
+	      }
+	    }
+	  }, {
+	    key: 'filterNumber',
+	    value: function filterNumber(targetVal, filterVal, comparator) {
+	      var valid = true;
+	      switch (comparator) {
+	        case '=':
+	          {
+	            if (targetVal != filterVal) {
+	              valid = false;
+	            }
+	            break;
+	          }
+	        case '>':
+	          {
+	            if (targetVal <= filterVal) {
+	              valid = false;
+	            }
+	            break;
+	          }
+	        case '>=':
+	          {
+	            if (targetVal < filterVal) {
+	              valid = false;
+	            }
+	            break;
+	          }
+	        case '<':
+	          {
+	            if (targetVal >= filterVal) {
+	              valid = false;
+	            }
+	            break;
+	          }
+	        case '<=':
+	          {
+	            if (targetVal > filterVal) {
+	              valid = false;
+	            }
+	            break;
+	          }
+	        case '!=':
+	          {
+	            if (targetVal == filterVal) {
+	              valid = false;
+	            }
+	            break;
+	          }
+	        default:
+	          {
+	            console.error('Number comparator provided is not supported');
+	            break;
+	          }
+	      }
+	      return valid;
+	    }
+	  }, {
+	    key: 'filterDate',
+	    value: function filterDate(targetVal, filterVal, comparator) {
+	      // if (!targetVal) {
+	      //   return false;
+	      // }
+	      // return (targetVal.getDate() === filterVal.getDate() &&
+	      //     targetVal.getMonth() === filterVal.getMonth() &&
+	      //     targetVal.getFullYear() === filterVal.getFullYear());
+
+	      var valid = true;
+	      switch (comparator) {
+	        case '=':
+	          {
+	            if (targetVal != filterVal) {
+	              valid = false;
+	            }
+	            break;
+	          }
+	        case '>':
+	          {
+	            if (targetVal <= filterVal) {
+	              valid = false;
+	            }
+	            break;
+	          }
+	        case '>=':
+	          {
+	            if (targetVal < filterVal) {
+	              valid = false;
+	            }
+	            break;
+	          }
+	        case '<':
+	          {
+	            if (targetVal >= filterVal) {
+	              valid = false;
+	            }
+	            break;
+	          }
+	        case '<=':
+	          {
+	            if (targetVal > filterVal) {
+	              valid = false;
+	            }
+	            break;
+	          }
+	        case '!=':
+	          {
+	            if (targetVal == filterVal) {
+	              valid = false;
+	            }
+	            break;
+	          }
+	        default:
+	          {
+	            console.error('Date comparator provided is not supported');
+	            break;
+	          }
+	      }
+	      return valid;
+	    }
+	  }, {
+	    key: 'filterRegex',
+	    value: function filterRegex(targetVal, filterVal) {
+	      try {
+	        return new RegExp(filterVal, 'i').test(targetVal);
+	      } catch (e) {
+	        return true;
+	      }
+	    }
+	  }, {
+	    key: 'filterCustom',
+	    value: function filterCustom(targetVal, filterVal, callbackInfo, cond) {
+	      if (callbackInfo !== null && (typeof callbackInfo === 'undefined' ? 'undefined' : _typeof(callbackInfo)) === 'object') {
+	        return callbackInfo.callback(targetVal, callbackInfo.callbackParameters);
+	      }
+
+	      return this.filterText(targetVal, filterVal, cond);
+	    }
+	  }, {
+	    key: 'filterText',
+	    value: function filterText(targetVal, filterVal) {
+	      var cond = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _Const2.default.FILTER_COND_LIKE;
+
+	      targetVal = targetVal.toString();
+	      filterVal = filterVal.toString();
+	      if (cond === _Const2.default.FILTER_COND_EQ) {
+	        return targetVal === filterVal;
+	      } else {
+	        targetVal = targetVal.toLowerCase();
+	        filterVal = filterVal.toLowerCase();
+	        return !(targetVal.indexOf(filterVal) === -1);
+	      }
+	    }
+
+	    /* General search function
+	     * It will search for the text if the input includes that text;
+	     */
+
+	  }, {
+	    key: 'search',
+	    value: function search(searchText) {
+	      if (searchText.trim() === '') {
+	        this.filteredData = null;
+	        this.isOnFilter = false;
+	        this.searchText = null;
+	        if (this.filterObj) this._filter(this.data);
+	      } else {
+	        var source = this.data;
+	        this.searchText = searchText;
+	        if (this.filterObj) {
+	          this._filter(source);
+	          source = this.filteredData;
+	        }
+	        this._search(source);
+	      }
+	    }
+	  }, {
+	    key: '_filter',
+	    value: function _filter(source) {
+	      var _this4 = this;
+
+	      var filterObj = this.filterObj;
+	      this.filteredData = source.filter(function (row, r) {
+	        var valid = true;
+	        var filterVal = void 0;
+	        for (var key in filterObj) {
+	          var targetVal = row[key];
+	          if (targetVal === null || targetVal === undefined) {
+	            targetVal = '';
+	          }
+
+	          switch (filterObj[key].type) {
+	            case _Const2.default.FILTER_TYPE.NUMBER:
+	              {
+	                filterVal = filterObj[key].value.number;
+	                break;
+	              }
+	            case _Const2.default.FILTER_TYPE.CUSTOM:
+	              {
+	                filterVal = _typeof(filterObj[key].value) === 'object' ? undefined : typeof filterObj[key].value === 'string' ? filterObj[key].value.toLowerCase() : filterObj[key].value;
+	                break;
+	              }
+	            case _Const2.default.FILTER_TYPE.DATE:
+	              {
+	                filterVal = filterObj[key].value.date;
+	                break;
+	              }
+	            case _Const2.default.FILTER_TYPE.REGEX:
+	              {
+	                filterVal = filterObj[key].value;
+	                break;
+	              }
+	            default:
+	              {
+	                filterVal = filterObj[key].value;
+	                if (filterVal === undefined) {
+	                  // Support old filter
+	                  filterVal = filterObj[key];
+	                }
+	                break;
+	              }
+	          }
+	          var format = void 0,
+	              filterFormatted = void 0,
+	              formatExtraData = void 0,
+	              filterValue = void 0;
+	          if (_this4.colInfos[key]) {
+	            format = _this4.colInfos[key].format;
+	            filterFormatted = _this4.colInfos[key].filterFormatted;
+	            formatExtraData = _this4.colInfos[key].formatExtraData;
+	            filterValue = _this4.colInfos[key].filterValue;
+	            if (filterFormatted && format) {
+	              targetVal = format(row[key], row, formatExtraData, r);
+	            } else if (filterValue) {
+	              targetVal = filterValue(row[key], row);
+	            }
+	          }
+
+	          switch (filterObj[key].type) {
+	            case _Const2.default.FILTER_TYPE.NUMBER:
+	              {
+	                valid = _this4.filterNumber(targetVal, filterVal, filterObj[key].value.comparator);
+	                break;
+	              }
+	            case _Const2.default.FILTER_TYPE.DATE:
+	              {
+	                valid = _this4.filterDate(targetVal, filterVal, filterObj[key].value.comparator);
+	                break;
+	              }
+	            case _Const2.default.FILTER_TYPE.REGEX:
+	              {
+	                valid = _this4.filterRegex(targetVal, filterVal);
+	                break;
+	              }
+	            case _Const2.default.FILTER_TYPE.CUSTOM:
+	              {
+	                var cond = filterObj[key].props ? filterObj[key].props.cond : _Const2.default.FILTER_COND_LIKE;
+	                valid = _this4.filterCustom(targetVal, filterVal, filterObj[key].value, cond);
+	                break;
+	              }
+	            default:
+	              {
+	                if (filterObj[key].type === _Const2.default.FILTER_TYPE.SELECT && filterFormatted && filterFormatted && format) {
+	                  filterVal = format(filterVal, row, formatExtraData, r);
+	                }
+	                var _cond = filterObj[key].props ? filterObj[key].props.cond : _Const2.default.FILTER_COND_LIKE;
+	                valid = _this4.filterText(targetVal, filterVal, _cond);
+	                break;
+	              }
+	          }
+	          if (!valid) {
+	            break;
+	          }
+	        }
+	        return valid;
+	      });
+	      this.isOnFilter = true;
+	    }
+	  }, {
+	    key: '_search',
+	    value: function _search(source) {
+	      var _this5 = this;
+
+	      var searchTextArray = [];
+
+	      if (this.multiColumnSearch) {
+	        searchTextArray = this.searchText.split(' ');
+	      } else {
+	        searchTextArray.push(this.searchText);
+	      }
+	      this.filteredData = source.filter(function (row, r) {
+	        var keys = Object.keys(row);
+	        var valid = false;
+	        // for loops are ugly, but performance matters here.
+	        // And you cant break from a forEach.
+	        // http://jsperf.com/for-vs-foreach/66
+	        for (var i = 0, keysLength = keys.length; i < keysLength; i++) {
+	          var key = keys[i];
+	          // fixed data filter when misunderstand 0 is false
+	          var filterSpecialNum = false;
+	          if (!isNaN(row[key]) && parseInt(row[key], 10) === 0) {
+	            filterSpecialNum = true;
+	          }
+	          if (_this5.colInfos[key] && (row[key] || filterSpecialNum)) {
+	            var _colInfos$key = _this5.colInfos[key],
+	                format = _colInfos$key.format,
+	                filterFormatted = _colInfos$key.filterFormatted,
+	                filterValue = _colInfos$key.filterValue,
+	                formatExtraData = _colInfos$key.formatExtraData,
+	                searchable = _colInfos$key.searchable;
+
+	            var targetVal = row[key];
+	            if (searchable) {
+	              if (filterFormatted && format) {
+	                targetVal = format(targetVal, row, formatExtraData, r);
+	              } else if (filterValue) {
+	                targetVal = filterValue(targetVal, row);
+	              }
+	              for (var j = 0, textLength = searchTextArray.length; j < textLength; j++) {
+	                var filterVal = searchTextArray[j].toLowerCase();
+	                if (targetVal.toString().toLowerCase().indexOf(filterVal) !== -1) {
+	                  valid = true;
+	                  break;
+	                }
+	              }
+	            }
+	          }
+	        }
+	        return valid;
+	      });
+	      this.isOnFilter = true;
+	    }
+	  }, {
+	    key: '_sort',
+	    value: function _sort(arr) {
+	      var _this6 = this;
+
+	      if (this.sortList.length === 0 || typeof this.sortList[0] === 'undefined') {
+	        return arr;
+	      }
+
+	      arr.sort(function (a, b) {
+	        var result = 0;
+
+	        for (var i = 0; i < _this6.sortList.length; i++) {
+	          var sortDetails = _this6.sortList[i];
+	          var isDesc = sortDetails.order.toLowerCase() === _Const2.default.SORT_DESC;
+
+	          var _colInfos$sortDetails = _this6.colInfos[sortDetails.sortField],
+	              sortFunc = _colInfos$sortDetails.sortFunc,
+	              sortFuncExtraData = _colInfos$sortDetails.sortFuncExtraData;
+
+
+	          if (sortFunc) {
+	            result = sortFunc(a, b, sortDetails.order, sortDetails.sortField, sortFuncExtraData);
+	          } else {
+	            var valueA = a[sortDetails.sortField] === null ? '' : a[sortDetails.sortField];
+	            var valueB = b[sortDetails.sortField] === null ? '' : b[sortDetails.sortField];
+	            if (isDesc) {
+	              if (typeof valueB === 'string') {
+	                result = valueB.localeCompare(valueA);
+	              } else {
+	                result = valueA > valueB ? -1 : valueA < valueB ? 1 : 0;
+	              }
+	            } else {
+	              if (typeof valueA === 'string') {
+	                result = valueA.localeCompare(valueB);
+	              } else {
+	                result = valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
+	              }
+	            }
+	          }
+
+	          if (result !== 0) {
+	            return result;
+	          }
+	        }
+
+	        return result;
+	      });
+
+	      return arr;
+	    }
+	  }, {
+	    key: 'getDataIgnoringPagination',
+	    value: function getDataIgnoringPagination() {
+	      return this.getCurrentDisplayData();
+	    }
+	  }, {
+	    key: 'get',
+	    value: function get() {
+	      var _data = this.getCurrentDisplayData();
+
+	      if (_data.length === 0) return _data;
+
+	      var remote = typeof this.remote === 'function' ? this.remote(_Const2.default.REMOTE)[_Const2.default.REMOTE_PAGE] : this.remote;
+
+	      if (remote || !this.enablePagination) {
+	        return _data;
+	      } else {
+	        var result = [];
+	        for (var i = this.pageObj.start; i <= this.pageObj.end; i++) {
+	          result.push(_data[i]);
+	          if (i + 1 === _data.length) break;
+	        }
+	        return result;
+	      }
+	    }
+	  }, {
+	    key: 'getKeyField',
+	    value: function getKeyField() {
+	      return this.keyField;
+	    }
+	  }, {
+	    key: 'getDataNum',
+	    value: function getDataNum() {
+	      return this.getCurrentDisplayData().length;
+	    }
+	  }, {
+	    key: 'isChangedPage',
+	    value: function isChangedPage() {
+	      return this.pageObj.start && this.pageObj.end ? true : false;
+	    }
+	  }, {
+	    key: 'isEmpty',
+	    value: function isEmpty() {
+	      return this.data.length === 0 || this.data === null || this.data === undefined;
+	    }
+	  }, {
+	    key: 'getAllRowkey',
+	    value: function getAllRowkey() {
+	      var _this7 = this;
+
+	      return this.data.map(function (row) {
+	        return row[_this7.keyField];
+	      });
+	    }
+	  }]);
+
+	  return TableDataStore;
+	}();
+
+	exports.TableDataStore = TableDataStore;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(TableDataStore, 'TableDataStore', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/store/TableDataStore.js');
+	}();
+
+	;
+
+/***/ },
+/* 635 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _util = __webpack_require__(445);
+
+	var _util2 = _interopRequireDefault(_util);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	if (_util2.default.canUseDOM()) {
+	  var filesaver = __webpack_require__(636);
+	  var saveAs = filesaver.saveAs;
+	} /* eslint block-scoped-var: 0 */
+	/* eslint vars-on-top: 0 */
+	/* eslint no-var: 0 */
+	/* eslint no-unused-vars: 0 */
+
+
+	function toString(data, keys) {
+	  var dataString = '';
+	  if (data.length === 0) return dataString;
+
+	  var headCells = [];
+	  var rowCount = 0;
+	  keys.forEach(function (key) {
+	    if (key.row > rowCount) {
+	      rowCount = key.row;
+	    }
+	    // rowCount += (key.rowSpan + key.colSpan - 1);
+	    for (var index = 0; index < key.colSpan; index++) {
+	      headCells.push(key);
+	    }
+	  });
+
+	  var _loop = function _loop(i) {
+	    dataString += headCells.map(function (x) {
+	      if (x.row + (x.rowSpan - 1) === i) {
+	        return x.header;
+	      }
+	      if (x.row === i && x.rowSpan > 1) {
+	        return '';
+	      }
+	    }).filter(function (key) {
+	      return typeof key !== 'undefined';
+	    }).join(',') + '\n';
+	  };
+
+	  for (var i = 0; i <= rowCount; i++) {
+	    _loop(i);
+	  }
+
+	  keys = keys.filter(function (key) {
+	    return key.field !== undefined;
+	  });
+
+	  data.map(function (row) {
+	    keys.map(function (col, i) {
+	      var field = col.field,
+	          format = col.format,
+	          extraData = col.extraData;
+
+	      var value = typeof format !== 'undefined' ? format(row[field], row, extraData) : row[field];
+	      var cell = typeof value !== 'undefined' ? '"' + value + '"' : '';
+	      dataString += cell;
+	      if (i + 1 < keys.length) dataString += ',';
+	    });
+
+	    dataString += '\n';
+	  });
+
+	  return dataString;
+	}
+
+	var exportCSV = function exportCSV(data, keys, filename) {
+	  var dataString = toString(data, keys);
+	  if (typeof window !== 'undefined') {
+	    saveAs(new Blob([dataString], { type: 'text/plain;charset=utf-8' }), filename, true);
+	  }
+	};
+
+	var _default = exportCSV;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(saveAs, 'saveAs', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/csv_export_util.js');
+
+	  __REACT_HOT_LOADER__.register(toString, 'toString', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/csv_export_util.js');
+
+	  __REACT_HOT_LOADER__.register(exportCSV, 'exportCSV', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/csv_export_util.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/csv_export_util.js');
+	}();
+
+	;
+
+/***/ },
+/* 636 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;"use strict";
+
+	/* FileSaver.js
+	 * A saveAs() FileSaver implementation.
+	 * 1.1.20151003
+	 *
+	 * By Eli Grey, http://eligrey.com
+	 * License: MIT
+	 *   See https://github.com/eligrey/FileSaver.js/blob/master/LICENSE.md
+	 */
+
+	/*global self */
+	/*jslint bitwise: true, indent: 4, laxbreak: true, laxcomma: true, smarttabs: true, plusplus: true */
+
+	/*! @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js */
+
+	var saveAs = saveAs || function (view) {
+		"use strict";
+		// IE <10 is explicitly unsupported
+
+		if (typeof navigator !== "undefined" && /MSIE [1-9]\./.test(navigator.userAgent)) {
+			return;
+		}
+		var doc = view.document
+		// only get URL when necessary in case Blob.js hasn't overridden it yet
+		,
+		    get_URL = function get_URL() {
+			return view.URL || view.webkitURL || view;
+		},
+		    save_link = doc.createElementNS("http://www.w3.org/1999/xhtml", "a"),
+		    can_use_save_link = "download" in save_link,
+		    click = function click(node) {
+			var event = new MouseEvent("click");
+			node.dispatchEvent(event);
+		},
+		    is_safari = /Version\/[\d\.]+.*Safari/.test(navigator.userAgent),
+		    webkit_req_fs = view.webkitRequestFileSystem,
+		    req_fs = view.requestFileSystem || webkit_req_fs || view.mozRequestFileSystem,
+		    throw_outside = function throw_outside(ex) {
+			(view.setImmediate || view.setTimeout)(function () {
+				throw ex;
+			}, 0);
+		},
+		    force_saveable_type = "application/octet-stream",
+		    fs_min_size = 0
+		// See https://code.google.com/p/chromium/issues/detail?id=375297#c7 and
+		// https://github.com/eligrey/FileSaver.js/commit/485930a#commitcomment-8768047
+		// for the reasoning behind the timeout and revocation flow
+		,
+		    arbitrary_revoke_timeout = 500 // in ms
+		,
+		    revoke = function revoke(file) {
+			var revoker = function revoker() {
+				if (typeof file === "string") {
+					// file is an object URL
+					get_URL().revokeObjectURL(file);
+				} else {
+					// file is a File
+					file.remove();
+				}
+			};
+			if (view.chrome) {
+				revoker();
+			} else {
+				setTimeout(revoker, arbitrary_revoke_timeout);
+			}
+		},
+		    dispatch = function dispatch(filesaver, event_types, event) {
+			event_types = [].concat(event_types);
+			var i = event_types.length;
+			while (i--) {
+				var listener = filesaver["on" + event_types[i]];
+				if (typeof listener === "function") {
+					try {
+						listener.call(filesaver, event || filesaver);
+					} catch (ex) {
+						throw_outside(ex);
+					}
+				}
+			}
+		},
+		    auto_bom = function auto_bom(blob) {
+			// prepend BOM for UTF-8 XML and text/* types (including HTML)
+			if (/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(blob.type)) {
+				return new Blob(["\uFEFF", blob], { type: blob.type });
+			}
+			return blob;
+		},
+		    FileSaver = function FileSaver(blob, name, no_auto_bom) {
+			if (!no_auto_bom) {
+				blob = auto_bom(blob);
+			}
+			// First try a.download, then web filesystem, then object URLs
+			var filesaver = this,
+			    type = blob.type,
+			    blob_changed = false,
+			    object_url,
+			    target_view,
+			    dispatch_all = function dispatch_all() {
+				dispatch(filesaver, "writestart progress write writeend".split(" "));
+			}
+			// on any filesys errors revert to saving with object URLs
+			,
+			    fs_error = function fs_error() {
+				if (target_view && is_safari && typeof FileReader !== "undefined") {
+					// Safari doesn't allow downloading of blob urls
+					var reader = new FileReader();
+					reader.onloadend = function () {
+						var base64Data = reader.result;
+						target_view.location.href = "data:attachment/file" + base64Data.slice(base64Data.search(/[,;]/));
+						filesaver.readyState = filesaver.DONE;
+						dispatch_all();
+					};
+					reader.readAsDataURL(blob);
+					filesaver.readyState = filesaver.INIT;
+					return;
+				}
+				// don't create more object URLs than needed
+				if (blob_changed || !object_url) {
+					object_url = get_URL().createObjectURL(blob);
+				}
+				if (target_view) {
+					target_view.location.href = object_url;
+				} else {
+					var new_tab = view.open(object_url, "_blank");
+					if (new_tab == undefined && is_safari) {
+						//Apple do not allow window.open, see http://bit.ly/1kZffRI
+						view.location.href = object_url;
+					}
+				}
+				filesaver.readyState = filesaver.DONE;
+				dispatch_all();
+				revoke(object_url);
+			},
+			    abortable = function abortable(func) {
+				return function () {
+					if (filesaver.readyState !== filesaver.DONE) {
+						return func.apply(this, arguments);
+					}
+				};
+			},
+			    create_if_not_found = { create: true, exclusive: false },
+			    slice;
+			filesaver.readyState = filesaver.INIT;
+			if (!name) {
+				name = "download";
+			}
+			if (can_use_save_link) {
+				object_url = get_URL().createObjectURL(blob);
+				save_link.href = object_url;
+				save_link.download = name;
+				setTimeout(function () {
+					click(save_link);
+					dispatch_all();
+					revoke(object_url);
+					filesaver.readyState = filesaver.DONE;
+				});
+				return;
+			}
+			// Object and web filesystem URLs have a problem saving in Google Chrome when
+			// viewed in a tab, so I force save with application/octet-stream
+			// http://code.google.com/p/chromium/issues/detail?id=91158
+			// Update: Google errantly closed 91158, I submitted it again:
+			// https://code.google.com/p/chromium/issues/detail?id=389642
+			if (view.chrome && type && type !== force_saveable_type) {
+				slice = blob.slice || blob.webkitSlice;
+				blob = slice.call(blob, 0, blob.size, force_saveable_type);
+				blob_changed = true;
+			}
+			// Since I can't be sure that the guessed media type will trigger a download
+			// in WebKit, I append .download to the filename.
+			// https://bugs.webkit.org/show_bug.cgi?id=65440
+			if (webkit_req_fs && name !== "download") {
+				name += ".download";
+			}
+			if (type === force_saveable_type || webkit_req_fs) {
+				target_view = view;
+			}
+			if (!req_fs) {
+				fs_error();
+				return;
+			}
+			fs_min_size += blob.size;
+			req_fs(view.TEMPORARY, fs_min_size, abortable(function (fs) {
+				fs.root.getDirectory("saved", create_if_not_found, abortable(function (dir) {
+					var save = function save() {
+						dir.getFile(name, create_if_not_found, abortable(function (file) {
+							file.createWriter(abortable(function (writer) {
+								writer.onwriteend = function (event) {
+									target_view.location.href = file.toURL();
+									filesaver.readyState = filesaver.DONE;
+									dispatch(filesaver, "writeend", event);
+									revoke(file);
+								};
+								writer.onerror = function () {
+									var error = writer.error;
+									if (error.code !== error.ABORT_ERR) {
+										fs_error();
+									}
+								};
+								"writestart progress write abort".split(" ").forEach(function (event) {
+									writer["on" + event] = filesaver["on" + event];
+								});
+								writer.write(blob);
+								filesaver.abort = function () {
+									writer.abort();
+									filesaver.readyState = filesaver.DONE;
+								};
+								filesaver.readyState = filesaver.WRITING;
+							}), fs_error);
+						}), fs_error);
+					};
+					dir.getFile(name, { create: false }, abortable(function (file) {
+						// delete file if it already exists
+						file.remove();
+						save();
+					}), abortable(function (ex) {
+						if (ex.code === ex.NOT_FOUND_ERR) {
+							save();
+						} else {
+							fs_error();
+						}
+					}));
+				}), fs_error);
+			}), fs_error);
+		},
+		    FS_proto = FileSaver.prototype,
+		    saveAs = function saveAs(blob, name, no_auto_bom) {
+			return new FileSaver(blob, name, no_auto_bom);
+		};
+		// IE 10+ (native saveAs)
+		if (typeof navigator !== "undefined" && navigator.msSaveOrOpenBlob) {
+			return function (blob, name, no_auto_bom) {
+				if (!no_auto_bom) {
+					blob = auto_bom(blob);
+				}
+				return navigator.msSaveOrOpenBlob(blob, name || "download");
+			};
+		}
+
+		FS_proto.abort = function () {
+			var filesaver = this;
+			filesaver.readyState = filesaver.DONE;
+			dispatch(filesaver, "abort");
+		};
+		FS_proto.readyState = FS_proto.INIT = 0;
+		FS_proto.WRITING = 1;
+		FS_proto.DONE = 2;
+
+		FS_proto.error = FS_proto.onwritestart = FS_proto.onprogress = FS_proto.onwrite = FS_proto.onabort = FS_proto.onerror = FS_proto.onwriteend = null;
+
+		return saveAs;
+	}(typeof self !== "undefined" && self || typeof window !== "undefined" && window || undefined.content);
+	// `self` is undefined in Firefox for Android content script context
+	// while `this` is nsIContentFrameMessageManager
+	// with an attribute `content` that corresponds to the window
+
+	if (typeof module !== "undefined" && module.exports) {
+		module.exports.saveAs = saveAs;
+	} else if ("function" !== "undefined" && __webpack_require__(637) !== null && __webpack_require__(638) != null) {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+			return saveAs;
+		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	}
+	;
+
+	var _temp = function () {
+		if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+			return;
+		}
+
+		__REACT_HOT_LOADER__.register(saveAs, "saveAs", "/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filesaver.js");
+	}();
+
+	;
+
+/***/ },
+/* 637 */
+/***/ function(module, exports) {
+
+	module.exports = function() { throw new Error("define cannot be used indirect"); };
+
+
+/***/ },
+/* 638 */
+/***/ function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, {}))
+
+/***/ },
+/* 639 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Filter = undefined;
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	var _events = __webpack_require__(640);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Filter = exports.Filter = function (_EventEmitter) {
+	  _inherits(Filter, _EventEmitter);
+
+	  function Filter(data) {
+	    _classCallCheck(this, Filter);
+
+	    var _this = _possibleConstructorReturn(this, (Filter.__proto__ || Object.getPrototypeOf(Filter)).call(this, data));
+
+	    _this.currentFilter = {};
+	    return _this;
+	  }
+
+	  _createClass(Filter, [{
+	    key: 'handleFilter',
+	    value: function handleFilter(dataField, value, type, filterObj) {
+	      var filterType = type || _Const2.default.FILTER_TYPE.CUSTOM;
+
+	      var props = {
+	        cond: filterObj.condition // Only for select and text filter
+	      };
+
+	      if (value !== null && (typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
+	        // value of the filter is an object
+	        var hasValue = true;
+	        for (var prop in value) {
+	          if (!value[prop] || value[prop] === '') {
+	            hasValue = false;
+	            break;
+	          }
+	        }
+	        // if one of the object properties is undefined or empty, we remove the filter
+	        if (hasValue) {
+	          this.currentFilter[dataField] = { value: value, type: filterType, props: props };
+	        } else {
+	          delete this.currentFilter[dataField];
+	        }
+	      } else if (!value || value.trim() === '') {
+	        delete this.currentFilter[dataField];
+	      } else {
+	        this.currentFilter[dataField] = { value: value.trim(), type: filterType, props: props };
+	      }
+	      this.emit('onFilterChange', this.currentFilter);
+	    }
+	  }]);
+
+	  return Filter;
+	}(_events.EventEmitter);
+
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(Filter, 'Filter', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/Filter.js');
+	}();
+
+	;
+
+/***/ },
+/* 640 */
+/***/ function(module, exports) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+	function EventEmitter() {
+	  this._events = this._events || {};
+	  this._maxListeners = this._maxListeners || undefined;
+	}
+	module.exports = EventEmitter;
+
+	// Backwards-compat with node 0.10.x
+	EventEmitter.EventEmitter = EventEmitter;
+
+	EventEmitter.prototype._events = undefined;
+	EventEmitter.prototype._maxListeners = undefined;
+
+	// By default EventEmitters will print a warning if more than 10 listeners are
+	// added to it. This is a useful default which helps finding memory leaks.
+	EventEmitter.defaultMaxListeners = 10;
+
+	// Obviously not all Emitters should be limited to 10. This function allows
+	// that to be increased. Set to zero for unlimited.
+	EventEmitter.prototype.setMaxListeners = function(n) {
+	  if (!isNumber(n) || n < 0 || isNaN(n))
+	    throw TypeError('n must be a positive number');
+	  this._maxListeners = n;
+	  return this;
+	};
+
+	EventEmitter.prototype.emit = function(type) {
+	  var er, handler, len, args, i, listeners;
+
+	  if (!this._events)
+	    this._events = {};
+
+	  // If there is no 'error' event listener then throw.
+	  if (type === 'error') {
+	    if (!this._events.error ||
+	        (isObject(this._events.error) && !this._events.error.length)) {
+	      er = arguments[1];
+	      if (er instanceof Error) {
+	        throw er; // Unhandled 'error' event
+	      } else {
+	        // At least give some kind of context to the user
+	        var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
+	        err.context = er;
+	        throw err;
+	      }
+	    }
+	  }
+
+	  handler = this._events[type];
+
+	  if (isUndefined(handler))
+	    return false;
+
+	  if (isFunction(handler)) {
+	    switch (arguments.length) {
+	      // fast cases
+	      case 1:
+	        handler.call(this);
+	        break;
+	      case 2:
+	        handler.call(this, arguments[1]);
+	        break;
+	      case 3:
+	        handler.call(this, arguments[1], arguments[2]);
+	        break;
+	      // slower
+	      default:
+	        args = Array.prototype.slice.call(arguments, 1);
+	        handler.apply(this, args);
+	    }
+	  } else if (isObject(handler)) {
+	    args = Array.prototype.slice.call(arguments, 1);
+	    listeners = handler.slice();
+	    len = listeners.length;
+	    for (i = 0; i < len; i++)
+	      listeners[i].apply(this, args);
+	  }
+
+	  return true;
+	};
+
+	EventEmitter.prototype.addListener = function(type, listener) {
+	  var m;
+
+	  if (!isFunction(listener))
+	    throw TypeError('listener must be a function');
+
+	  if (!this._events)
+	    this._events = {};
+
+	  // To avoid recursion in the case that type === "newListener"! Before
+	  // adding it to the listeners, first emit "newListener".
+	  if (this._events.newListener)
+	    this.emit('newListener', type,
+	              isFunction(listener.listener) ?
+	              listener.listener : listener);
+
+	  if (!this._events[type])
+	    // Optimize the case of one listener. Don't need the extra array object.
+	    this._events[type] = listener;
+	  else if (isObject(this._events[type]))
+	    // If we've already got an array, just append.
+	    this._events[type].push(listener);
+	  else
+	    // Adding the second element, need to change to array.
+	    this._events[type] = [this._events[type], listener];
+
+	  // Check for listener leak
+	  if (isObject(this._events[type]) && !this._events[type].warned) {
+	    if (!isUndefined(this._maxListeners)) {
+	      m = this._maxListeners;
+	    } else {
+	      m = EventEmitter.defaultMaxListeners;
+	    }
+
+	    if (m && m > 0 && this._events[type].length > m) {
+	      this._events[type].warned = true;
+	      console.error('(node) warning: possible EventEmitter memory ' +
+	                    'leak detected. %d listeners added. ' +
+	                    'Use emitter.setMaxListeners() to increase limit.',
+	                    this._events[type].length);
+	      if (typeof console.trace === 'function') {
+	        // not supported in IE 10
+	        console.trace();
+	      }
+	    }
+	  }
+
+	  return this;
+	};
+
+	EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+
+	EventEmitter.prototype.once = function(type, listener) {
+	  if (!isFunction(listener))
+	    throw TypeError('listener must be a function');
+
+	  var fired = false;
+
+	  function g() {
+	    this.removeListener(type, g);
+
+	    if (!fired) {
+	      fired = true;
+	      listener.apply(this, arguments);
+	    }
+	  }
+
+	  g.listener = listener;
+	  this.on(type, g);
+
+	  return this;
+	};
+
+	// emits a 'removeListener' event iff the listener was removed
+	EventEmitter.prototype.removeListener = function(type, listener) {
+	  var list, position, length, i;
+
+	  if (!isFunction(listener))
+	    throw TypeError('listener must be a function');
+
+	  if (!this._events || !this._events[type])
+	    return this;
+
+	  list = this._events[type];
+	  length = list.length;
+	  position = -1;
+
+	  if (list === listener ||
+	      (isFunction(list.listener) && list.listener === listener)) {
+	    delete this._events[type];
+	    if (this._events.removeListener)
+	      this.emit('removeListener', type, listener);
+
+	  } else if (isObject(list)) {
+	    for (i = length; i-- > 0;) {
+	      if (list[i] === listener ||
+	          (list[i].listener && list[i].listener === listener)) {
+	        position = i;
+	        break;
+	      }
+	    }
+
+	    if (position < 0)
+	      return this;
+
+	    if (list.length === 1) {
+	      list.length = 0;
+	      delete this._events[type];
+	    } else {
+	      list.splice(position, 1);
+	    }
+
+	    if (this._events.removeListener)
+	      this.emit('removeListener', type, listener);
+	  }
+
+	  return this;
+	};
+
+	EventEmitter.prototype.removeAllListeners = function(type) {
+	  var key, listeners;
+
+	  if (!this._events)
+	    return this;
+
+	  // not listening for removeListener, no need to emit
+	  if (!this._events.removeListener) {
+	    if (arguments.length === 0)
+	      this._events = {};
+	    else if (this._events[type])
+	      delete this._events[type];
+	    return this;
+	  }
+
+	  // emit removeListener for all listeners on all events
+	  if (arguments.length === 0) {
+	    for (key in this._events) {
+	      if (key === 'removeListener') continue;
+	      this.removeAllListeners(key);
+	    }
+	    this.removeAllListeners('removeListener');
+	    this._events = {};
+	    return this;
+	  }
+
+	  listeners = this._events[type];
+
+	  if (isFunction(listeners)) {
+	    this.removeListener(type, listeners);
+	  } else if (listeners) {
+	    // LIFO order
+	    while (listeners.length)
+	      this.removeListener(type, listeners[listeners.length - 1]);
+	  }
+	  delete this._events[type];
+
+	  return this;
+	};
+
+	EventEmitter.prototype.listeners = function(type) {
+	  var ret;
+	  if (!this._events || !this._events[type])
+	    ret = [];
+	  else if (isFunction(this._events[type]))
+	    ret = [this._events[type]];
+	  else
+	    ret = this._events[type].slice();
+	  return ret;
+	};
+
+	EventEmitter.prototype.listenerCount = function(type) {
+	  if (this._events) {
+	    var evlistener = this._events[type];
+
+	    if (isFunction(evlistener))
+	      return 1;
+	    else if (evlistener)
+	      return evlistener.length;
+	  }
+	  return 0;
+	};
+
+	EventEmitter.listenerCount = function(emitter, type) {
+	  return emitter.listenerCount(type);
+	};
+
+	function isFunction(arg) {
+	  return typeof arg === 'function';
+	}
+
+	function isNumber(arg) {
+	  return typeof arg === 'number';
+	}
+
+	function isObject(arg) {
+	  return typeof arg === 'object' && arg !== null;
+	}
+
+	function isUndefined(arg) {
+	  return arg === void 0;
+	}
+
+
+/***/ },
+/* 641 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(440);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	var _util = __webpack_require__(445);
+
+	var _util2 = _interopRequireDefault(_util);
+
+	var _Date = __webpack_require__(642);
+
+	var _Date2 = _interopRequireDefault(_Date);
+
+	var _Text = __webpack_require__(643);
+
+	var _Text2 = _interopRequireDefault(_Text);
+
+	var _Regex = __webpack_require__(644);
+
+	var _Regex2 = _interopRequireDefault(_Regex);
+
+	var _Select = __webpack_require__(645);
+
+	var _Select2 = _interopRequireDefault(_Select);
+
+	var _Number = __webpack_require__(646);
+
+	var _Number2 = _interopRequireDefault(_Number);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* eslint default-case: 0 */
+	/* eslint guard-for-in: 0 */
+
+
+	var TableHeaderColumn = function (_Component) {
+	  _inherits(TableHeaderColumn, _Component);
+
+	  function TableHeaderColumn(props) {
+	    _classCallCheck(this, TableHeaderColumn);
+
+	    var _this = _possibleConstructorReturn(this, (TableHeaderColumn.__proto__ || Object.getPrototypeOf(TableHeaderColumn)).call(this, props));
+
+	    _this.handleColumnClick = function () {
+	      return _this.__handleColumnClick__REACT_HOT_LOADER__.apply(_this, arguments);
+	    };
+
+	    _this.handleFilter = _this.handleFilter.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(TableHeaderColumn, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      if (nextProps.reset) {
+	        this.cleanFiltered();
+	      }
+	    }
+	  }, {
+	    key: '__handleColumnClick__REACT_HOT_LOADER__',
+	    value: function __handleColumnClick__REACT_HOT_LOADER__() {
+	      if (this.props.isOnlyHead || !this.props.dataSort) return;
+	      var order = this.props.sort === _Const2.default.SORT_DESC ? _Const2.default.SORT_ASC : _Const2.default.SORT_DESC;
+	      this.props.onSort(order, this.props.dataField);
+	    }
+	  }, {
+	    key: 'handleFilter',
+	    value: function handleFilter(value, type) {
+	      var filter = this.props.filter;
+
+	      filter.emitter.handleFilter(this.props.dataField, value, type, filter);
+	    }
+	  }, {
+	    key: 'getFilters',
+	    value: function getFilters() {
+	      var _props = this.props,
+	          headerText = _props.headerText,
+	          children = _props.children;
+
+	      switch (this.props.filter.type) {
+	        case _Const2.default.FILTER_TYPE.TEXT:
+	          {
+	            return _react2.default.createElement(_Text2.default, _extends({ ref: 'textFilter' }, this.props.filter, {
+	              columnName: headerText || children, filterHandler: this.handleFilter }));
+	          }
+	        case _Const2.default.FILTER_TYPE.REGEX:
+	          {
+	            return _react2.default.createElement(_Regex2.default, _extends({ ref: 'regexFilter' }, this.props.filter, {
+	              columnName: headerText || children, filterHandler: this.handleFilter }));
+	          }
+	        case _Const2.default.FILTER_TYPE.SELECT:
+	          {
+	            return _react2.default.createElement(_Select2.default, _extends({ ref: 'selectFilter' }, this.props.filter, {
+	              columnName: headerText || children, filterHandler: this.handleFilter }));
+	          }
+	        case _Const2.default.FILTER_TYPE.NUMBER:
+	          {
+	            return _react2.default.createElement(_Number2.default, _extends({ ref: 'numberFilter' }, this.props.filter, {
+	              columnName: headerText || children, filterHandler: this.handleFilter }));
+	          }
+	        case _Const2.default.FILTER_TYPE.DATE:
+	          {
+	            return _react2.default.createElement(_Date2.default, _extends({ ref: 'dateFilter' }, this.props.filter, {
+	              columnName: headerText || children, filterHandler: this.handleFilter }));
+	          }
+	        case _Const2.default.FILTER_TYPE.CUSTOM:
+	          {
+	            var elm = this.props.filter.getElement(this.handleFilter, this.props.filter.customFilterParameters);
+
+	            return _react2.default.cloneElement(elm, { ref: 'customFilter' });
+	          }
+	      }
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.refs['header-col'].setAttribute('data-field', this.props.dataField);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var defaultCaret = void 0;
+	      var sortCaret = void 0;
+	      var _props2 = this.props,
+	          headerText = _props2.headerText,
+	          dataAlign = _props2.dataAlign,
+	          dataField = _props2.dataField,
+	          headerAlign = _props2.headerAlign,
+	          headerTitle = _props2.headerTitle,
+	          hidden = _props2.hidden,
+	          sort = _props2.sort,
+	          dataSort = _props2.dataSort,
+	          sortIndicator = _props2.sortIndicator,
+	          children = _props2.children,
+	          caretRender = _props2.caretRender,
+	          className = _props2.className,
+	          isOnlyHead = _props2.isOnlyHead,
+	          style = _props2.thStyle;
+
+	      var thStyle = _extends({
+	        textAlign: headerAlign || dataAlign,
+	        display: hidden ? 'none' : null
+	      }, style);
+	      if (!isOnlyHead) {
+	        if (sortIndicator) {
+	          defaultCaret = !dataSort ? null : _react2.default.createElement(
+	            'span',
+	            { className: 'order' },
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'dropdown' },
+	              _react2.default.createElement('span', { className: 'caret', style: { margin: '10px 0 10px 5px', color: '#ccc' } })
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'dropup' },
+	              _react2.default.createElement('span', { className: 'caret', style: { margin: '10px 0', color: '#ccc' } })
+	            )
+	          );
+	        }
+	        sortCaret = sort ? _util2.default.renderReactSortCaret(sort) : defaultCaret;
+	        if (caretRender) {
+	          sortCaret = caretRender(sort, dataField);
+	        }
+	      }
+
+	      var classes = (0, _classnames2.default)(typeof className === 'function' ? className() : className, !isOnlyHead && dataSort ? 'sort-column' : '');
+
+	      var title = {
+	        title: headerTitle && typeof children === 'string' ? children : headerText
+	      };
+	      return _react2.default.createElement(
+	        'th',
+	        _extends({ ref: 'header-col',
+	          className: classes,
+	          style: thStyle,
+	          onClick: this.handleColumnClick,
+	          rowSpan: this.props.rowSpan,
+	          colSpan: this.props.colSpan,
+	          'data-is-only-head': this.props.isOnlyHead
+	        }, title),
+	        children,
+	        sortCaret,
+	        _react2.default.createElement(
+	          'div',
+	          { onClick: function onClick(e) {
+	              return e.stopPropagation();
+	            } },
+	          this.props.filter && !isOnlyHead ? this.getFilters() : null
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'cleanFiltered',
+	    value: function cleanFiltered() {
+	      if (this.props.filter === undefined) {
+	        return;
+	      }
+
+	      switch (this.props.filter.type) {
+	        case _Const2.default.FILTER_TYPE.TEXT:
+	          {
+	            this.refs.textFilter.cleanFiltered();
+	            break;
+	          }
+	        case _Const2.default.FILTER_TYPE.REGEX:
+	          {
+	            this.refs.regexFilter.cleanFiltered();
+	            break;
+	          }
+	        case _Const2.default.FILTER_TYPE.SELECT:
+	          {
+	            this.refs.selectFilter.cleanFiltered();
+	            break;
+	          }
+	        case _Const2.default.FILTER_TYPE.NUMBER:
+	          {
+	            this.refs.numberFilter.cleanFiltered();
+	            break;
+	          }
+	        case _Const2.default.FILTER_TYPE.DATE:
+	          {
+	            this.refs.dateFilter.cleanFiltered();
+	            break;
+	          }
+	        case _Const2.default.FILTER_TYPE.CUSTOM:
+	          {
+	            this.refs.customFilter.cleanFiltered();
+	            break;
+	          }
+	      }
+	    }
+	  }, {
+	    key: 'applyFilter',
+	    value: function applyFilter(val) {
+	      if (this.props.filter === undefined) return;
+	      switch (this.props.filter.type) {
+	        case _Const2.default.FILTER_TYPE.TEXT:
+	          {
+	            this.refs.textFilter.applyFilter(val);
+	            break;
+	          }
+	        case _Const2.default.FILTER_TYPE.REGEX:
+	          {
+	            this.refs.regexFilter.applyFilter(val);
+	            break;
+	          }
+	        case _Const2.default.FILTER_TYPE.SELECT:
+	          {
+	            this.refs.selectFilter.applyFilter(val);
+	            break;
+	          }
+	        case _Const2.default.FILTER_TYPE.NUMBER:
+	          {
+	            this.refs.numberFilter.applyFilter(val);
+	            break;
+	          }
+	        case _Const2.default.FILTER_TYPE.DATE:
+	          {
+	            this.refs.dateFilter.applyFilter(val);
+	            break;
+	          }
+	      }
+	    }
+	  }]);
+
+	  return TableHeaderColumn;
+	}(_react.Component);
+
+	var filterTypeArray = [];
+	for (var key in _Const2.default.FILTER_TYPE) {
+	  filterTypeArray.push(_Const2.default.FILTER_TYPE[key]);
+	}
+
+	TableHeaderColumn.propTypes = {
+	  dataField: _react.PropTypes.string,
+	  dataAlign: _react.PropTypes.string,
+	  headerAlign: _react.PropTypes.string,
+	  headerTitle: _react.PropTypes.bool,
+	  headerText: _react.PropTypes.string,
+	  dataSort: _react.PropTypes.bool,
+	  onSort: _react.PropTypes.func,
+	  dataFormat: _react.PropTypes.func,
+	  csvFormat: _react.PropTypes.func,
+	  csvHeader: _react.PropTypes.string,
+	  isKey: _react.PropTypes.bool,
+	  editable: _react.PropTypes.any,
+	  hidden: _react.PropTypes.bool,
+	  hiddenOnInsert: _react.PropTypes.bool,
+	  searchable: _react.PropTypes.bool,
+	  className: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.func]),
+	  width: _react.PropTypes.string,
+	  sortFunc: _react.PropTypes.func,
+	  sortFuncExtraData: _react.PropTypes.any,
+	  columnClassName: _react.PropTypes.any,
+	  editColumnClassName: _react.PropTypes.any,
+	  invalidEditColumnClassName: _react.PropTypes.any,
+	  columnTitle: _react.PropTypes.bool,
+	  filterFormatted: _react.PropTypes.bool,
+	  filterValue: _react.PropTypes.func,
+	  sort: _react.PropTypes.string,
+	  caretRender: _react.PropTypes.func,
+	  formatExtraData: _react.PropTypes.any,
+	  csvFormatExtraData: _react.PropTypes.any,
+	  filter: _react.PropTypes.shape({
+	    type: _react.PropTypes.oneOf(filterTypeArray),
+	    delay: _react.PropTypes.number,
+	    options: _react.PropTypes.oneOfType([_react.PropTypes.object, // for SelectFilter
+	    _react.PropTypes.arrayOf(_react.PropTypes.number) // for NumberFilter
+	    ]),
+	    numberComparators: _react.PropTypes.arrayOf(_react.PropTypes.string),
+	    emitter: _react.PropTypes.object,
+	    placeholder: _react.PropTypes.string,
+	    getElement: _react.PropTypes.func,
+	    customFilterParameters: _react.PropTypes.object,
+	    condition: _react.PropTypes.oneOf([_Const2.default.FILTER_COND_EQ, _Const2.default.FILTER_COND_LIKE])
+	  }),
+	  sortIndicator: _react.PropTypes.bool,
+	  export: _react.PropTypes.bool,
+	  expandable: _react.PropTypes.bool,
+	  tdAttr: _react.PropTypes.object,
+	  tdStyle: _react.PropTypes.object,
+	  thStyle: _react.PropTypes.object
+	};
+
+	TableHeaderColumn.defaultProps = {
+	  dataAlign: 'left',
+	  headerAlign: undefined,
+	  headerTitle: true,
+	  dataSort: false,
+	  dataFormat: undefined,
+	  csvFormat: undefined,
+	  csvHeader: undefined,
+	  isKey: false,
+	  editable: true,
+	  onSort: undefined,
+	  hidden: false,
+	  hiddenOnInsert: false,
+	  searchable: true,
+	  className: '',
+	  columnTitle: false,
+	  width: null,
+	  sortFunc: undefined,
+	  columnClassName: '',
+	  editColumnClassName: '',
+	  invalidEditColumnClassName: '',
+	  filterFormatted: false,
+	  filterValue: undefined,
+	  sort: undefined,
+	  formatExtraData: undefined,
+	  sortFuncExtraData: undefined,
+	  filter: undefined,
+	  sortIndicator: true,
+	  expandable: true,
+	  tdAttr: undefined,
+	  tdStyle: undefined,
+	  thStyle: undefined
+	};
+
+	var _default = TableHeaderColumn;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(TableHeaderColumn, 'TableHeaderColumn', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableHeaderColumn.js');
+
+	  __REACT_HOT_LOADER__.register(filterTypeArray, 'filterTypeArray', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableHeaderColumn.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/TableHeaderColumn.js');
+	}();
+
+	;
+
+/***/ },
+/* 642 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* eslint quotes: 0 */
+	/* eslint max-len: 0 */
+
+
+	var legalComparators = ['=', '>', '>=', '<', '<=', '!='];
+
+	function dateParser(d) {
+	  return d.getFullYear() + '-' + ("0" + (d.getMonth() + 1)).slice(-2) + '-' + ("0" + d.getDate()).slice(-2);
+	}
+
+	var DateFilter = function (_Component) {
+	  _inherits(DateFilter, _Component);
+
+	  function DateFilter(props) {
+	    _classCallCheck(this, DateFilter);
+
+	    var _this = _possibleConstructorReturn(this, (DateFilter.__proto__ || Object.getPrototypeOf(DateFilter)).call(this, props));
+
+	    _this.dateComparators = _this.props.dateComparators || legalComparators;
+	    _this.filter = _this.filter.bind(_this);
+	    _this.onChangeComparator = _this.onChangeComparator.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(DateFilter, [{
+	    key: 'setDefaultDate',
+	    value: function setDefaultDate() {
+	      var defaultDate = '';
+	      var defaultValue = this.props.defaultValue;
+
+	      if (defaultValue && defaultValue.date) {
+	        // Set the appropriate format for the input type=date, i.e. "YYYY-MM-DD"
+	        defaultDate = dateParser(new Date(defaultValue.date));
+	      }
+	      return defaultDate;
+	    }
+	  }, {
+	    key: 'onChangeComparator',
+	    value: function onChangeComparator(event) {
+	      var date = this.refs.inputDate.value;
+	      var comparator = event.target.value;
+	      if (date === '') {
+	        return;
+	      }
+	      date = new Date(date);
+	      this.props.filterHandler({ date: date, comparator: comparator }, _Const2.default.FILTER_TYPE.DATE);
+	    }
+	  }, {
+	    key: 'getComparatorOptions',
+	    value: function getComparatorOptions() {
+	      var optionTags = [];
+	      optionTags.push(_react2.default.createElement('option', { key: '-1' }));
+	      for (var i = 0; i < this.dateComparators.length; i++) {
+	        optionTags.push(_react2.default.createElement(
+	          'option',
+	          { key: i, value: this.dateComparators[i] },
+	          this.dateComparators[i]
+	        ));
+	      }
+	      return optionTags;
+	    }
+	  }, {
+	    key: 'filter',
+	    value: function filter(event) {
+	      var comparator = this.refs.dateFilterComparator.value;
+	      var dateValue = event.target.value;
+	      if (dateValue) {
+	        this.props.filterHandler({ date: new Date(dateValue), comparator: comparator }, _Const2.default.FILTER_TYPE.DATE);
+	      } else {
+	        this.props.filterHandler(null, _Const2.default.FILTER_TYPE.DATE);
+	      }
+	    }
+	  }, {
+	    key: 'cleanFiltered',
+	    value: function cleanFiltered() {
+	      var value = this.setDefaultDate();
+	      var comparator = this.props.defaultValue ? this.props.defaultValue.comparator : '';
+	      this.setState({ isPlaceholderSelected: value === '' });
+	      this.refs.dateFilterComparator.value = comparator;
+	      this.refs.inputDate.value = value;
+	      this.props.filterHandler({ date: new Date(value), comparator: comparator }, _Const2.default.FILTER_TYPE.DATE);
+	    }
+	  }, {
+	    key: 'applyFilter',
+	    value: function applyFilter(filterDateObj) {
+	      var date = filterDateObj.date,
+	          comparator = filterDateObj.comparator;
+
+	      this.setState({ isPlaceholderSelected: date === '' });
+	      this.refs.dateFilterComparator.value = comparator;
+	      this.refs.inputDate.value = dateParser(date);
+	      this.props.filterHandler({ date: date, comparator: comparator }, _Const2.default.FILTER_TYPE.DATE);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var comparator = this.refs.dateFilterComparator.value;
+	      var dateValue = this.refs.inputDate.value;
+	      if (comparator && dateValue) {
+	        this.props.filterHandler({ date: new Date(dateValue), comparator: comparator }, _Const2.default.FILTER_TYPE.DATE);
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var defaultValue = this.props.defaultValue;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'filter date-filter' },
+	        _react2.default.createElement(
+	          'select',
+	          { ref: 'dateFilterComparator',
+	            className: 'date-filter-comparator form-control',
+	            onChange: this.onChangeComparator,
+	            defaultValue: defaultValue ? defaultValue.comparator : '' },
+	          this.getComparatorOptions()
+	        ),
+	        _react2.default.createElement('input', { ref: 'inputDate',
+	          className: 'filter date-filter-input form-control',
+	          type: 'date',
+	          onChange: this.filter,
+	          defaultValue: this.setDefaultDate() })
+	      );
+	    }
+	  }]);
+
+	  return DateFilter;
+	}(_react.Component);
+
+	DateFilter.propTypes = {
+	  filterHandler: _react.PropTypes.func.isRequired,
+	  defaultValue: _react.PropTypes.shape({
+	    date: _react.PropTypes.object,
+	    comparator: _react.PropTypes.oneOf(legalComparators)
+	  }),
+	  /* eslint consistent-return: 0 */
+	  dateComparators: function dateComparators(props, propName) {
+	    if (!props[propName]) {
+	      return;
+	    }
+	    for (var i = 0; i < props[propName].length; i++) {
+	      var comparatorIsValid = false;
+	      for (var j = 0; j < legalComparators.length; j++) {
+	        if (legalComparators[j] === props[propName][i]) {
+	          comparatorIsValid = true;
+	          break;
+	        }
+	      }
+	      if (!comparatorIsValid) {
+	        return new Error('Date comparator provided is not supported.\n          Use only ' + legalComparators);
+	      }
+	    }
+	  },
+	  columnName: _react.PropTypes.string
+	};
+
+	var _default = DateFilter;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(legalComparators, 'legalComparators', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Date.js');
+
+	  __REACT_HOT_LOADER__.register(dateParser, 'dateParser', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Date.js');
+
+	  __REACT_HOT_LOADER__.register(DateFilter, 'DateFilter', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Date.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Date.js');
+	}();
+
+	;
+
+/***/ },
+/* 643 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TextFilter = function (_Component) {
+	  _inherits(TextFilter, _Component);
+
+	  function TextFilter(props) {
+	    _classCallCheck(this, TextFilter);
+
+	    var _this = _possibleConstructorReturn(this, (TextFilter.__proto__ || Object.getPrototypeOf(TextFilter)).call(this, props));
+
+	    _this.filter = _this.filter.bind(_this);
+	    _this.timeout = null;
+	    return _this;
+	  }
+
+	  _createClass(TextFilter, [{
+	    key: 'filter',
+	    value: function filter(event) {
+	      var _this2 = this;
+
+	      if (this.timeout) {
+	        clearTimeout(this.timeout);
+	      }
+	      var filterValue = event.target.value;
+	      this.timeout = setTimeout(function () {
+	        _this2.props.filterHandler(filterValue, _Const2.default.FILTER_TYPE.TEXT);
+	      }, this.props.delay);
+	    }
+	  }, {
+	    key: 'cleanFiltered',
+	    value: function cleanFiltered() {
+	      var value = this.props.defaultValue ? this.props.defaultValue : '';
+	      this.refs.inputText.value = value;
+	      this.props.filterHandler(value, _Const2.default.FILTER_TYPE.TEXT);
+	    }
+	  }, {
+	    key: 'applyFilter',
+	    value: function applyFilter(filterText) {
+	      this.refs.inputText.value = filterText;
+	      this.props.filterHandler(filterText, _Const2.default.FILTER_TYPE.TEXT);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var defaultValue = this.refs.inputText.value;
+	      if (defaultValue) {
+	        this.props.filterHandler(defaultValue, _Const2.default.FILTER_TYPE.TEXT);
+	      }
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      clearTimeout(this.timeout);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          placeholder = _props.placeholder,
+	          columnName = _props.columnName,
+	          defaultValue = _props.defaultValue;
+
+	      return _react2.default.createElement('input', { ref: 'inputText',
+	        className: 'filter text-filter form-control',
+	        type: 'text',
+	        onChange: this.filter,
+	        placeholder: placeholder || 'Enter ' + columnName + '...',
+	        defaultValue: defaultValue ? defaultValue : '' });
+	    }
+	  }]);
+
+	  return TextFilter;
+	}(_react.Component);
+
+	TextFilter.propTypes = {
+	  filterHandler: _react.PropTypes.func.isRequired,
+	  defaultValue: _react.PropTypes.string,
+	  delay: _react.PropTypes.number,
+	  placeholder: _react.PropTypes.string,
+	  columnName: _react.PropTypes.string
+	};
+
+	TextFilter.defaultProps = {
+	  delay: _Const2.default.FILTER_DELAY
+	};
+
+	var _default = TextFilter;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(TextFilter, 'TextFilter', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Text.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Text.js');
+	}();
+
+	;
+
+/***/ },
+/* 644 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var RegexFilter = function (_Component) {
+	  _inherits(RegexFilter, _Component);
+
+	  function RegexFilter(props) {
+	    _classCallCheck(this, RegexFilter);
+
+	    var _this = _possibleConstructorReturn(this, (RegexFilter.__proto__ || Object.getPrototypeOf(RegexFilter)).call(this, props));
+
+	    _this.filter = _this.filter.bind(_this);
+	    _this.timeout = null;
+	    return _this;
+	  }
+
+	  _createClass(RegexFilter, [{
+	    key: 'filter',
+	    value: function filter(event) {
+	      var _this2 = this;
+
+	      if (this.timeout) {
+	        clearTimeout(this.timeout);
+	      }
+	      var filterValue = event.target.value;
+	      this.timeout = setTimeout(function () {
+	        _this2.props.filterHandler(filterValue, _Const2.default.FILTER_TYPE.REGEX);
+	      }, this.props.delay);
+	    }
+	  }, {
+	    key: 'cleanFiltered',
+	    value: function cleanFiltered() {
+	      var value = this.props.defaultValue ? this.props.defaultValue : '';
+	      this.refs.inputText.value = value;
+	      this.props.filterHandler(value, _Const2.default.FILTER_TYPE.TEXT);
+	    }
+	  }, {
+	    key: 'applyFilter',
+	    value: function applyFilter(filterRegx) {
+	      this.refs.inputText.value = filterRegx;
+	      this.props.filterHandler(filterRegx, _Const2.default.FILTER_TYPE.REGEX);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var value = this.refs.inputText.value;
+	      if (value) {
+	        this.props.filterHandler(value, _Const2.default.FILTER_TYPE.REGEX);
+	      }
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      clearTimeout(this.timeout);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          defaultValue = _props.defaultValue,
+	          placeholder = _props.placeholder,
+	          columnName = _props.columnName;
+
+	      return _react2.default.createElement('input', { ref: 'inputText',
+	        className: 'filter text-filter form-control',
+	        type: 'text',
+	        onChange: this.filter,
+	        placeholder: placeholder || 'Enter Regex for ' + columnName + '...',
+	        defaultValue: defaultValue ? defaultValue : '' });
+	    }
+	  }]);
+
+	  return RegexFilter;
+	}(_react.Component);
+
+	RegexFilter.propTypes = {
+	  filterHandler: _react.PropTypes.func.isRequired,
+	  defaultValue: _react.PropTypes.string,
+	  delay: _react.PropTypes.number,
+	  placeholder: _react.PropTypes.string,
+	  columnName: _react.PropTypes.string
+	};
+
+	RegexFilter.defaultProps = {
+	  delay: _Const2.default.FILTER_DELAY
+	};
+
+	var _default = RegexFilter;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(RegexFilter, 'RegexFilter', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Regex.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Regex.js');
+	}();
+
+	;
+
+/***/ },
+/* 645 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(440);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SelectFilter = function (_Component) {
+	  _inherits(SelectFilter, _Component);
+
+	  function SelectFilter(props) {
+	    _classCallCheck(this, SelectFilter);
+
+	    var _this = _possibleConstructorReturn(this, (SelectFilter.__proto__ || Object.getPrototypeOf(SelectFilter)).call(this, props));
+
+	    _this.filter = _this.filter.bind(_this);
+	    _this.state = {
+	      isPlaceholderSelected: _this.props.defaultValue === undefined || !_this.props.options.hasOwnProperty(_this.props.defaultValue)
+	    };
+	    return _this;
+	  }
+
+	  _createClass(SelectFilter, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      var isPlaceholderSelected = nextProps.defaultValue === undefined || !nextProps.options.hasOwnProperty(nextProps.defaultValue);
+	      this.setState({
+	        isPlaceholderSelected: isPlaceholderSelected
+	      });
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate(prevProps) {
+	      var needFilter = false;
+	      if (this.props.defaultValue !== prevProps.defaultValue) {
+	        needFilter = true;
+	      } else if (this.props.options !== prevProps.options) {
+	        needFilter = true;
+	      }
+	      if (needFilter) {
+	        var value = this.refs.selectInput.value;
+	        if (value) {
+	          this.props.filterHandler(value, _Const2.default.FILTER_TYPE.SELECT);
+	        }
+	      }
+	    }
+	  }, {
+	    key: 'filter',
+	    value: function filter(event) {
+	      var value = event.target.value;
+
+	      this.setState({ isPlaceholderSelected: value === '' });
+	      this.props.filterHandler(value, _Const2.default.FILTER_TYPE.SELECT);
+	    }
+	  }, {
+	    key: 'cleanFiltered',
+	    value: function cleanFiltered() {
+	      var value = this.props.defaultValue !== undefined ? this.props.defaultValue : '';
+	      this.setState({ isPlaceholderSelected: value === '' });
+	      this.refs.selectInput.value = value;
+	      this.props.filterHandler(value, _Const2.default.FILTER_TYPE.SELECT);
+	    }
+	  }, {
+	    key: 'applyFilter',
+	    value: function applyFilter(filterOption) {
+	      filterOption = filterOption + '';
+	      this.setState({ isPlaceholderSelected: filterOption === '' });
+	      this.refs.selectInput.value = filterOption;
+	      this.props.filterHandler(filterOption, _Const2.default.FILTER_TYPE.SELECT);
+	    }
+	  }, {
+	    key: 'getOptions',
+	    value: function getOptions() {
+	      var optionTags = [];
+	      var _props = this.props,
+	          options = _props.options,
+	          placeholder = _props.placeholder,
+	          columnName = _props.columnName,
+	          selectText = _props.selectText;
+
+	      var selectTextValue = selectText !== undefined ? selectText : 'Select';
+	      optionTags.push(_react2.default.createElement(
+	        'option',
+	        { key: '-1', value: '' },
+	        placeholder || selectTextValue + ' ' + columnName + '...'
+	      ));
+	      Object.keys(options).map(function (key) {
+	        optionTags.push(_react2.default.createElement(
+	          'option',
+	          { key: key, value: key },
+	          options[key] + ''
+	        ));
+	      });
+	      return optionTags;
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var value = this.refs.selectInput.value;
+	      if (value) {
+	        this.props.filterHandler(value, _Const2.default.FILTER_TYPE.SELECT);
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var selectClass = (0, _classnames2.default)('filter', 'select-filter', 'form-control', { 'placeholder-selected': this.state.isPlaceholderSelected });
+
+	      return _react2.default.createElement(
+	        'select',
+	        { ref: 'selectInput',
+	          className: selectClass,
+	          onChange: this.filter,
+	          defaultValue: this.props.defaultValue !== undefined ? this.props.defaultValue : '' },
+	        this.getOptions()
+	      );
+	    }
+	  }]);
+
+	  return SelectFilter;
+	}(_react.Component);
+
+	SelectFilter.propTypes = {
+	  filterHandler: _react.PropTypes.func.isRequired,
+	  options: _react.PropTypes.object.isRequired,
+	  placeholder: _react.PropTypes.string,
+	  columnName: _react.PropTypes.string
+	};
+
+	var _default = SelectFilter;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(SelectFilter, 'SelectFilter', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Select.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Select.js');
+	}();
+
+	;
+
+/***/ },
+/* 646 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(440);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _Const = __webpack_require__(441);
+
+	var _Const2 = _interopRequireDefault(_Const);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var legalComparators = ['=', '>', '>=', '<', '<=', '!='];
+
+	var NumberFilter = function (_Component) {
+	  _inherits(NumberFilter, _Component);
+
+	  function NumberFilter(props) {
+	    _classCallCheck(this, NumberFilter);
+
+	    var _this = _possibleConstructorReturn(this, (NumberFilter.__proto__ || Object.getPrototypeOf(NumberFilter)).call(this, props));
+
+	    _this.numberComparators = _this.props.numberComparators || legalComparators;
+	    _this.timeout = null;
+	    _this.state = {
+	      isPlaceholderSelected: _this.props.defaultValue === undefined || _this.props.defaultValue.number === undefined || _this.props.options && _this.props.options.indexOf(_this.props.defaultValue.number) === -1
+	    };
+	    _this.onChangeNumber = _this.onChangeNumber.bind(_this);
+	    _this.onChangeNumberSet = _this.onChangeNumberSet.bind(_this);
+	    _this.onChangeComparator = _this.onChangeComparator.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(NumberFilter, [{
+	    key: 'onChangeNumber',
+	    value: function onChangeNumber(event) {
+	      var _this2 = this;
+
+	      var comparator = this.refs.numberFilterComparator.value;
+	      if (comparator === '') {
+	        return;
+	      }
+	      if (this.timeout) {
+	        clearTimeout(this.timeout);
+	      }
+	      var filterValue = event.target.value;
+	      this.timeout = setTimeout(function () {
+	        _this2.props.filterHandler({ number: filterValue, comparator: comparator }, _Const2.default.FILTER_TYPE.NUMBER);
+	      }, this.props.delay);
+	    }
+	  }, {
+	    key: 'onChangeNumberSet',
+	    value: function onChangeNumberSet(event) {
+	      var comparator = this.refs.numberFilterComparator.value;
+	      var value = event.target.value;
+
+	      this.setState({ isPlaceholderSelected: value === '' });
+	      if (comparator === '') {
+	        return;
+	      }
+	      this.props.filterHandler({ number: value, comparator: comparator }, _Const2.default.FILTER_TYPE.NUMBER);
+	    }
+	  }, {
+	    key: 'onChangeComparator',
+	    value: function onChangeComparator(event) {
+	      var value = this.refs.numberFilter.value;
+	      var comparator = event.target.value;
+	      if (value === '') {
+	        return;
+	      }
+	      this.props.filterHandler({ number: value, comparator: comparator }, _Const2.default.FILTER_TYPE.NUMBER);
+	    }
+	  }, {
+	    key: 'cleanFiltered',
+	    value: function cleanFiltered() {
+	      var value = this.props.defaultValue ? this.props.defaultValue.number : '';
+	      var comparator = this.props.defaultValue ? this.props.defaultValue.comparator : '';
+	      this.setState({ isPlaceholderSelected: value === '' });
+	      this.refs.numberFilterComparator.value = comparator;
+	      this.refs.numberFilter.value = value;
+	      this.props.filterHandler({ number: value, comparator: comparator }, _Const2.default.FILTER_TYPE.NUMBER);
+	    }
+	  }, {
+	    key: 'applyFilter',
+	    value: function applyFilter(filterObj) {
+	      var number = filterObj.number,
+	          comparator = filterObj.comparator;
+
+	      this.setState({ isPlaceholderSelected: number === '' });
+	      this.refs.numberFilterComparator.value = comparator;
+	      this.refs.numberFilter.value = number;
+	      this.props.filterHandler({ number: number, comparator: comparator }, _Const2.default.FILTER_TYPE.NUMBER);
+	    }
+	  }, {
+	    key: 'getComparatorOptions',
+	    value: function getComparatorOptions() {
+	      var optionTags = [];
+	      optionTags.push(_react2.default.createElement('option', { key: '-1' }));
+	      for (var i = 0; i < this.numberComparators.length; i++) {
+	        optionTags.push(_react2.default.createElement(
+	          'option',
+	          { key: i, value: this.numberComparators[i] },
+	          this.numberComparators[i]
+	        ));
+	      }
+	      return optionTags;
+	    }
+	  }, {
+	    key: 'getNumberOptions',
+	    value: function getNumberOptions() {
+	      var optionTags = [];
+	      var options = this.props.options;
+
+
+	      optionTags.push(_react2.default.createElement(
+	        'option',
+	        { key: '-1', value: '' },
+	        this.props.placeholder || 'Select ' + this.props.columnName + '...'
+	      ));
+	      for (var i = 0; i < options.length; i++) {
+	        optionTags.push(_react2.default.createElement(
+	          'option',
+	          { key: i, value: options[i] },
+	          options[i]
+	        ));
+	      }
+	      return optionTags;
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var comparator = this.refs.numberFilterComparator.value;
+	      var number = this.refs.numberFilter.value;
+	      if (comparator && number) {
+	        this.props.filterHandler({ number: number, comparator: comparator }, _Const2.default.FILTER_TYPE.NUMBER);
+	      }
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      clearTimeout(this.timeout);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var selectClass = (0, _classnames2.default)('select-filter', 'number-filter-input', 'form-control', { 'placeholder-selected': this.state.isPlaceholderSelected });
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'filter number-filter' },
+	        _react2.default.createElement(
+	          'select',
+	          { ref: 'numberFilterComparator',
+	            className: 'number-filter-comparator form-control',
+	            onChange: this.onChangeComparator,
+	            defaultValue: this.props.defaultValue ? this.props.defaultValue.comparator : '' },
+	          this.getComparatorOptions()
+	        ),
+	        this.props.options ? _react2.default.createElement(
+	          'select',
+	          { ref: 'numberFilter',
+	            className: selectClass,
+	            onChange: this.onChangeNumberSet,
+	            defaultValue: this.props.defaultValue ? this.props.defaultValue.number : '' },
+	          this.getNumberOptions()
+	        ) : _react2.default.createElement('input', { ref: 'numberFilter',
+	          type: 'number',
+	          className: 'number-filter-input form-control',
+	          placeholder: this.props.placeholder || 'Enter ' + this.props.columnName + '...',
+	          onChange: this.onChangeNumber,
+	          defaultValue: this.props.defaultValue ? this.props.defaultValue.number : '' })
+	      );
+	    }
+	  }]);
+
+	  return NumberFilter;
+	}(_react.Component);
+
+	NumberFilter.propTypes = {
+	  filterHandler: _react.PropTypes.func.isRequired,
+	  options: _react.PropTypes.arrayOf(_react.PropTypes.number),
+	  defaultValue: _react.PropTypes.shape({
+	    number: _react.PropTypes.number,
+	    comparator: _react.PropTypes.oneOf(legalComparators)
+	  }),
+	  delay: _react.PropTypes.number,
+	  /* eslint consistent-return: 0 */
+	  numberComparators: function numberComparators(props, propName) {
+	    if (!props[propName]) {
+	      return;
+	    }
+	    for (var i = 0; i < props[propName].length; i++) {
+	      var comparatorIsValid = false;
+	      for (var j = 0; j < legalComparators.length; j++) {
+	        if (legalComparators[j] === props[propName][i]) {
+	          comparatorIsValid = true;
+	          break;
+	        }
+	      }
+	      if (!comparatorIsValid) {
+	        return new Error('Number comparator provided is not supported.\n          Use only ' + legalComparators);
+	      }
+	    }
+	  },
+	  placeholder: _react.PropTypes.string,
+	  columnName: _react.PropTypes.string
+	};
+
+	NumberFilter.defaultProps = {
+	  delay: _Const2.default.FILTER_DELAY
+	};
+
+	var _default = NumberFilter;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(legalComparators, 'legalComparators', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Number.js');
+
+	  __REACT_HOT_LOADER__.register(NumberFilter, 'NumberFilter', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Number.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/filters/Number.js');
+	}();
+
+	;
+
+/***/ },
+/* 647 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ButtonGroup = function (_Component) {
+	  _inherits(ButtonGroup, _Component);
+
+	  function ButtonGroup() {
+	    _classCallCheck(this, ButtonGroup);
+
+	    return _possibleConstructorReturn(this, (ButtonGroup.__proto__ || Object.getPrototypeOf(ButtonGroup)).apply(this, arguments));
+	  }
+
+	  _createClass(ButtonGroup, [{
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          className = _props.className,
+	          sizeClass = _props.sizeClass,
+	          children = _props.children,
+	          rest = _objectWithoutProperties(_props, ['className', 'sizeClass', 'children']);
+
+	      return _react2.default.createElement(
+	        'div',
+	        _extends({ className: 'btn-group ' + sizeClass + ' ' + className, role: 'group' }, rest),
+	        children
+	      );
+	    }
+	  }]);
+
+	  return ButtonGroup;
+	}(_react.Component);
+
+	ButtonGroup.propTypes = {
+	  sizeClass: _react.PropTypes.string,
+	  className: _react.PropTypes.string
+	};
+	ButtonGroup.defaultProps = {
+	  sizeClass: 'btn-group-sm',
+	  className: ''
+	};
+
+	var _default = ButtonGroup;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(ButtonGroup, 'ButtonGroup', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ButtonGroup.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/allen/Node/react-bootstrap-table-new/react-bootstrap-table/src/toolbar/ButtonGroup.js');
+	}();
+
+	;
+
+/***/ },
+/* 648 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(203);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrapTable = __webpack_require__(438);
+
+	var products = [];
+
+	function addProducts(quantity) {
+	  var startId = products.length;
+	  for (var i = 0; i < quantity; i++) {
+	    var id = startId + i;
+	    products.push({
+	      id: id,
+	      name: 'Item name ' + id,
+	      price: 2100 + i
+	    });
+	  }
+	}
+
+	addProducts(5);
+
+	var SingleColumnTable = (function (_React$Component) {
+	  _inherits(SingleColumnTable, _React$Component);
+
+	  function SingleColumnTable() {
+	    _classCallCheck(this, SingleColumnTable);
+
+	    _get(Object.getPrototypeOf(SingleColumnTable.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(SingleColumnTable, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        _reactBootstrapTable.BootstrapTable,
+	        { data: products },
+	        _react2['default'].createElement(
+	          _reactBootstrapTable.TableHeaderColumn,
+	          { dataField: 'id', isKey: true },
+	          'Product ID'
+	        )
+	      );
+	    }
+	  }]);
+
+	  return SingleColumnTable;
+	})(_react2['default'].Component);
+
+	exports['default'] = SingleColumnTable;
+	module.exports = exports['default'];
+
+/***/ },
+/* 649 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	var React = __webpack_require__(1);
 	var Reflux = __webpack_require__(173);
 	var PageRouterActions = __webpack_require__(195);
 	var PageRouterStore = __webpack_require__(196);
-	var Actions = __webpack_require__(438);
-	var Store = __webpack_require__(439);
+	var Actions = __webpack_require__(650);
+	var Store = __webpack_require__(651);
 	var Router = __webpack_require__(199);
 	var Navigation = __webpack_require__(199).Navigation;
 	var Table = __webpack_require__(426);
@@ -77006,7 +93782,7 @@ webpackJsonp([1],[
 	module.exports = page;
 
 /***/ },
-/* 438 */
+/* 650 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -77019,13 +93795,13 @@ webpackJsonp([1],[
 	module.exports = actions;
 
 /***/ },
-/* 439 */
+/* 651 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var Reflux = __webpack_require__(173);
-	var Actions = __webpack_require__(438);
+	var Actions = __webpack_require__(650);
 	var tools = __webpack_require__(323);
 
 	'use strict';
@@ -77099,7 +93875,7 @@ webpackJsonp([1],[
 	module.exports = store;
 
 /***/ },
-/* 440 */
+/* 652 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -77108,8 +93884,8 @@ webpackJsonp([1],[
 	var Reflux = __webpack_require__(173);
 	var PageRouterActions = __webpack_require__(195);
 	var PageRouterStore = __webpack_require__(196);
-	var Actions = __webpack_require__(441);
-	var Store = __webpack_require__(442);
+	var Actions = __webpack_require__(653);
+	var Store = __webpack_require__(654);
 	var Router = __webpack_require__(199);
 	var Navigation = __webpack_require__(199).Navigation;
 	var Link = __webpack_require__(199).Link;
@@ -77407,7 +94183,7 @@ webpackJsonp([1],[
 	module.exports = page;
 
 /***/ },
-/* 441 */
+/* 653 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -77420,13 +94196,13 @@ webpackJsonp([1],[
 	module.exports = actions;
 
 /***/ },
-/* 442 */
+/* 654 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var Reflux = __webpack_require__(173);
-	var Actions = __webpack_require__(441);
+	var Actions = __webpack_require__(653);
 	var ListStore = __webpack_require__(322);
 
 	'use strict';
@@ -77461,7 +94237,7 @@ webpackJsonp([1],[
 	module.exports = store;
 
 /***/ },
-/* 443 */
+/* 655 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -77470,8 +94246,8 @@ webpackJsonp([1],[
 	var Reflux = __webpack_require__(173);
 	var PageRouterActions = __webpack_require__(195);
 	var PageRouterStore = __webpack_require__(196);
-	var Actions = __webpack_require__(444);
-	var Store = __webpack_require__(445);
+	var Actions = __webpack_require__(656);
+	var Store = __webpack_require__(657);
 	var Router = __webpack_require__(199);
 	var Navigation = __webpack_require__(199).Navigation;
 
@@ -77498,7 +94274,7 @@ webpackJsonp([1],[
 	module.exports = page;
 
 /***/ },
-/* 444 */
+/* 656 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -77511,13 +94287,13 @@ webpackJsonp([1],[
 	module.exports = actions;
 
 /***/ },
-/* 445 */
+/* 657 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var Reflux = __webpack_require__(173);
-	var Actions = __webpack_require__(444);
+	var Actions = __webpack_require__(656);
 
 	'use strict';
 
@@ -77532,7 +94308,7 @@ webpackJsonp([1],[
 	module.exports = store;
 
 /***/ },
-/* 446 */
+/* 658 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -77541,8 +94317,8 @@ webpackJsonp([1],[
 	var Reflux = __webpack_require__(173);
 	var PageRouterActions = __webpack_require__(195);
 	var PageRouterStore = __webpack_require__(196);
-	var Actions = __webpack_require__(447);
-	var Store = __webpack_require__(448);
+	var Actions = __webpack_require__(659);
+	var Store = __webpack_require__(660);
 	var Router = __webpack_require__(199);
 	var Navigation = __webpack_require__(199).Navigation;
 
@@ -77569,7 +94345,7 @@ webpackJsonp([1],[
 	module.exports = page;
 
 /***/ },
-/* 447 */
+/* 659 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -77582,13 +94358,13 @@ webpackJsonp([1],[
 	module.exports = actions;
 
 /***/ },
-/* 448 */
+/* 660 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var Reflux = __webpack_require__(173);
-	var Actions = __webpack_require__(447);
+	var Actions = __webpack_require__(659);
 
 	'use strict';
 
@@ -77603,7 +94379,7 @@ webpackJsonp([1],[
 	module.exports = store;
 
 /***/ },
-/* 449 */
+/* 661 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -77612,8 +94388,8 @@ webpackJsonp([1],[
 	var Reflux = __webpack_require__(173);
 	var PageRouterActions = __webpack_require__(195);
 	var PageRouterStore = __webpack_require__(196);
-	var Actions = __webpack_require__(450);
-	var Store = __webpack_require__(451);
+	var Actions = __webpack_require__(662);
+	var Store = __webpack_require__(663);
 	var Router = __webpack_require__(199);
 	var Navigation = __webpack_require__(199).Navigation;
 
@@ -77640,7 +94416,7 @@ webpackJsonp([1],[
 	module.exports = page;
 
 /***/ },
-/* 450 */
+/* 662 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -77653,13 +94429,13 @@ webpackJsonp([1],[
 	module.exports = actions;
 
 /***/ },
-/* 451 */
+/* 663 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var Reflux = __webpack_require__(173);
-	var Actions = __webpack_require__(450);
+	var Actions = __webpack_require__(662);
 
 	'use strict';
 
@@ -77674,7 +94450,7 @@ webpackJsonp([1],[
 	module.exports = store;
 
 /***/ },
-/* 452 */
+/* 664 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -77682,7 +94458,7 @@ webpackJsonp([1],[
 	var React = __webpack_require__(1);
 	var Reflux = __webpack_require__(173);
 	var Actions = __webpack_require__(313);
-	var Store = __webpack_require__(453);
+	var Store = __webpack_require__(665);
 	var State = __webpack_require__(199).State;
 
 	'use strict';
@@ -77706,7 +94482,7 @@ webpackJsonp([1],[
 	module.exports = page;
 
 /***/ },
-/* 453 */
+/* 665 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -77727,22 +94503,24 @@ webpackJsonp([1],[
 	module.exports = store;
 
 /***/ },
-/* 454 */
+/* 666 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/*
-	  资源管理-List
-	  zhoujiang 20160321
+	/**
+	 * resourceList.page.js
+	 * 
+	 * 资源管理List画面
+	 * 
+	 * @author zhoujiang
 	 */
-
 	'use strict';
 
 	var React = __webpack_require__(1);
 	var Reflux = __webpack_require__(173);
 	var PageRouterActions = __webpack_require__(195);
 	var PageRouterStore = __webpack_require__(196);
-	var Actions = __webpack_require__(455);
-	var Store = __webpack_require__(456);
+	var Actions = __webpack_require__(667);
+	var Store = __webpack_require__(668);
 	var Router = __webpack_require__(199);
 	var Navigation = __webpack_require__(199).Navigation;
 	var Table = __webpack_require__(426);
@@ -77769,40 +94547,38 @@ webpackJsonp([1],[
 	    displayName: 'page',
 
 	    mixins: [Reflux.listenTo(Store, "onStatusChange"), Navigation, OverlayMixin, React.addons.LinkedStateMixin, Reflux.listenTo(PageRouterStore, "")],
-	    onStatusChange: function onStatusChange(listData) {
-	        console.log("---onStatusChange-----rows---------", listData.rows);
-	        console.log("---onStatusChange-----rowsTotoal---------", listData.rowsTotoal);
-	        console.log("---onStatusChange-----deleteOk---------", listData.deleteOk);
-	        console.log("---onStatusChange-----currentPage---------", listData.currentPage);
-	        console.log("---onStatusChange-----msg---------", listData.msg);
+	    onStatusChange: function onStatusChange(params) {
+	        // console.log("---onStatusChange-----rows---------",listData.rows);
+	        // console.log("---onStatusChange-----rowsTotoal---------",listData.rowsTotoal);
+	        // console.log("---onStatusChange-----deleteOk---------",listData.deleteOk);
+	        // console.log("---onStatusChange-----currentPage---------",listData.currentPage);
+	        // console.log("---onStatusChange-----msg---------",listData.msg);
 
 	        this.setState({
-	            rows: listData.rows,
-	            rowsTotoal: listData.rowsTotoal,
-	            deleteOk: listData.deleteOk,
-	            currentPage: listData.currentPage
+	            rows: params.rows,
+	            rowsTotoal: params.rowsTotoal,
+	            deleteOk: params.deleteOk,
+	            currentPage: params.currentPage
 	            // hasChildNum : 0
 	        }, function () {
 	            if (listData.deleteOk) {
 	                Gritter.add({
 	                    title: '提示',
-	                    text: '删除成功！' + listData.msg,
+	                    text: '删除成功！',
 	                    //image: 'assets/avatars/avatar.png',
 	                    sticky: false,
 	                    time: '2000',
 	                    class_name: 'gritter-light '
 	                });
 	            } else {
-	                if (!_.isUndefined(listData.msg) && !_.isEmpty(listData.msg)) {
-	                    Gritter.add({
-	                        title: '提示',
-	                        text: '删除失败！' + listData.msg,
-	                        //image: 'assets/avatars/avatar.png',
-	                        sticky: false,
-	                        time: '2000',
-	                        class_name: 'gritter-light '
-	                    });
-	                }
+	                Gritter.add({
+	                    title: '提示',
+	                    text: '删除失败！',
+	                    //image: 'assets/avatars/avatar.png',
+	                    sticky: false,
+	                    time: '2000',
+	                    class_name: 'gritter-light '
+	                });
 	            }
 	        });
 	    },
@@ -77810,10 +94586,9 @@ webpackJsonp([1],[
 	    table: null,
 
 	    getInitialState: function getInitialState() {
-	        // Actions.init();
 
 	        Actions.search({
-	            page: 0,
+	            currentPage: 0,
 	            querystring: "",
 	            refresh: true //是否后台刷新数据
 	        });
@@ -77931,7 +94706,7 @@ webpackJsonp([1],[
 	        //    text: "前往页码：" + page + "，每页记录数：" + navigationInfo.pageSize + "，共 " + navigationInfo.pages + " 页"
 	        //});
 	        Actions.search({
-	            page: pageNo,
+	            currentPage: pageNo,
 	            querystring: this.state.querystring,
 	            refresh: false //true:后台分页 false:后台分页
 	        });
@@ -77940,7 +94715,7 @@ webpackJsonp([1],[
 	        console.log("_handleKeyUp--->" + evt.which);
 	        //if (evt.which === 13) {//Enter键
 	        Actions.search({
-	            page: 0,
+	            currentPage: 0,
 	            querystring: this.state.querystring,
 	            refresh: false
 	        });
@@ -78090,7 +94865,7 @@ webpackJsonp([1],[
 	            rowIdColumn: "resourceId", //唯一标识每行记录的字段
 	            rowSelected: true, //选择一行是否触发checkbox
 	            id: "demoList"
-	        }, [React.createElement(Column, { dataKey: 'checkbox', label: '' }), React.createElement(Column, { dataKey: 'id', label: 'ID', hidden: true }), React.createElement(Column, { label: '资源ID', dataKey: 'resourceId', width: 50 }), React.createElement(Column, { label: '资源名称', dataKey: 'resourceName' }), React.createElement(Column, { label: '资源种类', dataKey: 'resourceType', width: 50, cellRender: this.typeCellRender }), React.createElement(Column, { label: '数据库连接', dataKey: 'dbLink', width: 100 }), React.createElement(Column, { label: '用户名', dataKey: 'dbUser' }), React.createElement(Column, { label: '密码', dataKey: 'dbPasswd', cellRender: this.passwdCellRender }),
+	        }, [React.createElement(Column, { dataKey: 'checkbox', label: '', inputType: 'checkbox' }), React.createElement(Column, { dataKey: 'id', label: 'ID', hidden: true }), React.createElement(Column, { label: '资源ID', dataKey: 'resourceId', width: 50 }), React.createElement(Column, { label: '资源名称', dataKey: 'resourceName' }), React.createElement(Column, { label: '资源种类', dataKey: 'resourceType', width: 50, cellRender: this.typeCellRender }), React.createElement(Column, { label: '数据库连接', dataKey: 'dbLink', width: 100 }), React.createElement(Column, { label: '用户名', dataKey: 'dbUser' }), React.createElement(Column, { label: '密码', dataKey: 'dbPasswd', cellRender: this.passwdCellRender }),
 	        // <Column label="有效" dataKey="deleteFlg" cellRender={this.deleteFlgCellRender}/>,
 	        // <Column label="子数据" dataKey="hasChild" width={50} cellRender={this.childCellRender}/>,
 	        React.createElement(Column, { label: '连接', dataKey: 'connectStatus', cellRender: this.connectCellRender })]);
@@ -78146,9 +94921,16 @@ webpackJsonp([1],[
 	module.exports = page;
 
 /***/ },
-/* 455 */
+/* 667 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/**
+	 * resourceList.action.js
+	 * 
+	 * 资源管理List画面
+	 * 
+	 * @author zhoujiang
+	 */
 	'use strict';
 
 	var Reflux = __webpack_require__(173);
@@ -78159,22 +94941,29 @@ webpackJsonp([1],[
 	module.exports = actions;
 
 /***/ },
-/* 456 */
+/* 668 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(setImmediate) {'use strict';
+	/* WEBPACK VAR INJECTION */(function(setImmediate) {/**
+	 * resourceList.store.js
+	 * 
+	 * 资源管理List画面
+	 * 
+	 * @author zhoujiang
+	 */
+	'use strict';
 
 	var Reflux = __webpack_require__(173);
-	var Actions = __webpack_require__(455);
-	var tools = __webpack_require__(323);
-	var httpUtil = __webpack_require__(457);
+	var Actions = __webpack_require__(667);
+	var httpUtil = __webpack_require__(669);
+	var navigationUtil = __webpack_require__(707);
 	var constants = __webpack_require__(428);
-	var http = __webpack_require__(458);
+	var http = __webpack_require__(670);
 
 	'use strict';
 
 	var pageSize = 20; //TODO 暂时还不能修改
-	var _cache = [];
+	var _cache = []; //数据缓存
 	var message = "";
 
 	var store = Reflux.createStore({
@@ -78186,61 +94975,149 @@ webpackJsonp([1],[
 	        deleteOk: false,
 	        querystring: null
 	    },
-	    onSearch: function onSearch(param) {
-	        if (param.refresh) {
+	    /**
+	     * 查询资源列表数据
+	     * 
+	     * @param currentPage 当前页数 
+	     * @param querystring  查询条件
+	     * @param refresh 是否后台更新数据
+	     */
+	    onSearch: function onSearch(params) {
+	        // var currentPage = params.currentPage;
+	        // var querystring = params.querystring;
+	        var refresh = params.refresh;
+	        // var pageSize = params.pageSize;
+
+	        if (refresh) {
 	            //从后台刷新数据
-	            console.log("---------------refresh-----------------");
-	            var getResult = function getResult(callback) {
-	                //TODO 拼接分页条件
-	                http.get("http://192.168.120.156:8081/resourceList?WithNoValid=1", function (res) {
-	                    var json = "";
-	                    res.on('data', function (d) {
-	                        json += d;
-	                    });
-	                    res.on('end', function () {
-	                        json = JSON.parse(json);
-	                        callback(json); //返回结果
-	                    });
-	                }).on('error', function (e) {
-	                    console.error(e.toString());
-	                    //message = e.toString();
-	                });
-	            };
-	            //查询结束回调函数
-	            getResult(function (resourceJson) {
-	                // console.log("getResult--->"+resourceJson);
-
-	                // TODO for localtest
-	                // _cache = [{"resourceId":4,"resourceName":"测试DB20170324","resourceType":"01","dbLink":"jdbc:mysql://192.168.120.156:3306/test","dbUser":"huhu","dbPasswd":"test","deleteFlg":"0","hasChild":true},{"resourceId":5,"resourceName":"测试DB111","resourceType":"01","dbLink":"jdbc:mysql://xxx.xxx.xxx.xxx:3306/test","dbUser":"test","dbPasswd":"xxxxxxxx","deleteFlg":"0","hasChild":false},{"resourceId":8,"resourceName":"测试DB","resourceType":"01","dbLink":"jdbc:mysql://xxx.xxx.xxx.xxx:3306/test","dbUser":"test","dbPasswd":"xxxxxxxx","deleteFlg":"0","hasChild":false},{"resourceId":9,"resourceName":"测试DB","resourceType":"01","dbLink":"jdbc:mysql://xxx.xxx.xxx.xxx:3306/test","dbUser":"test","dbPasswd":"xxxxxxxx","deleteFlg":"0","hasChild":false},{"resourceId":10,"resourceName":"测试DB","resourceType":"01","dbLink":"jdbc:mysql://xxx.xxx.xxx.xxx:3306/test","dbUser":"test","dbPasswd":"xxxxxxxx","deleteFlg":"0","hasChild":false},{"resourceId":11,"resourceName":"test","resourceType":"01","dbLink":"jdbc:mysql://192.168.120.156:3306/test","dbUser":"huhu","dbPasswd":"test","deleteFlg":"0","hasChild":false},{"resourceId":12,"resourceName":"测试DB111","resourceType":"01","dbLink":"jdbc:mysql://xxx.xxx.xxx.xxx:3306/test","dbUser":"test","dbPasswd":"xxxxxxxx","deleteFlg":"0","hasChild":false},{"resourceId":13,"resourceName":"901","resourceType":"01","dbLink":"1111","dbUser":"1111","dbPasswd":"1111","deleteFlg":"0","hasChild":false},{"resourceId":14,"resourceName":"902","resourceType":"01","dbLink":"111111","dbUser":"11111","dbPasswd":"111111","deleteFlg":"0","hasChild":false},{"resourceId":15,"resourceName":"903","resourceType":"01","dbLink":"111111","dbUser":"11111","dbPasswd":"111111","deleteFlg":"0","hasChild":false},{"resourceId":16,"resourceName":"904","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":17,"resourceName":"905","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":18,"resourceName":"906","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":19,"resourceName":"907","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":20,"resourceName":"908","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":21,"resourceName":"909","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":22,"resourceName":"910","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":23,"resourceName":"911","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":24,"resourceName":"912","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":25,"resourceName":"913","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":26,"resourceName":"914","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":27,"resourceName":"915","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false}];
-	                _cache = resourceJson;
-
-	                param.data = _cache;
-
-	                store.filterData(param);
+	            httpUtil.doGet("http://192.168.120.156:8081/resourceList?WithNoValid=0&ResourceFlg=1", function (result, resultStr) {
+	                var json = JSON.parse(resultStr);
+	                _cache = json;
+	                params.rows = _cache;
+	                params.columns = ["resourceName", "dbLink", "dbUser"];
+	                var filterData = navigationUtil.filterData(params);
+	                this.trigger(filterData);
 	            });
 	        } else {
 	            //不刷新数据，仅用当前数据过滤
-	            console.log("---------------do not refresh-----------------");
-	            param.data = _cache;
-	            store.filterData(param);
+	            // console.log("---------------do not refresh-----------------");
+	            params.rows = _cache;
+	            params.columns = ["resourceName", "dbLink", "dbUser"];
+	            var filterData = navigationUtil.filterData(params);
+	            this.trigger(filterData);
 	        }
 	    },
+	    /**
+	     * 删除资源
+	     * 
+	     * @param  {[type]} ids [多个资源ID可以用,分割]
+	     * @return {[type]}     [description]
+	     */
 	    onDelete: function onDelete(ids) {
-	        // console.log("delete Obj",ids);
-
-	        var idList = [];
-	        var idSplit = ids.split(',');
-	        for (var p in idSplit) {
-	            idList[p] = idSplit[p];
+	        httpUtil.doPost("http://192.168.120.156:8081/deleteResource", ids, function (result, resultStr) {
+	            this.deleteOk = result;
+	            if (result) {
+	                store.onSearch({
+	                    page: 0, //TODO 获取当前页码
+	                    querystring: "", //TODO 获取当前检索条件
+	                    refresh: true //是否后台刷新数据
+	                });
+	            } else {
+	                    message = e.toString();
+	                }
+	        });
+	    },
+	    connectTest: function connectTest() {
+	        //递归调用
+	        var forImmediate = function forImmediate(i, end) {
+	            if (i > end) {
+	                // console.log('==================调用递归完成 !');
+	            } else {
+	                    // console.log('==================调用递归中.....i='+i);
+	                    http.get("http://192.168.120.156:8081/testConnectById?ResourceId=" + newRows[i].resourceId, function (res) {
+	                        var json = "";
+	                        res.on('data', function (d) {
+	                            json += d;
+	                        });
+	                        res.on('end', function () {
+	                            newRows[i].connectStatus = json;
+	                            store.trigger({
+	                                rows: newRows,
+	                                rowsTotoal: filterRows.length,
+	                                deleteOk: false,
+	                                currentPage: params.page //TODO 得不到this.searchParams.currentPage
+	                            });
+	                            setImmediate(forImmediate, i + 1, end);
+	                            // });
+	                        }).on('error', function (e) {
+	                            console.error(e.toString());
+	                            //message = e.toString();
+	                        });
+	                    });
+	                }
+	        };
+	        var end = 0;
+	        for (var p in newRows) {
+	            end = p;
 	        }
+	        forImmediate(0, end);
+	    }
+	});
 
-	        var bodyString = JSON.stringify(idSplit);
-	        console.log("onDelete body" + bodyString);
+	module.exports = store;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(178).setImmediate))
+
+/***/ },
+/* 669 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	  http事件处理
+	 */
+
+	'use strict';
+
+	var http = __webpack_require__(670);
+	var url = __webpack_require__(700);
+	var testData = __webpack_require__(706);
+
+	var httpUtil = {
+
+	    /*
+	      http.get操作 
+	        url 地址
+	      callback(成功标志，返回内容)
+	     */
+	    doGet: function doGet(urlStr, callback) {
+	        //TODO 拼接分页条件
+	        http.get(urlStr, function (res) {
+	            var resultStr = "";
+	            res.on('data', function (d) {
+	                resultStr += d;
+	            });
+	            res.on('end', function () {
+	                // resultStr = testData.get({urlStr:urlStr}); //TODO For test
+	                callback(true, resultStr);
+	            });
+	        }).on('error', function (e) {
+	            //var resultStr = testData.get({urlStr:urlStr}); //TODO For test
+	            callback(true, resultStr);
+
+	            // console.error(e.toString());
+	            // callback(false,e.toString());
+	        });
+	    },
+	    /*
+	      http.post操作 
+	         */
+	    doPost: function doPost(urlStr, postStr, callback) {
+	        var bodyString = JSON.stringify(postStr);
+	        var urlObj = url.parse(urlStr);
 
 	        var options = {
-	            host: '192.168.120.156',
-	            port: 8081,
-	            path: '/deleteResource',
+	            host: urlObj.hostname,
+	            port: urlObj.port,
+	            path: urlObj.path,
 	            method: 'POST',
 	            headers: {
 	                'Content-Type': 'application/json',
@@ -78250,280 +95127,39 @@ webpackJsonp([1],[
 
 	        var req = http.request(options, function (res) {
 	            res.setEncoding('utf-8');
-	            var result;
+	            var resultStr;
 	            res.on('data', function (data) {
-	                result = data;
+	                resultStr += data;
 	            });
 
 	            res.on('end', function () {
 	                //这里接收的参数是字符串形式,需要格式化成json格式使用
-	                var resultObject = JSON.parse(result);
-	                console.log('-----resBody-----' + result);
-	                this.deleteOk = true;
-	                store.onSearch({ //todo for localtdev
-	                    page: 0,
-	                    querystring: "",
-	                    refresh: true //是否后台刷新数据
-	                });
+	                console.log('-----resBody-----' + resultStr);
+	                callback(true, resultStr);
 	            });
 	        }).on('error', function (e) {
 	            // TODO: handle error.
 	            console.log('-----error-------' + e.toString());
-	            message = e.toString();
-	            this.deleteOk = false;
-	            //TODO 刷新数据 ?
-	            console.log("-------onDelete----------this.currentPage--------" + this.currentPage);
-	            console.log("-------onDelete----------this.deleteOk-------" + this.deleteOk);
+	            callback(false, e.toString());
+	            // message = e.toString();
+	            // this.deleteOk = false;
 	        });
 	        req.write(bodyString);
 	        console.log('-----bodyString-------' + req);
 	        req.end();
-
-	        // this.deleteOk = true;
-	        // store.onSearch({//todo for localtdev
-	        //     page: 0,//TODO
-	        //     querystring: "",//TODO
-	        //     refresh: false //是否后台刷新数据
-	        // });
-	    },
-	    filterData: function filterData(params) {
-	        //TODO 抽取为共通
-	        console.log("------resourceSearch-------");
-	        this.searchParams.querystring = params.querystring || "";
-	        this.searchParams.currentPage = params.page || 0;
-	        var filterRows = tools.filterRowsByColumns({
-	            rows: params.data,
-	            querystring: this.searchParams.querystring,
-	            columns: ["resourceName", "dbLink", "dbUser"]
-	        });
-	        //console.log(filterRows.length);
-	        var newRows = tools.getNextPageRows(filterRows, this.searchParams.currentPage, pageSize);
-	        //console.log(newRows.length,filterRows.length);
-	        console.log("---------trigger-----------rowsTotoal:" + filterRows.length);
-	        console.log("---------trigger-----------deleteOk:" + this.deleteOk);
-	        console.log("---------trigger-----------currentPage:" + this.searchParams.currentPage);
-	        console.log("---------trigger-----------msg:" + message);
-	        //
-	        this.trigger({
-	            rows: newRows,
-	            rowsTotoal: filterRows.length,
-	            deleteOk: this.deleteOk,
-	            currentPage: this.searchParams.currentPage,
-	            msg: message
-	        });
-	        //递归调用
-	        var forImmediate = function forImmediate(i, end) {
-	            if (i > end) {
-	                console.log('==================调用递归完成 !');
-	            } else {
-	                console.log('==================调用递归中.....i=' + i);
-	                http.get("http://192.168.120.156:8081/testConnectById?ResourceId=" + newRows[i].resourceId, function (res) {
-	                    var json = "";
-	                    res.on('data', function (d) {
-	                        json += d;
-	                    });
-	                    res.on('end', function () {
-	                        // json = JSON.parse(json);
-	                        // callback(newRows[p].resourceId,json);
-	                        newRows[i].connectStatus = json;
-	                        store.trigger({
-	                            rows: newRows,
-	                            rowsTotoal: filterRows.length,
-	                            deleteOk: false,
-	                            currentPage: params.page //TODO 得不到this.searchParams.currentPage
-	                        });
-	                        setImmediate(forImmediate, i + 1, end);
-	                        // });
-	                    }).on('error', function (e) {
-	                        console.error(e.toString());
-	                        //message = e.toString();
-	                        newRows[i].connectStatus = e.toString();
-	                        store.trigger({
-	                            rows: newRows,
-	                            rowsTotoal: filterRows.length,
-	                            deleteOk: false,
-	                            currentPage: params.page //TODO 得不到this.searchParams.currentPage
-	                        });
-	                        setImmediate(forImmediate, i + 1, end);
-	                    });
-	                });
-	            }
-	        };
-	        var end = 0;
-	        for (var p in newRows) {
-	            end = p;
-	        }
-	        forImmediate(0, end);
-	        // this.deleteOk = false;
-	        message = null;
 	    }
-	});
-
-	module.exports = store;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(178).setImmediate))
-
-/***/ },
-/* 457 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-	  http事件处理
-	 */
-	'use strict';
-
-	var http = __webpack_require__(458);
-	var url = __webpack_require__(489);
-	var httpUtil = {
-
-	  /*
-	    根据url获取返回json
-	   */
-	  getJsonFrmUrl: function getJsonFrmUrl(urlStr) {
-	    console.log("getJsonFrmUrl--->" + urlStr);
-	    var json;
-	    var result;
-	    var async = __webpack_require__(495);
-
-	    var getResult = function getResult(callback) {
-
-	      var db = http.get(urlStr, function (res) {
-	        //console.log("statusCode: ", res.statusCode);
-	        //console.log("headers: ", res.headers);
-
-	        res.on('data', function (d) {
-	          // json += JSON.parse(d);
-	          json += JSON.parse(d);
-	        });
-	        res.on('end', function () {
-	          //获取到的数据
-	          //json = JSON.parse(json);
-
-	          console.log("getJsonFromUrl--->" + json.toString());
-	          var data = [];
-	          var i = 0;
-	          for (var p in json) {
-	            data[i] = json[p];
-	            i++;
-	            //console.log("for--->"+i+"-->"+p);
-	          }
-	          // console.log("data1--->"+data);
-
-	          callback(data); //返回结果
-	          // result = data;
-	          // return result;
-	        });
-	      }).on('error', function (e) {
-	        console.error(e);
-	      });
-	    };
-
-	    // TODO 回调返回数据
-	    getResult(function (ddd) {
-	      console.log("result1--->" + ddd);
-	    });
-
-	    // data.length = json.length;
-	    // console.log("result2--->"+result);
-	    //result;
-	    //
-	    //
-	    //-----------------------TODO 单独调试用 -------------------------------
-	    console.log('result---->' + result);
-	    if (_.isUndefined(result)) {
-	      var pathname = url.parse(urlStr).pathname;
-	      if (pathname == "/resourceList") {
-	        result = [{ "resourceId": 4, "resourceName": "测试DB", "resourceType": "01", "dbLink": "jdbc:mysql://192.168.120.156:3306/test", "dbUser": "huhu", "dbPasswd": "test", "deleteFlg": "0", "hasChild": "0" }, { "resourceId": 5, "resourceName": "测试DB", "resourceType": "01", "dbLink": "jdbc:mysql://xxx.xxx.xxx.xxx:3306/test", "dbUser": "test", "dbPasswd": "xxxxxxxx", "deleteFlg": "0", "hasChild": "0" }, { "resourceId": 6, "resourceName": "测试DB", "resourceType": "01", "dbLink": "jdbc:mysql://xxx.xxx.xxx.xxx:3306/test", "dbUser": "test", "dbPasswd": "xxxxxxxx", "deleteFlg": "0", "hasChild": "1" }, { "resourceId": 7, "resourceName": "测试DB", "resourceType": "02", "dbLink": "jdbc:mysql://xxx.xxx.xxx.xxx:3306/test", "dbUser": "test", "dbPasswd": "xxxxxxxx", "deleteFlg": "0", "hasChild": "0" }, { "resourceId": 8, "resourceName": "测试DB", "resourceType": "0", "dbLink": "jdbc:mysql://xxx.xxx.xxx.xxx:3306/test", "dbUser": "test", "dbPasswd": "xxxxxxxx", "deleteFlg": "0", "hasChild": "1" }, { "resourceId": 9, "resourceName": "测试DB", "resourceType": "0", "dbLink": "jdbc:mysql://xxx.xxx.xxx.xxx:3306/test", "dbUser": "test", "dbPasswd": "xxxxxxxx", "deleteFlg": "0", "hasChild": "0" }, { "resourceId": 10, "resourceName": "测试DB", "resourceType": "0", "dbLink": "jdbc:mysql://xxx.xxx.xxx.xxx:3306/test", "dbUser": "test", "dbPasswd": "xxxxxxxx", "deleteFlg": "0", "hasChild": "0" }];
-	      }
-	      if (pathname == "/resource") {
-	        result = { "resourceId": 4, "resourceName": "测试DB", "resourceType": "01", "dbLink": "jdbc:mysql://192.168.120.156:3306/test", "dbUser": "huhu", "dbPasswd": "test11111", "deleteFlg": "0" };
-	      }
-	    }
-
-	    // console.log('result---->'+result);
-	    return result;
-	  },
-
-	  /*
-	    发送json给指定url
-	   */
-	  postJsonToUrl: function postJsonToUrl(data, urlStr) {
-	    // data = {
-	    //         "resourceId":5,
-	    //        "resourceName":"测试DB111",
-	    //        "resourceType":"0",
-	    //        "dbLink":"jdbc:mysql://xxx.xxx.xxx.xxx:3306/test",
-	    //        "dbUser":"test",
-	    //        "dbPasswd":"xxxxxxxx",
-	    //        "deleteFlg":"0"};
-
-	    // urlStr = "http://192.168.120.156:8081/saveResource";
-
-	    // var bodyString = require("querystring").stringify(json1);
-	    // console.log("postJsonToUrl-->"+data.toString());
-	    //
-	    var result;
-
-	    var bodyString = JSON.stringify(data);
-	    console.log("start body" + bodyString);
-
-	    var headers = {
-	      // Accepts:'application/json',
-	      'Content-Type': 'application/json',
-	      'Content-Length': bodyString.length
-	    };
-
-	    var options = {
-	      host: '192.168.120.156',
-	      port: 8081,
-	      path: '/saveResource',
-	      method: 'POST',
-	      // dataType:'json',
-	      headers: headers
-	    };
-
-	    var req = http.request(options, function (res) {
-	      res.setEncoding('utf-8');
-
-	      var responseString = '';
-
-	      res.on('data', function (data) {
-	        responseString += data;
-	      });
-
-	      res.on('end', function () {
-	        //这里接收的参数是字符串形式,需要格式化成json格式使用
-	        var resultObject = JSON.parse(responseString);
-	        console.log('-----resBody-----', resultObject);
-	      });
-
-	      req.on('error', function (e) {
-	        // TODO: handle error.
-	        console.log('-----error-------', e);
-	      });
-	    });
-	    req.write(bodyString);
-	    console.log('-----bodyString-------', req);
-	    req.end();
-
-	    if (_.isUndefined(result)) {
-	      result = "success";
-	    }
-	    console.log("----------postJsonToUrl----result---------------" + result);
-	    return result;
-	  }
-
 	};
 
 	module.exports = httpUtil;
 
 /***/ },
-/* 458 */
+/* 670 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {var ClientRequest = __webpack_require__(459)
-	var extend = __webpack_require__(487)
-	var statusCodes = __webpack_require__(488)
-	var url = __webpack_require__(489)
+	/* WEBPACK VAR INJECTION */(function(global) {var ClientRequest = __webpack_require__(671)
+	var extend = __webpack_require__(698)
+	var statusCodes = __webpack_require__(699)
+	var url = __webpack_require__(700)
 
 	var http = exports
 
@@ -78602,14 +95238,14 @@ webpackJsonp([1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 459 */
+/* 671 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(Buffer, global, process) {var capability = __webpack_require__(464)
-	var inherits = __webpack_require__(465)
-	var response = __webpack_require__(466)
-	var stream = __webpack_require__(467)
-	var toArrayBuffer = __webpack_require__(486)
+	/* WEBPACK VAR INJECTION */(function(Buffer, global, process) {var capability = __webpack_require__(676)
+	var inherits = __webpack_require__(677)
+	var response = __webpack_require__(678)
+	var stream = __webpack_require__(679)
+	var toArrayBuffer = __webpack_require__(697)
 
 	var IncomingMessage = response.IncomingMessage
 	var rStates = response.readyStates
@@ -78900,10 +95536,10 @@ webpackJsonp([1],[
 		'via'
 	]
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(460).Buffer, (function() { return this; }()), __webpack_require__(180)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(672).Buffer, (function() { return this; }()), __webpack_require__(180)))
 
 /***/ },
-/* 460 */
+/* 672 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -78916,9 +95552,9 @@ webpackJsonp([1],[
 
 	'use strict'
 
-	var base64 = __webpack_require__(461)
-	var ieee754 = __webpack_require__(462)
-	var isArray = __webpack_require__(463)
+	var base64 = __webpack_require__(673)
+	var ieee754 = __webpack_require__(674)
+	var isArray = __webpack_require__(675)
 
 	exports.Buffer = Buffer
 	exports.SlowBuffer = SlowBuffer
@@ -80699,7 +97335,7 @@ webpackJsonp([1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 461 */
+/* 673 */
 /***/ function(module, exports) {
 
 	'use strict'
@@ -80819,7 +97455,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 462 */
+/* 674 */
 /***/ function(module, exports) {
 
 	exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -80909,7 +97545,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 463 */
+/* 675 */
 /***/ function(module, exports) {
 
 	var toString = {}.toString;
@@ -80920,7 +97556,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 464 */
+/* 676 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {exports.fetch = isFunction(global.fetch) && isFunction(global.ReadableStream)
@@ -80996,7 +97632,7 @@ webpackJsonp([1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 465 */
+/* 677 */
 /***/ function(module, exports) {
 
 	if (typeof Object.create === 'function') {
@@ -81025,12 +97661,12 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 466 */
+/* 678 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process, Buffer, global) {var capability = __webpack_require__(464)
-	var inherits = __webpack_require__(465)
-	var stream = __webpack_require__(467)
+	/* WEBPACK VAR INJECTION */(function(process, Buffer, global) {var capability = __webpack_require__(676)
+	var inherits = __webpack_require__(677)
+	var stream = __webpack_require__(679)
 
 	var rStates = exports.readyStates = {
 		UNSENT: 0,
@@ -81211,24 +97847,24 @@ webpackJsonp([1],[
 		}
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(180), __webpack_require__(460).Buffer, (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(180), __webpack_require__(672).Buffer, (function() { return this; }())))
 
 /***/ },
-/* 467 */
+/* 679 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {var Stream = (function (){
 	  try {
-	    return __webpack_require__(468); // hack to fix a circular dependency issue when used with browserify
+	    return __webpack_require__(680); // hack to fix a circular dependency issue when used with browserify
 	  } catch(_){}
 	}());
-	exports = module.exports = __webpack_require__(477);
+	exports = module.exports = __webpack_require__(688);
 	exports.Stream = Stream || exports;
 	exports.Readable = exports;
-	exports.Writable = __webpack_require__(471);
-	exports.Duplex = __webpack_require__(476);
-	exports.Transform = __webpack_require__(483);
-	exports.PassThrough = __webpack_require__(485);
+	exports.Writable = __webpack_require__(682);
+	exports.Duplex = __webpack_require__(687);
+	exports.Transform = __webpack_require__(694);
+	exports.PassThrough = __webpack_require__(696);
 
 	if (!process.browser && process.env.READABLE_STREAM === 'disable' && Stream) {
 	  module.exports = Stream;
@@ -81237,7 +97873,7 @@ webpackJsonp([1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(180)))
 
 /***/ },
-/* 468 */
+/* 680 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -81263,15 +97899,15 @@ webpackJsonp([1],[
 
 	module.exports = Stream;
 
-	var EE = __webpack_require__(469).EventEmitter;
-	var inherits = __webpack_require__(465);
+	var EE = __webpack_require__(640).EventEmitter;
+	var inherits = __webpack_require__(677);
 
 	inherits(Stream, EE);
-	Stream.Readable = __webpack_require__(467);
-	Stream.Writable = __webpack_require__(470);
-	Stream.Duplex = __webpack_require__(481);
-	Stream.Transform = __webpack_require__(482);
-	Stream.PassThrough = __webpack_require__(484);
+	Stream.Readable = __webpack_require__(679);
+	Stream.Writable = __webpack_require__(681);
+	Stream.Duplex = __webpack_require__(692);
+	Stream.Transform = __webpack_require__(693);
+	Stream.PassThrough = __webpack_require__(695);
 
 	// Backwards-compat with node 0.4.x
 	Stream.Stream = Stream;
@@ -81370,322 +98006,14 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 469 */
-/***/ function(module, exports) {
-
-	// Copyright Joyent, Inc. and other Node contributors.
-	//
-	// Permission is hereby granted, free of charge, to any person obtaining a
-	// copy of this software and associated documentation files (the
-	// "Software"), to deal in the Software without restriction, including
-	// without limitation the rights to use, copy, modify, merge, publish,
-	// distribute, sublicense, and/or sell copies of the Software, and to permit
-	// persons to whom the Software is furnished to do so, subject to the
-	// following conditions:
-	//
-	// The above copyright notice and this permission notice shall be included
-	// in all copies or substantial portions of the Software.
-	//
-	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-	// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-	function EventEmitter() {
-	  this._events = this._events || {};
-	  this._maxListeners = this._maxListeners || undefined;
-	}
-	module.exports = EventEmitter;
-
-	// Backwards-compat with node 0.10.x
-	EventEmitter.EventEmitter = EventEmitter;
-
-	EventEmitter.prototype._events = undefined;
-	EventEmitter.prototype._maxListeners = undefined;
-
-	// By default EventEmitters will print a warning if more than 10 listeners are
-	// added to it. This is a useful default which helps finding memory leaks.
-	EventEmitter.defaultMaxListeners = 10;
-
-	// Obviously not all Emitters should be limited to 10. This function allows
-	// that to be increased. Set to zero for unlimited.
-	EventEmitter.prototype.setMaxListeners = function(n) {
-	  if (!isNumber(n) || n < 0 || isNaN(n))
-	    throw TypeError('n must be a positive number');
-	  this._maxListeners = n;
-	  return this;
-	};
-
-	EventEmitter.prototype.emit = function(type) {
-	  var er, handler, len, args, i, listeners;
-
-	  if (!this._events)
-	    this._events = {};
-
-	  // If there is no 'error' event listener then throw.
-	  if (type === 'error') {
-	    if (!this._events.error ||
-	        (isObject(this._events.error) && !this._events.error.length)) {
-	      er = arguments[1];
-	      if (er instanceof Error) {
-	        throw er; // Unhandled 'error' event
-	      } else {
-	        // At least give some kind of context to the user
-	        var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
-	        err.context = er;
-	        throw err;
-	      }
-	    }
-	  }
-
-	  handler = this._events[type];
-
-	  if (isUndefined(handler))
-	    return false;
-
-	  if (isFunction(handler)) {
-	    switch (arguments.length) {
-	      // fast cases
-	      case 1:
-	        handler.call(this);
-	        break;
-	      case 2:
-	        handler.call(this, arguments[1]);
-	        break;
-	      case 3:
-	        handler.call(this, arguments[1], arguments[2]);
-	        break;
-	      // slower
-	      default:
-	        args = Array.prototype.slice.call(arguments, 1);
-	        handler.apply(this, args);
-	    }
-	  } else if (isObject(handler)) {
-	    args = Array.prototype.slice.call(arguments, 1);
-	    listeners = handler.slice();
-	    len = listeners.length;
-	    for (i = 0; i < len; i++)
-	      listeners[i].apply(this, args);
-	  }
-
-	  return true;
-	};
-
-	EventEmitter.prototype.addListener = function(type, listener) {
-	  var m;
-
-	  if (!isFunction(listener))
-	    throw TypeError('listener must be a function');
-
-	  if (!this._events)
-	    this._events = {};
-
-	  // To avoid recursion in the case that type === "newListener"! Before
-	  // adding it to the listeners, first emit "newListener".
-	  if (this._events.newListener)
-	    this.emit('newListener', type,
-	              isFunction(listener.listener) ?
-	              listener.listener : listener);
-
-	  if (!this._events[type])
-	    // Optimize the case of one listener. Don't need the extra array object.
-	    this._events[type] = listener;
-	  else if (isObject(this._events[type]))
-	    // If we've already got an array, just append.
-	    this._events[type].push(listener);
-	  else
-	    // Adding the second element, need to change to array.
-	    this._events[type] = [this._events[type], listener];
-
-	  // Check for listener leak
-	  if (isObject(this._events[type]) && !this._events[type].warned) {
-	    if (!isUndefined(this._maxListeners)) {
-	      m = this._maxListeners;
-	    } else {
-	      m = EventEmitter.defaultMaxListeners;
-	    }
-
-	    if (m && m > 0 && this._events[type].length > m) {
-	      this._events[type].warned = true;
-	      console.error('(node) warning: possible EventEmitter memory ' +
-	                    'leak detected. %d listeners added. ' +
-	                    'Use emitter.setMaxListeners() to increase limit.',
-	                    this._events[type].length);
-	      if (typeof console.trace === 'function') {
-	        // not supported in IE 10
-	        console.trace();
-	      }
-	    }
-	  }
-
-	  return this;
-	};
-
-	EventEmitter.prototype.on = EventEmitter.prototype.addListener;
-
-	EventEmitter.prototype.once = function(type, listener) {
-	  if (!isFunction(listener))
-	    throw TypeError('listener must be a function');
-
-	  var fired = false;
-
-	  function g() {
-	    this.removeListener(type, g);
-
-	    if (!fired) {
-	      fired = true;
-	      listener.apply(this, arguments);
-	    }
-	  }
-
-	  g.listener = listener;
-	  this.on(type, g);
-
-	  return this;
-	};
-
-	// emits a 'removeListener' event iff the listener was removed
-	EventEmitter.prototype.removeListener = function(type, listener) {
-	  var list, position, length, i;
-
-	  if (!isFunction(listener))
-	    throw TypeError('listener must be a function');
-
-	  if (!this._events || !this._events[type])
-	    return this;
-
-	  list = this._events[type];
-	  length = list.length;
-	  position = -1;
-
-	  if (list === listener ||
-	      (isFunction(list.listener) && list.listener === listener)) {
-	    delete this._events[type];
-	    if (this._events.removeListener)
-	      this.emit('removeListener', type, listener);
-
-	  } else if (isObject(list)) {
-	    for (i = length; i-- > 0;) {
-	      if (list[i] === listener ||
-	          (list[i].listener && list[i].listener === listener)) {
-	        position = i;
-	        break;
-	      }
-	    }
-
-	    if (position < 0)
-	      return this;
-
-	    if (list.length === 1) {
-	      list.length = 0;
-	      delete this._events[type];
-	    } else {
-	      list.splice(position, 1);
-	    }
-
-	    if (this._events.removeListener)
-	      this.emit('removeListener', type, listener);
-	  }
-
-	  return this;
-	};
-
-	EventEmitter.prototype.removeAllListeners = function(type) {
-	  var key, listeners;
-
-	  if (!this._events)
-	    return this;
-
-	  // not listening for removeListener, no need to emit
-	  if (!this._events.removeListener) {
-	    if (arguments.length === 0)
-	      this._events = {};
-	    else if (this._events[type])
-	      delete this._events[type];
-	    return this;
-	  }
-
-	  // emit removeListener for all listeners on all events
-	  if (arguments.length === 0) {
-	    for (key in this._events) {
-	      if (key === 'removeListener') continue;
-	      this.removeAllListeners(key);
-	    }
-	    this.removeAllListeners('removeListener');
-	    this._events = {};
-	    return this;
-	  }
-
-	  listeners = this._events[type];
-
-	  if (isFunction(listeners)) {
-	    this.removeListener(type, listeners);
-	  } else if (listeners) {
-	    // LIFO order
-	    while (listeners.length)
-	      this.removeListener(type, listeners[listeners.length - 1]);
-	  }
-	  delete this._events[type];
-
-	  return this;
-	};
-
-	EventEmitter.prototype.listeners = function(type) {
-	  var ret;
-	  if (!this._events || !this._events[type])
-	    ret = [];
-	  else if (isFunction(this._events[type]))
-	    ret = [this._events[type]];
-	  else
-	    ret = this._events[type].slice();
-	  return ret;
-	};
-
-	EventEmitter.prototype.listenerCount = function(type) {
-	  if (this._events) {
-	    var evlistener = this._events[type];
-
-	    if (isFunction(evlistener))
-	      return 1;
-	    else if (evlistener)
-	      return evlistener.length;
-	  }
-	  return 0;
-	};
-
-	EventEmitter.listenerCount = function(emitter, type) {
-	  return emitter.listenerCount(type);
-	};
-
-	function isFunction(arg) {
-	  return typeof arg === 'function';
-	}
-
-	function isNumber(arg) {
-	  return typeof arg === 'number';
-	}
-
-	function isObject(arg) {
-	  return typeof arg === 'object' && arg !== null;
-	}
-
-	function isUndefined(arg) {
-	  return arg === void 0;
-	}
-
-
-/***/ },
-/* 470 */
+/* 681 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(471)
+	module.exports = __webpack_require__(682)
 
 
 /***/ },
-/* 471 */
+/* 682 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process, setImmediate) {// A bit simpler than readable streams.
@@ -81697,7 +98025,7 @@ webpackJsonp([1],[
 	module.exports = Writable;
 
 	/*<replacement>*/
-	var processNextTick = __webpack_require__(472);
+	var processNextTick = __webpack_require__(683);
 	/*</replacement>*/
 
 	/*<replacement>*/
@@ -81711,13 +98039,13 @@ webpackJsonp([1],[
 	Writable.WritableState = WritableState;
 
 	/*<replacement>*/
-	var util = __webpack_require__(473);
-	util.inherits = __webpack_require__(465);
+	var util = __webpack_require__(684);
+	util.inherits = __webpack_require__(677);
 	/*</replacement>*/
 
 	/*<replacement>*/
 	var internalUtil = {
-	  deprecate: __webpack_require__(474)
+	  deprecate: __webpack_require__(685)
 	};
 	/*</replacement>*/
 
@@ -81725,16 +98053,16 @@ webpackJsonp([1],[
 	var Stream;
 	(function () {
 	  try {
-	    Stream = __webpack_require__(468);
+	    Stream = __webpack_require__(680);
 	  } catch (_) {} finally {
-	    if (!Stream) Stream = __webpack_require__(469).EventEmitter;
+	    if (!Stream) Stream = __webpack_require__(640).EventEmitter;
 	  }
 	})();
 	/*</replacement>*/
 
-	var Buffer = __webpack_require__(460).Buffer;
+	var Buffer = __webpack_require__(672).Buffer;
 	/*<replacement>*/
-	var bufferShim = __webpack_require__(475);
+	var bufferShim = __webpack_require__(686);
 	/*</replacement>*/
 
 	util.inherits(Writable, Stream);
@@ -81749,7 +98077,7 @@ webpackJsonp([1],[
 	}
 
 	function WritableState(options, stream) {
-	  Duplex = Duplex || __webpack_require__(476);
+	  Duplex = Duplex || __webpack_require__(687);
 
 	  options = options || {};
 
@@ -81883,7 +98211,7 @@ webpackJsonp([1],[
 	}
 
 	function Writable(options) {
-	  Duplex = Duplex || __webpack_require__(476);
+	  Duplex = Duplex || __webpack_require__(687);
 
 	  // Writable ctor is applied to Duplexes, too.
 	  // `realHasInstance` is necessary because using plain `instanceof`
@@ -82242,7 +98570,7 @@ webpackJsonp([1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(180), __webpack_require__(178).setImmediate))
 
 /***/ },
-/* 472 */
+/* 683 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -82292,7 +98620,7 @@ webpackJsonp([1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(180)))
 
 /***/ },
-/* 473 */
+/* 684 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {// Copyright Joyent, Inc. and other Node contributors.
@@ -82403,10 +98731,10 @@ webpackJsonp([1],[
 	  return Object.prototype.toString.call(o);
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(460).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(672).Buffer))
 
 /***/ },
-/* 474 */
+/* 685 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -82480,12 +98808,12 @@ webpackJsonp([1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 475 */
+/* 686 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
 
-	var buffer = __webpack_require__(460);
+	var buffer = __webpack_require__(672);
 	var Buffer = buffer.Buffer;
 	var SlowBuffer = buffer.SlowBuffer;
 	var MAX_LEN = buffer.kMaxLength || 2147483647;
@@ -82595,7 +98923,7 @@ webpackJsonp([1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 476 */
+/* 687 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// a duplex stream is just a stream that is both readable and writable.
@@ -82618,16 +98946,16 @@ webpackJsonp([1],[
 	module.exports = Duplex;
 
 	/*<replacement>*/
-	var processNextTick = __webpack_require__(472);
+	var processNextTick = __webpack_require__(683);
 	/*</replacement>*/
 
 	/*<replacement>*/
-	var util = __webpack_require__(473);
-	util.inherits = __webpack_require__(465);
+	var util = __webpack_require__(684);
+	util.inherits = __webpack_require__(677);
 	/*</replacement>*/
 
-	var Readable = __webpack_require__(477);
-	var Writable = __webpack_require__(471);
+	var Readable = __webpack_require__(688);
+	var Writable = __webpack_require__(682);
 
 	util.inherits(Duplex, Readable);
 
@@ -82675,7 +99003,7 @@ webpackJsonp([1],[
 	}
 
 /***/ },
-/* 477 */
+/* 688 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -82683,11 +99011,11 @@ webpackJsonp([1],[
 	module.exports = Readable;
 
 	/*<replacement>*/
-	var processNextTick = __webpack_require__(472);
+	var processNextTick = __webpack_require__(683);
 	/*</replacement>*/
 
 	/*<replacement>*/
-	var isArray = __webpack_require__(463);
+	var isArray = __webpack_require__(675);
 	/*</replacement>*/
 
 	/*<replacement>*/
@@ -82697,7 +99025,7 @@ webpackJsonp([1],[
 	Readable.ReadableState = ReadableState;
 
 	/*<replacement>*/
-	var EE = __webpack_require__(469).EventEmitter;
+	var EE = __webpack_require__(640).EventEmitter;
 
 	var EElistenerCount = function (emitter, type) {
 	  return emitter.listeners(type).length;
@@ -82708,25 +99036,25 @@ webpackJsonp([1],[
 	var Stream;
 	(function () {
 	  try {
-	    Stream = __webpack_require__(468);
+	    Stream = __webpack_require__(680);
 	  } catch (_) {} finally {
-	    if (!Stream) Stream = __webpack_require__(469).EventEmitter;
+	    if (!Stream) Stream = __webpack_require__(640).EventEmitter;
 	  }
 	})();
 	/*</replacement>*/
 
-	var Buffer = __webpack_require__(460).Buffer;
+	var Buffer = __webpack_require__(672).Buffer;
 	/*<replacement>*/
-	var bufferShim = __webpack_require__(475);
+	var bufferShim = __webpack_require__(686);
 	/*</replacement>*/
 
 	/*<replacement>*/
-	var util = __webpack_require__(473);
-	util.inherits = __webpack_require__(465);
+	var util = __webpack_require__(684);
+	util.inherits = __webpack_require__(677);
 	/*</replacement>*/
 
 	/*<replacement>*/
-	var debugUtil = __webpack_require__(478);
+	var debugUtil = __webpack_require__(689);
 	var debug = void 0;
 	if (debugUtil && debugUtil.debuglog) {
 	  debug = debugUtil.debuglog('stream');
@@ -82735,7 +99063,7 @@ webpackJsonp([1],[
 	}
 	/*</replacement>*/
 
-	var BufferList = __webpack_require__(479);
+	var BufferList = __webpack_require__(690);
 	var StringDecoder;
 
 	util.inherits(Readable, Stream);
@@ -82755,7 +99083,7 @@ webpackJsonp([1],[
 	}
 
 	function ReadableState(options, stream) {
-	  Duplex = Duplex || __webpack_require__(476);
+	  Duplex = Duplex || __webpack_require__(687);
 
 	  options = options || {};
 
@@ -82817,14 +99145,14 @@ webpackJsonp([1],[
 	  this.decoder = null;
 	  this.encoding = null;
 	  if (options.encoding) {
-	    if (!StringDecoder) StringDecoder = __webpack_require__(480).StringDecoder;
+	    if (!StringDecoder) StringDecoder = __webpack_require__(691).StringDecoder;
 	    this.decoder = new StringDecoder(options.encoding);
 	    this.encoding = options.encoding;
 	  }
 	}
 
 	function Readable(options) {
-	  Duplex = Duplex || __webpack_require__(476);
+	  Duplex = Duplex || __webpack_require__(687);
 
 	  if (!(this instanceof Readable)) return new Readable(options);
 
@@ -82927,7 +99255,7 @@ webpackJsonp([1],[
 
 	// backwards compatibility.
 	Readable.prototype.setEncoding = function (enc) {
-	  if (!StringDecoder) StringDecoder = __webpack_require__(480).StringDecoder;
+	  if (!StringDecoder) StringDecoder = __webpack_require__(691).StringDecoder;
 	  this._readableState.decoder = new StringDecoder(enc);
 	  this._readableState.encoding = enc;
 	  return this;
@@ -83622,20 +99950,20 @@ webpackJsonp([1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(180)))
 
 /***/ },
-/* 478 */
+/* 689 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 479 */
+/* 690 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Buffer = __webpack_require__(460).Buffer;
+	var Buffer = __webpack_require__(672).Buffer;
 	/*<replacement>*/
-	var bufferShim = __webpack_require__(475);
+	var bufferShim = __webpack_require__(686);
 	/*</replacement>*/
 
 	module.exports = BufferList;
@@ -83697,7 +100025,7 @@ webpackJsonp([1],[
 	};
 
 /***/ },
-/* 480 */
+/* 691 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -83721,7 +100049,7 @@ webpackJsonp([1],[
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var Buffer = __webpack_require__(460).Buffer;
+	var Buffer = __webpack_require__(672).Buffer;
 
 	var isBufferEncoding = Buffer.isEncoding
 	  || function(encoding) {
@@ -83924,21 +100252,21 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 481 */
+/* 692 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(476)
+	module.exports = __webpack_require__(687)
 
 
 /***/ },
-/* 482 */
+/* 693 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(483)
+	module.exports = __webpack_require__(694)
 
 
 /***/ },
-/* 483 */
+/* 694 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// a transform stream is a readable/writable stream where you do
@@ -83987,11 +100315,11 @@ webpackJsonp([1],[
 
 	module.exports = Transform;
 
-	var Duplex = __webpack_require__(476);
+	var Duplex = __webpack_require__(687);
 
 	/*<replacement>*/
-	var util = __webpack_require__(473);
-	util.inherits = __webpack_require__(465);
+	var util = __webpack_require__(684);
+	util.inherits = __webpack_require__(677);
 	/*</replacement>*/
 
 	util.inherits(Transform, Duplex);
@@ -84125,14 +100453,14 @@ webpackJsonp([1],[
 	}
 
 /***/ },
-/* 484 */
+/* 695 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(485)
+	module.exports = __webpack_require__(696)
 
 
 /***/ },
-/* 485 */
+/* 696 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// a passthrough stream.
@@ -84143,11 +100471,11 @@ webpackJsonp([1],[
 
 	module.exports = PassThrough;
 
-	var Transform = __webpack_require__(483);
+	var Transform = __webpack_require__(694);
 
 	/*<replacement>*/
-	var util = __webpack_require__(473);
-	util.inherits = __webpack_require__(465);
+	var util = __webpack_require__(684);
+	util.inherits = __webpack_require__(677);
 	/*</replacement>*/
 
 	util.inherits(PassThrough, Transform);
@@ -84163,10 +100491,10 @@ webpackJsonp([1],[
 	};
 
 /***/ },
-/* 486 */
+/* 697 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Buffer = __webpack_require__(460).Buffer
+	var Buffer = __webpack_require__(672).Buffer
 
 	module.exports = function (buf) {
 		// If the buffer is backed by a Uint8Array, a faster version will work
@@ -84196,7 +100524,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 487 */
+/* 698 */
 /***/ function(module, exports) {
 
 	module.exports = extend
@@ -84221,7 +100549,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 488 */
+/* 699 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -84291,7 +100619,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 489 */
+/* 700 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -84317,8 +100645,8 @@ webpackJsonp([1],[
 
 	'use strict';
 
-	var punycode = __webpack_require__(490);
-	var util = __webpack_require__(491);
+	var punycode = __webpack_require__(701);
+	var util = __webpack_require__(702);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -84393,7 +100721,7 @@ webpackJsonp([1],[
 	      'gopher:': true,
 	      'file:': true
 	    },
-	    querystring = __webpack_require__(492);
+	    querystring = __webpack_require__(703);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && util.isObject(url) && url instanceof Url) return url;
@@ -85029,7 +101357,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 490 */
+/* 701 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/punycode v1.3.2 by @mathias */
@@ -85564,7 +101892,7 @@ webpackJsonp([1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(342)(module), (function() { return this; }())))
 
 /***/ },
-/* 491 */
+/* 702 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -85586,17 +101914,17 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 492 */
+/* 703 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(493);
-	exports.encode = exports.stringify = __webpack_require__(494);
+	exports.decode = exports.parse = __webpack_require__(704);
+	exports.encode = exports.stringify = __webpack_require__(705);
 
 
 /***/ },
-/* 493 */
+/* 704 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -85682,7 +102010,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 494 */
+/* 705 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -85752,1279 +102080,149 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 495 */
-/***/ function(module, exports, __webpack_require__) {
+/* 706 */
+/***/ function(module, exports) {
 
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global, setImmediate, process) {/*!
-	 * async
-	 * https://github.com/caolan/async
-	 *
-	 * Copyright 2010-2014 Caolan McMahon
-	 * Released under the MIT license
+	/**
+	 * 根据条件返回对应的testData
 	 */
-	(function () {
 
-	    var async = {};
-	    function noop() {}
-	    function identity(v) {
-	        return v;
-	    }
-	    function toBool(v) {
-	        return !!v;
-	    }
-	    function notId(v) {
-	        return !v;
-	    }
+	"use strict";
 
-	    // global on the server, window in the browser
-	    var previous_async;
+	var testData = {
 
-	    // Establish the root object, `window` (`self`) in the browser, `global`
-	    // on the server, or `this` in some virtual machines. We use `self`
-	    // instead of `window` for `WebWorker` support.
-	    var root = typeof self === 'object' && self.self === self && self ||
-	            typeof global === 'object' && global.global === global && global ||
-	            this;
+	    get: function get(params) {
+	        var urlStr = params.urlStr;
 
-	    if (root != null) {
-	        previous_async = root.async;
-	    }
-
-	    async.noConflict = function () {
-	        root.async = previous_async;
-	        return async;
-	    };
-
-	    function only_once(fn) {
-	        return function() {
-	            if (fn === null) throw new Error("Callback was already called.");
-	            fn.apply(this, arguments);
-	            fn = null;
-	        };
-	    }
-
-	    function _once(fn) {
-	        return function() {
-	            if (fn === null) return;
-	            fn.apply(this, arguments);
-	            fn = null;
-	        };
-	    }
-
-	    //// cross-browser compatiblity functions ////
-
-	    var _toString = Object.prototype.toString;
-
-	    var _isArray = Array.isArray || function (obj) {
-	        return _toString.call(obj) === '[object Array]';
-	    };
-
-	    // Ported from underscore.js isObject
-	    var _isObject = function(obj) {
-	        var type = typeof obj;
-	        return type === 'function' || type === 'object' && !!obj;
-	    };
-
-	    function _isArrayLike(arr) {
-	        return _isArray(arr) || (
-	            // has a positive integer length property
-	            typeof arr.length === "number" &&
-	            arr.length >= 0 &&
-	            arr.length % 1 === 0
-	        );
-	    }
-
-	    function _arrayEach(arr, iterator) {
-	        var index = -1,
-	            length = arr.length;
-
-	        while (++index < length) {
-	            iterator(arr[index], index, arr);
+	        if (urlStr === "http://192.168.120.156:8081/resourceList?WithNoValid=0&ResourceFlg=1") {
+	            return [{ "resourceId": 4, "resourceName": "测试DB20170324", "resourceType": "01", "dbLink": "jdbc:mysql://192.168.120.156:3306/test", "dbUser": "huhu", "dbPasswd": "test", "deleteFlg": "0", "hasChild": true }, { "resourceId": 5, "resourceName": "测试DB111", "resourceType": "01", "dbLink": "jdbc:mysql://xxx.xxx.xxx.xxx:3306/test", "dbUser": "test", "dbPasswd": "xxxxxxxx", "deleteFlg": "0", "hasChild": false }, { "resourceId": 8, "resourceName": "测试DB", "resourceType": "01", "dbLink": "jdbc:mysql://xxx.xxx.xxx.xxx:3306/test", "dbUser": "test", "dbPasswd": "xxxxxxxx", "deleteFlg": "0", "hasChild": false }, { "resourceId": 9, "resourceName": "测试DB", "resourceType": "01", "dbLink": "jdbc:mysql://xxx.xxx.xxx.xxx:3306/test", "dbUser": "test", "dbPasswd": "xxxxxxxx", "deleteFlg": "0", "hasChild": false }, { "resourceId": 10, "resourceName": "测试DB", "resourceType": "01", "dbLink": "jdbc:mysql://xxx.xxx.xxx.xxx:3306/test", "dbUser": "test", "dbPasswd": "xxxxxxxx", "deleteFlg": "0", "hasChild": false }, { "resourceId": 11, "resourceName": "test", "resourceType": "01", "dbLink": "jdbc:mysql://192.168.120.156:3306/test", "dbUser": "huhu", "dbPasswd": "test", "deleteFlg": "0", "hasChild": false }, { "resourceId": 12, "resourceName": "测试DB111", "resourceType": "01", "dbLink": "jdbc:mysql://xxx.xxx.xxx.xxx:3306/test", "dbUser": "test", "dbPasswd": "xxxxxxxx", "deleteFlg": "0", "hasChild": false }, { "resourceId": 13, "resourceName": "901", "resourceType": "01", "dbLink": "1111", "dbUser": "1111", "dbPasswd": "1111", "deleteFlg": "0", "hasChild": false }];
 	        }
 	    }
+	};
 
-	    function _map(arr, iterator) {
-	        var index = -1,
-	            length = arr.length,
-	            result = Array(length);
-
-	        while (++index < length) {
-	            result[index] = iterator(arr[index], index, arr);
-	        }
-	        return result;
-	    }
-
-	    function _range(count) {
-	        return _map(Array(count), function (v, i) { return i; });
-	    }
-
-	    function _reduce(arr, iterator, memo) {
-	        _arrayEach(arr, function (x, i, a) {
-	            memo = iterator(memo, x, i, a);
-	        });
-	        return memo;
-	    }
-
-	    function _forEachOf(object, iterator) {
-	        _arrayEach(_keys(object), function (key) {
-	            iterator(object[key], key);
-	        });
-	    }
-
-	    function _indexOf(arr, item) {
-	        for (var i = 0; i < arr.length; i++) {
-	            if (arr[i] === item) return i;
-	        }
-	        return -1;
-	    }
-
-	    var _keys = Object.keys || function (obj) {
-	        var keys = [];
-	        for (var k in obj) {
-	            if (obj.hasOwnProperty(k)) {
-	                keys.push(k);
-	            }
-	        }
-	        return keys;
-	    };
-
-	    function _keyIterator(coll) {
-	        var i = -1;
-	        var len;
-	        var keys;
-	        if (_isArrayLike(coll)) {
-	            len = coll.length;
-	            return function next() {
-	                i++;
-	                return i < len ? i : null;
-	            };
-	        } else {
-	            keys = _keys(coll);
-	            len = keys.length;
-	            return function next() {
-	                i++;
-	                return i < len ? keys[i] : null;
-	            };
-	        }
-	    }
-
-	    // Similar to ES6's rest param (http://ariya.ofilabs.com/2013/03/es6-and-rest-parameter.html)
-	    // This accumulates the arguments passed into an array, after a given index.
-	    // From underscore.js (https://github.com/jashkenas/underscore/pull/2140).
-	    function _restParam(func, startIndex) {
-	        startIndex = startIndex == null ? func.length - 1 : +startIndex;
-	        return function() {
-	            var length = Math.max(arguments.length - startIndex, 0);
-	            var rest = Array(length);
-	            for (var index = 0; index < length; index++) {
-	                rest[index] = arguments[index + startIndex];
-	            }
-	            switch (startIndex) {
-	                case 0: return func.call(this, rest);
-	                case 1: return func.call(this, arguments[0], rest);
-	            }
-	            // Currently unused but handle cases outside of the switch statement:
-	            // var args = Array(startIndex + 1);
-	            // for (index = 0; index < startIndex; index++) {
-	            //     args[index] = arguments[index];
-	            // }
-	            // args[startIndex] = rest;
-	            // return func.apply(this, args);
-	        };
-	    }
-
-	    function _withoutIndex(iterator) {
-	        return function (value, index, callback) {
-	            return iterator(value, callback);
-	        };
-	    }
-
-	    //// exported async module functions ////
-
-	    //// nextTick implementation with browser-compatible fallback ////
-
-	    // capture the global reference to guard against fakeTimer mocks
-	    var _setImmediate = typeof setImmediate === 'function' && setImmediate;
-
-	    var _delay = _setImmediate ? function(fn) {
-	        // not a direct alias for IE10 compatibility
-	        _setImmediate(fn);
-	    } : function(fn) {
-	        setTimeout(fn, 0);
-	    };
-
-	    if (typeof process === 'object' && typeof process.nextTick === 'function') {
-	        async.nextTick = process.nextTick;
-	    } else {
-	        async.nextTick = _delay;
-	    }
-	    async.setImmediate = _setImmediate ? _delay : async.nextTick;
-
-
-	    async.forEach =
-	    async.each = function (arr, iterator, callback) {
-	        return async.eachOf(arr, _withoutIndex(iterator), callback);
-	    };
-
-	    async.forEachSeries =
-	    async.eachSeries = function (arr, iterator, callback) {
-	        return async.eachOfSeries(arr, _withoutIndex(iterator), callback);
-	    };
-
-
-	    async.forEachLimit =
-	    async.eachLimit = function (arr, limit, iterator, callback) {
-	        return _eachOfLimit(limit)(arr, _withoutIndex(iterator), callback);
-	    };
-
-	    async.forEachOf =
-	    async.eachOf = function (object, iterator, callback) {
-	        callback = _once(callback || noop);
-	        object = object || [];
-
-	        var iter = _keyIterator(object);
-	        var key, completed = 0;
-
-	        while ((key = iter()) != null) {
-	            completed += 1;
-	            iterator(object[key], key, only_once(done));
-	        }
-
-	        if (completed === 0) callback(null);
-
-	        function done(err) {
-	            completed--;
-	            if (err) {
-	                callback(err);
-	            }
-	            // Check key is null in case iterator isn't exhausted
-	            // and done resolved synchronously.
-	            else if (key === null && completed <= 0) {
-	                callback(null);
-	            }
-	        }
-	    };
-
-	    async.forEachOfSeries =
-	    async.eachOfSeries = function (obj, iterator, callback) {
-	        callback = _once(callback || noop);
-	        obj = obj || [];
-	        var nextKey = _keyIterator(obj);
-	        var key = nextKey();
-	        function iterate() {
-	            var sync = true;
-	            if (key === null) {
-	                return callback(null);
-	            }
-	            iterator(obj[key], key, only_once(function (err) {
-	                if (err) {
-	                    callback(err);
-	                }
-	                else {
-	                    key = nextKey();
-	                    if (key === null) {
-	                        return callback(null);
-	                    } else {
-	                        if (sync) {
-	                            async.setImmediate(iterate);
-	                        } else {
-	                            iterate();
-	                        }
-	                    }
-	                }
-	            }));
-	            sync = false;
-	        }
-	        iterate();
-	    };
-
-
-
-	    async.forEachOfLimit =
-	    async.eachOfLimit = function (obj, limit, iterator, callback) {
-	        _eachOfLimit(limit)(obj, iterator, callback);
-	    };
-
-	    function _eachOfLimit(limit) {
-
-	        return function (obj, iterator, callback) {
-	            callback = _once(callback || noop);
-	            obj = obj || [];
-	            var nextKey = _keyIterator(obj);
-	            if (limit <= 0) {
-	                return callback(null);
-	            }
-	            var done = false;
-	            var running = 0;
-	            var errored = false;
-
-	            (function replenish () {
-	                if (done && running <= 0) {
-	                    return callback(null);
-	                }
-
-	                while (running < limit && !errored) {
-	                    var key = nextKey();
-	                    if (key === null) {
-	                        done = true;
-	                        if (running <= 0) {
-	                            callback(null);
-	                        }
-	                        return;
-	                    }
-	                    running += 1;
-	                    iterator(obj[key], key, only_once(function (err) {
-	                        running -= 1;
-	                        if (err) {
-	                            callback(err);
-	                            errored = true;
-	                        }
-	                        else {
-	                            replenish();
-	                        }
-	                    }));
-	                }
-	            })();
-	        };
-	    }
-
-
-	    function doParallel(fn) {
-	        return function (obj, iterator, callback) {
-	            return fn(async.eachOf, obj, iterator, callback);
-	        };
-	    }
-	    function doParallelLimit(fn) {
-	        return function (obj, limit, iterator, callback) {
-	            return fn(_eachOfLimit(limit), obj, iterator, callback);
-	        };
-	    }
-	    function doSeries(fn) {
-	        return function (obj, iterator, callback) {
-	            return fn(async.eachOfSeries, obj, iterator, callback);
-	        };
-	    }
-
-	    function _asyncMap(eachfn, arr, iterator, callback) {
-	        callback = _once(callback || noop);
-	        arr = arr || [];
-	        var results = _isArrayLike(arr) ? [] : {};
-	        eachfn(arr, function (value, index, callback) {
-	            iterator(value, function (err, v) {
-	                results[index] = v;
-	                callback(err);
-	            });
-	        }, function (err) {
-	            callback(err, results);
-	        });
-	    }
-
-	    async.map = doParallel(_asyncMap);
-	    async.mapSeries = doSeries(_asyncMap);
-	    async.mapLimit = doParallelLimit(_asyncMap);
-
-	    // reduce only has a series version, as doing reduce in parallel won't
-	    // work in many situations.
-	    async.inject =
-	    async.foldl =
-	    async.reduce = function (arr, memo, iterator, callback) {
-	        async.eachOfSeries(arr, function (x, i, callback) {
-	            iterator(memo, x, function (err, v) {
-	                memo = v;
-	                callback(err);
-	            });
-	        }, function (err) {
-	            callback(err, memo);
-	        });
-	    };
-
-	    async.foldr =
-	    async.reduceRight = function (arr, memo, iterator, callback) {
-	        var reversed = _map(arr, identity).reverse();
-	        async.reduce(reversed, memo, iterator, callback);
-	    };
-
-	    async.transform = function (arr, memo, iterator, callback) {
-	        if (arguments.length === 3) {
-	            callback = iterator;
-	            iterator = memo;
-	            memo = _isArray(arr) ? [] : {};
-	        }
-
-	        async.eachOf(arr, function(v, k, cb) {
-	            iterator(memo, v, k, cb);
-	        }, function(err) {
-	            callback(err, memo);
-	        });
-	    };
-
-	    function _filter(eachfn, arr, iterator, callback) {
-	        var results = [];
-	        eachfn(arr, function (x, index, callback) {
-	            iterator(x, function (v) {
-	                if (v) {
-	                    results.push({index: index, value: x});
-	                }
-	                callback();
-	            });
-	        }, function () {
-	            callback(_map(results.sort(function (a, b) {
-	                return a.index - b.index;
-	            }), function (x) {
-	                return x.value;
-	            }));
-	        });
-	    }
-
-	    async.select =
-	    async.filter = doParallel(_filter);
-
-	    async.selectLimit =
-	    async.filterLimit = doParallelLimit(_filter);
-
-	    async.selectSeries =
-	    async.filterSeries = doSeries(_filter);
-
-	    function _reject(eachfn, arr, iterator, callback) {
-	        _filter(eachfn, arr, function(value, cb) {
-	            iterator(value, function(v) {
-	                cb(!v);
-	            });
-	        }, callback);
-	    }
-	    async.reject = doParallel(_reject);
-	    async.rejectLimit = doParallelLimit(_reject);
-	    async.rejectSeries = doSeries(_reject);
-
-	    function _createTester(eachfn, check, getResult) {
-	        return function(arr, limit, iterator, cb) {
-	            function done() {
-	                if (cb) cb(getResult(false, void 0));
-	            }
-	            function iteratee(x, _, callback) {
-	                if (!cb) return callback();
-	                iterator(x, function (v) {
-	                    if (cb && check(v)) {
-	                        cb(getResult(true, x));
-	                        cb = iterator = false;
-	                    }
-	                    callback();
-	                });
-	            }
-	            if (arguments.length > 3) {
-	                eachfn(arr, limit, iteratee, done);
-	            } else {
-	                cb = iterator;
-	                iterator = limit;
-	                eachfn(arr, iteratee, done);
-	            }
-	        };
-	    }
-
-	    async.any =
-	    async.some = _createTester(async.eachOf, toBool, identity);
-
-	    async.someLimit = _createTester(async.eachOfLimit, toBool, identity);
-
-	    async.all =
-	    async.every = _createTester(async.eachOf, notId, notId);
-
-	    async.everyLimit = _createTester(async.eachOfLimit, notId, notId);
-
-	    function _findGetResult(v, x) {
-	        return x;
-	    }
-	    async.detect = _createTester(async.eachOf, identity, _findGetResult);
-	    async.detectSeries = _createTester(async.eachOfSeries, identity, _findGetResult);
-	    async.detectLimit = _createTester(async.eachOfLimit, identity, _findGetResult);
-
-	    async.sortBy = function (arr, iterator, callback) {
-	        async.map(arr, function (x, callback) {
-	            iterator(x, function (err, criteria) {
-	                if (err) {
-	                    callback(err);
-	                }
-	                else {
-	                    callback(null, {value: x, criteria: criteria});
-	                }
-	            });
-	        }, function (err, results) {
-	            if (err) {
-	                return callback(err);
-	            }
-	            else {
-	                callback(null, _map(results.sort(comparator), function (x) {
-	                    return x.value;
-	                }));
-	            }
-
-	        });
-
-	        function comparator(left, right) {
-	            var a = left.criteria, b = right.criteria;
-	            return a < b ? -1 : a > b ? 1 : 0;
-	        }
-	    };
-
-	    async.auto = function (tasks, concurrency, callback) {
-	        if (typeof arguments[1] === 'function') {
-	            // concurrency is optional, shift the args.
-	            callback = concurrency;
-	            concurrency = null;
-	        }
-	        callback = _once(callback || noop);
-	        var keys = _keys(tasks);
-	        var remainingTasks = keys.length;
-	        if (!remainingTasks) {
-	            return callback(null);
-	        }
-	        if (!concurrency) {
-	            concurrency = remainingTasks;
-	        }
-
-	        var results = {};
-	        var runningTasks = 0;
-
-	        var hasError = false;
-
-	        var listeners = [];
-	        function addListener(fn) {
-	            listeners.unshift(fn);
-	        }
-	        function removeListener(fn) {
-	            var idx = _indexOf(listeners, fn);
-	            if (idx >= 0) listeners.splice(idx, 1);
-	        }
-	        function taskComplete() {
-	            remainingTasks--;
-	            _arrayEach(listeners.slice(0), function (fn) {
-	                fn();
-	            });
-	        }
-
-	        addListener(function () {
-	            if (!remainingTasks) {
-	                callback(null, results);
-	            }
-	        });
-
-	        _arrayEach(keys, function (k) {
-	            if (hasError) return;
-	            var task = _isArray(tasks[k]) ? tasks[k]: [tasks[k]];
-	            var taskCallback = _restParam(function(err, args) {
-	                runningTasks--;
-	                if (args.length <= 1) {
-	                    args = args[0];
-	                }
-	                if (err) {
-	                    var safeResults = {};
-	                    _forEachOf(results, function(val, rkey) {
-	                        safeResults[rkey] = val;
-	                    });
-	                    safeResults[k] = args;
-	                    hasError = true;
-
-	                    callback(err, safeResults);
-	                }
-	                else {
-	                    results[k] = args;
-	                    async.setImmediate(taskComplete);
-	                }
-	            });
-	            var requires = task.slice(0, task.length - 1);
-	            // prevent dead-locks
-	            var len = requires.length;
-	            var dep;
-	            while (len--) {
-	                if (!(dep = tasks[requires[len]])) {
-	                    throw new Error('Has nonexistent dependency in ' + requires.join(', '));
-	                }
-	                if (_isArray(dep) && _indexOf(dep, k) >= 0) {
-	                    throw new Error('Has cyclic dependencies');
-	                }
-	            }
-	            function ready() {
-	                return runningTasks < concurrency && _reduce(requires, function (a, x) {
-	                    return (a && results.hasOwnProperty(x));
-	                }, true) && !results.hasOwnProperty(k);
-	            }
-	            if (ready()) {
-	                runningTasks++;
-	                task[task.length - 1](taskCallback, results);
-	            }
-	            else {
-	                addListener(listener);
-	            }
-	            function listener() {
-	                if (ready()) {
-	                    runningTasks++;
-	                    removeListener(listener);
-	                    task[task.length - 1](taskCallback, results);
-	                }
-	            }
-	        });
-	    };
-
-
-
-	    async.retry = function(times, task, callback) {
-	        var DEFAULT_TIMES = 5;
-	        var DEFAULT_INTERVAL = 0;
-
-	        var attempts = [];
-
-	        var opts = {
-	            times: DEFAULT_TIMES,
-	            interval: DEFAULT_INTERVAL
-	        };
-
-	        function parseTimes(acc, t){
-	            if(typeof t === 'number'){
-	                acc.times = parseInt(t, 10) || DEFAULT_TIMES;
-	            } else if(typeof t === 'object'){
-	                acc.times = parseInt(t.times, 10) || DEFAULT_TIMES;
-	                acc.interval = parseInt(t.interval, 10) || DEFAULT_INTERVAL;
-	            } else {
-	                throw new Error('Unsupported argument type for \'times\': ' + typeof t);
-	            }
-	        }
-
-	        var length = arguments.length;
-	        if (length < 1 || length > 3) {
-	            throw new Error('Invalid arguments - must be either (task), (task, callback), (times, task) or (times, task, callback)');
-	        } else if (length <= 2 && typeof times === 'function') {
-	            callback = task;
-	            task = times;
-	        }
-	        if (typeof times !== 'function') {
-	            parseTimes(opts, times);
-	        }
-	        opts.callback = callback;
-	        opts.task = task;
-
-	        function wrappedTask(wrappedCallback, wrappedResults) {
-	            function retryAttempt(task, finalAttempt) {
-	                return function(seriesCallback) {
-	                    task(function(err, result){
-	                        seriesCallback(!err || finalAttempt, {err: err, result: result});
-	                    }, wrappedResults);
-	                };
-	            }
-
-	            function retryInterval(interval){
-	                return function(seriesCallback){
-	                    setTimeout(function(){
-	                        seriesCallback(null);
-	                    }, interval);
-	                };
-	            }
-
-	            while (opts.times) {
-
-	                var finalAttempt = !(opts.times-=1);
-	                attempts.push(retryAttempt(opts.task, finalAttempt));
-	                if(!finalAttempt && opts.interval > 0){
-	                    attempts.push(retryInterval(opts.interval));
-	                }
-	            }
-
-	            async.series(attempts, function(done, data){
-	                data = data[data.length - 1];
-	                (wrappedCallback || opts.callback)(data.err, data.result);
-	            });
-	        }
-
-	        // If a callback is passed, run this as a controll flow
-	        return opts.callback ? wrappedTask() : wrappedTask;
-	    };
-
-	    async.waterfall = function (tasks, callback) {
-	        callback = _once(callback || noop);
-	        if (!_isArray(tasks)) {
-	            var err = new Error('First argument to waterfall must be an array of functions');
-	            return callback(err);
-	        }
-	        if (!tasks.length) {
-	            return callback();
-	        }
-	        function wrapIterator(iterator) {
-	            return _restParam(function (err, args) {
-	                if (err) {
-	                    callback.apply(null, [err].concat(args));
-	                }
-	                else {
-	                    var next = iterator.next();
-	                    if (next) {
-	                        args.push(wrapIterator(next));
-	                    }
-	                    else {
-	                        args.push(callback);
-	                    }
-	                    ensureAsync(iterator).apply(null, args);
-	                }
-	            });
-	        }
-	        wrapIterator(async.iterator(tasks))();
-	    };
-
-	    function _parallel(eachfn, tasks, callback) {
-	        callback = callback || noop;
-	        var results = _isArrayLike(tasks) ? [] : {};
-
-	        eachfn(tasks, function (task, key, callback) {
-	            task(_restParam(function (err, args) {
-	                if (args.length <= 1) {
-	                    args = args[0];
-	                }
-	                results[key] = args;
-	                callback(err);
-	            }));
-	        }, function (err) {
-	            callback(err, results);
-	        });
-	    }
-
-	    async.parallel = function (tasks, callback) {
-	        _parallel(async.eachOf, tasks, callback);
-	    };
-
-	    async.parallelLimit = function(tasks, limit, callback) {
-	        _parallel(_eachOfLimit(limit), tasks, callback);
-	    };
-
-	    async.series = function(tasks, callback) {
-	        _parallel(async.eachOfSeries, tasks, callback);
-	    };
-
-	    async.iterator = function (tasks) {
-	        function makeCallback(index) {
-	            function fn() {
-	                if (tasks.length) {
-	                    tasks[index].apply(null, arguments);
-	                }
-	                return fn.next();
-	            }
-	            fn.next = function () {
-	                return (index < tasks.length - 1) ? makeCallback(index + 1): null;
-	            };
-	            return fn;
-	        }
-	        return makeCallback(0);
-	    };
-
-	    async.apply = _restParam(function (fn, args) {
-	        return _restParam(function (callArgs) {
-	            return fn.apply(
-	                null, args.concat(callArgs)
-	            );
-	        });
-	    });
-
-	    function _concat(eachfn, arr, fn, callback) {
-	        var result = [];
-	        eachfn(arr, function (x, index, cb) {
-	            fn(x, function (err, y) {
-	                result = result.concat(y || []);
-	                cb(err);
-	            });
-	        }, function (err) {
-	            callback(err, result);
-	        });
-	    }
-	    async.concat = doParallel(_concat);
-	    async.concatSeries = doSeries(_concat);
-
-	    async.whilst = function (test, iterator, callback) {
-	        callback = callback || noop;
-	        if (test()) {
-	            var next = _restParam(function(err, args) {
-	                if (err) {
-	                    callback(err);
-	                } else if (test.apply(this, args)) {
-	                    iterator(next);
-	                } else {
-	                    callback.apply(null, [null].concat(args));
-	                }
-	            });
-	            iterator(next);
-	        } else {
-	            callback(null);
-	        }
-	    };
-
-	    async.doWhilst = function (iterator, test, callback) {
-	        var calls = 0;
-	        return async.whilst(function() {
-	            return ++calls <= 1 || test.apply(this, arguments);
-	        }, iterator, callback);
-	    };
-
-	    async.until = function (test, iterator, callback) {
-	        return async.whilst(function() {
-	            return !test.apply(this, arguments);
-	        }, iterator, callback);
-	    };
-
-	    async.doUntil = function (iterator, test, callback) {
-	        return async.doWhilst(iterator, function() {
-	            return !test.apply(this, arguments);
-	        }, callback);
-	    };
-
-	    async.during = function (test, iterator, callback) {
-	        callback = callback || noop;
-
-	        var next = _restParam(function(err, args) {
-	            if (err) {
-	                callback(err);
-	            } else {
-	                args.push(check);
-	                test.apply(this, args);
-	            }
-	        });
-
-	        var check = function(err, truth) {
-	            if (err) {
-	                callback(err);
-	            } else if (truth) {
-	                iterator(next);
-	            } else {
-	                callback(null);
-	            }
-	        };
-
-	        test(check);
-	    };
-
-	    async.doDuring = function (iterator, test, callback) {
-	        var calls = 0;
-	        async.during(function(next) {
-	            if (calls++ < 1) {
-	                next(null, true);
-	            } else {
-	                test.apply(this, arguments);
-	            }
-	        }, iterator, callback);
-	    };
-
-	    function _queue(worker, concurrency, payload) {
-	        if (concurrency == null) {
-	            concurrency = 1;
-	        }
-	        else if(concurrency === 0) {
-	            throw new Error('Concurrency must not be zero');
-	        }
-	        function _insert(q, data, pos, callback) {
-	            if (callback != null && typeof callback !== "function") {
-	                throw new Error("task callback must be a function");
-	            }
-	            q.started = true;
-	            if (!_isArray(data)) {
-	                data = [data];
-	            }
-	            if(data.length === 0 && q.idle()) {
-	                // call drain immediately if there are no tasks
-	                return async.setImmediate(function() {
-	                    q.drain();
-	                });
-	            }
-	            _arrayEach(data, function(task) {
-	                var item = {
-	                    data: task,
-	                    callback: callback || noop
-	                };
-
-	                if (pos) {
-	                    q.tasks.unshift(item);
-	                } else {
-	                    q.tasks.push(item);
-	                }
-
-	                if (q.tasks.length === q.concurrency) {
-	                    q.saturated();
-	                }
-	            });
-	            async.setImmediate(q.process);
-	        }
-	        function _next(q, tasks) {
-	            return function(){
-	                workers -= 1;
-
-	                var removed = false;
-	                var args = arguments;
-	                _arrayEach(tasks, function (task) {
-	                    _arrayEach(workersList, function (worker, index) {
-	                        if (worker === task && !removed) {
-	                            workersList.splice(index, 1);
-	                            removed = true;
-	                        }
-	                    });
-
-	                    task.callback.apply(task, args);
-	                });
-	                if (q.tasks.length + workers === 0) {
-	                    q.drain();
-	                }
-	                q.process();
-	            };
-	        }
-
-	        var workers = 0;
-	        var workersList = [];
-	        var q = {
-	            tasks: [],
-	            concurrency: concurrency,
-	            payload: payload,
-	            saturated: noop,
-	            empty: noop,
-	            drain: noop,
-	            started: false,
-	            paused: false,
-	            push: function (data, callback) {
-	                _insert(q, data, false, callback);
-	            },
-	            kill: function () {
-	                q.drain = noop;
-	                q.tasks = [];
-	            },
-	            unshift: function (data, callback) {
-	                _insert(q, data, true, callback);
-	            },
-	            process: function () {
-	                while(!q.paused && workers < q.concurrency && q.tasks.length){
-
-	                    var tasks = q.payload ?
-	                        q.tasks.splice(0, q.payload) :
-	                        q.tasks.splice(0, q.tasks.length);
-
-	                    var data = _map(tasks, function (task) {
-	                        return task.data;
-	                    });
-
-	                    if (q.tasks.length === 0) {
-	                        q.empty();
-	                    }
-	                    workers += 1;
-	                    workersList.push(tasks[0]);
-	                    var cb = only_once(_next(q, tasks));
-	                    worker(data, cb);
-	                }
-	            },
-	            length: function () {
-	                return q.tasks.length;
-	            },
-	            running: function () {
-	                return workers;
-	            },
-	            workersList: function () {
-	                return workersList;
-	            },
-	            idle: function() {
-	                return q.tasks.length + workers === 0;
-	            },
-	            pause: function () {
-	                q.paused = true;
-	            },
-	            resume: function () {
-	                if (q.paused === false) { return; }
-	                q.paused = false;
-	                var resumeCount = Math.min(q.concurrency, q.tasks.length);
-	                // Need to call q.process once per concurrent
-	                // worker to preserve full concurrency after pause
-	                for (var w = 1; w <= resumeCount; w++) {
-	                    async.setImmediate(q.process);
-	                }
-	            }
-	        };
-	        return q;
-	    }
-
-	    async.queue = function (worker, concurrency) {
-	        var q = _queue(function (items, cb) {
-	            worker(items[0], cb);
-	        }, concurrency, 1);
-
-	        return q;
-	    };
-
-	    async.priorityQueue = function (worker, concurrency) {
-
-	        function _compareTasks(a, b){
-	            return a.priority - b.priority;
-	        }
-
-	        function _binarySearch(sequence, item, compare) {
-	            var beg = -1,
-	                end = sequence.length - 1;
-	            while (beg < end) {
-	                var mid = beg + ((end - beg + 1) >>> 1);
-	                if (compare(item, sequence[mid]) >= 0) {
-	                    beg = mid;
-	                } else {
-	                    end = mid - 1;
-	                }
-	            }
-	            return beg;
-	        }
-
-	        function _insert(q, data, priority, callback) {
-	            if (callback != null && typeof callback !== "function") {
-	                throw new Error("task callback must be a function");
-	            }
-	            q.started = true;
-	            if (!_isArray(data)) {
-	                data = [data];
-	            }
-	            if(data.length === 0) {
-	                // call drain immediately if there are no tasks
-	                return async.setImmediate(function() {
-	                    q.drain();
-	                });
-	            }
-	            _arrayEach(data, function(task) {
-	                var item = {
-	                    data: task,
-	                    priority: priority,
-	                    callback: typeof callback === 'function' ? callback : noop
-	                };
-
-	                q.tasks.splice(_binarySearch(q.tasks, item, _compareTasks) + 1, 0, item);
-
-	                if (q.tasks.length === q.concurrency) {
-	                    q.saturated();
-	                }
-	                async.setImmediate(q.process);
-	            });
-	        }
-
-	        // Start with a normal queue
-	        var q = async.queue(worker, concurrency);
-
-	        // Override push to accept second parameter representing priority
-	        q.push = function (data, priority, callback) {
-	            _insert(q, data, priority, callback);
-	        };
-
-	        // Remove unshift function
-	        delete q.unshift;
-
-	        return q;
-	    };
-
-	    async.cargo = function (worker, payload) {
-	        return _queue(worker, 1, payload);
-	    };
-
-	    function _console_fn(name) {
-	        return _restParam(function (fn, args) {
-	            fn.apply(null, args.concat([_restParam(function (err, args) {
-	                if (typeof console === 'object') {
-	                    if (err) {
-	                        if (console.error) {
-	                            console.error(err);
-	                        }
-	                    }
-	                    else if (console[name]) {
-	                        _arrayEach(args, function (x) {
-	                            console[name](x);
-	                        });
-	                    }
-	                }
-	            })]));
-	        });
-	    }
-	    async.log = _console_fn('log');
-	    async.dir = _console_fn('dir');
-	    /*async.info = _console_fn('info');
-	    async.warn = _console_fn('warn');
-	    async.error = _console_fn('error');*/
-
-	    async.memoize = function (fn, hasher) {
-	        var memo = {};
-	        var queues = {};
-	        var has = Object.prototype.hasOwnProperty;
-	        hasher = hasher || identity;
-	        var memoized = _restParam(function memoized(args) {
-	            var callback = args.pop();
-	            var key = hasher.apply(null, args);
-	            if (has.call(memo, key)) {   
-	                async.setImmediate(function () {
-	                    callback.apply(null, memo[key]);
-	                });
-	            }
-	            else if (has.call(queues, key)) {
-	                queues[key].push(callback);
-	            }
-	            else {
-	                queues[key] = [callback];
-	                fn.apply(null, args.concat([_restParam(function (args) {
-	                    memo[key] = args;
-	                    var q = queues[key];
-	                    delete queues[key];
-	                    for (var i = 0, l = q.length; i < l; i++) {
-	                        q[i].apply(null, args);
-	                    }
-	                })]));
-	            }
-	        });
-	        memoized.memo = memo;
-	        memoized.unmemoized = fn;
-	        return memoized;
-	    };
-
-	    async.unmemoize = function (fn) {
-	        return function () {
-	            return (fn.unmemoized || fn).apply(null, arguments);
-	        };
-	    };
-
-	    function _times(mapper) {
-	        return function (count, iterator, callback) {
-	            mapper(_range(count), iterator, callback);
-	        };
-	    }
-
-	    async.times = _times(async.map);
-	    async.timesSeries = _times(async.mapSeries);
-	    async.timesLimit = function (count, limit, iterator, callback) {
-	        return async.mapLimit(_range(count), limit, iterator, callback);
-	    };
-
-	    async.seq = function (/* functions... */) {
-	        var fns = arguments;
-	        return _restParam(function (args) {
-	            var that = this;
-
-	            var callback = args[args.length - 1];
-	            if (typeof callback == 'function') {
-	                args.pop();
-	            } else {
-	                callback = noop;
-	            }
-
-	            async.reduce(fns, args, function (newargs, fn, cb) {
-	                fn.apply(that, newargs.concat([_restParam(function (err, nextargs) {
-	                    cb(err, nextargs);
-	                })]));
-	            },
-	            function (err, results) {
-	                callback.apply(that, [err].concat(results));
-	            });
-	        });
-	    };
-
-	    async.compose = function (/* functions... */) {
-	        return async.seq.apply(null, Array.prototype.reverse.call(arguments));
-	    };
-
-
-	    function _applyEach(eachfn) {
-	        return _restParam(function(fns, args) {
-	            var go = _restParam(function(args) {
-	                var that = this;
-	                var callback = args.pop();
-	                return eachfn(fns, function (fn, _, cb) {
-	                    fn.apply(that, args.concat([cb]));
-	                },
-	                callback);
-	            });
-	            if (args.length) {
-	                return go.apply(this, args);
-	            }
-	            else {
-	                return go;
-	            }
-	        });
-	    }
-
-	    async.applyEach = _applyEach(async.eachOf);
-	    async.applyEachSeries = _applyEach(async.eachOfSeries);
-
-
-	    async.forever = function (fn, callback) {
-	        var done = only_once(callback || noop);
-	        var task = ensureAsync(fn);
-	        function next(err) {
-	            if (err) {
-	                return done(err);
-	            }
-	            task(next);
-	        }
-	        next();
-	    };
-
-	    function ensureAsync(fn) {
-	        return _restParam(function (args) {
-	            var callback = args.pop();
-	            args.push(function () {
-	                var innerArgs = arguments;
-	                if (sync) {
-	                    async.setImmediate(function () {
-	                        callback.apply(null, innerArgs);
-	                    });
-	                } else {
-	                    callback.apply(null, innerArgs);
-	                }
-	            });
-	            var sync = true;
-	            fn.apply(this, args);
-	            sync = false;
-	        });
-	    }
-
-	    async.ensureAsync = ensureAsync;
-
-	    async.constant = _restParam(function(values) {
-	        var args = [null].concat(values);
-	        return function (callback) {
-	            return callback.apply(this, args);
-	        };
-	    });
-
-	    async.wrapSync =
-	    async.asyncify = function asyncify(func) {
-	        return _restParam(function (args) {
-	            var callback = args.pop();
-	            var result;
-	            try {
-	                result = func.apply(this, args);
-	            } catch (e) {
-	                return callback(e);
-	            }
-	            // if result is Promise object
-	            if (_isObject(result) && typeof result.then === "function") {
-	                result.then(function(value) {
-	                    callback(null, value);
-	                })["catch"](function(err) {
-	                    callback(err.message ? err : new Error(err));
-	                });
-	            } else {
-	                callback(null, result);
-	            }
-	        });
-	    };
-
-	    // Node.js
-	    if (typeof module === 'object' && module.exports) {
-	        module.exports = async;
-	    }
-	    // AMD / RequireJS
-	    else if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
-	            return async;
-	        }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	    }
-	    // included directly via <script> tag
-	    else {
-	        root.async = async;
-	    }
-
-	}());
-
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(178).setImmediate, __webpack_require__(180)))
+	module.exports = testData;
 
 /***/ },
-/* 496 */
+/* 707 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * common.navigationUtil.js 
+	 *
+	 * 分页查询工具类
+	 * 
+	 * @author zhoujiang
+	 */
+	"use strict";
+
+	var _ = __webpack_require__(372);
+
+	var tools = {
+	    /**
+	     * 获取分页数据
+	     * 
+	     * @param  rows 数据
+	     * @param  rows 当前页数
+	     * @param  rows 每页的行数
+	     *
+	     * @return 过滤之后的数据
+	     */
+	    getNextPageRows: function getNextPageRows(params) {
+	        var rows = params.rows;
+	        var currentPage = params.currentPage || 0;
+	        var pageSize = params.pageSize;
+
+	        var fromRowNumber = 0;
+	        var toRowNumber = 0;
+	        var rowsTotoal = rows.length;
+	        if (rows.length == 0 || pageSize == 0) {
+	            //没有数据的情况
+	            fromRowNumber = 0;
+	            toRowNumber = 0;
+	        } else {
+	            //有数据的情况
+	            fromRowNumber = currentPage * pageSize + 1;
+	            if (rowsTotoal <= pageSize) {
+	                toRowNumber = rowsTotoal;
+	            } else if ((currentPage + 1) * pageSize <= rowsTotoal) {
+	                toRowNumber = (currentPage + 1) * pageSize;
+	            } else {
+	                toRowNumber = currentPage * pageSize + rowsTotoal % pageSize;
+	            }
+	        }
+	        //console.log(currentPage,pageSize,fromRowNumber,toRowNumber,rowsTotoal);
+	        var newRows = rows.slice(fromRowNumber - 1, toRowNumber);
+	        return newRows;
+	    },
+	    /**
+	     * 根据条件对指定列进行模糊查询
+	     * 
+	     * @param  rows 数据
+	     * @param  querystring 查询条件
+	     * @param  columns 过滤字段[数组]
+	     * 
+	     * @return 查询后的数据
+	     */
+	    filterRowsByColumns: function filterRowsByColumns(param) {
+	        var rows = param.rows;
+	        var querystring = param.querystring;
+	        var columns = param.columns;
+
+	        var newRows = Array();
+	        for (var i = 0; i < rows.length; i++) {
+	            var row = rows[i];
+	            if (_.isEmpty(querystring)) {
+	                //查询条件为空
+	                newRows.push(row);
+	            } else {
+	                var flag = false; //是否符合过滤条件
+	                for (var j = 0; j < columns.length; j++) {
+	                    //逐个字段进行过滤
+	                    var column = columns[j];
+	                    //TODO：字符串中特殊字符要处理，否则会报错。
+	                    var rowValue = row["" + column];
+	                    // console.log("filterRowsByColumns--->"+column+"---->"+rowValue);
+	                    if (column && rowValue.indexOf(querystring) > -1) {
+	                        flag = true;
+	                    }
+	                }
+	                if (flag) {
+	                    newRows.push(row);
+	                }
+	            }
+	        }
+	        return newRows;
+	    },
+	    /**
+	     * 过滤数据
+	     * 
+	     * @param  row 数据
+	     * @param  querystring 过滤条件
+	     * @param  currentPage 当前页数
+	     * @param columns 过滤字段
+	     * 
+	     */
+	    filterData: function filterData(params) {
+	        //TODO 抽取为共通
+	        var rows = params.rows;
+	        var querystring = params.querystring || "";
+
+	        var filterRows = this.filterRowsByColumns(params);
+	        params.filterRows = filterRows;
+	        var newRows = this.getNextPageRows(params);
+	        return {
+	            rows: newRows,
+	            rowsTotoal: filterRows.length,
+	            currentPage: params.currentPage
+	        };
+	    }
+
+	};
+
+	module.exports = tools;
+
+/***/ },
+/* 708 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -87038,8 +102236,8 @@ webpackJsonp([1],[
 	var Reflux = __webpack_require__(173);
 	var PageRouterActions = __webpack_require__(195);
 	var PageRouterStore = __webpack_require__(196);
-	var Actions = __webpack_require__(497);
-	var Store = __webpack_require__(498);
+	var Actions = __webpack_require__(709);
+	var Store = __webpack_require__(710);
 	var Router = __webpack_require__(199);
 	var Navigation = __webpack_require__(199).Navigation;
 	var Link = __webpack_require__(199).Link;
@@ -87068,8 +102266,12 @@ webpackJsonp([1],[
 	            this.state.resourceType = detailData.obj.resourceType;
 	            this.state.dbLink = detailData.obj.dbLink;
 	            this.state.dbUser = detailData.obj.dbUser;
-	            this.state.dbName = detailData.obj.dbName;
 	            this.state.dbPasswd = detailData.obj.dbPasswd;
+
+	            //通过resourceType的值 设置dbLink、dbUser、dbPasswd 显示和隐藏
+	            // if(this.state.resourceType === "01"){
+	            // }else{
+	            // }
 	        }
 
 	        this.setState({ obj: detailData.obj }, function () {
@@ -87138,6 +102340,7 @@ webpackJsonp([1],[
 	                dbLink: dbLink,
 	                dbUser: dbUser,
 	                dbPasswd: dbPasswd,
+	                resourceFlg: "1",
 	                deleteFlg: "0"
 	            });
 	        } else if (mode == "edit") {
@@ -87149,6 +102352,7 @@ webpackJsonp([1],[
 	                dbLink: dbLink,
 	                dbUser: dbUser,
 	                dbPasswd: dbPasswd,
+	                resourceFlg: "1",
 	                deleteFlg: "0"
 	            });
 	        }
@@ -87240,6 +102444,16 @@ webpackJsonp([1],[
 	        $('#id-date-picker').datepicker({
 	            autoclose: true,
 	            todayHighlight: true
+	        });
+	    },
+	    _handleNewTableMappingClick: function _handleNewTableMappingClick() {
+	        //根据resourceId批量生成tableMapping
+	        bootbox.confirm("需要生成ColumnMapping吗？", function (result) {
+	            if (result) {
+	                Actions.newTableMapping(this.state.resourceId, 1); //生成ColumnMapping
+	            } else {
+	                    Actions.newTableMapping(this.state.resourceId, 0); //不生成ColumnMapping
+	                }
 	        });
 	    },
 	    render: function render() {
@@ -87493,14 +102707,21 @@ webpackJsonp([1],[
 	                                'button',
 	                                { className: 'btn btn-info', type: 'button', onClick: this._handleClick },
 	                                React.createElement('i', { className: 'ace-icon fa fa-check bigger-110' }),
-	                                '保存123'
+	                                '保存'
 	                            ),
 	                            '     ',
 	                            React.createElement(
 	                                'button',
 	                                { className: 'btn', type: 'connect', onClick: this._handleConnectClick },
 	                                React.createElement('i', { className: 'ace-icon fa fa-undo bigger-110' }),
-	                                '测试连接1'
+	                                '测试连接'
+	                            ),
+	                            '     ',
+	                            React.createElement(
+	                                'button',
+	                                { className: 'btn btn-sm btn-white btn-warning btn-round', onClick: this._handleNewTableMappingClick },
+	                                React.createElement('i', { className: 'ace-icon fa fa-trash-o bigger-120 orange' }),
+	                                '生成TableMapping'
 	                            )
 	                        )
 	                    )
@@ -87513,7 +102734,7 @@ webpackJsonp([1],[
 	module.exports = page;
 
 /***/ },
-/* 497 */
+/* 709 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -87521,21 +102742,21 @@ webpackJsonp([1],[
 	var Reflux = __webpack_require__(173);
 	'use strict';
 
-	var actions = Reflux.createActions(["init", "add", "edit", "reset", "connect"]);
+	var actions = Reflux.createActions(["init", "add", "edit", "reset", "connect", "newTableMapping"]);
 
 	module.exports = actions;
 
 /***/ },
-/* 498 */
+/* 710 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var Reflux = __webpack_require__(173);
-	var Actions = __webpack_require__(497);
-	var ListStore = __webpack_require__(456);
-	var httpUtil = __webpack_require__(457);
-	var http = __webpack_require__(458);
+	var Actions = __webpack_require__(709);
+	var ListStore = __webpack_require__(668);
+	var httpUtil = __webpack_require__(669);
+	var http = __webpack_require__(670);
 
 	'use strict';
 
@@ -87706,7 +102927,1624 @@ webpackJsonp([1],[
 	        req.write(bodyString);
 	        console.log('-----bodyString-------', req);
 	        req.end();
+	    },
+	    onNewTableMapping: function onNewTableMapping(resourceId, withColumn) {
+	        http.get("http://192.168.120.156:8081/autoGenTableMapping?ResourceId=" + resourceId + "&WithColumn=" + withColumn, function (res) {
+	            var json = "";
+	            res.on('data', function (d) {
+	                json += d;
+	            });
+	            res.on('end', function () {
+	                json = JSON.parse(json);
+	                this.saveOk = true;
+	                store.onSearch({ //todo for localtdev
+	                    page: 0,
+	                    querystring: "",
+	                    refresh: true //是否后台刷新数据
+	                });
+	            });
+	        }).on('error', function (e) {
+	            console.error(e.toString());
+	            //message = e.toString();
+	        });
 	    }
+	});
+
+	module.exports = store;
+
+/***/ },
+/* 711 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	  TableMapping管理-List
+	  zhoujiang 20160327
+	 */
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var Reflux = __webpack_require__(173);
+	var PageRouterActions = __webpack_require__(195);
+	var PageRouterStore = __webpack_require__(196);
+	var Actions = __webpack_require__(712);
+	var Store = __webpack_require__(713);
+	var Router = __webpack_require__(199);
+	var Navigation = __webpack_require__(199).Navigation;
+	var Table = __webpack_require__(426);
+	var TableStore = __webpack_require__(431);
+	var Column = __webpack_require__(436);
+	var Link = __webpack_require__(199).Link;
+	var Gritter = __webpack_require__(433);
+	var Constants = __webpack_require__(428);
+	var _ = __webpack_require__(372);
+	var OverlayMixin = __webpack_require__(246).OverlayMixin;
+	var Modal = __webpack_require__(246).Modal;
+	var Button = __webpack_require__(246).Button;
+
+	var Route = Router.Route;
+	var DefaultRoute = Router.DefaultRoute;
+	var RouteHandler = Router.RouteHandler;
+	var Link = Router.Link;
+
+	'use strict';
+
+	// var hasChildNum = 0;
+
+	var page = React.createClass({
+	    displayName: 'page',
+
+	    mixins: [Reflux.listenTo(Store, "onStatusChange"), Navigation, OverlayMixin, React.addons.LinkedStateMixin, Reflux.listenTo(PageRouterStore, "")],
+	    getInitialState: function getInitialState() {
+	        // Actions.init();
+	        Actions.searchResource();
+
+	        Actions.search({
+	            page: 0,
+	            querystring: "",
+	            refresh: true //是否后台刷新数据
+	        });
+	        return { list: [] };
+	    },
+	    onStatusChange: function onStatusChange(listData) {
+	        console.log("---onStatusChange-----resourceList---------", listData.resourceList);
+	        console.log("---onStatusChange-----rows---------", listData.rows);
+	        console.log("---onStatusChange-----rowsTotoal---------", listData.rowsTotoal);
+	        console.log("---onStatusChange-----deleteOk---------", listData.deleteOk);
+	        console.log("---onStatusChange-----currentPage---------", listData.currentPage);
+	        console.log("---onStatusChange-----msg---------", listData.msg);
+
+	        //动态添加option到select资源名称中
+	        var resourceListOptions = [];
+	        var i = 1;
+	        resourceListOptions[0] = React.createElement('option', { value: "none" }, "请选择资源名称");
+	        for (var p in listData.resourceList) {
+	            resourceListOptions[i] = React.createElement('option', { value: listData.resourceList[p].resourceId }, listData.resourceList[p].resourceName);
+	            i++;
+	        }
+	        if (resourceListOptions.length > 1) {
+	            this.state.resourceListOptions = resourceListOptions;
+	        }
+
+	        if (typeof listData.rows !== "undefined") {
+	            this.setState({
+	                rows: listData.rows,
+	                rowsTotoal: listData.rowsTotoal,
+	                deleteOk: listData.deleteOk,
+	                currentPage: listData.currentPage,
+	                hasChildNum: 0
+	            }, function () {
+	                // $('select.resourceList').empty();
+	                // $('select.resourceList').append('<option value="01">1111111</option>');
+	                if (listData.deleteOk) {
+	                    Gritter.add({
+	                        title: '提示',
+	                        text: '删除成功！' + listData.msg,
+	                        //image: 'assets/avatars/avatar.png',
+	                        sticky: false,
+	                        time: '2000',
+	                        class_name: 'gritter-light '
+	                    });
+	                } else {
+	                    if (!_.isUndefined(listData.msg) && !_.isEmpty(listData.msg)) {
+	                        Gritter.add({
+	                            title: '提示',
+	                            text: '删除失败！' + listData.msg,
+	                            //image: 'assets/avatars/avatar.png',
+	                            sticky: false,
+	                            time: '2000',
+	                            class_name: 'gritter-light '
+	                        });
+	                    }
+	                }
+	            });
+	        } else {
+	            this.setState({});
+	        }
+
+	        console.log("-------------onStatusChange------resourceListOptions------", this.state.resourceListOptions);
+	        console.log("-------------onStatusChange------rows------", this.state.rows);
+	    },
+
+	    table: null,
+	    componentDidMount: function componentDidMount() {
+	        console.log("componentDidMount");
+	        // this.unsubscribe=store.listen(this.onStatusChange);
+	        // action.init();
+	    },
+	    componentWillMount: function componentWillMount() {
+	        console.log("componentWillMount");
+	        //Actions.init();
+	        // this.unsubscribe();
+	    },
+
+	    _handleToggle: function _handleToggle() {
+	        this.setState({
+	            isModalOpen: !this.state.isModalOpen
+	        });
+	    },
+
+	    renderOverlay: function renderOverlay() {
+	        if (!this.state.isModalOpen) {
+	            return React.createElement('span', null);
+	        }
+
+	        return React.createElement(
+	            Modal,
+	            { title: 'Modal heading', onRequestHide: this._handleToggle },
+	            React.createElement(
+	                'div',
+	                { className: 'modal-body' },
+	                'This modal is controlled by our custom trigger component.'
+	            ),
+	            React.createElement(
+	                'div',
+	                { className: 'modal-footer' },
+	                React.createElement(
+	                    Button,
+	                    { onClick: this._handleToggle },
+	                    'Close'
+	                )
+	            )
+	        );
+	    },
+
+	    rowGetter: function rowGetter(rowIndex) {
+	        //console.log(rowIndex);
+	        return this.state.rows[rowIndex];
+	    },
+	    _xuhaoCellRender: function _xuhaoCellRender(cellData, cellDataKey, rowData, cellIndex, rowIndex) {
+
+	        var xuhao = rowIndex + 1;
+	        return xuhao;
+	    },
+
+	    _headerDataGetter: function _headerDataGetter(dataKey, columnProps) {
+	        if (dataKey === "id") {
+	            return React.createElement(
+	                'span',
+	                { style: { color: "green" } },
+	                '_ID_'
+	            );
+	        } else if (dataKey === "firstName") {
+	            return React.createElement(
+	                'span',
+	                { style: { color: "green" } },
+	                '_姓名_'
+	            );
+	        } else {
+	            return columnProps.label;
+	        }
+	    },
+
+	    _onRowClick: function _onRowClick(event, rowId, rowData, checked) {
+	        // console.log("_onRowClick--->"+rowData);
+	        //选中的记录有有没有hasChild为true的
+	        if (typeof checked === "undefined") {
+	            checked = false;
+	        }
+	        // if(rowData.hasRunJob){
+	        if (!checked) {
+	            //当前行如果被选中
+	            this.state.hasChildNum++;
+	            this.state.selResourceId = rowData["resourceId"];
+	            this.state.selTableMappingId = rowData["tableMappingId"];
+	            this.state.tableName = rowData["tableName"];
+	            this.state.tableNameView = rowData["tableNameView"];
+	        } else {
+	            this.state.hasChildNum--;
+	        }
+	        // }
+
+	        Gritter.add({
+	            title: '单击信息' + !checked,
+	            text: rowData.resourceId + "/" + rowData.hasRunJob + "===>" + this.state.hasChildNum,
+	            image: 'assets/avatars/avatar.png',
+	            sticky: false,
+	            time: '2000',
+	            class_name: 'gritter-info gritter-light'
+	        });
+	    },
+	    _onRowDblClick: function _onRowDblClick(event, rowId, rowData, checked) {
+
+	        Gritter.add({
+	            title: '双击信息',
+	            text: rowData.firstName + rowData.lastName + ' 你好 ' + checked,
+	            image: 'assets/avatars/avatar.png',
+	            sticky: false,
+	            time: '4000',
+	            class_name: 'gritter-info '
+	        });
+	    },
+
+	    _onNavigationBtnClick: function _onNavigationBtnClick(pageNo, navigationInfo) {
+	        //Gritter.add({
+	        //    title: "分页事件演示",
+	        //    text: "前往页码：" + page + "，每页记录数：" + navigationInfo.pageSize + "，共 " + navigationInfo.pages + " 页"
+	        //});
+	        Actions.search({
+	            page: pageNo,
+	            querystring: this.state.querystring,
+	            refresh: false //true:后台分页 false:后台分页
+	        });
+	    },
+	    _handleKeyUp: function _handleKeyUp(evt) {
+	        console.log("_handleKeyUp--->" + evt.which);
+	        //if (evt.which === 13) {//Enter键
+	        Actions.search({
+	            page: 0,
+	            querystring: this.state.querystring,
+	            refresh: false
+	        });
+	        // }
+	    },
+
+	    _handleDeleteClick: function _handleDeleteClick(param) {
+	        console.log("TableMapping _handleDeleteClick", param);
+	        var selectedString = $("#selectedRowIds")[0].innerHTML;
+	        //console.log("selectedRowIds in _handleDeleteClick", _.isUndefined(selectedString), selecteds);
+	        if (_.isUndefined(selectedString) || _.isEmpty(selectedString)) {
+	            Gritter.add({
+	                title: '提示',
+	                text: '至少选择一条记录！',
+	                //image: 'assets/avatars/avatar.png',
+	                sticky: false,
+	                time: '4000',
+	                class_name: 'gritter-light '
+	            });
+	            //this.handleToggle();
+	            return;
+	        }
+	        // var selecteds = selectedString.split(',');
+	        bootbox.confirm("确认删除吗？", function (result) {
+	            if (result) {
+	                //判断是否有子数据
+	                //console.log("this.state.hasChildNum-->"+this.state.hasChildNum);
+	                if (this.state.hasChildNum > 0) {
+	                    bootbox.confirm("有关联的JobAction,确认删除吗？", function (result) {
+	                        if (result) {
+	                            Actions['delete'](selectedString);
+	                        }
+	                    });
+	                } else {
+	                    Actions['delete'](selectedString);
+	                }
+	            }
+	        });
+	    },
+	    _handleEditClick: function _handleEditClick() {
+	        var selectedString = $("#selectedRowIds")[0].innerHTML;
+	        if (_.isUndefined(selectedString) || _.isEmpty(selectedString) || selectedString.indexOf(",") > -1) {
+	            Gritter.add({
+	                title: '提示',
+	                text: '请选择一条记录！',
+	                //image: 'assets/avatars/avatar.png',
+	                sticky: false,
+	                time: '4000',
+	                class_name: 'gritter-light '
+	            });
+	            //this.handleToggle();
+	            return;
+	        }
+	        PageRouterActions.navigateTo('#/dbColumnMappingListPage/edit&' + this.state.selResourceId + '&' + this.state.selTableMappingId + '&' + this.state.tableName + '&' + this.state.tableNameView);
+	    },
+	    selectResource: function selectResource() {},
+	    render: function render() {
+
+	        console.log("-------------render------resourceListOptions------", this.state.resourceListOptions);
+	        console.log("-------------render------rows------", this.state.rows);
+
+	        this.table = React.createElement(Table, {
+	            rowGetter: this.rowGetter, //获得记录数据，每页都从0开始
+	            rowsTotoal: this.state.rowsTotoal, //记录总数
+	            currentPage: this.state.currentPage, //当前页码，从0开始
+	            headerDataGetter: this._headerDataGetter, //表头格式化方法
+	            onRowClick: this._onRowClick, //记录行单击事件
+	            onRowDblClick: this._onRowDblClick, //记录行双击事件
+	            onNavigationBtnClick: this._onNavigationBtnClick, //分页事件
+	            rowIdColumn: "tableMappingId", //唯一标识每行记录的字段
+	            rowSelected: true, //选择一行是否触发checkbox
+	            id: "demoList"
+	        }, [React.createElement(Column, { dataKey: 'checkbox', label: '', inputType: 'checkbox' }), React.createElement(Column, { dataKey: 'id', label: 'ID', hidden: true }), React.createElement(Column, { label: 'DBTableID', dataKey: 'tableMappingId', width: 50 }), React.createElement(Column, { label: '资源ID', dataKey: 'resourceId', width: 50 }), React.createElement(Column, { label: '数据库表物理名', dataKey: 'tableName', width: 100 }), React.createElement(Column, { label: '数据库表逻辑名', dataKey: 'tableNameView', width: 100 }), React.createElement(Column, { label: 'deleteFlg', dataKey: 'deleteFlg' }), React.createElement(Column, { label: 'hasRunJob', dataKey: 'hasRunJob', width: 50 })]);
+
+	        return React.createElement(
+	            'div',
+	            { className: 'row ' },
+	            React.createElement(
+	                'div',
+	                { className: 'col-xs-12 dataTables_wrapper  form-inline' },
+	                React.createElement(
+	                    'div',
+	                    { className: 'row', style: { "paddingBottom": "0px" } },
+	                    React.createElement(
+	                        'div',
+	                        { className: 'col-xs-6' },
+	                        React.createElement(
+	                            Link,
+	                            { className: 'btn btn-sm btn-white btn-info btn-round', to: '/dbColumnMappingListPage/add&-1&-1&-1&-1' },
+	                            React.createElement('i', { className: 'ace-icon fa fa-plus-circle blue bigger-120 ' }),
+	                            '新增0123'
+	                        ),
+	                        ' ',
+	                        React.createElement(
+	                            'button',
+	                            { className: 'btn btn-sm btn-white btn-default btn-round', onClick: this._handleEditClick },
+	                            React.createElement('i', { className: 'ace-icon fa fa-pencil align-top bigger-120 ' }),
+	                            '修改'
+	                        ),
+	                        ' ',
+	                        React.createElement(
+	                            'button',
+	                            { className: 'btn btn-sm btn-white btn-warning btn-round', onClick: this._handleDeleteClick.bind(this, "delete") },
+	                            React.createElement('i', { className: 'ace-icon fa fa-trash-o bigger-120 orange' }),
+	                            '删除'
+	                        )
+	                    ),
+	                    React.createElement(
+	                        'div',
+	                        { className: 'col-xs-6' },
+	                        React.createElement(
+	                            'div',
+	                            { id: 'sample-table-2_filter', className: 'dataTables_filter' },
+	                            React.createElement(
+	                                'select',
+	                                { id: 'resourceList', ref: 'resourceList', className: 'width-100', onChange: this.selectResource },
+	                                this.state.resourceListOptions
+	                            )
+	                        )
+	                    )
+	                ),
+	                this.table
+	            )
+	        );
+	    }
+	});
+	module.exports = page;
+
+/***/ },
+/* 712 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Reflux = __webpack_require__(173);
+	'use strict';
+
+	var actions = Reflux.createActions(["searchResource", "search", "delete", "connect"]);
+
+	module.exports = actions;
+
+/***/ },
+/* 713 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Reflux = __webpack_require__(173);
+	var Actions = __webpack_require__(712);
+	var tools = __webpack_require__(323);
+	var httpUtil = __webpack_require__(669);
+	var constants = __webpack_require__(428);
+	var http = __webpack_require__(670);
+
+	'use strict';
+
+	var pageSize = 20; //TODO 暂时还不能修改
+	var _cache = [];
+	var message = "";
+
+	var store = Reflux.createStore({
+	    listenables: [Actions],
+	    searchParams: {
+	        rows: null,
+	        rowsTotoal: 0,
+	        currentPage: 0,
+	        deleteOk: false,
+	        querystring: null
+	    },
+	    onSearchResource: function onSearchResource() {
+	        http.get("http://192.168.120.156:8081/resourceList?WithNoValid=0&ResourceFlg=1", function (res) {
+	            var json = "";
+	            res.on('data', function (d) {
+	                json += d;
+	            });
+	            res.on('end', function () {
+	                json = JSON.parse(json);
+	                console.log("do triggrt-----------" + json);
+	                store.trigger({
+	                    resourceList: json
+	                });
+	            });
+	        }).on('error', function (e) {
+	            console.error(e.toString());
+	            //message = e.toString();
+	        });
+	    },
+	    onSearch: function onSearch(param) {
+	        if (param.refresh) {
+	            //从后台刷新数据
+	            console.log("---------------refresh-----------------");
+	            var getResult = function getResult(callback) {
+	                //TODO 拼接分页条件
+	                http.get("http://192.168.120.156:8081/tableMappingList?WithNoValid=0", function (res) {
+	                    var json = "";
+	                    res.on('data', function (d) {
+	                        json += d;
+	                    });
+	                    res.on('end', function () {
+	                        json = JSON.parse(json);
+	                        callback(json); //返回结果
+	                    });
+	                }).on('error', function (e) {
+	                    console.error(e.toString());
+	                    //message = e.toString();
+	                });
+	            };
+	            //查询结束回调函数
+	            getResult(function (resourceJson) {
+	                // console.log("getResult--->"+resourceJson);
+
+	                // TODO for localtest
+	                // _cache = [{"resourceId":4,"resourceName":"测试DB20170324","resourceType":"01","dbLink":"jdbc:mysql://192.168.120.156:3306/test","dbUser":"huhu","dbPasswd":"test","deleteFlg":"0","hasChild":true},{"resourceId":5,"resourceName":"测试DB111","resourceType":"01","dbLink":"jdbc:mysql://xxx.xxx.xxx.xxx:3306/test","dbUser":"test","dbPasswd":"xxxxxxxx","deleteFlg":"0","hasChild":false},{"resourceId":8,"resourceName":"测试DB","resourceType":"01","dbLink":"jdbc:mysql://xxx.xxx.xxx.xxx:3306/test","dbUser":"test","dbPasswd":"xxxxxxxx","deleteFlg":"0","hasChild":false},{"resourceId":9,"resourceName":"测试DB","resourceType":"01","dbLink":"jdbc:mysql://xxx.xxx.xxx.xxx:3306/test","dbUser":"test","dbPasswd":"xxxxxxxx","deleteFlg":"0","hasChild":false},{"resourceId":10,"resourceName":"测试DB","resourceType":"01","dbLink":"jdbc:mysql://xxx.xxx.xxx.xxx:3306/test","dbUser":"test","dbPasswd":"xxxxxxxx","deleteFlg":"0","hasChild":false},{"resourceId":11,"resourceName":"test","resourceType":"01","dbLink":"jdbc:mysql://192.168.120.156:3306/test","dbUser":"huhu","dbPasswd":"test","deleteFlg":"0","hasChild":false},{"resourceId":12,"resourceName":"测试DB111","resourceType":"01","dbLink":"jdbc:mysql://xxx.xxx.xxx.xxx:3306/test","dbUser":"test","dbPasswd":"xxxxxxxx","deleteFlg":"0","hasChild":false},{"resourceId":13,"resourceName":"901","resourceType":"01","dbLink":"1111","dbUser":"1111","dbPasswd":"1111","deleteFlg":"0","hasChild":false},{"resourceId":14,"resourceName":"902","resourceType":"01","dbLink":"111111","dbUser":"11111","dbPasswd":"111111","deleteFlg":"0","hasChild":false},{"resourceId":15,"resourceName":"903","resourceType":"01","dbLink":"111111","dbUser":"11111","dbPasswd":"111111","deleteFlg":"0","hasChild":false},{"resourceId":16,"resourceName":"904","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":17,"resourceName":"905","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":18,"resourceName":"906","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":19,"resourceName":"907","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":20,"resourceName":"908","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":21,"resourceName":"909","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":22,"resourceName":"910","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":23,"resourceName":"911","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":24,"resourceName":"912","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":25,"resourceName":"913","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":26,"resourceName":"914","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false},{"resourceId":27,"resourceName":"915","resourceType":"01","dbLink":"22222","dbUser":"22222","dbPasswd":"222222","deleteFlg":"0","hasChild":false}];
+	                _cache = resourceJson;
+	                param.data = _cache;
+	                store.filterData(param);
+	            });
+	        } else {
+	            //不刷新数据，仅用当前数据过滤
+	            console.log("---------------do not refresh-----------------");
+	            param.data = _cache;
+	            store.filterData(param);
+	        }
+	    },
+	    onDelete: function onDelete(ids) {
+	        // console.log("delete Obj",ids);
+
+	        var idList = [];
+	        var idSplit = ids.split(',');
+	        for (var p in idSplit) {
+	            idList[p] = idSplit[p];
+	        }
+
+	        var bodyString = JSON.stringify(idSplit);
+	        console.log("onDelete body" + bodyString);
+
+	        var options = {
+	            host: '192.168.120.156',
+	            port: 8081,
+	            path: '/deleteTableMapping',
+	            method: 'POST',
+	            headers: {
+	                'Content-Type': 'application/json',
+	                'Content-Length': bodyString.length
+	            }
+	        };
+
+	        var req = http.request(options, function (res) {
+	            res.setEncoding('utf-8');
+	            var result;
+	            res.on('data', function (data) {
+	                result = data;
+	            });
+
+	            res.on('end', function () {
+	                //这里接收的参数是字符串形式,需要格式化成json格式使用
+	                var resultObject = JSON.parse(result);
+	                console.log('-----resBody-----' + result);
+	                this.deleteOk = true;
+	                store.onSearch({
+	                    page: 0,
+	                    querystring: "",
+	                    refresh: true //是否后台刷新数据
+	                });
+	            });
+	        }).on('error', function (e) {
+	            console.log('-----error-------' + e.toString());
+	            message = e.toString();
+	            this.deleteOk = false;
+	            //TODO 刷新数据 ?
+	            console.log("-------onDelete----------this.currentPage--------" + this.currentPage);
+	            console.log("-------onDelete----------this.deleteOk-------" + this.deleteOk);
+	        });
+	        req.write(bodyString);
+	        console.log('-----bodyString-------' + req);
+	        req.end();
+
+	        // this.deleteOk = true;
+	        // store.onSearch({//todo for localtdev
+	        //     page: 0,//TODO
+	        //     querystring: "",//TODO
+	        //     refresh: false //是否后台刷新数据
+	        // });
+	    },
+	    filterData: function filterData(params) {
+	        //TODO 抽取为共通
+	        console.log("------resourceSearch-------");
+	        this.searchParams.querystring = params.querystring || "";
+	        this.searchParams.currentPage = params.page || 0;
+	        var filterRows = tools.filterRowsByColumns({
+	            rows: params.data,
+	            querystring: this.searchParams.querystring,
+	            columns: ["tableName", "tableNameView"]
+	        });
+	        //console.log(filterRows.length);
+	        var newRows = tools.getNextPageRows(filterRows, this.searchParams.currentPage, pageSize);
+	        //console.log(newRows.length,filterRows.length);
+	        console.log("---------trigger-----------rowsTotoal:" + filterRows.length);
+	        console.log("---------trigger-----------deleteOk:" + this.deleteOk);
+	        console.log("---------trigger-----------currentPage:" + this.searchParams.currentPage);
+	        console.log("---------trigger-----------msg:" + message);
+	        //
+	        this.trigger({
+	            rows: newRows,
+	            rowsTotoal: filterRows.length,
+	            deleteOk: this.deleteOk,
+	            currentPage: this.searchParams.currentPage,
+	            msg: message
+	        });
+	        // this.deleteOk = false;
+	        message = null;
+	    }
+	});
+
+	module.exports = store;
+
+/***/ },
+/* 714 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {/*
+	  ColumnMappingList管理
+	  zhoujiang 20160321
+	 */
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var Reflux = __webpack_require__(173);
+	var PageRouterActions = __webpack_require__(195);
+	var PageRouterStore = __webpack_require__(196);
+	var Actions = __webpack_require__(715);
+	var Store = __webpack_require__(716);
+	var Router = __webpack_require__(199);
+	var Navigation = __webpack_require__(199).Navigation;
+	var Link = __webpack_require__(199).Link;
+	var _ = __webpack_require__(372);
+	var Gritter = __webpack_require__(433);
+	var Route = Router.Route;
+	var DefaultRoute = Router.DefaultRoute;
+	var RouteHandler = Router.RouteHandler;
+	var Link = Router.Link;
+
+	var Table = __webpack_require__(426);
+	var TableStore = __webpack_require__(431);
+	var Column = __webpack_require__(436);
+
+	'use strict';
+
+	var mode; //"add","edit","view"
+	var resourceId; //TODO 使用prop
+	var tableMappingId; //TODO 使用prop
+	var tableName; //TODO 使用prop
+	var tableNameView; //TODO 使用prop
+	var delColumns = ""; // TODO
+
+	var page = React.createClass({
+	    displayName: 'page',
+
+	    mixins: [Reflux.listenTo(Store, "onStatusChange"), React.addons.LinkedStateMixin, Navigation, Reflux.listenTo(PageRouterStore, "")
+	    // Reflux.connect(TableStore, "tableState")//绑定Tablestore的数据
+	    ],
+	    getInitialState: function getInitialState() {
+
+	        resourceId = this.props.params.resourceId;
+	        tableMappingId = this.props.params.tableMappingId;
+	        tableName = this.props.params.tableName;
+	        tableNameView = this.props.params.tableNameView;
+
+	        mode = this.props.params.mode;
+	        if (mode === "edit") {
+	            Actions.searchResource();
+	            Actions.searchTable(resourceId);
+	            Actions.searchColumnMapping(tableMappingId);
+	        } else if (mode === "add") {
+	            Actions.searchResource();
+	            // Actions.searchTable("4");
+	            // Actions.searchColumn("1");
+	        }
+	        // this.state.resourceId = this.props.params.resourceId;
+	        return {};
+	    },
+	    onStatusChange: function onStatusChange(resultData) {
+	        console.log("onStatusChange--->" + resultData);
+	        var saveOk = resultData.saveOk;
+	        var connectOk = resultData.connectOk;
+
+	        this.state.resourceId = resourceId;
+	        this.state.tableMappingId = tableMappingId;
+	        this.state.tableName = tableName;
+	        if (mode === "add") {
+	            this.state.tableNameView = "";
+	        } else {
+	            this.state.tableNameView = tableNameView;
+	        }
+
+	        //动态添加option到select资源名称中
+
+	        var resourceListOptions = [];
+	        var i = 1;
+	        resourceListOptions[0] = React.createElement('option', { value: "none" }, "请选择资源名称");
+	        for (var p in resultData.resourceList) {
+	            if (mode === "edit") {
+	                if (resultData.resourceList[p].resourceId == resourceId) {
+	                    resourceListOptions[0] = React.createElement('option', { value: resultData.resourceList[p].resourceId }, resultData.resourceList[p].resourceName);
+	                    this.state.resourceListOptions = resourceListOptions;
+	                }
+	            } else if (mode === "add") {
+	                resourceListOptions[i] = React.createElement('option', { value: resultData.resourceList[p].resourceId }, resultData.resourceList[p].resourceName);
+	                // if(i == 4){
+	                //     resourceListOptions[i].selected = selected;
+	                // }
+	                i++;
+	            }
+	        }
+	        if (mode === "add") {
+	            if (resourceListOptions.length > 1) {
+	                this.state.resourceListOptions = resourceListOptions;
+	                // this.refs.resourceList.getDOMNode().defaultValue = "4";
+	            }
+	        }
+
+	        //动态添加option到select数据库表物理名中
+	        var tableListOptions = [];
+
+	        if (mode === "edit") {
+	            tableListOptions[0] = React.createElement('option', { value: tableName }, tableName);
+	            this.state.tableListOptions = tableListOptions;
+	        } else if (mode === "add") {
+	            i = 1;
+	            tableListOptions[0] = React.createElement('option', { value: "none" }, "请选择数据库表物理名");
+	            for (var p in resultData.tableList) {
+	                tableListOptions[i] = React.createElement('option', { value: resultData.tableList[p] }, resultData.tableList[p]);
+	                i++;
+	            }
+	            if (tableListOptions.length > 1) {
+	                this.state.tableListOptions = tableListOptions;
+	            }
+	        }
+
+	        //动态添加option到select数据库列物理名中
+	        var columnListOptions = [];
+	        i = 1;
+	        columnListOptions[0] = React.createElement('option', { value: "none" }, "请选择列物理名");
+	        for (var p in resultData.columnList) {
+	            columnListOptions[i] = React.createElement('option', { value: resultData.columnList[p] }, resultData.columnList[p]);
+	            i++;
+	        }
+	        if (columnListOptions.length > 1) {
+	            this.state.columnListOptions = columnListOptions;
+	            console.log("数据库表物理名Select加载完成!");
+	            // 刷新grid
+	            if (mode === "add") {
+	                resultData.columnMappingList = [];
+	                for (var p in resultData.columnList) {
+	                    resultData.columnMappingList.push({ "xh": resultData.columnMappingList.length, "columnListOptions": this.state.columnListOptions, "columnMappingId": 0, "tableMappingId": 1, "columnName": resultData.columnList[p], "columnNameView": "", "columnType": "", "jasonName": "", "seqName": "", "txtValue": "", "dateFormat": "" });
+	                }
+	            }
+	        }
+
+	        if (resultData.columnMappingList) {
+	            if (mode === "edit") {
+	                // if(this.state.columnListOptions.length <= 1){
+	                Actions.searchColumn(tableName);
+	                // }
+	            }
+
+	            //TODO 生成序号
+	            for (var p in resultData.columnMappingList) {
+	                resultData.columnMappingList[p].xh = p;
+	                // deleteXHMap[p] = false;
+	                //写入columnName
+	                if (resultData.columnMappingList[p].columnName !== "") {
+	                    resultData.columnMappingList[p].columnListOptions = React.createElement('option', { value: resultData.columnMappingList[p].columnName }, resultData.columnMappingList[p].columnName);
+	                } else {
+	                    resultData.columnMappingList[p].columnListOptions = this.state.columnListOptions;
+	                }
+	            }
+	            // deleteXHMap.length = resultData.columnMappingList.length;
+	            this.setState({
+	                columnMappingList: resultData.columnMappingList,
+	                rowsTotoal: resultData.columnMappingList.length,
+	                deleteOk: null,
+	                currentPage: 0
+	            }, function () {
+	                if (typeof saveOk === "undefined") {} else if (saveOk) {
+	                    Gritter.add({
+	                        title: '提示',
+	                        text: '保存成功！' + _.values(resultData.tableObj),
+	                        //image: 'assets/avatars/avatar.png',
+	                        sticky: false,
+	                        time: '2000',
+	                        class_name: 'gritter-light '
+	                    });
+	                } else if (!saveOk) {
+	                    Gritter.add({
+	                        title: '警告',
+	                        text: '保存失败！',
+	                        //image: 'assets/avatars/avatar.png',
+	                        sticky: false,
+	                        time: '2000',
+	                        class_name: 'gritter-warning '
+	                    });
+	                }
+	            });
+	        } else {
+	            // if(addRefreshFlg){
+	            //     this.setState({               
+	            //         columnMappingList: [],
+	            //         rowsTotoal: 0,
+	            //         deleteOk: null,
+	            //         currentPage: 0
+	            //     });
+	            // }
+	            this.setState({});
+	        }
+	    },
+	    rowGetter: function rowGetter(rowIndex) {
+	        //console.log(rowIndex);
+	        return this.state.columnMappingList[rowIndex];
+	    },
+	    saveHandler: function saveHandler() {
+	        console.log("global.tableDate", global.tableDate);
+	        //
+	        // this.validateForm("resourceName");
+	        // this.validateForm("resourceType");
+	        // this.validateForm("dbLink");
+	        // this.validateForm("dbUser");
+	        // this.validateForm("dbPasswd");
+
+	        // if (!_.isEmpty(this.state.nameValidateMessage)
+	        //     || !_.isEmpty(this.state.typeValidateMessage)
+	        //     || !_.isEmpty(this.state.dbLinkValidateMessage)
+	        //     || !_.isEmpty(this.state.dbUserValidateMessage)
+	        //     || !_.isEmpty(this.state.dbPasswdValidateMessage)) {
+	        //     return;
+	        // }
+	        //resourceId
+	        // var resourceId = this.state.resourceId;
+	        // var tableMappingId = this.state.tableMappingId;
+	        // var tableName = this.state.tableName;
+	        // var tableNameView = this.state.tableNameView;
+	        //
+	        //
+	        // TODO getDataFromTable
+
+	        // console.log(this.state.tableState.myTableData);
+	        console.log("============doSave==============");
+	        //获取table数据
+	        var myTableDataString = $("#myTableDataString")[0].innerHTML;
+	        console.log("myTableDataString-->" + myTableDataString);
+	        var myTableData = JSON.parse(myTableDataString);
+
+	        if (mode == "add") {
+	            //新增时 所有的Column列表都是新增对象
+
+	            Actions.add({
+	                resourceId: this.state.resourceId,
+	                tableName: this.state.tableName,
+	                tableNameView: this.state.tableNameView,
+	                deleteFlg: "0"
+	            }, myTableData);
+	        } else if (mode == "edit") {
+	            var addColumns = [];
+	            var updColumns = [];
+	            // var delColumns = [];
+	            for (var p in myTableData) {
+	                if (myTableData[p].columnMappingId === 0) {
+	                    //columnMappingId为0的是新增对象
+	                    addColumns.push(myTableData[p]);
+	                } else {
+	                    //columnMappingId不为0的是更新对象
+	                    updColumns.push(myTableData[p]);
+	                }
+	            }
+
+	            Actions.upd({
+	                tableMappingId: this.props.params.tableMappingId,
+	                resourceId: resourceId,
+	                tableName: tableName,
+	                tableNameView: this.state.tableNameView,
+	                deleteFlg: "0"
+	            }, addColumns, updColumns, delColumns);
+	        }
+	    },
+	    // TODO
+	    validateForm: function validateForm(columnName) {
+	        console.log("validateForm", columnName, this.state[columnName]);
+	        var flag = true;
+	        var value = this.state[columnName];
+	        switch (columnName) {
+	            // case "resourceName":
+	            //     if (_.isEmpty(value)) {
+	            //         this.setState({"nameValidateMessage": "请输入资源名称"});
+	            //         flag = false;
+	            //     } else if (value.length > 20) {
+	            //         this.setState({"nameValidateMessage": "资源名称的字数不能大于20"});
+	            //         flag = false
+	            //     } else {
+	            //         this.setState({"nameValidateMessage": ""});
+	            //     }
+	            //     break;
+	            // case "resourceType":
+	            //     if (_.isEmpty(value)) {
+	            //         this.setState({"typeValidateMessage": "请选择资源种类"});
+	            //         flag = false;
+	            //     } else {
+	            //         this.setState({"typeValidateMessage": ""});
+	            //     }
+	            //     break;
+
+	            default:
+	                break;
+	        }
+	        return flag;
+	    },
+	    componentDidMount: function componentDidMount() {
+	        //console.log("componentDidMount");
+
+	        $('#id-date-picker').datepicker({
+	            autoclose: true,
+	            todayHighlight: true
+	        });
+	    },
+	    selectTableHandler: function selectTableHandler() {
+	        // 根据数据库表物理名查询数据库列物理名，并刷新列表
+	        this.state.tableName = event.target.value;
+	        // this.state.tableNameView = this.state.tableName;
+	        // this.refs.tableNameView.value = this.state.tableNameView;
+	        //
+	        if (this.state.tableName !== "none") {
+	            Actions.searchColumn(this.state.tableName);
+	        }
+	    },
+	    selectResourceHandler: function selectResourceHandler() {
+	        //根据resourceId查询TabList
+	        this.state.resourceId = event.target.value;
+	        if (this.state.resourceId !== "none") {
+	            Actions.searchTable(this.state.resourceId);
+	        }
+	    },
+	    resourceListRender: function resourceListRender() {
+	        console.log("---------------resourceListRender---------------");
+	        return "";
+	    },
+	    _onRowClick: function _onRowClick(event, rowId, rowData, checked) {
+	        console.log("_onRowClick--->" + checked);
+	        if (typeof checked === "undefined") {
+	            checked = false;
+	        }
+	        // if(!checked){
+	        //     deleteXHMap[rowId] = true;
+	        // }
+	        // console.log("deleteXHMap[rowId]=--->"+deleteXHMap[rowId]);
+
+	        Gritter.add({
+	            title: '单击信息' + !checked,
+	            text: rowData.columnMappingId + "/" + rowData.columnName + "/" + rowData.columnNameView + "/" + checked,
+	            image: 'assets/avatars/avatar.png',
+	            sticky: false,
+	            time: '2000',
+	            class_name: 'gritter-info gritter-light'
+	        });
+	    },
+	    _addHandler: function _addHandler() {
+	        //TODO check 必须选择数据库表物理名
+	        //添加1行空数据
+	        Actions.addRow(this.state.columnMappingList);
+	    },
+	    _handleDeleteColumnClick: function _handleDeleteColumnClick(param) {
+	        var selectedString = $("#selectedRowIds")[0].innerHTML;
+	        // console.log("selectedRowIds in _handleDeleteClick", _.isUndefined(selectedString), selecteds);
+	        //
+	        //
+	        if (_.isUndefined(selectedString) || _.isEmpty(selectedString)) {
+	            Gritter.add({
+	                title: '提示',
+	                text: '至少选择一条记录！',
+	                //image: 'assets/avatars/avatar.png',
+	                sticky: false,
+	                time: '4000',
+	                class_name: 'gritter-light '
+	            });
+	            //this.handleToggle();
+	            return;
+	        }
+
+	        var deleteRows = selectedString.split(',');
+
+	        var columnMappingList = [];
+	        columnMappingList = this.state.columnMappingList;
+	        var i = 0;
+
+	        for (var p in deleteRows) {
+
+	            var delno = deleteRows[p] - i;
+	            console.log("-------------delno--------------" + delno + "----" + columnMappingList[delno].columnMappingId);
+	            if (columnMappingList[delno].columnMappingId > 0) {
+	                if (delColumns === "") {
+	                    delColumns = columnMappingList[delno].columnMappingId;
+	                } else {
+	                    delColumns = delColumns + "," + columnMappingList[delno].columnMappingId;
+	                }
+	            }
+	            columnMappingList.splice(delno, 1);
+	            i++;
+	        }
+	        // this.state.columnMappingList = columnMappingList;
+	        // columnMappingList= [
+	        //     {"xh":0,"columnMappingId":1,"tableMappingId":1,"columnName":"columnName1","columnNameView":"columnNameView11","columnType":"columnType11","jasonName":"jasonName1","seqName":"seqName1","txtValue":"txtValue1","dateFormat":"dateFormat11"},
+	        //         {"xh":1,"columnMappingId":3,"tableMappingId":1,"columnName":"columnName2","columnNameView":"columnNameView2222","columnType":"columnType22","jasonName":"jasonName2","seqName":"seqName2","txtValue":"txtValue2","dateFormat":"dateFormat22"},
+	        //         {"xh":2,"columnMappingId":4,"tableMappingId":1,"columnName":"columnName3","columnNameView":"columnNameView3333","columnType":"columnType33","jasonName":"jasonName3","seqName":"seqName3","txtValue":"txtValue3","dateFormat":"dateFormat33"}
+	        //         ];
+	        console.log(JSON.stringify(columnMappingList));
+	        this.onStatusChange({ columnMappingList: columnMappingList });
+	    },
+	    render: function render() {
+
+	        var nameValidateMessage = this.state.nameValidateMessage;
+	        var classnameForName = null;
+	        var nameValidateIcon = null;
+	        var errMsgForName = null;
+	        if (_.isUndefined(nameValidateMessage)) {
+	            classnameForName = "form-group";
+	        } else if (_.isEmpty(nameValidateMessage)) {
+	            classnameForName = "form-group has-success";
+	            errMsgForName = null;
+	            nameValidateIcon = React.createElement('i', { className: 'ace-icon fa fa-check-circle' });
+	        } else {
+	            classnameForName = "form-group has-error";
+	            errMsgForName = React.createElement(
+	                'div',
+	                { className: 'help-block col-xs-12 col-sm-reset inline' },
+	                ' ',
+	                nameValidateMessage,
+	                ' '
+	            );
+	            nameValidateIcon = React.createElement('i', { className: 'ace-icon fa fa-times-circle' });
+	        }
+
+	        // resourceListOptions[0] = React.createElement('option',
+	        //     {value: "none"},"请选择资源名称");
+
+	        // //动态添加option到select中
+	        // for(var p in this.state.resourceList){
+	        //     resourceListOptions[p+1] = React.createElement(
+	        //         'option',
+	        //         {value: this.state.resourceList[p].resourceId},
+	        //         this.state.resourceList[p].resourceName);
+	        // }
+
+	        // // TODO 需要封装
+	        var typeValidateMessage = this.state.typeValidateMessage;
+	        var typeclassnameForName = null;
+	        var typeValidateIcon = null;
+	        var typeerrMsgForName = null;
+	        if (_.isUndefined(typeValidateMessage)) {
+	            typeclassnameForName = "form-group";
+	        } else if (_.isEmpty(typeValidateMessage)) {
+	            typeclassnameForName = "form-group has-success";
+	            typeerrMsgForName = null;
+	            typeValidateIcon = React.createElement('i', { className: 'ace-icon fa fa-check-circle' });
+	        } else {
+	            typeclassnameForName = "form-group has-error";
+	            typeerrMsgForName = React.createElement(
+	                'div',
+	                { className: 'help-block col-xs-12 col-sm-reset inline' },
+	                ' ',
+	                typeValidateMessage,
+	                ' '
+	            );
+	            typeValidateIcon = React.createElement('i', { className: 'ace-icon fa fa-times-circle' });
+	        }
+
+	        var dbLinkValidateMessage = this.state.dbLinkValidateMessage;
+	        var dbLinkclassnameForName = null;
+	        var dbLinkValidateIcon = null;
+	        var dbLinkerrMsgForName = null;
+	        if (_.isUndefined(dbLinkValidateMessage)) {
+	            dbLinkclassnameForName = "form-group";
+	        } else if (_.isEmpty(dbLinkValidateMessage)) {
+	            dbLinkclassnameForName = "form-group has-success";
+	            dbLinkerrMsgForName = null;
+	            dbLinkValidateIcon = React.createElement('i', { className: 'ace-icon fa fa-check-circle' });
+	        } else {
+	            dbLinkclassnameForName = "form-group has-error";
+	            dbLinkerrMsgForName = React.createElement(
+	                'div',
+	                { className: 'help-block col-xs-12 col-sm-reset inline' },
+	                ' ',
+	                dbLinkValidateMessage,
+	                ' '
+	            );
+	            dbLinkValidateIcon = React.createElement('i', { className: 'ace-icon fa fa-times-circle' });
+	        }
+
+	        this.table = React.createElement(Table, {
+	            rowGetter: this.rowGetter, //获得记录数据，每页都从0开始
+	            rowsTotoal: this.state.rowsTotoal, //记录总数
+	            currentPage: this.state.currentPage, //当前页码，从0开始
+	            headerDataGetter: this._headerDataGetter, //表头格式化方法
+	            onRowClick: this._onRowClick, //记录行单击事件
+	            onRowDblClick: this._onRowDblClick, //记录行双击事件
+	            onNavigationBtnClick: this._onNavigationBtnClick, //分页事件
+	            rowIdColumn: "xh", //唯一标识每行记录的字段
+	            rowSelected: false, //选择一行是否触发checkbox
+	            id: "columnMappingTable"
+	        }, [React.createElement(Column, { dataKey: 'checkbox', label: '', inputType: 'checkbox', onChange: this.checkBoxClick }), React.createElement(Column, { dataKey: 'xh', label: '序号' }), React.createElement(Column, { label: 'ColID', dataKey: 'columnMappingId', width: 10 }), React.createElement(Column, { label: 'TabID', dataKey: 'tableMappingId', width: 10 }), React.createElement(Column, { label: '数据库列逻辑名', dataKey: 'columnNameView', inputType: 'text', width: 10 }), React.createElement(Column, { label: '数据库列物理名', dataKey: 'columnListOptions', inputType: 'select', width: 10 }), React.createElement(Column, { label: '数据库列类型', dataKey: 'columnType', inputType: 'text', width: 10 }), React.createElement(Column, { label: 'JASON项目名', dataKey: 'jasonName', inputType: 'text', width: 10 }), React.createElement(Column, { label: 'SEQ自定义项目', dataKey: 'seqName', inputType: 'text', width: 10 }), React.createElement(Column, { label: '固定文字自定义项目', dataKey: 'txtValue', inputType: 'text', width: 10 }), React.createElement(Column, { label: '日期自定义项目', dataKey: 'dateFormat', inputType: 'text', width: 10 })]);
+
+	        return React.createElement(
+	            'div',
+	            { className: 'row' },
+	            React.createElement(
+	                'div',
+	                { className: 'col-xs-12' },
+	                React.createElement(
+	                    'div',
+	                    { className: 'clearfix form-actions' },
+	                    React.createElement(
+	                        'button',
+	                        { className: 'btn btn-info', type: 'button', onClick: this.saveHandler },
+	                        React.createElement('i', { className: 'ace-icon fa fa-check' }),
+	                        '保存'
+	                    )
+	                ),
+	                React.createElement(
+	                    'form',
+	                    { role: 'form' },
+	                    React.createElement(
+	                        'div',
+	                        { className: classnameForName },
+	                        React.createElement(
+	                            'label',
+	                            { htmlFor: 'name', className: 'col-xs-1 col-sm-1 col-md-1 control-label ' },
+	                            ' 资源名称 '
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'col-xs-2 col-sm-2' },
+	                            React.createElement(
+	                                'span',
+	                                { className: 'block input-icon input-icon-right' },
+	                                React.createElement(
+	                                    'select',
+	                                    { id: 'resourceList', ref: 'resourceList', className: 'width-100', onChange: this.selectResourceHandler },
+	                                    this.state.resourceListOptions
+	                                ),
+	                                nameValidateIcon
+	                            )
+	                        )
+	                    ),
+	                    React.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        React.createElement(
+	                            'label',
+	                            { htmlFor: 'tableName', className: 'col-xs-2 col-sm-1 col-md-2 control-label' },
+	                            ' 数据库表物理名 '
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'col-xs-2 col-sm-2' },
+	                            React.createElement(
+	                                'span',
+	                                { className: 'block input-icon input-icon-right' },
+	                                React.createElement(
+	                                    'select',
+	                                    { id: 'tableName', className: 'width-100', onBlur: this.validateForm.bind(this, "tableName"), onChange: this.selectTableHandler },
+	                                    this.state.tableListOptions
+	                                ),
+	                                typeValidateIcon
+	                            )
+	                        ),
+	                        typeerrMsgForName
+	                    ),
+	                    React.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        React.createElement(
+	                            'label',
+	                            { htmlFor: 'tableNameView', className: 'col-xs-2 col-sm-3 col-md-2 control-label' },
+	                            ' 数据库表逻辑名 '
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'col-xs-2 col-sm-3' },
+	                            React.createElement(
+	                                'span',
+	                                { className: 'block input-icon input-icon-right' },
+	                                React.createElement('input', { type: 'text', ref: 'tableNameView', id: 'tableNameView', className: 'width-100', valueLink: this.linkState('tableNameView'), onBlur: this.validateForm.bind(this, "tableNameView"), placeholder: '数据库表逻辑名' }),
+	                                dbLinkValidateIcon
+	                            )
+	                        ),
+	                        dbLinkerrMsgForName
+	                    ),
+	                    React.createElement('div', { className: 'space-6' })
+	                ),
+	                React.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    React.createElement(
+	                        'div',
+	                        { className: 'col-xs-6' },
+	                        React.createElement(
+	                            'button',
+	                            { className: 'btn btn-sm btn-white btn-info btn-round', onClick: this._addHandler },
+	                            React.createElement('i', { className: 'ace-icon fa fa-plus-circle blue bigger-120 ' }),
+	                            '新增'
+	                        ),
+	                        ' ',
+	                        React.createElement(
+	                            'button',
+	                            { className: 'btn btn-sm btn-white btn-warning btn-round', onClick: this._handleDeleteColumnClick },
+	                            React.createElement('i', { className: 'ace-icon fa fa-trash-o bigger-120 orange' }),
+	                            '删除'
+	                        )
+	                    )
+	                ),
+	                React.createElement('div', { className: 'space-6' }),
+	                this.table
+	            )
+	        );
+	        //console.log("state", this.state);
+	    }
+	});
+	module.exports = page;
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 715 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Reflux = __webpack_require__(173);
+	'use strict';
+
+	var actions = Reflux.createActions(["init", "searchResource", "searchTable", "searchColumn", "searchTableMapping", "searchColumnMapping", "add", "upd", "addRow", "delRow"]);
+
+	module.exports = actions;
+
+/***/ },
+/* 716 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Reflux = __webpack_require__(173);
+	var Actions = __webpack_require__(715);
+	var ListStore = __webpack_require__(668);
+	var httpUtil = __webpack_require__(669);
+	var http = __webpack_require__(670);
+
+	'use strict';
+
+	var store = Reflux.createStore({
+	    listenables: [Actions],
+
+	    // getInitialState: function () {
+	    //     return {};
+	    // },
+	    onInit: function onInit(tableMappingId) {
+	        console.log("onInit---->" + resourceId);
+	        http.get("http://192.168.120.156:8081/tableMapping?TableMappingId=" + tableMappingId, function (res) {
+	            var json;
+	            res.on('data', function (d) {
+	                json = JSON.parse(d);
+	            });
+	            res.on('end', function () {
+	                store.trigger({
+	                    obj: json
+	                });
+	            });
+	        }).on('error', function (e) {
+	            console.error(e);
+	            // store.trigger({
+	            // obj: {"resourceId":4,"resourceName":"测试DB20170324","resourceType":"01","dbLink":"jdbc:mysql://192.168.120.156:3306/test","dbUser":"huhu","dbPasswd":"test","deleteFlg":"0","hasChild":true}
+	            // });
+	        });
+
+	        // store.trigger({
+	        // obj: {"resourceId":4,"resourceName":"测试DB20170324","resourceType":"01","dbLink":"jdbc:mysql://192.168.120.156:3306/test","dbUser":"huhu","dbPasswd":"test","deleteFlg":"0","hasChild":true}
+	        // });
+	    },
+	    onSearchResource: function onSearchResource() {
+	        http.get("http://192.168.120.156:8081/resourceList?WithNoValid=0&ResourceFlg=1", function (res) {
+	            var json = "";
+	            res.on('data', function (d) {
+	                json += d;
+	            });
+	            res.on('end', function () {
+	                json = JSON.parse(json);
+	                console.log("do onSearchResource-----------" + json);
+	                store.trigger({
+	                    resourceList: json
+	                });
+	            });
+	        }).on('error', function (e) {
+	            console.error(e.toString());
+	            //message = e.toString();
+	        });
+
+	        // store.trigger({
+	        //             resourceList:[{"resourceId":1,"resourceName":"resource01"},{"resourceId":2,"resourceName":"resource02"},{"resourceId":3,"resourceName":"resource03"},{"resourceId":4,"resourceName":"resource04"}]
+	        // });
+	    },
+	    onSearchTable: function onSearchTable(resourceId) {
+	        http.get("http://192.168.120.156:8081/tableList?ResourceId=" + resourceId, function (res) {
+	            var json = "";
+	            res.on('data', function (d) {
+	                json += d;
+	            });
+	            res.on('end', function () {
+	                json = JSON.parse(json);
+	                console.log("do onSearchTable-----------" + json);
+	                store.trigger({
+	                    tableList: json
+	                });
+	            });
+	        }).on('error', function (e) {
+	            console.error(e.toString());
+	            //message = e.toString();
+	        });
+	        // store.trigger({
+	        //             tableList:["table01","table02","table03","table04"]
+	        //         });
+	    },
+	    onSearchColumn: function onSearchColumn(tableMappingId) {
+	        http.get("http://192.168.120.156:8081/columnList?TableMappingId=" + tableMappingId, function (res) {
+	            var json = "";
+	            res.on('data', function (d) {
+	                json += d;
+	            });
+	            res.on('end', function () {
+	                json = JSON.parse(json);
+	                console.log("do onSearchColumn-----------" + json);
+	                store.trigger({
+	                    columnList: json
+	                });
+	            });
+	        }).on('error', function (e) {
+	            console.error(e.toString());
+	            //message = e.toString();
+	        });
+	        // store.trigger({
+	        //             columnList:["column01","column02","column03","column04"]
+	        //             // {"columnName":"column01"},
+	        //             // {"columnName":"column02"},
+	        //             // {"columnName":"column03"},
+	        //             // {"columnName":"column04"}]
+	        //         });
+	    },
+	    onSearchColumnMapping: function onSearchColumnMapping(tableMappingId) {
+	        http.get("http://192.168.120.156:8081/columnMappingList?TableMappingId=" + tableMappingId, function (res) {
+	            var json = "";
+	            res.on('data', function (d) {
+	                json += d;
+	            });
+	            res.on('end', function () {
+	                json = JSON.parse(json);
+	                console.log("do onSearchColumnMapping-----------" + json);
+	                store.trigger({
+	                    columnMappingList: json
+	                });
+	            });
+	        }).on('error', function (e) {
+	            console.error(e.toString());
+	            //message = e.toString();
+	        });
+	        // store.trigger({
+	        //         columnMappingList:[
+	        //         {"xh":0,"columnMappingId":1,"tableMappingId":1,"columnName":"columnName1","columnNameView":"columnNameView11","columnType":"columnType11","jasonName":"jasonName1","seqName":"seqName1","txtValue":"txtValue1","dateFormat":"dateFormat11"},
+	        //         {"xh":1,"columnMappingId":3,"tableMappingId":1,"columnName":"columnName2","columnNameView":"columnNameView2222","columnType":"columnType22","jasonName":"jasonName2","seqName":"seqName2","txtValue":"txtValue2","dateFormat":"dateFormat22"},
+	        //         {"xh":2,"columnMappingId":4,"tableMappingId":1,"columnName":"columnName3","columnNameView":"columnNameView3333","columnType":"columnType33","jasonName":"jasonName3","seqName":"seqName3","txtValue":"txtValue3","dateFormat":"dateFormat33"}]
+	        // });
+	    },
+	    onAddRow: function onAddRow(columnMappingList) {
+	        var newList = columnMappingList || [];
+	        newList.push({ "xh": columnMappingList.length, "columnMappingId": 0, "tableMappingId": 1, "columnName": "", "columnNameView": "", "columnType": "", "jasonName": "", "seqName": "", "txtValue": "", "dateFormat": "" });
+	        store.trigger({
+	            columnMappingList: newList
+	        });
+	    },
+	    onDelRow: function onDelRow(columnMappingList, deleteRows) {
+
+	        var newList = [];
+	        newList = columnMappingList;
+	        var i = 0;
+	        for (var p in deleteRows) {
+	            var delno = deleteRows[p] - i;
+	            // console.log("-------------delno--------------"+delno+"----"+columnMappingList[delno].columnMappingId);
+	            columnMappingList.splice(0, 1);
+	            i++;
+	        }
+	        //   store.trigger({
+	        //     columnMappingList:newList
+	        // });
+	        store.trigger({ //TODO 其挂了
+	            columnMappingList: [{ "xh": 1, "columnMappingId": 3, "tableMappingId": 1, "columnName": "columnName2", "columnNameView": "columnNameView2222", "columnType": "columnType22", "jasonName": "jasonName2", "seqName": "seqName2", "txtValue": "txtValue2", "dateFormat": "dateFormat22" }, { "xh": 2, "columnMappingId": 4, "tableMappingId": 1, "columnName": "columnName3", "columnNameView": "columnNameView3333", "columnType": "columnType33", "jasonName": "jasonName3", "seqName": "seqName3", "txtValue": "txtValue3", "dateFormat": "dateFormat33" }]
+	        });
+	    },
+	    onAdd: function onAdd(tableObj, addColumns) {
+	        // console.log("Add tableObj", tableObj);
+	        var bodyString = JSON.stringify(tableObj);
+	        // console.log("start body" + bodyString);
+
+	        var options = {
+	            host: '192.168.120.156', port: 8081, path: '/newTableMapping', method: 'POST',
+	            headers: { 'Content-Type': 'application/json', 'Content-Length': bodyString.length }
+	        };
+
+	        var req = http.request(options, function (res) {
+	            res.setEncoding('utf-8');
+	            var result = '';
+	            res.on('data', function (data) {
+	                result = data;
+	            });
+
+	            res.on('end', function () {
+	                //这里接收的参数是字符串形式,需要格式化成json格式使用
+	                var resultObject = JSON.parse(result);
+	                console.log('-----resBody-----', result);
+	                store.trigger({
+	                    tableObj: tableObj,
+	                    saveOk: true
+	                });
+	                //新增成功，开始新增columnMapping
+	                for (var p in addColumns) {
+	                    addColumns[p].tableMappingId = result;
+	                    doAddColumn(addColumns[p]);
+	                }
+	            });
+	            res.on('error', function (e) {
+	                // TODO: handle error.
+	                console.log('-----error-------', e.toString());
+	                store.trigger({
+	                    tableObj: e.toString(),
+	                    saveOk: false
+	                });
+	            });
+	        });
+	        req.write(bodyString);
+	        console.log('-----bodyString-------', req);
+	        req.end();
+
+	        // store.trigger({
+	        //     obj: "",
+	        //     saveOk: true
+	        // });
+	    },
+	    onUpd: function onUpd(tableObj, addColumns, updColumns, delColumns) {
+	        // console.log("Edit tableObj", tableObj);
+	        var bodyString = JSON.stringify(tableObj);
+	        // console.log("start body" + bodyString);
+
+	        var options = {
+	            host: '192.168.120.156',
+	            port: 8081,
+	            path: '/saveTableMapping',
+	            method: 'POST',
+	            headers: {
+	                'Content-Type': 'application/json',
+	                'Content-Length': bodyString.length
+	            }
+	        };
+
+	        var req = http.request(options, function (res) {
+	            res.setEncoding('utf-8');
+	            var result = '';
+	            res.on('data', function (data) {
+	                result = data;
+	            });
+	            res.on('end', function () {
+	                //这里接收的参数是字符串形式,需要格式化成json格式使用
+	                var resultObject = JSON.parse(result);
+	                console.log('-----resBody-----', result);
+	                store.trigger({
+	                    tableObj: tableObj,
+	                    saveOk: true
+	                });
+	                //保存成功，开始新增columnMapping
+	                for (var p in addColumns) {
+	                    doAddColumn(addColumns[p]);
+	                }
+	                //保存成功，开始新增columnMapping
+	                for (var p in addColumns) {
+	                    addColumns[p].tableMappingId = result;
+	                    doUpdColumn(addColumns[p]);
+	                }
+	                //保存成功，开始更新columnMapping
+	                for (var p in updColumns) {
+	                    doAddColumn(updColumns[p]);
+	                }
+	                //保存成功，开始删除columnMapping
+	                doDelColumn(delColumns);
+	            });
+	            res.on('error', function (e) {
+	                // TODO: handle error.
+	                console.log('-----error-------', e.toString());
+	                store.trigger({
+	                    tableObj: e.toString(),
+	                    saveOk: false
+	                });
+	            });
+	        });
+	        req.write(bodyString);
+	        console.log('-----bodyString-------', req);
+	        req.end();
+	        // store.trigger({
+	        //     obj: "",
+	        //     saveOk: true
+	        // });
+	    },
+	    doAddColumn: function doAddColumn(columnObj) {
+	        // console.log("Add doAddColumn", columnObj);
+	        var bodyString = JSON.stringify(columnObj);
+	        console.log("start doAddColumn" + bodyString);
+
+	        var options = {
+	            host: '192.168.120.156', port: 8081, path: '/newColumnMapping', method: 'POST',
+	            headers: { 'Content-Type': 'application/json', 'Content-Length': bodyString.length }
+	        };
+
+	        var req = http.request(options, function (res) {
+	            res.setEncoding('utf-8');
+	            var result = '';
+	            res.on('data', function (data) {
+	                result = data;
+	            });
+
+	            res.on('end', function () {
+	                //这里接收的参数是字符串形式,需要格式化成json格式使用
+	                var resultObject = JSON.parse(result);
+	                console.log('-----resBody-----', result);
+	                // store.trigger({
+	                //     tableObj: columnObj, //子数据更新成功不需要报消息
+	                //     saveOk: true
+	                // });
+	            });
+	            res.on('error', function (e) {
+	                // TODO: handle error.
+	                console.log('-----error-------', e.toString());
+	                store.trigger({
+	                    tableObj: e.toString(),
+	                    saveOk: false
+	                });
+	            });
+	        });
+	        req.write(bodyString);
+	        console.log('-----bodyString-------', req);
+	        req.end();
+
+	        // store.trigger({
+	        //     tableObj: "",
+	        //     saveOk: true
+	        // });
+	    },
+	    doUpdColumn: function doUpdColumn(columnObj) {
+	        // console.log("Add doAddColumn", columnObj);
+	        var bodyString = JSON.stringify(columnObj);
+	        console.log("start doUpdColumn" + bodyString);
+
+	        var options = {
+	            host: '192.168.120.156', port: 8081, path: '/saveColumnMapping', method: 'POST',
+	            headers: { 'Content-Type': 'application/json', 'Content-Length': bodyString.length }
+	        };
+
+	        var req = http.request(options, function (res) {
+	            res.setEncoding('utf-8');
+	            var result = '';
+	            res.on('data', function (data) {
+	                result = data;
+	            });
+
+	            res.on('end', function () {
+	                //这里接收的参数是字符串形式,需要格式化成json格式使用
+	                var resultObject = JSON.parse(result);
+	                console.log('-----resBody-----', result);
+	                // store.trigger({
+	                //     tableObj: columnObj, //子数据更新成功不需要报消息
+	                //     saveOk: true
+	                // });
+	            });
+	            res.on('error', function (e) {
+	                // TODO: handle error.
+	                console.log('-----error-------', e.toString());
+	                store.trigger({
+	                    tableObj: e.toString(),
+	                    saveOk: false
+	                });
+	            });
+	        });
+	        req.write(bodyString);
+	        console.log('-----bodyString-------', req);
+	        req.end();
+
+	        // store.trigger({
+	        //     tableObj: "",
+	        //     saveOk: true
+	        // });
+	    },
+	    doDelColumn: function doDelColumn(ids) {
+	        var idList = [];
+	        var idSplit = ids.split(',');
+	        for (var p in idSplit) {
+	            idList[p] = idSplit[p];
+	        }
+
+	        var bodyString = JSON.stringify(idSplit);
+	        console.log("doDelColumn body" + bodyString);
+
+	        var options = {
+	            host: '192.168.120.156',
+	            port: 8081,
+	            path: '/deleteColumnMapping',
+	            method: 'POST',
+	            headers: {
+	                'Content-Type': 'application/json',
+	                'Content-Length': bodyString.length
+	            }
+	        };
+
+	        var req = http.request(options, function (res) {
+	            res.setEncoding('utf-8');
+	            var result;
+	            res.on('data', function (data) {
+	                result = data;
+	            });
+
+	            res.on('end', function () {
+	                //这里接收的参数是字符串形式,需要格式化成json格式使用
+	                var resultObject = JSON.parse(result);
+	                console.log('-----resBody-----' + result);
+	                // this.deleteOk = true; //成功不报消息
+	                // store.onSearch({
+	                //     page: 0,
+	                //     querystring: "",
+	                //     refresh: true //是否后台刷新数据
+	                // });
+	            });
+	        }).on('error', function (e) {
+	            console.log('-----error-------' + e.toString());
+	            store.trigger({
+	                tableObj: e.toString(),
+	                saveOk: false
+	            });
+	        });
+	        req.write(bodyString);
+	        console.log('-----bodyString-------' + req);
+	        req.end();
+	    }
+
 	});
 
 	module.exports = store;
