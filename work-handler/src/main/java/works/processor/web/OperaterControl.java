@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import works.processor.domain.ActionJob;
 import works.processor.domain.ColumnMapping;
+import works.processor.domain.DataSource;
 import works.processor.domain.Resource;
+import works.processor.domain.ScheduleJob;
 import works.processor.domain.TableMapping;
 import works.processor.web.dbutil.ConnectionUtil;
 import works.processor.web.domain.ColumnInfo;
@@ -223,4 +225,33 @@ public class OperaterControl {
 		return actionJob.getActionJobId();
 	}
 
+	@RequestMapping(value="/newDataSource", consumes="application/json")
+	public int newDataSource(@RequestBody DataSource dataSource)
+	{
+		dataSource.setDataSourceId(null);
+		storeDao.getDataSourceDAO().save(dataSource);
+		return dataSource.getDataSourceId();
+	}
+	
+	@RequestMapping(value="/saveDataSource", consumes="application/json")
+	public int saveDataSource(@RequestBody DataSource dataSource)
+	{
+		storeDao.getDataSourceDAO().save(dataSource);
+		return dataSource.getDataSourceId();
+	}
+	
+	@RequestMapping(value="/newScheduleJob", consumes="application/json")
+	public int newScheduleJob(@RequestBody ScheduleJob scheduleJob)
+	{
+		scheduleJob.setJobId(null);
+		storeDao.getScheduleJobDAO().save(scheduleJob);
+		return scheduleJob.getJobId();
+	}
+	
+	@RequestMapping(value="/saveScheduleJob", consumes="application/json")
+	public int saveScheduleJob(@RequestBody ScheduleJob scheduleJob)
+	{
+		storeDao.getScheduleJobDAO().save(scheduleJob);
+		return scheduleJob.getJobId();
+	}
 }

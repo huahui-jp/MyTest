@@ -21,6 +21,12 @@ public class DAOStore {
 	@Autowired
 	private ActionJobHistoryDAO actionJobHistoryDAO;
 	
+	@Autowired
+	private DataSourceDAO dataSourceDAO;
+	
+	@Autowired
+	private ScheduleJobDAO scheduleJobDAO;
+
 	public ActionJobHistoryDAO getActionJobHistoryDAO() {
 		return actionJobHistoryDAO;
 	}
@@ -60,4 +66,21 @@ public class DAOStore {
 	public void setActionJobDAO(ActionJobDAO actionJobDAO) {
 		this.actionJobDAO = actionJobDAO;
 	}
+
+	public DataSourceDAO getDataSourceDAO() {
+		return dataSourceDAO;
+	}
+
+	public void setDataSourceDAO(DataSourceDAO dataSourceDAO) {
+		this.dataSourceDAO = dataSourceDAO;
+	}
+
+	public ScheduleJobDAO getScheduleJobDAO() {
+		return scheduleJobDAO;
+	}
+
+	public void setScheduleJobDAO(ScheduleJobDAO scheduleJobDAO) {
+		this.scheduleJobDAO = scheduleJobDAO;
+	}
+	
 }
