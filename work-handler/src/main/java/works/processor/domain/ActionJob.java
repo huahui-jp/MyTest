@@ -51,7 +51,18 @@ public class ActionJob {
 	@Column(nullable=false, length=1)
 	private String deleteFlg;
 
-    public String getDeleteFlg() {
+	// 运行状态
+	private boolean runStatus;
+
+    public boolean getRunStatus() {
+		return runStatus;
+	}
+
+	public void setRunStatus(boolean runStatus) {
+		this.runStatus = runStatus;
+	}
+
+	public String getDeleteFlg() {
 		return deleteFlg;
 	}
 

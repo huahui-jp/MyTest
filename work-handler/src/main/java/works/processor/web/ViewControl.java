@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import works.processor.data.ActionJobManager;
 import works.processor.domain.ActionJob;
 import works.processor.domain.ActionJobHistory;
 import works.processor.domain.ColumnMapping;
@@ -127,14 +128,23 @@ public class ViewControl {
 	@RequestMapping("/actionJobList")
 	public Iterable<ActionJob> getActionJobList(@RequestParam("WithNoValid") int validFlg)
 	{
+		List<ActionJob> result = new ArrayList<ActionJob>();
 		if( validFlg == 0)
 		{
-			return storeDao.getActionJobDAO().findByDeleteFlg("0");
+			result = storeDao.getActionJobDAO().findByDeleteFlg("0");
 		}
 		else
 		{
-			return storeDao.getActionJobDAO().findAll();
-		}		
+			result = storeDao.getActionJobDAO().findAll();
+		}
+		result.forEach(new Consumer<ActionJob>() {
+			@Override
+			public void accept(ActionJob job) {
+				job.setRunStatus(ActionJobManager.getInstance().isRunning(job.getActionJobId()));
+	        }
+		});
+		
+		return result;
 	}
 
 	

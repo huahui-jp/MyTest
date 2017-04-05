@@ -2,6 +2,8 @@ package works.processor.web;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -71,6 +73,7 @@ public class OperaterControl {
 	}
 
 	@RequestMapping(value="/deleteResource", consumes="application/json")
+	@Transactional()
 	public List<Integer> deleteResource(@RequestBody List<Integer> resourceIdList)
 	{
 		for(int i = 0; i < resourceIdList.size(); i++ )
@@ -130,6 +133,7 @@ public class OperaterControl {
 	}
 
 	@RequestMapping(value="/autoGenTableMapping")
+	@Transactional()
 	public int autoGenTableMapping(@RequestParam("ResourceId") int resourceId, @RequestParam("WithColumn") int withColumn) throws Throwable {
 		
 		Resource resource = storeDao.getResourceDAO().findOne(resourceId);

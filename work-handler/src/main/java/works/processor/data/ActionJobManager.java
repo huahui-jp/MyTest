@@ -150,6 +150,23 @@ public class ActionJobManager {
 
 		return 0;
 	}
+	
+	public boolean isRunning(int actionJobId) {
+		
+		for( int i = 0; i < jobList.size(); i++)
+		{
+			if( jobList.get(i) instanceof DbActionJobThread )
+			{
+				if (((DbJobStatus) jobList.get(i).getJobStatus()).getActionJob().getActionJobId() == actionJobId)
+				{
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	
+	}
 
 	public int addData(String channelName, String data) {
 
