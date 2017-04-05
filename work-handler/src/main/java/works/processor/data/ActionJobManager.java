@@ -57,6 +57,7 @@ public class ActionJobManager {
 		history.setStartTime(new Timestamp(System.currentTimeMillis()));
 		history.setErrorCnt(0);
 		history.setUpdateCnt(0);
+		history.setDeleteFlg("0");
 		jobHistoryDao.save(history);
 		
 		TableMappingDAO mappingDao = (TableMappingDAO) DaoTools.getDAO(TableMappingDAO.class);
