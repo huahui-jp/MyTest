@@ -62,7 +62,7 @@ var page = React.createClass({
                             <li className="">
                                 <a href="#" className="dropdown-toggle">
                                     <i className="menu-icon fa fa-caret-right"></i>
-                                    资源管理
+                                    导入数据管理
                                     <b className="arrow fa fa-angle-down"></b>
                                 </a>
 
@@ -72,56 +72,25 @@ var page = React.createClass({
                                     <li className="">
                                         <Link to="/resourceListPage" >
                                             <i className="menu-icon fa fa-caret-right"></i>
-                                            资源列表
+                                            导入数据源管理
                                         </Link>
 
                                         <b className="arrow"></b>
                                     </li>
                                     <li className="">
-                                        <Link to="/resourceDetailPage/add&-1">
-                                            <i className="menu-icon fa fa-caret-right"></i>
-                                            资源编辑
-                                        </Link>
-                                    </li>
-
-                                    <li className="">
                                         <Link to="/dbTableMappingListPage">
                                         <i className="menu-icon fa fa-caret-right"></i>
-                                            DBTable列表
-                                        </Link>
-                                    </li>
-
-                                    <li className="">
-                                        <Link to="/dbColumnMappingListPage/add&9&-1">
-                                        <i className="menu-icon fa fa-caret-right"></i>
-                                            DBTable编辑
+                                            数据库表结构管理
                                         </Link>
                                     </li>
                                     <li className="">
                                         <Link to="/dbActionJobListPage">
                                             <i className="menu-icon fa fa-caret-right"></i>
-                                            JobAction管理
+                                            数据导入任务管理
                                         </Link>
 
                                         <b className="arrow"></b>
                                     </li>
-                                    <li className="">
-                                        <Link to="/dbActionJobDetailPage/add&-1">
-                                            <i className="menu-icon fa fa-caret-right"></i>
-                                            JobAction编辑
-                                        </Link>
-
-                                        <b className="arrow"></b>
-                                    </li>
-                                    <li className="">
-                                        <Link to="/dbActionJobHisListPage/4">
-                                            <i className="menu-icon fa fa-caret-right"></i>
-                                            JobAction履历
-                                        </Link>
-
-                                        <b className="arrow"></b>
-                                    </li>
-
                                 </ul>
                             </li>
                             <li className="">
