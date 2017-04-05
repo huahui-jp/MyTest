@@ -1,7 +1,7 @@
 /**
- * resourceList.page.js
+ * actionJobHisList.page.js
  * 
- * 资源管理List画面
+ * actionJob履历管理List画面
  * 
  * @author zhoujiang
  */
@@ -48,6 +48,7 @@ var page = React.createClass({
      */
     getInitialState: function () {
         Actions.search({
+            actionJobId: this.props.params.actionJobId,
             currentPage: 0,
             querystring: ""
         });
@@ -80,42 +81,10 @@ var page = React.createClass({
         });
     },
     /**
-     * 删除按钮事件
+     * 导出按钮事件
      */
-    _handleDeleteResourceClick: function (param) {
-        //console.log("_handleDeleteClick",param);
-        var selectedString = $("#selectedRowIds")[0].innerHTML;
-        if (_.isUndefined(selectedString) || _.isEmpty(selectedString)) {
-            messageUtil.addGritter({text:"至少选择一条记录!"});
-            // this.handleToggle();
-            return;
-        }
-        bootbox.confirm("确认删除吗？", function (result) {
-            if (result) {
-                //判断是否有子数据
-                if(hasChildNum>0){
-                    bootbox.confirm("有关联的TableMapping,确认删除吗？", function (result) {
-                        if (result) {
-                            Actions.delete(selectedString);
-                        }
-                    });
-                }else{
-                    Actions.delete(selectedString);
-                }
-            }
-        });
-    },
-    /**
-     * 编辑按钮事件
-     */
-    _handleEditClick: function () {
-        var selectedString = $("#selectedRowIds")[0].innerHTML;
-        if (_.isUndefined(selectedString) || _.isEmpty(selectedString) || selectedString.indexOf(",")>-1) {
-            messageUtil.addGritter({text: "请选择一条记录！"});
-            //this.handleToggle();
-            return;
-        }
-        PageRouterActions.navigateTo('#/resourceDetailPage/edit&'+selectedString);
+    _handleExportClick: function (param) {
+        //TODO
     },
     /*-----------------------------------table相关事件-----------------------------*/
     /**
@@ -149,8 +118,6 @@ var page = React.createClass({
     _onRowDblClick: function (event, rowId, rowData, checked) {
         messageUtil.addGritter({text: rowData.resourceName});
         //TODO 弹出Detail画面
-        //http://localhost:9100#/resourceDetailPage/edit&1
-        window.open("http://localhost:9100#/resourceDetailPage/edit&1");
 
     },
     /**
@@ -180,40 +147,28 @@ var page = React.createClass({
             onRowClick: this._onRowClick, //记录行单击事件
             onRowDblClick: this._onRowDblClick, //记录行双击事件
             onNavigationBtnClick: this._onNavigationBtnClick, //分页事件
-            rowIdColumn: "resourceId", //唯一标识每行记录的字段
-            rowSelected: true,//选择一行是否触发checkbox
+            rowIdColumn: "actionJobHistoryId", //唯一标识每行记录的字段
+            // rowSelected: true,//选择一行是否触发checkbox
             id: "demoList"
         }, [
-            <Column dataKey="checkbox" label="" inputType="checkbox"/>,
+            // <Column dataKey="checkbox" label="" inputType="checkbox"/>,
             <Column dataKey="id" label="ID" hidden={true} />,
-            <Column label="资源ID" dataKey="resourceId" width={50} />,
-            <Column label="资源名称" dataKey="resourceName" />,
-            <Column label="资源种类"  dataKey="resourceType" width={50} cellRender={this.typeCellRender} />,
-            <Column label="数据库连接" dataKey="dbLink" width={100} />,
-            <Column label="用户名" dataKey="dbUser" />,
-            <Column label="密码" dataKey="dbPasswd"  cellRender={this.passwdCellRender}/>,
-            // <Column label="有效" dataKey="deleteFlg" cellRender={this.deleteFlgCellRender}/>,
-            <Column label="子数据" dataKey="hasChild" width={50} cellRender={this.childCellRender}/>,
-            <Column label="连接" dataKey="connectStatus" cellRender={this.connectCellRender}/>]);
+            <Column label="JOB履历ID" dataKey="actionJobHistoryId" width={50} />,
+            <Column label="JOBID" dataKey="actionJobId" />,
+            <Column label="开始时间"  dataKey="startTime" width={50}  />,
+            <Column label="错误时间" dataKey="startError" width={100} />,
+            <Column label="结束时间" dataKey="endTime" />,
+            <Column label="更新数量" dataKey="updateCnt" width={50} />,
+            <Column label="错误数量" dataKey="errorCnt" />]);
 
         return (
             <div className="row ">
                 <div className="col-xs-12 dataTables_wrapper  form-inline">
                     <div className="row" style={{"paddingBottom": "0px"}}>
                         <div className="col-xs-6">
-                            <Link className="btn btn-sm btn-white btn-info btn-round" to="/resourceDetailPage/add&-1">
-                                <i className="ace-icon fa fa-plus-circle blue bigger-120 "></i>
-                                新增
-                            </Link>
-                        &nbsp;
-                            <button className="btn btn-sm btn-white btn-default btn-round" onClick={this._handleEditClick}>
-                                <i className="ace-icon fa fa-pencil align-top bigger-120 "></i>
-                                修改
-                            </button>
-                        &nbsp;
-                            <button className="btn btn-sm btn-white btn-warning btn-round" onClick={this._handleDeleteResourceClick}>
+                            <button className="btn btn-sm btn-white btn-warning btn-round" onClick={this._handleExportClick}>
                                 <i className="ace-icon fa fa-trash-o bigger-120 orange"></i>
-                                删除 
+                                导出
                             </button>
                         </div>
                         <div className="col-xs-6">
@@ -229,63 +184,13 @@ var page = React.createClass({
             </div>
         );
     },
-            /**
+    /**
      * 生成列内容:序号
      */
     _xuhaoCellRender: function (cellData, cellDataKey, rowData, cellIndex, rowIndex) {
 
         var xuhao = rowIndex + 1;
         return xuhao;
-    },
-    /**
-     * 转换字段内容：资源种类
-     */
-    typeCellRender: function (cellData, cellDataKey, rowData, cellIndex, rowIndex) {
-
-        var res = rowData["resourceType"];
-        if(res === "01"){
-            return "DB";
-        }else if(res === "02"){
-            return "GEMFIRE";
-        }
-        return res;
-    },
-    /**
-     * 转换列内容:密码
-     */
-    passwdCellRender: function (cellData,
-                              cellDataKey,
-                              rowData,
-                              cellIndex,
-                              rowIndex) {
-
-        var passwd = rowData["dbPasswd"] || "";
-        var res = "";
-        for(var i=0;i<passwd.length;i++){
-            res+="●"; 
-        } 
-        
-        return res;
-    },
-    /**
-     * 转换列内容:测试连接
-     */
-    connectCellRender: function(cellData,
-                              cellDataKey,
-                              rowData,
-                              cellIndex,
-                              rowIndex){
-        //查询连接状态,如果成功/失败显示对应的图标
-        if(typeof rowData["connectStatus"] === "undefined"){
-            return <span className="label label-sm label-warning">connecting</span>;
-        }else{
-            var connectStatus = rowData["connectStatus"];
-            if(connectStatus === "Success..."){ 
-                return <span className="label label-sm label-success">{connectStatus}</span>;
-            }else{
-                return <span className="label label-sm label-danger">{connectStatus}</span>;
-            }
-        }
     },
     _handleToggle: function () {
         this.setState({

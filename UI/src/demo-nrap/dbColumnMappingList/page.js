@@ -19,19 +19,9 @@ var { Route, DefaultRoute, RouteHandler, Link } = Router;
 var Table = require('../../component/table-grid/table');
 var TableStore = require('../../component/table-grid/store');
 var Column = require('../../component/table-grid/table-column');
-
+var messageUtil  = require('../../common/messageUtil');
 
 'use strict';
-
-var mode;//"add","edit","view"
-var resourceId ; //TODO 使用prop
-var tableMappingId; //TODO 使用prop
-var tableName ; //TODO 使用prop
-var tableNameView; //TODO 使用prop
-var delColumns = ""; // TODO
-
-
-
 
 var page = React.createClass({
     mixins: [
@@ -41,22 +31,17 @@ var page = React.createClass({
         Reflux.listenTo(PageRouterStore, "")
         // Reflux.connect(TableStore, "tableState")//绑定Tablestore的数据
     ],
+    mode: "",
     getInitialState: function () {
 
-        resourceId = this.props.params.resourceId;
-        tableMappingId = this.props.params.tableMappingId;
-        tableName = this.props.params.tableName;
-        tableNameView = this.props.params.tableNameView;
 
-        mode = this.props.params.mode;    
-        if(mode === "edit"){
+        this.mode = this.props.params.mode;    
+        if(this.mode === "edit"){
             Actions.searchResource();
-            Actions.searchTable(resourceId);
-            Actions.searchColumnMapping(tableMappingId);
-        }else if(mode === "add"){
+            Actions.searchTable(this.props.params.resourceId);
+            Actions.searchColumnMapping(this.props.params.tableMappingId);
+        }else if(this.mode === "add"){
             Actions.searchResource();
-            // Actions.searchTable("4");
-            // Actions.searchColumn("1");
             
         }
         // this.state.resourceId = this.props.params.resourceId;
@@ -64,167 +49,135 @@ var page = React.createClass({
     },
     onStatusChange: function (resultData) {
         console.log("onStatusChange--->"+resultData);
-        var saveOk = resultData.saveOk;
-        var connectOk = resultData.connectOk;
+        // var saveOk = resultData.saveOk;
+        // var connectOk = resultData.connectOk;
 
-        this.state.resourceId =resourceId;
-        this.state.tableMappingId =tableMappingId;
-        this.state.tableName =tableName;
-        if(mode === "add"){
-            this.state.tableNameView ="";
+        if (resultData.message && resultData.message !== ""){
+            //显示提示信息
+            messageUtil.addGritter({text:resultData.message});
         }else{
-            this.state.tableNameView =tableNameView;
-        }
-        
-        
+            if(this.mode === "add"){
+                this.state.tableNameView ="";
+            }else{
+                this.state.tableNameView =this.props.params.tableNameView;
+            }
+            
+            
 
-        //动态添加option到select资源名称中
-        
-        var resourceListOptions = [];
-        var i = 1;
-        resourceListOptions[0] = React.createElement('option', 
-            {value: "none"},"请选择资源名称");
-        for(var p in resultData.resourceList){
-            if(mode === "edit"){
-                if(resultData.resourceList[p].resourceId == resourceId){
-                    resourceListOptions[0] = React.createElement(
+            //动态添加option到select资源名称中
+            var resourceListOptions = [];
+            var i = 1;
+            resourceListOptions[0] = React.createElement('option', 
+                {value: "none"},"请选择资源名称");
+            for(var p in resultData.resourceList){
+                if(this.mode === "edit"){
+                    if(resultData.resourceList[p].resourceId == this.props.params.resourceId){
+                        resourceListOptions[0] = React.createElement(
+                        'option', 
+                        {value: resultData.resourceList[p].resourceId},
+                        resultData.resourceList[p].resourceName);
+                        this.state.resourceListOptions = resourceListOptions;
+                    }
+                    
+                }else if(this.mode === "add"){
+                    resourceListOptions[i] = React.createElement(
                     'option', 
                     {value: resultData.resourceList[p].resourceId},
                     resultData.resourceList[p].resourceName);
-                    this.state.resourceListOptions = resourceListOptions;
+                    // if(i == 4){
+                    //     resourceListOptions[i].selected = selected;
+                    // }
+                    i++;
                 }
-                
-            }else if(mode === "add"){
-                resourceListOptions[i] = React.createElement(
-                'option', 
-                {value: resultData.resourceList[p].resourceId},
-                resultData.resourceList[p].resourceName);
-                // if(i == 4){
-                //     resourceListOptions[i].selected = selected;
-                // }
+            }
+                if(this.mode === "add"){
+                    if(resourceListOptions.length > 1){
+                    this.state.resourceListOptions = resourceListOptions;
+                    // this.refs.resourceList.getDOMNode().defaultValue = "4";
+                    }
+                }
+
+
+            //动态添加option到select数据库表物理名中
+            var tableListOptions = [];
+            
+            if(this.mode === "edit"){
+                tableListOptions[0] = React.createElement('option', {value: this.props.params.tableName},this.props.params.tableName);
+                this.state.tableListOptions = tableListOptions;
+            }else if(this.mode === "add"){
+                i = 1;
+                tableListOptions[0] = React.createElement('option', 
+                {value: "none"},"请选择数据库表物理名");
+            for(var p in resultData.tableList){
+                tableListOptions[i] = React.createElement(
+                    'option', 
+                    {value: resultData.tableList[p]},
+                    resultData.tableList[p]);
                 i++;
             }
-        }
-            if(mode === "add"){
-                if(resourceListOptions.length > 1){
-                this.state.resourceListOptions = resourceListOptions;
-                // this.refs.resourceList.getDOMNode().defaultValue = "4";
+                if(resultData.tableList){
+                    this.state.tableListOptions = tableListOptions;
                 }
             }
 
-
-        //动态添加option到select数据库表物理名中
-        var tableListOptions = [];
-        
-        if(mode === "edit"){
-            tableListOptions[0] = React.createElement('option', {value: tableName},tableName);
-            this.state.tableListOptions = tableListOptions;
-        }else if(mode === "add"){
+            //动态添加option到select数据库列物理名中
+            var columnListOptions = [];
             i = 1;
-            tableListOptions[0] = React.createElement('option', 
-            {value: "none"},"请选择数据库表物理名");
-        for(var p in resultData.tableList){
-            tableListOptions[i] = React.createElement(
-                'option', 
-                {value: resultData.tableList[p]},
-                resultData.tableList[p]);
-            i++;
-        }
-        if(tableListOptions.length > 1){
-            this.state.tableListOptions = tableListOptions;
-        }
-        }
-
-        //动态添加option到select数据库列物理名中
-        var columnListOptions = [];
-        i = 1;
-        columnListOptions[0] = React.createElement('option', {value: "none"},"请选择列物理名");
-        for(var p in resultData.columnList){
-            columnListOptions[i] = React.createElement(
-                'option', 
-                {value: resultData.columnList[p]},
-                resultData.columnList[p]);
-            i++;
-        }
-        if(columnListOptions.length > 1){
-            this.state.columnListOptions = columnListOptions;
-            console.log("数据库表物理名Select加载完成!");
-            // 刷新grid
-            if(mode === "add"){
-                resultData.columnMappingList = [];
-                for(var p in resultData.columnList){
-                    resultData.columnMappingList.push({"xh":resultData.columnMappingList.length,"columnListOptions":this.state.columnListOptions,"columnMappingId":0,"tableMappingId":1,"columnName":resultData.columnList[p],"columnNameView":"","columnType":"","jasonName":"","seqName":"","txtValue":"","dateFormat":""});
-                }
-            }
-            
-
-            
-        }
-
-
-        if(resultData.columnMappingList){
-            if(mode === "edit"){
-                // if(this.state.columnListOptions.length <= 1){
-                    Actions.searchColumn(tableName);
-                // }
-                
-            }
-
-            //TODO 生成序号
-            for(var p in resultData.columnMappingList){
-                resultData.columnMappingList[p].xh = p;   
-                // deleteXHMap[p] = false;
-                //写入columnName
-                if(resultData.columnMappingList[p].columnName !== ""){
-                    resultData.columnMappingList[p].columnListOptions = React.createElement(
+            columnListOptions[0] = React.createElement('option', {value: "none"},"请选择列物理名");
+            for(var p in resultData.columnList){
+                columnListOptions[i] = React.createElement(
                     'option', 
-                    {value: resultData.columnMappingList[p].columnName},
-                    resultData.columnMappingList[p].columnName);
-                }else{
-                    resultData.columnMappingList[p].columnListOptions = this.state.columnListOptions;
+                    {value: resultData.columnList[p]},
+                    resultData.columnList[p]);
+                i++;
+            }
+            if(columnListOptions.length > 1){
+                this.state.columnListOptions = columnListOptions;
+                console.log("数据库表物理名Select加载完成!");
+                // 刷新grid
+                if(this.mode === "add"){
+                    resultData.columnMappingList = [];
+                    for(var p in resultData.columnList){
+                        resultData.columnMappingList.push({"xh":resultData.columnMappingList.length,"columnListOptions":this.state.columnListOptions,"columnMappingId":0,"tableMappingId":1,"columnName":resultData.columnList[p],"columnNameView":"","columnType":"","jasonName":"","seqName":"","txtValue":"","dateFormat":""});
+                    }
                 }
-                
             }
-            // deleteXHMap.length = resultData.columnMappingList.length;
-            this.setState({
-                columnMappingList: resultData.columnMappingList,
-                rowsTotoal: resultData.columnMappingList.length, 
-                deleteOk: null, 
-                currentPage: 0
-        }, function () {
-            if (typeof saveOk === "undefined") {
-            }else if (saveOk) {
-                Gritter.add({
-                    title: '提示',
-                    text: '保存成功！' + _.values(resultData.tableObj),
-                    //image: 'assets/avatars/avatar.png',
-                    sticky: false,
-                    time: '2000',
-                    class_name: 'gritter-light '
+
+
+            if(resultData.columnMappingList){
+                if(this.mode === "edit"){
+                    // if(this.state.columnListOptions.length <= 1){
+                        Actions.searchColumn(this.props.params.resourceId,this.props.params.tableName);
+                    // }
+                    
+                }
+
+                //TODO 生成序号
+                for(var p in resultData.columnMappingList){
+                    resultData.columnMappingList[p].xh = p;   
+                    // deleteXHMap[p] = false;
+                    //写入columnName
+                    if(resultData.columnMappingList[p].columnName !== ""){
+                        resultData.columnMappingList[p].columnListOptions = React.createElement(
+                        'option', 
+                        {value: resultData.columnMappingList[p].columnName},
+                        resultData.columnMappingList[p].columnName);
+                    }else{
+                        resultData.columnMappingList[p].columnListOptions = this.state.columnListOptions;
+                    }
+                    
+                }
+                // deleteXHMap.length = resultData.columnMappingList.length;
+                this.setState({
+                    columnMappingList: resultData.columnMappingList,
+                    rowsTotoal: resultData.columnMappingList.length, 
+                    deleteOk: null, 
+                    currentPage: 0
                 });
-            }else if (!saveOk) {
-                Gritter.add({
-                    title: '警告',
-                    text: '保存失败！',
-                    //image: 'assets/avatars/avatar.png',
-                    sticky: false,
-                    time: '2000',
-                    class_name: 'gritter-warning '
-                });
+            }else{
+                this.setState({});
             }
-        });
-        }else{
-            // if(addRefreshFlg){
-            //     this.setState({                
-            //         columnMappingList: [],
-            //         rowsTotoal: 0, 
-            //         deleteOk: null, 
-            //         currentPage: 0
-            //     });
-            // }
-            this.setState({});
         }
-        
     },
     rowGetter: function (rowIndex) {
             //console.log(rowIndex);
@@ -232,28 +185,6 @@ var page = React.createClass({
     },
     saveHandler: function () {
         console.log("global.tableDate", global.tableDate);
-            // 
-        // this.validateForm("resourceName");
-        // this.validateForm("resourceType");
-        // this.validateForm("dbLink");
-        // this.validateForm("dbUser");
-        // this.validateForm("dbPasswd");
-
-        // if (!_.isEmpty(this.state.nameValidateMessage) 
-        //     || !_.isEmpty(this.state.typeValidateMessage)
-        //     || !_.isEmpty(this.state.dbLinkValidateMessage)
-        //     || !_.isEmpty(this.state.dbUserValidateMessage)
-        //     || !_.isEmpty(this.state.dbPasswdValidateMessage)) {
-        //     return;
-        // }
-        //resourceId
-        // var resourceId = this.state.resourceId;
-        // var tableMappingId = this.state.tableMappingId;
-        // var tableName = this.state.tableName;
-        // var tableNameView = this.state.tableNameView;
-        // 
-        // 
-        // TODO getDataFromTable
         
 
         // console.log(this.state.tableState.myTableData);
@@ -261,26 +192,23 @@ var page = React.createClass({
         //获取table数据
         var myTableDataString = $("#myTableDataString")[0].innerHTML; 
         console.log("myTableDataString-->"+myTableDataString);
-        var myTableData = JSON.parse(myTableDataString);
+        // var myTableData = JSON.parse(myTableDataString);
+        var myTableData = global.golMyTableDate;
         
 
 
-        if(mode == "add"){
+        if(this.mode == "add"){
             //新增时 所有的Column列表都是新增对象
-
-
-
-
             Actions.add({
-            resourceId: this.state.resourceId,
-            tableName: this.state.tableName,
-            tableNameView: this.state.tableNameView,
-            deleteFlg: "0"
+                resourceId: this.state.resourceId,
+                tableName: this.state.tableName,
+                tableNameView: this.state.tableNameView,
+                deleteFlg: "0"
             },myTableData);
-        }else if(mode == "edit"){
+        }else if(this.mode == "edit"){
             var addColumns = [];
             var updColumns = [];
-            // var delColumns = [];
+            var delColumns = [];
             for(var p in myTableData){
                 if(myTableData[p].columnMappingId === 0){//columnMappingId为0的是新增对象
                     addColumns.push(myTableData[p]);
@@ -293,8 +221,8 @@ var page = React.createClass({
 
             Actions.upd({
                 tableMappingId: this.props.params.tableMappingId,
-                resourceId: resourceId,
-                tableName: tableName,
+                resourceId: this.props.params.resourceId,
+                tableName: this.props.params.tableName,
                 tableNameView: this.state.tableNameView,
                 deleteFlg: "0"
             },addColumns,updColumns,delColumns);
@@ -307,27 +235,6 @@ var page = React.createClass({
         var flag = true;
         var value = this.state[columnName];
         switch (columnName) {
-            // case "resourceName":
-            //     if (_.isEmpty(value)) {
-            //         this.setState({"nameValidateMessage": "请输入资源名称"});
-            //         flag = false;
-            //     } else if (value.length > 20) {
-            //         this.setState({"nameValidateMessage": "资源名称的字数不能大于20"});
-            //         flag = false
-            //     } else {
-            //         this.setState({"nameValidateMessage": ""});
-            //     }
-            //     break;
-            // case "resourceType":
-            //     if (_.isEmpty(value)) {
-            //         this.setState({"typeValidateMessage": "请选择资源种类"});
-            //         flag = false;
-            //     } else {
-            //         this.setState({"typeValidateMessage": ""});
-            //     }
-            //     break;
-
-
 
             default:
                 break;
@@ -343,18 +250,6 @@ var page = React.createClass({
             todayHighlight: true
         })
     },
-    selectTableHandler: function () {
-        // 根据数据库表物理名查询数据库列物理名，并刷新列表
-        this.state.tableName = event.target.value;
-        // this.state.tableNameView = this.state.tableName;
-        // this.refs.tableNameView.value = this.state.tableNameView;
-        // 
-        if(this.state.tableName !== "none"){
-            Actions.searchColumn(this.state.tableName);
-        }
-
-
-    },
     selectResourceHandler: function() {
         //根据resourceId查询TabList
         this.state.resourceId = event.target.value;
@@ -363,6 +258,20 @@ var page = React.createClass({
         }
         
     },
+    selectTableHandler: function () {
+        // 根据数据库表物理名查询数据库列物理名，并刷新列表
+        this.state.tableName = event.target.value;
+        // this.state.tableNameView = this.state.tableName;
+        // this.refs.tableNameView.value = this.state.tableNameView;
+        // 
+        if(this.state.tableName !== "none"){
+            Actions.searchColumn(this.state.resourceId,this.state.tableName);
+            // this.state.tableNameView = this.state.tableName;
+        }
+
+
+    },
+
     resourceListRender: function () {
         console.log("---------------resourceListRender---------------");
         return "";

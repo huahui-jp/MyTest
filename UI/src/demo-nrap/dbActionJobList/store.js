@@ -1,7 +1,7 @@
 /**
- * resourceList.store.js
+ * actionJobList.store.js
  * 
- * 资源管理List画面
+ * actionJob管理List画面
  * 
  * @author zhoujiang
  */
@@ -9,7 +9,7 @@ var Reflux = require('reflux');
 var Actions = require('./actions');
 var httpUtil = require('../../common/httpUtil'); 
 var navigationUtil = require('../../common/navigationUtil'); 
-var url = require('url');
+var http = require('http');
 var constants = require('../../common/constants.js');
 
 'use strict';
@@ -22,7 +22,7 @@ var store = Reflux.createStore({
         currentPage: 0,
         querystring: "",
         refresh: true, //是否后台刷新数据
-        columns: ["resourceName", "dbLink", "dbUser"],
+        columns: ["actionJobId", "tableMappingId", "actionJobType","batchUpdateCnt","messageChannelName","keyColumn"],
         pageSize: constants.PAGE_SIZE
     },
     /**
@@ -37,7 +37,7 @@ var store = Reflux.createStore({
         this.searchParams.querystring = params.querystring;
 
         if(this.searchParams.refresh){//从后台刷新数据
-        httpUtil.doGet({path:"/resourceList?WithNoValid=0&ResourceFlg=1"},
+        httpUtil.doGet({path:"/actionJobList?WithNoValid=0"},
             function(result){
                 var json = JSON.parse(result.resultStr);
                 store._cache = json;
@@ -57,15 +57,9 @@ var store = Reflux.createStore({
      * @return {[type]}     [description]
      */
     onDelete: function (ids) {
-        var idList = [];
-        var idSplit = ids.split(',');
-        for(var p in idSplit){ 
-             idList[p] = idSplit[p];  
-        } 
-
         httpUtil.doPost({
-                path: '/deleteResource',
-                postStr:"["+ids+"]"
+                path: '/deleteActionJob',
+                postStr:ids
             },
             function(result){
                 if(result.success){
@@ -96,35 +90,6 @@ var store = Reflux.createStore({
             rowsTotoal: filterData.rowsTotoal,
             currentPage: filterData.currentPage
         });
-
-        store.doConnectTest(filterData);
-    },
-    /**
-     * 测试资源连接
-     */
-    doConnectTest: function(params){
-        for(var p in params.rows){
-            httpUtil.doGet({path:"/testConnectById?ResourceId="+params.rows[p].resourceId},
-                function(result){
-                    if(result.success){
-                        var query = url.parse(result.path,true).query;//参数true是将query返回成对象
-                        // console.log("doConnectTest-->"+result.path+" query:"+query+" result:"+result.resultStr);
-                        for(var i in params.rows){
-                            if(query.ResourceId == params.rows[i].resourceId){
-                                params.rows[i].connectStatus = result.resultStr;
-                                
-                                store.trigger({
-                                    rows: params.rows,
-                                    rowsTotoal: params.rowsTotoal,
-                                    currentPage: params.currentPage
-                                });
-                            }
-                        }
-                    }
-                }
-            );
-        }
-
     }
 });
 

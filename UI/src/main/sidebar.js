@@ -72,7 +72,7 @@ var page = React.createClass({
                                     <li className="">
                                         <Link to="/resourceListPage" >
                                             <i className="menu-icon fa fa-caret-right"></i>
-                                            资源列表画面
+                                            资源列表
                                         </Link>
 
                                         <b className="arrow"></b>
@@ -80,38 +80,44 @@ var page = React.createClass({
                                     <li className="">
                                         <Link to="/resourceDetailPage/add&-1">
                                             <i className="menu-icon fa fa-caret-right"></i>
-                                            资源编辑页面(Add)
+                                            资源编辑
                                         </Link>
                                     </li>
 
                                     <li className="">
                                         <Link to="/dbTableMappingListPage">
                                         <i className="menu-icon fa fa-caret-right"></i>
-                                            DBTableMapping列表
-                                        </Link>
-                                    </li>
-
-                                                                        <li className="">
-                                    <Link to="/dbColumnMappingListPage/add&9&-1">
-                                        <i className="menu-icon fa fa-caret-right"></i>
-                                            DBTable编辑(Add)
+                                            DBTable列表
                                         </Link>
                                     </li>
 
                                     <li className="">
-                                        <a href="#">
+                                        <Link to="/dbColumnMappingListPage/add&9&-1">
+                                        <i className="menu-icon fa fa-caret-right"></i>
+                                            DBTable编辑
+                                        </Link>
+                                    </li>
+                                    <li className="">
+                                        <Link to="/dbActionJobListPage">
                                             <i className="menu-icon fa fa-caret-right"></i>
                                             JobAction管理
-                                        </a>
+                                        </Link>
 
                                         <b className="arrow"></b>
                                     </li>
-
                                     <li className="">
-                                        <a href="#">
+                                        <Link to="/dbActionJobDetailPage/add&-1">
+                                            <i className="menu-icon fa fa-caret-right"></i>
+                                            JobAction编辑
+                                        </Link>
+
+                                        <b className="arrow"></b>
+                                    </li>
+                                    <li className="">
+                                        <Link to="/dbActionJobHisListPage/4">
                                             <i className="menu-icon fa fa-caret-right"></i>
                                             JobAction履历
-                                        </a>
+                                        </Link>
 
                                         <b className="arrow"></b>
                                     </li>

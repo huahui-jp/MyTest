@@ -39,28 +39,28 @@ var page = React.createClass({
     },
 
     componentWillMount: function () {
-        console.log("componentWillMount");
+        // console.log("componentWillMount");
         Actions.init(this.props.id,this._getNavigationInfo());
 
     },
 
     componentDidMount: function () {
-        console.log("componentDidMount");
+        // console.log("componentDidMount");
 
     },
 
     componentDidUpdate: function () {
-        console.log("componentDidUpdate",this.props.id);
+        // console.log("componentDidUpdate",this.props.id);
 
     },
 
     componentWillReceiveProps: function (nextProps) {
-        console.log("componentWillReceiveProps");
+        // console.log("componentWillReceiveProps");
         Actions.cleanCheckArray();
     },
 
     componentWillUnmount: function () {
-        console.log("componentWillUnmount");
+        // console.log("componentWillUnmount");
         Actions.cleanCheckArray();
 
     },
