@@ -103,5 +103,17 @@ public class ActionJobHistory {
 		this.deleteFlg = deleteFlg;
 	}
 	
+	public String getStartTimeStr() {
+		if(this.startTime == null){
+			return "";
+		}
+		return this.startTime.toGMTString();
+	}
 	
+	public String getEndTimeStr() {
+		if( this.endTime == null) {
+			return "";
+		}
+		return this.endTime.toGMTString();
+	}
 }
