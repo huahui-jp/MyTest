@@ -131,11 +131,13 @@ var page = React.createClass({
      * 生成TableMapping按钮
      */
     newTableMappingHandler: function(){//根据resourceId批量生成tableMapping
+        var resourceId = this.state.resourceId;
+
         bootbox.confirm("需要生成ColumnMapping吗？", function (result) {
             if (result) {
-                Actions.newTableMapping(this.props.params.resourceId,1);//生成ColumnMapping
+                Actions.newTableMapping(resourceId,1);//生成ColumnMapping
             }else{
-                Actions.newTableMapping(this.props.params.resourceId,0);//不生成ColumnMapping
+                Actions.newTableMapping(resourceId,0);//不生成ColumnMapping
             }
         });
     },
