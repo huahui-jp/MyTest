@@ -48,15 +48,15 @@ var breadcrumbsMap = {
     "/demoFixedDataTablePage": [{name: "演示系统"}, {name: "列表页面(FixedDataTable)", url: "/demoFixedDataTablePage"}],
     "/demoBootstrapTablePage": [{name: "演示系统"}, {name: "列表页面(BootstrapTable)", url: "/demoBootstrapTablePage"}],
     "/reactBootstrapTablePage": [{name: "演示系统"}, {name: "列表页面(ReactBootstrapTable)", url: "/reactBootstrapTablePage"}],
-    "/resourceListPage": [{name: "国铁云服务平台"}, {name: "资源管理", url: "/resourceListPage"}],
-    "/resourceDetailPage": [{name: "国铁云服务平台"}, {name: "资源管理", url: "/resourceListPage"}, {name: "资源详细页面", url: ""}],
+    "/resourceListPage": [{name: "国铁云服务平台"}, {name: "导入数据源管理", url: "/resourceListPage"}],
+    "/resourceDetailPage": [{name: "国铁云服务平台"}, {name: "导入数据源管理", url: "/resourceListPage"}, {name: "导入数据源详细信息", url: ""}],
 
-    "/dbTableMappingListPage": [{name: "国铁云服务平台"}, {name: "dbTableMapping管理", url: "/dbTableMappingListPage"}],
-    "/dbColumnMappingListPage": [{name: "国铁云服务平台"}, {name: "dbTableMapping管理", url: "/dbTableMappingListPage"}, {name: "dbColumnMapping列表画面", url: ""}],
+    "/dbTableMappingListPage": [{name: "国铁云服务平台"}, {name: "数据库表结构管理", url: "/dbTableMappingListPage"}],
+    "/dbColumnMappingListPage": [{name: "国铁云服务平台"}, {name: "数据库表结构管理", url: "/dbTableMappingListPage"}, {name: "数据库表结构详细", url: ""}],
 
-    "/dbActionJobListPage": [{name: "国铁云服务平台"}, {name: "dbActionJob管理", url: "/dbActionJobListPage"}],
-    "/dbActionJobHisListPage": [{name: "国铁云服务平台"}, {name: "dbActionJob管理", url: "/dbActionJobListPage"}, {name: "dbActionJob履历", url: ""}],
-    "/dbActionJobDetailPage": [{name: "国铁云服务平台"}, {name: "dbActionJob管理", url: "/dbActionJobListPage"}, {name: "dbActionJob详细", url: ""}]
+    "/dbActionJobListPage": [{name: "国铁云服务平台"}, {name: "数据导入任务管理", url: "/dbActionJobListPage"}],
+    "/dbActionJobHisListPage": [{name: "国铁云服务平台"}, {name: "数据导入任务管理", url: "/dbActionJobListPage"}, {name: "dbActionJob履历", url: ""}],
+    "/dbActionJobDetailPage": [{name: "国铁云服务平台"}, {name: "数据导入任务管理", url: "/dbActionJobListPage"}, {name: "数据导入任务详细", url: ""}]
 };
 
 var App = React.createClass({

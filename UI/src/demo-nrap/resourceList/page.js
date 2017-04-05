@@ -186,14 +186,13 @@ var page = React.createClass({
         }, [
             <Column dataKey="checkbox" label="" inputType="checkbox"/>,
             <Column dataKey="id" label="ID" hidden={true} />,
-            <Column label="资源ID" dataKey="resourceId" width={50} />,
-            <Column label="资源名称" dataKey="resourceName" />,
+            <Column label="资源ID" dataKey="resourceId" width={50} hidden={true} />,
+            <Column label="资源名称" width={100} dataKey="resourceName" />,
             <Column label="资源种类"  dataKey="resourceType" width={50} cellRender={this.typeCellRender} />,
             <Column label="数据库连接" dataKey="dbLink" width={100} />,
             <Column label="用户名" dataKey="dbUser" />,
-            <Column label="密码" dataKey="dbPasswd"  cellRender={this.passwdCellRender}/>,
-            // <Column label="有效" dataKey="deleteFlg" cellRender={this.deleteFlgCellRender}/>,
-            <Column label="子数据" dataKey="hasChild" width={50} cellRender={this.childCellRender}/>,
+            <Column label="密码" dataKey="dbPasswd"  cellRender={this.passwdCellRender} hidden={true}/>,
+            <Column label="子数据" dataKey="hasChild" width={50} cellRender={this.childCellRender} hidden={true}/>,
             <Column label="连接" dataKey="connectStatus" cellRender={this.connectCellRender}/>]);
 
         return (

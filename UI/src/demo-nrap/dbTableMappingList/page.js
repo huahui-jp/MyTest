@@ -299,12 +299,12 @@ var page = React.createClass({
             }, [
                 <Column dataKey="checkbox" label="" inputType="checkbox"/>,
                 <Column dataKey="id" label="ID" hidden={true} />,
-                <Column label="DBTableID" dataKey="tableMappingId" width={50} />,
-                <Column label="资源ID" dataKey="resourceId" width={50} />,
+                <Column label="DBTableID" dataKey="tableMappingId" hidden={true}/>,
+                <Column label="资源ID" dataKey="resourceId" hidden={true}/>,
                 <Column label="数据库表物理名" dataKey="tableName" width={100}/>,
                 <Column label="数据库表逻辑名"  dataKey="tableNameView" width={100} />,
-                <Column label="deleteFlg" dataKey="deleteFlg" />,
-                <Column label="hasRunJob"  dataKey="hasRunJob" width={50} />
+                <Column label="deleteFlg" dataKey="deleteFlg" hidden={true}/>,
+                <Column label="hasRunJob"  dataKey="hasRunJob" hidden={true} />
                 ]);
 
             return (

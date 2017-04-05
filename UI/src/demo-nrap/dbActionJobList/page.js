@@ -169,10 +169,10 @@ var page = React.createClass({
         }, [
             <Column dataKey="checkbox" label="" inputType="checkbox"/>,
             <Column dataKey="id" label="ID" hidden={true} />,
-            <Column label="JOBID" dataKey="actionJobId" width={50}/>,
+            <Column label="JOBID" dataKey="actionJobId" hidden={true}/>,
             <Column label="tableId" dataKey="tableMappingId" hidden={true}/>,
-            <Column label="JOB种类"  dataKey="actionJobType" width={50} cellRender={this.typeCellRender} />,
-            <Column label="更新数量" dataKey="batchUpdateCnt" width={100} />,
+            <Column label="任务种类"  dataKey="actionJobType" width={50} cellRender={this.typeCellRender} />,
+            <Column label="任务提交阀值" dataKey="batchUpdateCnt" width={50} />,
             <Column label="消息通道名称" dataKey="messageChannelName" />,
             <Column label="保存履历" dataKey="enableSaveHistory"  cellRender={this.enSaveHisCellRender}/>,
             <Column label="主键名称" dataKey="keyColumn" width={50} cellRender={this.childCellRender}/>,
