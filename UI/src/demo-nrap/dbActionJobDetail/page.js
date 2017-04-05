@@ -249,9 +249,9 @@ var page = React.createClass({
                 <Column dataKey="id" label="ID" hidden={true} />,
                 <Column label="JOB履历ID" dataKey="actionJobHistoryId" width={50} />,
                 <Column label="JOBID" dataKey="actionJobId" />,
-                <Column label="开始时间"  dataKey="startTime" width={50}  />,
+                <Column label="开始时间"  dataKey="startTimeStr" width={50}  />,
                 <Column label="错误时间" dataKey="startError" width={100} />,
-                <Column label="结束时间" dataKey="endTime" />,
+                <Column label="结束时间" dataKey="endTimeStr" />,
                 <Column label="更新数量" dataKey="updateCnt" width={50} />,
                 <Column label="错误数量" dataKey="errorCnt" />]);
 

@@ -426,9 +426,9 @@ var page = React.createClass({
                 id: "columnMappingTable"
             }, [
                 <Column dataKey="checkbox" label="" inputType="checkbox" onChange={this.checkBoxClick}/>,
-                <Column dataKey="xh" label="序号" />,
-                <Column label="ColID" dataKey="columnMappingId" width={10} />,
-                <Column label="TabID" dataKey="tableMappingId" width={10} />,
+                <Column dataKey="xh" label="序号" hidden={true}/>,
+                <Column label="ColID" dataKey="columnMappingId" width={10} hidden={true}/>,
+                <Column label="TabID" dataKey="tableMappingId" width={10} hidden={true}/>,
                 <Column label="数据库列逻辑名" dataKey="columnNameView" inputType="text" width={10}/>,
                 <Column label="数据库列物理名"  dataKey="columnListOptions" inputType="select"  width={10} />,
                 <Column label="数据库列类型"  dataKey="columnType" inputType="text"  width={10} />,
