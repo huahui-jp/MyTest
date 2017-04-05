@@ -319,13 +319,9 @@ var page = React.createClass({
                             &nbsp;
                                 <button className="btn btn-sm btn-white btn-default btn-round" onClick={this._handleEditClick}>
                                     <i className="ace-icon fa fa-pencil align-top bigger-120 "></i>
-                                    修改
+                                    详细
                                 </button>
                             &nbsp;
-                                <button className="btn btn-sm btn-white btn-warning btn-round" onClick={this._handleDeleteClick.bind(this, "delete")}>
-                                    <i className="ace-icon fa fa-trash-o bigger-120 orange"></i>
-                                    删除 
-                                </button>
                             </div>
                             <div className="col-xs-6">
                                 <div id="sample-table-2_filter" className="dataTables_filter">

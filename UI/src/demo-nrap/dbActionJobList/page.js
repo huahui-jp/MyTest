@@ -172,8 +172,8 @@ var page = React.createClass({
             <Column label="JOBID" dataKey="actionJobId" hidden={true}/>,
             <Column label="tableId" dataKey="tableMappingId" hidden={true}/>,
             <Column label="任务种类"  dataKey="actionJobType" width={50} cellRender={this.typeCellRender} />,
-            <Column label="任务提交阀值" dataKey="batchUpdateCnt" width={50} />,
-            <Column label="消息通道名称" dataKey="messageChannelName" />,
+            <Column label="数据提交阀值" dataKey="batchUpdateCnt" width={50} />,
+            <Column label="数据通道名称" dataKey="messageChannelName" />,
             <Column label="保存履历" dataKey="enableSaveHistory"  cellRender={this.enSaveHisCellRender}/>,
             <Column label="主键名称" dataKey="keyColumn" width={50} cellRender={this.childCellRender}/>,
             <Column label="运行状态" dataKey="runStatus" width={50} />]);
@@ -190,19 +190,10 @@ var page = React.createClass({
                         &nbsp;
                             <button className="btn btn-sm btn-white btn-default btn-round" onClick={this._handleEditClick}>
                                 <i className="ace-icon fa fa-pencil align-top bigger-120 "></i>
-                                修改
+                                详细
                             </button>
                         &nbsp;
-                            <button className="btn btn-sm btn-white btn-warning btn-round" onClick={this._handleDeleteClick}>
-                                <i className="ace-icon fa fa-trash-o bigger-120 orange"></i>
-                                删除 
-                            </button>
-                        &nbsp;
-                            <button className="btn btn-sm btn-white btn-warning btn-round" onClick={this._handleHisListClick}>
-                                <i className="ace-icon fa fa-trash-o bigger-120 orange"></i>
-                                查看履历 
-                            </button>
-                        </div>
+                         </div>
                         <div className="col-xs-6">
                             <div id="sample-table-2_filter" className="dataTables_filter">
                                 <input type="search" valueLink={this.linkState('querystring')} onKeyUp={this._searchKeyUp} className="form-control input-sm" placeholder="查询..." aria-controls="sample-table-2"></input>
