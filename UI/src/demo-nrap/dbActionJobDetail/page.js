@@ -20,6 +20,10 @@ var messageUtil  = require('../../common/messageUtil');
 var Validation  = require('react-validation'); 
 var Validator  = require('validator');
 var ValidationMixin = require('../../mixin/validationMixin');
+    
+var Table = require('../../component/table-grid/table');
+var TableStore = require('../../component/table-grid/store');
+var Column = require('../../component/table-grid/table-column');
 
 var { Route, DefaultRoute, RouteHandler, Link } = Router;
 
@@ -54,6 +58,11 @@ var page = React.createClass({
         this.mode = this.props.params.mode;
         if(this.mode === "edit"){
             Actions.init(actionJobId);
+            Actions.search({
+                actionJobId: this.props.params.actionJobId,
+                currentPage: 0,
+                querystring: ""
+            });
         }
         if(this.mode === "add"){
             Actions.searchTableMapping(null);
@@ -80,6 +89,15 @@ var page = React.createClass({
                     keyColumn: params.obj.keyColumn
                 });
             }  
+            if(params.rows){
+                this.setState({
+                    rows: params.rows,
+                    rowsTotoal: params.rowsTotoal,
+                    currentPage: params.currentPage
+                });
+
+            }
+
             if(params.tableMappingList){
                 //动态添加option到select数据库表物理名中
                 var tableMappingListOptions = [];
@@ -182,12 +200,64 @@ var page = React.createClass({
     endJob: function () {
         Actions.end(this.state.actionJobId);
     },
-    /*-----------------------------------表单相关事件-----------------------------*/
+    /*-----------------------------------table相关事件-----------------------------*/
+    /**
+     * table加载行数据
+     */
+    rowGetter: function (rowIndex) {
+        //console.log(rowIndex);
+        return this.state.rows[rowIndex];
+    },
+    /**
+     * 双击行的事件
+     */
+    _onRowDblClick: function (event, rowId, rowData, checked) {
+        messageUtil.addGritter({text: rowData.resourceName});
+        //TODO 弹出Detail画面
+
+    },
+    /**
+     * 分页按钮的事件 待封装
+     */
+    _onNavigationBtnClick: function (pageNo, navigationInfo) {
+        Actions.search({
+            currentPage: pageNo,
+            querystring: this.state.querystring
+        });
+
+    },
     /*-----------------------------------画面Layout-----------------------------*/
     render: function () {
         
 
         console.log("get this.state.tableMappingListOptions--->"+this.state.tableMappingListOptions);
+
+        if(this.mode === "edit"){
+            this.table = React.createElement(Table, {
+                rowGetter: this.rowGetter,//获得记录数据，每页都从0开始
+                rowsTotoal: this.state.rowsTotoal, //记录总数
+                currentPage: this.state.currentPage, //当前页码，从0开始
+                // headerDataGetter: this._headerDataGetter, //表头格式化方法
+                onRowClick: this._onRowClick, //记录行单击事件
+                onRowDblClick: this._onRowDblClick, //记录行双击事件
+                onNavigationBtnClick: this._onNavigationBtnClick, //分页事件
+                rowIdColumn: "actionJobHistoryId", //唯一标识每行记录的字段
+                // rowSelected: true,//选择一行是否触发checkbox
+                id: "demoList"
+            }, [
+                // <Column dataKey="checkbox" label="" inputType="checkbox"/>,
+                <Column dataKey="id" label="ID" hidden={true} />,
+                <Column label="JOB履历ID" dataKey="actionJobHistoryId" width={50} />,
+                <Column label="JOBID" dataKey="actionJobId" />,
+                <Column label="开始时间"  dataKey="startTime" width={50}  />,
+                <Column label="错误时间" dataKey="startError" width={100} />,
+                <Column label="结束时间" dataKey="endTime" />,
+                <Column label="更新数量" dataKey="updateCnt" width={50} />,
+                <Column label="错误数量" dataKey="errorCnt" />]);
+
+        }
+
+
 
 
         return (
@@ -284,9 +354,8 @@ var page = React.createClass({
                                 </button>
                             </div>
                         </div>
-
-
                     </form>
+                    {this.table}
                 </div>
             </div>
         );

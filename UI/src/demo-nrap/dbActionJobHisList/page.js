@@ -184,14 +184,6 @@ var page = React.createClass({
             </div>
         );
     },
-    /**
-     * 生成列内容:序号
-     */
-    _xuhaoCellRender: function (cellData, cellDataKey, rowData, cellIndex, rowIndex) {
-
-        var xuhao = rowIndex + 1;
-        return xuhao;
-    },
     _handleToggle: function () {
         this.setState({
             isModalOpen: !this.state.isModalOpen

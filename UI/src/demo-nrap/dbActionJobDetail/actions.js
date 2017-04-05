@@ -13,7 +13,8 @@ var actions = Reflux.createActions([
     "edit",
     "searchTableMapping",
     "start",
-    "end"
+    "end",
+    "search"
 ]);
 
 module.exports = actions;
