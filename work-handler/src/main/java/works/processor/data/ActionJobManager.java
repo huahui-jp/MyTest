@@ -11,6 +11,7 @@ import works.processor.domain.Resource;
 import works.processor.domain.TableMapping;
 import works.processor.utils.DaoTools;
 import works.processor.web.ActionJobDAO;
+import works.processor.web.ActionJobHistoryDAO;
 import works.processor.web.ColumnMappingDAO;
 import works.processor.web.ResourceDAO;
 import works.processor.web.TableMappingDAO;

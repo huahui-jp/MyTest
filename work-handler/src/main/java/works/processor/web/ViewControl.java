@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import works.processor.data.ActionJobHistoryDAO;
 import works.processor.domain.ActionJob;
 import works.processor.domain.ActionJobHistory;
 import works.processor.domain.ColumnMapping;

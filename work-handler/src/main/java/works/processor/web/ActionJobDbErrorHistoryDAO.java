@@ -1,4 +1,4 @@
-package works.processor.data;
+package works.processor.web;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
