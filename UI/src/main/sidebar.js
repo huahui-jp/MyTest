@@ -53,7 +53,7 @@ var page = React.createClass({
                     <li className="">
                         <a href="#" className="dropdown-toggle">
                             <i className="menu-icon fa fa-fire"></i>
-                            <span className="menu-text"> 国铁云服务平台 </span>
+                            <span className="menu-text"> 数据交换平台 </span>
 
                             <b className="arrow fa fa-angle-down"></b>
                         </a>
@@ -93,40 +93,43 @@ var page = React.createClass({
                                     </li>
                                 </ul>
                             </li>
-                            <li className="">
-                                <Link to="/user">
-                                    <i className="menu-icon fa fa-caret-right"></i>
-
-                                    服务管理
-                                    <b className="arrow"></b>
-                                </Link>
-
-                                <b className="arrow"></b>
-
-                            </li>
-                            <li className="">
-                                <Link to="/user">
-                                    <i className="menu-icon fa fa-caret-right"></i>
-
-                                    工作流管理
-                                    <b className="arrow"></b>
-                                </Link>
-
-                                <b className="arrow"></b>
-
-                            </li>
-                            <li className="">
-                                <Link to="/user">
-                                    <i className="menu-icon fa fa-caret-right"></i>
-
-                                    组织管理
-                                    <b className="arrow"></b>
-                                </Link>
-
-                                <b className="arrow"></b>
-
-                            </li>
                         </ul>
+                        <ul className="submenu">
+                            <li className="">
+                                <a href="#" className="dropdown-toggle">
+                                    <i className="menu-icon fa fa-caret-right"></i>
+                                    数据来源管理
+                                    <b className="arrow fa fa-angle-down"></b>
+                                </a>
+
+                                <b className="arrow"></b>
+
+                                <ul className="submenu">
+                                    <li className="">
+                                        <Link to="/resourceListPage" >
+                                            <i className="menu-icon fa fa-caret-right"></i>
+                                            数据来源管理
+                                        </Link>
+
+                                        <b className="arrow"></b>
+                                    </li>
+                                    <li className="">
+                                        <Link to="/dbTableMappingListPage">
+                                        <i className="menu-icon fa fa-caret-right"></i>
+                                            数据抽出方法
+                                        </Link>
+                                    </li>
+                                    <li className="">
+                                        <Link to="/dbActionJobListPage">
+                                            <i className="menu-icon fa fa-caret-right"></i>
+                                            定时任务管理
+                                        </Link>
+
+                                        <b className="arrow"></b>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>                        
                     </li>
                     <li className="">
                         <a href="#" className="dropdown-toggle">
