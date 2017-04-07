@@ -10,5 +10,5 @@ public interface ITableMapping extends ICommonValid<TableMapping, Integer> {
 	
 	int deleteByResourceId(int resourceId);
 	
-	List<TableMapping> findByResourceId(int resourceId);
+	List<TableMapping> findByResourceId(Integer resourceId);
 }

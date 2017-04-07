@@ -13,7 +13,7 @@ public class RepositoryTools implements ApplicationContextAware {
 		   applicationContext = context;
 	}
 	
-	public static Object getDAO(Class classname) {
+	public static Object getDAO(@SuppressWarnings("rawtypes") Class classname) {
 		try{
 			Object _restTemplate = applicationContext.getBean(classname);
 			return _restTemplate;
