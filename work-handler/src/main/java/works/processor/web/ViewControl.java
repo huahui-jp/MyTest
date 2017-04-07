@@ -18,7 +18,7 @@ import works.processor.domain.ActionJobHistory;
 import works.processor.domain.ColumnMapping;
 import works.processor.domain.Resource;
 import works.processor.domain.TableMapping;
-import works.processor.repository.DAOStore;
+import works.processor.repository.RespositoryStore;
 import works.processor.repository.IActionJobHistory;
 import works.processor.utils.DaoTools;
 import works.processor.web.domain.ResourceView;
@@ -29,7 +29,7 @@ import works.processor.web.domain.TableMappingView;
 public class ViewControl {
 
 	@Autowired
-	private DAOStore storeDao;
+	private RespositoryStore storeDao;
 
 	@RequestMapping("/resource")
 	public Resource getResource(@RequestParam("ResourceId") int resourceId)

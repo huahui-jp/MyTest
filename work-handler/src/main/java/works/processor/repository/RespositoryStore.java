@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class DAOStore {
+public class RespositoryStore {
 
 	@Autowired
 	private IResource resourceDAO;

@@ -17,7 +17,7 @@ import works.processor.domain.DataSource;
 import works.processor.domain.Resource;
 import works.processor.domain.ScheduleJob;
 import works.processor.domain.TableMapping;
-import works.processor.repository.DAOStore;
+import works.processor.repository.RespositoryStore;
 import works.processor.web.dbutil.ConnectionUtil;
 import works.processor.web.domain.ColumnInfo;
 
@@ -26,7 +26,7 @@ import works.processor.web.domain.ColumnInfo;
 public class OperaterControl {
 
 	@Autowired
-	private DAOStore storeDao;
+	private RespositoryStore storeDao;
 
 //======================test===============================//	
 	@RequestMapping(value="/testResource")
