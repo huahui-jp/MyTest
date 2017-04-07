@@ -16,10 +16,10 @@ import org.quartz.impl.StdSchedulerFactory;
 import works.processor.domain.DataSource;
 import works.processor.domain.Resource;
 import works.processor.domain.ScheduleJob;
+import works.processor.repository.IDataSource;
+import works.processor.repository.IResource;
+import works.processor.repository.IScheduleJob;
 import works.processor.utils.DaoTools;
-import works.processor.web.IDataSource;
-import works.processor.web.IResource;
-import works.processor.web.IScheduleJob;
 
 public class ScheduleManager {
 

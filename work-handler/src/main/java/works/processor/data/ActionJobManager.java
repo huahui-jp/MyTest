@@ -9,12 +9,12 @@ import works.processor.domain.ActionJobHistory;
 import works.processor.domain.ColumnMapping;
 import works.processor.domain.Resource;
 import works.processor.domain.TableMapping;
+import works.processor.repository.IActionJob;
+import works.processor.repository.IActionJobHistory;
+import works.processor.repository.IColumnMapping;
+import works.processor.repository.IResource;
+import works.processor.repository.ITableMapping;
 import works.processor.utils.DaoTools;
-import works.processor.web.IActionJob;
-import works.processor.web.IActionJobHistory;
-import works.processor.web.IColumnMapping;
-import works.processor.web.IResource;
-import works.processor.web.ITableMapping;
 
 public class ActionJobManager {
 

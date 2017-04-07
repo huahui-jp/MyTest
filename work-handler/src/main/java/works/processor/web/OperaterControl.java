@@ -17,6 +17,7 @@ import works.processor.domain.DataSource;
 import works.processor.domain.Resource;
 import works.processor.domain.ScheduleJob;
 import works.processor.domain.TableMapping;
+import works.processor.repository.DAOStore;
 import works.processor.web.dbutil.ConnectionUtil;
 import works.processor.web.domain.ColumnInfo;
 

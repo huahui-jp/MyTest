@@ -15,9 +15,9 @@ import org.springframework.stereotype.Controller;
 import works.processor.data.sourcesink.MessageGateway;
 import works.processor.domain.ScheduleJob;
 import works.processor.domain.ScheduleJobHistory;
+import works.processor.repository.IScheduleJobHistory;
 import works.processor.utils.CommonTools;
 import works.processor.utils.DaoTools;
-import works.processor.web.IScheduleJobHistory;
 
 @Controller
 public abstract class ScheduleJobExecutor implements Job {

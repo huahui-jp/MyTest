@@ -18,6 +18,8 @@ import works.processor.domain.ActionJobHistory;
 import works.processor.domain.ColumnMapping;
 import works.processor.domain.Resource;
 import works.processor.domain.TableMapping;
+import works.processor.repository.DAOStore;
+import works.processor.repository.IActionJobHistory;
 import works.processor.utils.DaoTools;
 import works.processor.web.domain.ResourceView;
 import works.processor.web.domain.TableMappingView;

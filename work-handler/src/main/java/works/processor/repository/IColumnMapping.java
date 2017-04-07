@@ -1,4 +1,4 @@
-package works.processor.web;
+package works.processor.repository;
 
 import java.util.List;
 
