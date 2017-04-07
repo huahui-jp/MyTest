@@ -119,7 +119,7 @@ public class ActionJobManager {
 		
 		for(int i = 0; i < jobHistoryList.size(); i++ ) {
 
-			if(jobHistoryList.get(i).getStartTime() != null){
+			if(jobHistoryList.get(i).getEndTime() == null){
 				
 				jobHistoryList.get(i).setStartError(errorMessage);
 				jobHistoryList.get(i).setEndTime(new Timestamp(System.currentTimeMillis()));

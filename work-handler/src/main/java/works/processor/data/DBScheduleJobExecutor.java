@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.quartz.JobDataMap;
+
 import works.processor.domain.DataSource;
 import works.processor.domain.Resource;
 import works.processor.web.dbutil.ConnectionUtil;
@@ -15,7 +17,7 @@ public class DBScheduleJobExecutor extends ScheduleJobExecutor {
 	private ResultSet rs = null;
 	
 	@Override
-	DataSet getDataSet(JobScheduler jobScheduler) {
+	DataSet getDataSet(JobDataMap jobDataMap) {
 		try {
 			rs = ps.executeQuery();
 			return new DBDataSet(rs);
@@ -25,10 +27,10 @@ public class DBScheduleJobExecutor extends ScheduleJobExecutor {
 	}
 
 	@Override
-	void prepareJobExecution(JobScheduler jobScheduler) {
+	void prepareJobExecution(JobDataMap jobDataMap) {
 
-		Resource resource = jobScheduler.getSourceResource();
-		DataSource dataSource = jobScheduler.getDataSource();
+		Resource resource = (Resource) jobDataMap.get(ScheduleJobExecutor.SCHEDULE_RESOURCE);
+		DataSource dataSource = (DataSource) jobDataMap.get(ScheduleJobExecutor.SCHEDULE_DATASOURCE);
 
 		try {
 			conn = ConnectionUtil.getInstance().getDbHelper(resource.getDbLink()).getConnection(resource.getDbLink(), resource.getDbUser(), resource.getDbPasswd());
@@ -39,7 +41,7 @@ public class DBScheduleJobExecutor extends ScheduleJobExecutor {
 	}
 
 	@Override
-	void endJobExecution(JobScheduler jobScheduler) {
+	void endJobExecution(JobDataMap jobScheduler) {
 		try {
 			if( rs != null && !rs.isClosed()) {
 				rs.close();

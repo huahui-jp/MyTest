@@ -56,6 +56,10 @@ public class ScheduleJob {
 		this.jobName = jobName;
 	}
 
+	public String getSchedJobName() {
+		return this.jobName + "_" + this.jobId;
+	}
+	
 	public String getCronTime() {
 		return cronTime;
 	}
