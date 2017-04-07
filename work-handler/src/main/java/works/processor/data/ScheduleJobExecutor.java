@@ -16,8 +16,8 @@ import works.processor.data.sourcesink.MessageGateway;
 import works.processor.domain.ScheduleJob;
 import works.processor.domain.ScheduleJobHistory;
 import works.processor.repository.IScheduleJobHistory;
+import works.processor.repository.RepositoryTools;
 import works.processor.utils.CommonTools;
-import works.processor.utils.DaoTools;
 
 @Controller
 public abstract class ScheduleJobExecutor implements Job {
@@ -45,7 +45,7 @@ public abstract class ScheduleJobExecutor implements Job {
 		JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
 
 		ScheduleJob scheduleJob = (ScheduleJob) jobDataMap.get(ScheduleJobExecutor.SCHEDULE_JOB);
-		IScheduleJobHistory dao = (IScheduleJobHistory)DaoTools.getDAO(IScheduleJobHistory.class);
+		IScheduleJobHistory dao = (IScheduleJobHistory)RepositoryTools.getDAO(IScheduleJobHistory.class);
 		ScheduleJobHistory jobHistory = new ScheduleJobHistory();
 
 		try {

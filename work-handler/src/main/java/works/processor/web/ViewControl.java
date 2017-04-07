@@ -20,7 +20,7 @@ import works.processor.domain.Resource;
 import works.processor.domain.TableMapping;
 import works.processor.repository.RespositoryStore;
 import works.processor.repository.IActionJobHistory;
-import works.processor.utils.DaoTools;
+import works.processor.repository.RepositoryTools;
 import works.processor.web.domain.ResourceView;
 import works.processor.web.domain.TableMappingView;
 
@@ -152,7 +152,7 @@ public class ViewControl {
 	
 	@RequestMapping("/testDao")
 	public int testDao() {
-		IActionJobHistory dao = (IActionJobHistory)DaoTools.getDAO(IActionJobHistory.class);
+		IActionJobHistory dao = (IActionJobHistory)RepositoryTools.getDAO(IActionJobHistory.class);
 		
 		ActionJobHistory history = new ActionJobHistory();
 		history.setActionJobId(1);
