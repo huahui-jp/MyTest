@@ -10,11 +10,11 @@ import works.processor.domain.ColumnMapping;
 import works.processor.domain.Resource;
 import works.processor.domain.TableMapping;
 import works.processor.utils.DaoTools;
-import works.processor.web.ActionJobDAO;
-import works.processor.web.ActionJobHistoryDAO;
-import works.processor.web.ColumnMappingDAO;
-import works.processor.web.ResourceDAO;
-import works.processor.web.TableMappingDAO;
+import works.processor.web.IActionJob;
+import works.processor.web.IActionJobHistory;
+import works.processor.web.IColumnMapping;
+import works.processor.web.IResource;
+import works.processor.web.ITableMapping;
 
 public class ActionJobManager {
 
@@ -33,7 +33,7 @@ public class ActionJobManager {
 
 	public int startJob(int actionJobId, String type) {
 
-		ActionJobDAO dao = (ActionJobDAO) DaoTools.getDAO(ActionJobDAO.class);
+		IActionJob dao = (IActionJob) DaoTools.getDAO(IActionJob.class);
 		ActionJob actionJob = dao.findOne(actionJobId);
 		if( actionJob == null ) {
 			return -1;
@@ -50,7 +50,7 @@ public class ActionJobManager {
 			}
 		}
 
-		ActionJobHistoryDAO jobHistoryDao = (ActionJobHistoryDAO) DaoTools.getDAO(ActionJobHistoryDAO.class);
+		IActionJobHistory jobHistoryDao = (IActionJobHistory) DaoTools.getDAO(IActionJobHistory.class);
 		ActionJobHistory history = new ActionJobHistory();
 		history.setActionJobHistoryId(null);
 		history.setActionJobId(actionJobId);
@@ -60,7 +60,7 @@ public class ActionJobManager {
 		history.setDeleteFlg("0");
 		jobHistoryDao.save(history);
 		
-		TableMappingDAO mappingDao = (TableMappingDAO) DaoTools.getDAO(TableMappingDAO.class);
+		ITableMapping mappingDao = (ITableMapping) DaoTools.getDAO(ITableMapping.class);
 		TableMapping tableMapping = mappingDao.findOne(actionJob.getTableMappingId());
 		if( tableMapping == null ) {
 			
@@ -70,7 +70,7 @@ public class ActionJobManager {
 			return -1;
 		}
 		
-		ResourceDAO resourceDao = (ResourceDAO) DaoTools.getDAO(ResourceDAO.class);
+		IResource resourceDao = (IResource) DaoTools.getDAO(IResource.class);
 		Resource resource = resourceDao.findOne(tableMapping.getResourceId());
 		if( resource == null ) {
 			history.setStartError("资源不存在。。");
@@ -80,7 +80,7 @@ public class ActionJobManager {
 		}
 			
 
-		ColumnMappingDAO columnMappingDao = (ColumnMappingDAO) DaoTools.getDAO(ColumnMappingDAO.class);
+		IColumnMapping columnMappingDao = (IColumnMapping) DaoTools.getDAO(IColumnMapping.class);
 		List<ColumnMapping> columnMappings = columnMappingDao.findByTableMappingId(actionJob.getTableMappingId());
 		if( columnMappings == null || columnMappings.size() == 0) {
 			
@@ -114,7 +114,7 @@ public class ActionJobManager {
 
 	private void updateJobFinishInfo(int actionJobId, int updateCnt, int errorCnt, String errorMessage) {
 
-		ActionJobHistoryDAO jobHistoryDao = (ActionJobHistoryDAO) DaoTools.getDAO(ActionJobHistoryDAO.class);
+		IActionJobHistory jobHistoryDao = (IActionJobHistory) DaoTools.getDAO(IActionJobHistory.class);
 		List<ActionJobHistory> jobHistoryList = jobHistoryDao.findByActionJobId(actionJobId);
 		
 		for(int i = 0; i < jobHistoryList.size(); i++ ) {

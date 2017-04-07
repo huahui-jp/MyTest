@@ -1,6 +1,7 @@
 package works.processor.data;
 
 import java.lang.reflect.Method;
+import java.sql.Timestamp;
 
 import org.apache.activemq.artemis.utils.json.JSONException;
 import org.apache.activemq.artemis.utils.json.JSONObject;
@@ -13,6 +14,10 @@ import org.springframework.stereotype.Controller;
 
 import works.processor.data.sourcesink.MessageGateway;
 import works.processor.domain.ScheduleJob;
+import works.processor.domain.ScheduleJobHistory;
+import works.processor.utils.CommonTools;
+import works.processor.utils.DaoTools;
+import works.processor.web.IScheduleJobHistory;
 
 @Controller
 public abstract class ScheduleJobExecutor implements Job {
@@ -26,6 +31,8 @@ public abstract class ScheduleJobExecutor implements Job {
     @Autowired
     private MessageGateway messageGateway;
 
+	private int getCnt = 0;
+	
     abstract DataSet getDataSet(JobDataMap jobDataMap);
 
     abstract void prepareJobExecution(JobDataMap jobDataMap);
@@ -37,9 +44,24 @@ public abstract class ScheduleJobExecutor implements Job {
 		
 		JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
 
+		ScheduleJob scheduleJob = (ScheduleJob) jobDataMap.get(ScheduleJobExecutor.SCHEDULE_JOB);
+		IScheduleJobHistory dao = (IScheduleJobHistory)DaoTools.getDAO(IScheduleJobHistory.class);
+		ScheduleJobHistory jobHistory = new ScheduleJobHistory();
+
 		try {
+			jobHistory.setStartTime(new Timestamp(System.currentTimeMillis()));
+			jobHistory.setGetCnt(0);
+			jobHistory.setJobId(scheduleJob.getJobId());
+
+			dao.save(jobHistory);
+
 			prepareJobExecution(jobDataMap);
 		} catch (RuntimeException re) {
+			
+			jobHistory.setEndTime(new Timestamp(System.currentTimeMillis()));
+			jobHistory.setError(CommonTools.convertExceptionToString(re, 2048));
+			jobHistory.setGetCnt(0);
+			dao.save(jobHistory);
 			// TODO ::
 			return;
 		}
@@ -57,10 +79,27 @@ public abstract class ScheduleJobExecutor implements Job {
 				}
 				
 				postData(jobDataMap, jsonObject.toString());
-			} catch (JSONException je) {
+				getCnt++;
 				
+				if(getCnt % 100 == 0){
+					jobHistory.setGetCnt(getCnt);
+					dao.save(jobHistory);
+				}
+				
+			} catch (JSONException je) {
+				jobHistory.setEndTime(new Timestamp(System.currentTimeMillis()));
+				jobHistory.setError(CommonTools.convertExceptionToString(je, 2048));
+				jobHistory.setGetCnt(getCnt);
+				dao.save(jobHistory);
+				return;
 			}
 		}
+
+		jobHistory.setEndTime(new Timestamp(System.currentTimeMillis()));
+		jobHistory.setGetCnt(getCnt);
+		dao.save(jobHistory);
+		
+		return;
 	}
 
 

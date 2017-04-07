@@ -2,5 +2,5 @@ package works.processor.web;
 
 import works.processor.domain.ScheduleJob;
 
-public interface ScheduleJobDAO extends CommonValidDAO<ScheduleJob, Integer> {
+public interface IScheduleJob extends ICommonValid<ScheduleJob, Integer> {
 }

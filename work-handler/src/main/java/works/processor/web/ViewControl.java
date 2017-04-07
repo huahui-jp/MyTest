@@ -150,7 +150,7 @@ public class ViewControl {
 	
 	@RequestMapping("/testDao")
 	public int testDao() {
-		ActionJobHistoryDAO dao = (ActionJobHistoryDAO)DaoTools.getDAO(ActionJobHistoryDAO.class);
+		IActionJobHistory dao = (IActionJobHistory)DaoTools.getDAO(IActionJobHistory.class);
 		
 		ActionJobHistory history = new ActionJobHistory();
 		history.setActionJobId(1);

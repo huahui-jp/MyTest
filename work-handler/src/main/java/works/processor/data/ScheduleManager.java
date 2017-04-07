@@ -17,9 +17,9 @@ import works.processor.domain.DataSource;
 import works.processor.domain.Resource;
 import works.processor.domain.ScheduleJob;
 import works.processor.utils.DaoTools;
-import works.processor.web.DataSourceDAO;
-import works.processor.web.ResourceDAO;
-import works.processor.web.ScheduleJobDAO;
+import works.processor.web.IDataSource;
+import works.processor.web.IResource;
+import works.processor.web.IScheduleJob;
 
 public class ScheduleManager {
 
@@ -46,7 +46,7 @@ public class ScheduleManager {
     
     public boolean isScheduled(int jobId) {
     	
-		ScheduleJobDAO dao = (ScheduleJobDAO) DaoTools.getDAO(ScheduleJobDAO.class);
+		IScheduleJob dao = (IScheduleJob) DaoTools.getDAO(IScheduleJob.class);
 		
 		ScheduleJob job = dao.findOne(jobId);
 		String jobName = job.getSchedJobName();
@@ -67,9 +67,9 @@ public class ScheduleManager {
     
     public void addJob(int jobId, String time) {
     	
-		ScheduleJobDAO dao = (ScheduleJobDAO) DaoTools.getDAO(ScheduleJobDAO.class);
-		DataSourceDAO dataSourceDao = (DataSourceDAO) DaoTools.getDAO(DataSourceDAO.class);
-		ResourceDAO resourceDao = (ResourceDAO) DaoTools.getDAO(ResourceDAO.class);
+		IScheduleJob dao = (IScheduleJob) DaoTools.getDAO(IScheduleJob.class);
+		IDataSource dataSourceDao = (IDataSource) DaoTools.getDAO(IDataSource.class);
+		IResource resourceDao = (IResource) DaoTools.getDAO(IResource.class);
 
 		if( isScheduled(jobId)) {
 			return;
@@ -100,7 +100,7 @@ public class ScheduleManager {
     }
 
     public void removeJob(int jobId) {
-		ScheduleJobDAO dao = (ScheduleJobDAO) DaoTools.getDAO(ScheduleJobDAO.class);
+		IScheduleJob dao = (IScheduleJob) DaoTools.getDAO(IScheduleJob.class);
 		ScheduleJob job = dao.findOne(jobId);
 
 		if( !isScheduled(jobId)) {

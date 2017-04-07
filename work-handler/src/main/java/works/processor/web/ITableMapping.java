@@ -4,7 +4,7 @@ import java.util.List;
 
 import works.processor.domain.TableMapping;
 
-public interface TableMappingDAO extends CommonValidDAO<TableMapping, Integer> {
+public interface ITableMapping extends ICommonValid<TableMapping, Integer> {
 	
 	int countByResourceId(int resourceId);
 	

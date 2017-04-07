@@ -4,6 +4,6 @@ import java.util.List;
 
 import works.processor.domain.Resource;
 
-public interface ResourceDAO extends CommonValidDAO<Resource, Integer> {
+public interface IResource extends ICommonValid<Resource, Integer> {
 	List<Resource> findByResourceFlgAndDeleteFlg(String resourceFlg, String deleteFlg);
 }

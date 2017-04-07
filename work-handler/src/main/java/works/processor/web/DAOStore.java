@@ -7,79 +7,79 @@ import org.springframework.context.annotation.Configuration;
 public class DAOStore {
 
 	@Autowired
-	private ResourceDAO resourceDAO;
+	private IResource resourceDAO;
 	
 	@Autowired
-	private TableMappingDAO tableMappingDAO;
+	private ITableMapping tableMappingDAO;
 	
 	@Autowired
-	private ColumnMappingDAO columnMappingDAO;
+	private IColumnMapping columnMappingDAO;
 	
 	@Autowired
-	private ActionJobDAO actionJobDAO;
+	private IActionJob actionJobDAO;
 
 	@Autowired
-	private ActionJobHistoryDAO actionJobHistoryDAO;
+	private IActionJobHistory actionJobHistoryDAO;
 	
 	@Autowired
-	private DataSourceDAO dataSourceDAO;
+	private IDataSource dataSourceDAO;
 	
 	@Autowired
-	private ScheduleJobDAO scheduleJobDAO;
+	private IScheduleJob scheduleJobDAO;
 
-	public ActionJobHistoryDAO getActionJobHistoryDAO() {
+	public IActionJobHistory getActionJobHistoryDAO() {
 		return actionJobHistoryDAO;
 	}
 
-	public void setActionJobHistoryDAO(ActionJobHistoryDAO actionJobHistoryDAO) {
+	public void setActionJobHistoryDAO(IActionJobHistory actionJobHistoryDAO) {
 		this.actionJobHistoryDAO = actionJobHistoryDAO;
 	}
 
-	public ResourceDAO getResourceDAO() {
+	public IResource getResourceDAO() {
 		return resourceDAO;
 	}
 
-	public void setResourceDAO(ResourceDAO resourceDAO) {
+	public void setResourceDAO(IResource resourceDAO) {
 		this.resourceDAO = resourceDAO;
 	}
 
-	public TableMappingDAO getTableMappingDAO() {
+	public ITableMapping getTableMappingDAO() {
 		return tableMappingDAO;
 	}
 
-	public void setTableMappingDAO(TableMappingDAO tableMappingDAO) {
+	public void setTableMappingDAO(ITableMapping tableMappingDAO) {
 		this.tableMappingDAO = tableMappingDAO;
 	}
 
-	public ColumnMappingDAO getColumnMappingDAO() {
+	public IColumnMapping getColumnMappingDAO() {
 		return columnMappingDAO;
 	}
 
-	public void setColumnMappingDAO(ColumnMappingDAO columnMappingDAO) {
+	public void setColumnMappingDAO(IColumnMapping columnMappingDAO) {
 		this.columnMappingDAO = columnMappingDAO;
 	}
 
-	public ActionJobDAO getActionJobDAO() {
+	public IActionJob getActionJobDAO() {
 		return actionJobDAO;
 	}
 
-	public void setActionJobDAO(ActionJobDAO actionJobDAO) {
+	public void setActionJobDAO(IActionJob actionJobDAO) {
 		this.actionJobDAO = actionJobDAO;
 	}
 
-	public DataSourceDAO getDataSourceDAO() {
+	public IDataSource getDataSourceDAO() {
 		return dataSourceDAO;
 	}
 
-	public void setDataSourceDAO(DataSourceDAO dataSourceDAO) {
+	public void setDataSourceDAO(IDataSource dataSourceDAO) {
 		this.dataSourceDAO = dataSourceDAO;
 	}
 
-	public ScheduleJobDAO getScheduleJobDAO() {
+	public IScheduleJob getScheduleJobDAO() {
 		return scheduleJobDAO;
 	}
 
-	public void setScheduleJobDAO(ScheduleJobDAO scheduleJobDAO) {
+	public void setScheduleJobDAO(IScheduleJob scheduleJobDAO) {
 		this.scheduleJobDAO = scheduleJobDAO;
 	}
 	
