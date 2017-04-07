@@ -1,4 +1,4 @@
-package works.processor.web.dbutil;
+package works.processor.dbutil;
 
 public class ConnectionUtil {
 

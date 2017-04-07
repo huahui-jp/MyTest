@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 
 import org.quartz.JobDataMap;
 
+import works.processor.dbutil.ConnectionUtil;
 import works.processor.domain.DataSource;
 import works.processor.domain.Resource;
-import works.processor.web.dbutil.ConnectionUtil;
 
 public class DBScheduleJobExecutor extends ScheduleJobExecutor {
 

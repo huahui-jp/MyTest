@@ -1,4 +1,4 @@
-package works.processor.web.dbutil;
+package works.processor.dbutil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +11,13 @@ import java.util.List;
 import works.processor.web.domain.ColumnInfo;
 
 public abstract class BaseDbHelper implements DbHelper {
+
+	public List<ColumnInfo> getColumnNameList(String url, String userName, String passWord, String tableName) throws SQLException{
+		
+		String sql = "select * from " + tableName;
+		
+		return getColumnInfo(url, userName, passWord, sql);
+	}
 
 	public List<ColumnInfo> getColumnInfo(String url, String userName, String passWord, String sql) throws SQLException {
 		

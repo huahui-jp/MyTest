@@ -1,4 +1,4 @@
-package works.processor.web.dbutil;
+package works.processor.dbutil;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -111,46 +111,5 @@ public class MySqlDbHelper extends BaseDbHelper implements DbHelper{
 		
 	}
 	
-	public List<ColumnInfo> getColumnNameList(String url, String userName, String passWord, String tableName) throws SQLException{
-		
-		List<ColumnInfo> result = new ArrayList<ColumnInfo>();
-		
-		String schema = getSchemaName(url);
-		
-		Connection conn = getConnection(url, userName, passWord);
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		
-		try {
-			ps = conn.prepareStatement("SELECT column_name, data_type from information_schema.columns WHERE table_schema = ? AND table_name = ?");
-			ps.setString(1, schema);
-			ps.setString(2, tableName);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				ColumnInfo colInfo = new ColumnInfo();
-				colInfo.setColumnName(rs.getString("column_name"));
-				colInfo.setDataType(rs.getString("data_type"));
-				result.add(colInfo);
-			}
-		} finally {
-			try {
-				if (rs != null){
-					rs.close();
-				}
-			} catch (Exception ex) {
-			}
-			
-			try {
-				if (ps != null){
-					ps.close();
-				}
-			} catch (Exception ex) {
-			}
-				
-			conn.close();
-		}
-		
-		return result;
-	}
 
 }

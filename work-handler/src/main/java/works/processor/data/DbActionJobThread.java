@@ -8,9 +8,9 @@ import java.sql.SQLException;
 import org.apache.activemq.artemis.utils.json.JSONException;
 import org.apache.activemq.artemis.utils.json.JSONObject;
 
+import works.processor.dbutil.ConnectionUtil;
 import works.processor.domain.ActionJob;
 import works.processor.utils.CommonTools;
-import works.processor.web.dbutil.ConnectionUtil;
 
 public class DbActionJobThread extends ActionJobThread {
 

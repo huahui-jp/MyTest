@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import works.processor.dbutil.ConnectionUtil;
 import works.processor.domain.ActionJob;
 import works.processor.domain.ColumnMapping;
 import works.processor.domain.DataSource;
@@ -18,7 +19,6 @@ import works.processor.domain.Resource;
 import works.processor.domain.ScheduleJob;
 import works.processor.domain.TableMapping;
 import works.processor.repository.RespositoryStore;
-import works.processor.web.dbutil.ConnectionUtil;
 import works.processor.web.domain.ColumnInfo;
 
 @RestController
