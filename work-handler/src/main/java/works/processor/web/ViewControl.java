@@ -5,9 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,10 +25,12 @@ import works.processor.domain.ColumnMapping;
 import works.processor.domain.Resource;
 import works.processor.domain.TableMapping;
 import works.processor.repository.RespositoryStore;
+import works.processor.utils.CommonTools;
 import works.processor.repository.IActionJobHistory;
 import works.processor.repository.RepositoryTools;
 import works.processor.web.domain.ResourceView;
 import works.processor.web.domain.TableMappingView;
+import works.processor.web.domain.WebResult;
 
 @RestController
 @Configuration
@@ -39,12 +47,34 @@ public class ViewControl {
 
 	
 	@RequestMapping("/resourceList")
-	public Iterable<Resource> getResourceList(@RequestParam("ResourceFlg") String resourceFlg, @RequestParam("WithNoValid") String validFlg)
+	public WebResult getResourceList(
+			@RequestParam(value="ResourceFlg", required=true) String resourceFlg, 
+			@RequestParam(value="WithNoValid", required=true) String validFlg,
+			@RequestParam(value="ResourceName", required=false) String name,
+			@RequestParam(value="ResourceType", required=false) String type)
 	{
 		Iterable<Resource> result;
 		ArrayList<Resource> resultView = new ArrayList<Resource>();
+		
+		Specification<Resource> querySpecifi = new Specification<Resource>() {
+			 @Override
+	         public Predicate toPredicate(Root<Resource> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+				 List<Predicate> predicates = new ArrayList<>();
+				 predicates.add(criteriaBuilder.equal(root.get("resourceFlg"), resourceFlg));
+				 predicates.add(criteriaBuilder.equal(root.get("deleteFlg"), validFlg));
+				 if(name != null) {
+					 predicates.add(criteriaBuilder.like(root.get("resourceName"), "%" + "测试" + "%"));
+				 }
+				 
+				 if(type != null) {
+					 predicates.add(criteriaBuilder.equal(root.get("resourceType"), type));
+				 }
+				 
+				 return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+			 }
+		};
 
-		result = storeDao.getResourceDAO().findByResourceFlgAndDeleteFlg(resourceFlg, validFlg);
+		result = storeDao.getResourceDAO().findAll(querySpecifi);
 		
 		for(Resource resource:result )
 		{
@@ -57,7 +87,7 @@ public class ViewControl {
 			resultView.add(newResource);
 		}
 		
-		return resultView;
+		return CommonTools.convertWebListResult(resultView);
 	}
 
 	
