@@ -1,20 +1,13 @@
 package works.processor.data;
 
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import org.quartz.CronTrigger;
-import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
 import org.quartz.impl.StdSchedulerFactory;
 
 import works.processor.domain.DataSource;
-import works.processor.domain.Resource;
 import works.processor.domain.ScheduleJob;
 import works.processor.repository.IDataSource;
 import works.processor.repository.IResource;
@@ -115,20 +108,14 @@ public class ScheduleManager {
             throw new RuntimeException(e);
         }    	
     }
+
     /**
      * @Description: 添加一个定时任务，使用默认的任务组名，触发器名，触发器组名
      * 
-     * @param sched
-     *            调度器
-     * 
-     * @param jobName
-     *            任务名
-     * @param cls
-     *            任务
-     * @param time
-     *            时间设置，参考quartz说明文档
-     * 
-     * @Title: QuartzManager.java
+     * @param sched 调度器
+     * @param jobName 任务名
+     * @param cls 任务
+     * @param time 时间设置，参考quartz说明文档
      */
     public static void addJob(Scheduler sched, String jobName, @SuppressWarnings("rawtypes") Class cls, String time) {
         try {
@@ -149,12 +136,9 @@ public class ScheduleManager {
     /**
      * @Description: 修改一个任务的触发时间(使用默认的任务组名，触发器名，触发器组名)
      * 
-     * @param sched
-     *            调度器
+     * @param sched 调度器
      * @param jobName
      * @param time
-     * 
-     * @Title: QuartzManager.java
      */
     @SuppressWarnings("rawtypes")
     public static void modifyJobTime(Scheduler sched, String jobName, String time) {
@@ -179,11 +163,8 @@ public class ScheduleManager {
     /**
      * @Description: 移除一个任务(使用默认的任务组名，触发器名，触发器组名)
      * 
-     * @param sched
-     *            调度器
+     * @param sched 调度器
      * @param jobName
-     * 
-     * @Title: QuartzManager.java
      */
     public static void removeJob(Scheduler sched, String jobName) {
         try {
@@ -198,10 +179,7 @@ public class ScheduleManager {
     /**
      * @Description:启动所有定时任务
      * 
-     * @param sched
-     *            调度器
-     * 
-     * @Title: QuartzManager.java
+     * @param sched 调度器
      */
     public static void startJobs(Scheduler sched) {
         try {
@@ -214,12 +192,7 @@ public class ScheduleManager {
     /**
      * @Description:关闭所有定时任务
      * 
-     * 
-     * @param sched
-     *            调度器
-     * 
-     * 
-     * @Title: QuartzManager.java
+     * @param sched 调度器
      */
     public static void shutdownJobs(Scheduler sched) {
         try {

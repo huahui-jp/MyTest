@@ -237,7 +237,6 @@ public class DbActionJobThread extends ActionJobThread {
 	@Override
 	void doError(String param, Throwable ex) {
 		// TODO Auto-generated method stub
-		
 	}
 
 }

@@ -48,10 +48,10 @@ public class ViewControl {
 	
 	@RequestMapping("/resourceList")
 	public WebResult getResourceList(
-			@RequestParam(value="ResourceFlg", required=true) String resourceFlg, 
-			@RequestParam(value="WithNoValid", required=true) String validFlg,
-			@RequestParam(value="ResourceName", required=false) String name,
-			@RequestParam(value="ResourceType", required=false) String type)
+			@RequestParam(value="ResourceFlg", required=true) final String resourceFlg, 
+			@RequestParam(value="WithNoValid", required=true) final String validFlg,
+			@RequestParam(value="ResourceName", required=false) final String name,
+			@RequestParam(value="ResourceType", required=false) final String  type)
 	{
 		Iterable<Resource> result;
 		ArrayList<Resource> resultView = new ArrayList<Resource>();
@@ -59,11 +59,11 @@ public class ViewControl {
 		Specification<Resource> querySpecifi = new Specification<Resource>() {
 			 @Override
 	         public Predicate toPredicate(Root<Resource> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-				 List<Predicate> predicates = new ArrayList<>();
+				 List<Predicate> predicates = new ArrayList<Predicate>();
 				 predicates.add(criteriaBuilder.equal(root.get("resourceFlg"), resourceFlg));
 				 predicates.add(criteriaBuilder.equal(root.get("deleteFlg"), validFlg));
 				 if(name != null) {
-					 predicates.add(criteriaBuilder.like(root.get("resourceName"), "%" + "测试" + "%"));
+					 predicates.add(criteriaBuilder.like(root.get("resourceName"), "%" + name +"%"));
 				 }
 				 
 				 if(type != null) {

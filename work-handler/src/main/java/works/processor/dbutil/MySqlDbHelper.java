@@ -10,9 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import works.processor.web.domain.ColumnInfo;
-
-
 public class MySqlDbHelper extends BaseDbHelper implements DbHelper{
 
 	public Connection getConnection(String url, String userName, String passWord) throws SQLException {

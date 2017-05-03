@@ -30,11 +30,11 @@ public class CommonTools {
 		return sw.toString();
 	}
 	
-	public static WebResult convertWebListResult(List data) {
+	public static WebResult convertWebListResult(List<?> data) {
 		return convertWebListResult(data, true, null);
 	}
 
-	public static WebResult convertWebListResult(List data, boolean success, String message) {
+	public static WebResult convertWebListResult(List<?> data, boolean success, String message) {
 		WebResult resultData = new WebResult();
 		resultData.setSuccess(success);
 		
@@ -43,8 +43,9 @@ public class CommonTools {
 		if(success){
 			listData.setRows(data);
 			listData.setTotalNum(data.size());
+			resultData.setMessage(null);
 		} else {
-			listData.setRows(new ArrayList());
+			listData.setRows(new ArrayList<Object>());
 			listData.setTotalNum(0);
 			resultData.setMessage(message);
 		}
