@@ -1,9 +1,12 @@
 package works.processor.web;
 
+import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.apache.activemq.artemis.utils.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import works.processor.dbutil.ConnectionUtil;
+import works.processor.dbutil.QueryResult;
 import works.processor.domain.ActionJob;
 import works.processor.domain.ColumnMapping;
 import works.processor.domain.DataSource;
@@ -19,7 +23,10 @@ import works.processor.domain.Resource;
 import works.processor.domain.ScheduleJob;
 import works.processor.domain.TableMapping;
 import works.processor.repository.RespositoryStore;
+import works.processor.utils.CommonTools;
 import works.processor.web.domain.ColumnInfo;
+import works.processor.web.domain.ConnectResult;
+import works.processor.web.domain.WebOneResult;
 
 @RestController
 @Configuration
@@ -59,20 +66,33 @@ public class OperaterControl {
 //====================end test=============================//
 	
 	@RequestMapping(value="/newResource", consumes="application/json")
-	public int newResource(@RequestBody Resource resource)
+	public WebOneResult newResource(@RequestBody Resource resource)
 	{
+		resource.setDeleteFlg("0");
 		resource.setResourceId(null);
 		storeDao.getResourceDAO().save(resource);
 
-		return resource.getResourceId();
+		WebOneResult result = new WebOneResult();
+		result.setErrCode(null);
+		result.setMessage(null);
+		result.setSuccess(true);
+		result.setResult(resource);
+		return result;
 	}
 
 	
 	@RequestMapping(value="/saveResource", consumes="application/json")
-	public int saveResource(@RequestBody Resource resource)
+	public WebOneResult saveResource(@RequestBody Resource resource)
 	{
+		resource.setDeleteFlg("0");
 		storeDao.getResourceDAO().save(resource);
-		return resource.getResourceId();
+		
+		WebOneResult result = new WebOneResult();
+		result.setErrCode(null);
+		result.setMessage(null);
+		result.setSuccess(true);
+		result.setResult(resource);
+		return result;
 	}
 
 	@RequestMapping(value="/deleteResource", consumes="application/json")
@@ -96,15 +116,100 @@ public class OperaterControl {
 		return resourceIdList;
 	}
 	
-	@RequestMapping(value="/testConnect", consumes="application/json")
-	public String testConnect(@RequestBody Resource resource) throws Throwable
+	@RequestMapping(value="/newDataSource", consumes="application/json")
+	public WebOneResult newDataSource(@RequestBody DataSource datasource)
 	{
-		return ConnectionUtil.getInstance().getDbHelper(resource.getDbLink()).testConnection(resource.getDbLink(),
+		datasource.setDeleteFlg("0");
+		datasource.setDeleteFlg("0");
+		datasource.setDataSourceId(null);
+		storeDao.getDataSourceDAO().save(datasource);
+
+		WebOneResult result = new WebOneResult();
+		result.setErrCode(null);
+		result.setMessage(null);
+		result.setSuccess(true);
+		result.setResult(datasource);
+		return result;
+	}	
+	
+	@RequestMapping(value="/executeQuery", consumes="application/json")
+	public String executeQuery(@RequestBody DataSource datasource) throws Throwable
+	{
+		
+		Resource resource = storeDao.getResourceDAO().getOne(datasource.getResourceId());
+		
+		try {
+			JSONObject jsonObject = new JSONObject();
+
+			QueryResult result = ConnectionUtil.getInstance().getDbHelper(resource.getDbLink()).executeQuery(resource.getDbLink(),
+					resource.getDbUser(), resource.getDbPasswd(), datasource.getSourceSql());
+			
+			
+			jsonObject.put("success", true);
+			jsonObject.put("message", "");
+			jsonObject.put("errorCode", "");
+			jsonObject.put("cols", result.getCols());
+			
+			List<JSONObject> rows = new ArrayList<JSONObject>();
+
+			if(result.getRows() != null)
+			{
+				
+				for( int i = 0; i < result.getRows().size(); i++)
+				{
+					JSONObject obj = new JSONObject();
+					
+					for( int j = 0; j < result.getCols().size(); j++ )
+					{
+						obj.put(result.getCols().get(j), ((List<String>)result.getRows().get(i)).get(j));
+					}
+
+					rows.add(obj);
+				}
+			}
+			
+			jsonObject.put("rows", rows);
+			
+			StringWriter sw = new StringWriter();
+			jsonObject.write(sw);
+			
+			String rt = sw.toString();
+			return rt;
+		} catch (Throwable t) {
+
+			JSONObject jsonObject = new JSONObject();
+			
+			jsonObject.put("success", false);
+			jsonObject.put("message", CommonTools.convertExceptionToString(t));
+			jsonObject.put("errorCode", "");
+			
+			return jsonObject.toString();
+		}
+	}
+	
+	@RequestMapping(value="/testConnect", consumes="application/json")
+	public ConnectResult testConnect(@RequestBody Resource resource) throws Throwable
+	{
+		String result = ConnectionUtil.getInstance().getDbHelper(resource.getDbLink()).testConnection(resource.getDbLink(),
 				resource.getDbUser(), resource.getDbPasswd());
+		
+		ConnectResult webResult = new ConnectResult();
+		webResult.setResourceId(resource.getResourceId());
+				
+		if( result.startsWith("Success")) {
+			webResult.setSuccess(true);
+			webResult.setMessage("");
+		} else {
+			webResult.setSuccess(false);
+			webResult.setMessage(result);
+		}
+		
+		return webResult;
+		
 	}
 
 	@RequestMapping(value="/testConnectById")
-	public String testConnect(@RequestParam("ResourceId") int id) throws Throwable
+	public ConnectResult testConnect(@RequestParam("ResourceId") int id) throws Throwable
 	{
 		Resource resource = storeDao.getResourceDAO().findOne(id);
 		return testConnect(resource);
@@ -226,14 +331,6 @@ public class OperaterControl {
 		return actionJob.getActionJobId();
 	}
 
-	@RequestMapping(value="/newDataSource", consumes="application/json")
-	public int newDataSource(@RequestBody DataSource dataSource)
-	{
-		dataSource.setDataSourceId(null);
-		storeDao.getDataSourceDAO().save(dataSource);
-		return dataSource.getDataSourceId();
-	}
-	
 	@RequestMapping(value="/saveDataSource", consumes="application/json")
 	public int saveDataSource(@RequestBody DataSource dataSource)
 	{

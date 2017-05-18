@@ -17,4 +17,6 @@ public interface DbHelper {
 	public List<ColumnInfo> getColumnNameList(String url, String userName, String passWord, String tableName) throws SQLException;
 	
 	public List<ColumnInfo> getColumnInfo(String url, String userName, String passWord, String sql) throws SQLException;
+	
+	public QueryResult executeQuery(String url, String userName, String passWord, String sql) throws SQLException;
 }

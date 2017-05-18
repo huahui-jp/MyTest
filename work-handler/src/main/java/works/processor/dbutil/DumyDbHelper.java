@@ -32,5 +32,7 @@ public class DumyDbHelper extends BaseDbHelper implements DbHelper {
 		// TODO Auto-generated method stub
 		return new ArrayList<ColumnInfo>();
 	}
+	
+
 
 }

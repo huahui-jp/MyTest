@@ -6,6 +6,16 @@ public class WebResult {
 	
 	private String message;
 	
+	private String errCode;
+	
+	public String getErrCode() {
+		return errCode;
+	}
+
+	public void setErrCode(String errCode) {
+		this.errCode = errCode;
+	}
+
 	private WebListData result;
 
 	public boolean isSuccess() {

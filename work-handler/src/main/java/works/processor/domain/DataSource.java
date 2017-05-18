@@ -21,6 +21,9 @@ public class DataSource {
 	@Column(nullable=false, length=2048)
 	private String sourceSql;
 
+	@Column(nullable=false, length=2048)
+	private String dataSourceName;
+	
 	// 删除FLG
 	@Column(nullable=false, length=1)
 	private String deleteFlg;
@@ -55,6 +58,14 @@ public class DataSource {
 
 	public void setDeleteFlg(String deleteFlg) {
 		this.deleteFlg = deleteFlg;
+	}
+
+	public String getDataSourceName() {
+		return dataSourceName;
+	}
+
+	public void setDataSourceName(String dataSourceName) {
+		this.dataSourceName = dataSourceName;
 	}
 
 }

@@ -14,6 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,8 +29,9 @@ import works.processor.repository.RespositoryStore;
 import works.processor.utils.CommonTools;
 import works.processor.repository.IActionJobHistory;
 import works.processor.repository.RepositoryTools;
-import works.processor.web.domain.ResourceView;
+import works.processor.web.domain.ResourceListSearchPageCondition;
 import works.processor.web.domain.TableMappingView;
+import works.processor.web.domain.WebOneResult;
 import works.processor.web.domain.WebResult;
 
 @RestController
@@ -40,18 +42,21 @@ public class ViewControl {
 	private RespositoryStore storeDao;
 
 	@RequestMapping("/resource")
-	public Resource getResource(@RequestParam("ResourceId") int resourceId)
+	public WebOneResult getResource(@RequestParam("ResourceId") int resourceId)
 	{
-		return storeDao.getResourceDAO().findOne(resourceId);
+		Resource resource = storeDao.getResourceDAO().findOne(resourceId);
+		
+		WebOneResult result = new WebOneResult();
+		result.setErrCode(null);
+		result.setMessage(null);
+		result.setSuccess(true);
+		result.setResult(resource);
+		return result;
 	}
 
 	
 	@RequestMapping("/resourceList")
-	public WebResult getResourceList(
-			@RequestParam(value="ResourceFlg", required=true) final String resourceFlg, 
-			@RequestParam(value="WithNoValid", required=true) final String validFlg,
-			@RequestParam(value="ResourceName", required=false) final String name,
-			@RequestParam(value="ResourceType", required=false) final String  type)
+	public WebResult getResourceList(@RequestBody ResourceListSearchPageCondition searchCondition)
 	{
 		Iterable<Resource> result;
 		ArrayList<Resource> resultView = new ArrayList<Resource>();
@@ -60,14 +65,16 @@ public class ViewControl {
 			 @Override
 	         public Predicate toPredicate(Root<Resource> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
 				 List<Predicate> predicates = new ArrayList<Predicate>();
-				 predicates.add(criteriaBuilder.equal(root.get("resourceFlg"), resourceFlg));
-				 predicates.add(criteriaBuilder.equal(root.get("deleteFlg"), validFlg));
-				 if(name != null) {
-					 predicates.add(criteriaBuilder.like(root.get("resourceName"), "%" + name +"%"));
-				 }
 				 
-				 if(type != null) {
-					 predicates.add(criteriaBuilder.equal(root.get("resourceType"), type));
+				 predicates.add(criteriaBuilder.equal(root.get("resourceFlg"), "0"));
+				 predicates.add(criteriaBuilder.equal(root.get("deleteFlg"), "0"));
+				 
+				 if( searchCondition.getQueryData().getResourceType() != null ) {
+					 predicates.add(criteriaBuilder.equal(root.get("resourceType"), searchCondition.getQueryData().getResourceType()));
+				 }
+
+				 if(searchCondition.getQueryData().getResourceName() != null) {
+					 predicates.add(criteriaBuilder.like(root.get("resourceName"), "%" + searchCondition.getQueryData().getResourceName() +"%"));
 				 }
 				 
 				 return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
@@ -78,13 +85,7 @@ public class ViewControl {
 		
 		for(Resource resource:result )
 		{
-			ResourceView newResource = new ResourceView();
-			BeanUtils.copyProperties(resource, newResource);
-			if( storeDao.getTableMappingDAO().countByResourceId(newResource.getResourceId()) > 0)
-			{
-				newResource.setHasChild(true);
-			}
-			resultView.add(newResource);
+			resultView.add(resource);
 		}
 		
 		return CommonTools.convertWebListResult(resultView);

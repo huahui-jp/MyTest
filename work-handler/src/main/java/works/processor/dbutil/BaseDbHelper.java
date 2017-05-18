@@ -56,5 +56,63 @@ public abstract class BaseDbHelper implements DbHelper {
 			throw ex;
 		}
 	}
+	
+	public QueryResult executeQuery(String url, String userName, String passWord, String sql) throws SQLException {
+
+		QueryResult result = new QueryResult();
+
+		Connection conn = getConnection(url, userName, passWord);
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<String> columns = new ArrayList<String>();
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			ResultSetMetaData metaData = rs.getMetaData();
+			
+			for( int i = 1; i <= metaData.getColumnCount(); i++) {
+				columns.add(metaData.getColumnLabel(i));
+			}
+			
+			result.setCols(columns);
+
+			List<List<String>> rows = new ArrayList<List<String>>();
+			while(rs.next()) {
+				List<String> row = new ArrayList<String>();
+				
+				for( int i = 1; i <= metaData.getColumnCount(); i++)
+				{
+					Object obj = rs.getObject(columns.get(i - 1));
+					if(obj == null) {
+						row.add("");
+					} else {
+						row.add(obj.toString());
+					}
+				}
+				rows.add(row);
+			}
+			
+			result.setRows(rows);
+			
+			return result;
+		} catch (SQLException ex) {
+			
+			if( ps != null ) {
+			
+				try {
+					if(!ps.isClosed()) ps.close();
+				} catch (Exception e){};
+			}
+			if( rs != null ) {
+				try {
+					if(!rs.isClosed()) rs.close();
+				} catch (Exception e){};
+				
+			}
+				
+			throw ex;
+		}
+		
+	}
 
 }

@@ -37,6 +37,7 @@ public class CommonTools {
 	public static WebResult convertWebListResult(List<?> data, boolean success, String message) {
 		WebResult resultData = new WebResult();
 		resultData.setSuccess(success);
+		resultData.setErrCode(null);
 		
 		WebListData listData = new WebListData();
 		resultData.setResult(listData);
