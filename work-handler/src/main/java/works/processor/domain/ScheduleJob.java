@@ -1,6 +1,7 @@
 package works.processor.domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +28,7 @@ public class ScheduleJob {
 	
 	// 定时一次执行时间
 	@Column(nullable=true)
-	private Date executeDate;
+	private Timestamp executeDate;
 	
 	// 数据元ID
 	@Column(nullable=false)
@@ -68,11 +69,11 @@ public class ScheduleJob {
 		this.cronTime = cronTime;
 	}
 
-	public Date getExecuteDate() {
+	public Timestamp getExecuteDate() {
 		return executeDate;
 	}
 
-	public void setExecuteDate(Date executeDate) {
+	public void setExecuteDate(Timestamp executeDate) {
 		this.executeDate = executeDate;
 	}
 

@@ -332,24 +332,48 @@ public class OperaterControl {
 	}
 
 	@RequestMapping(value="/saveDataSource", consumes="application/json")
-	public int saveDataSource(@RequestBody DataSource dataSource)
+	public WebOneResult saveDataSource(@RequestBody DataSource dataSource)
 	{
-		storeDao.getDataSourceDAO().save(dataSource);
-		return dataSource.getDataSourceId();
+		DataSource dataSourceOrg = storeDao.getDataSourceDAO().findOne(dataSource.getDataSourceId());
+		
+		dataSourceOrg.setDataSourceName(dataSource.getDataSourceName());
+		dataSourceOrg.setSourceSql(dataSource.getSourceSql());
+		dataSourceOrg.setDeleteFlg(dataSource.getDeleteFlg());
+
+		storeDao.getDataSourceDAO().save(dataSourceOrg);
+		
+		WebOneResult result = new WebOneResult();
+		result.setErrCode(null);
+		result.setMessage(null);
+		result.setSuccess(true);
+		result.setResult(dataSourceOrg);
+		return result;		
 	}
 	
 	@RequestMapping(value="/newScheduleJob", consumes="application/json")
-	public int newScheduleJob(@RequestBody ScheduleJob scheduleJob)
+	public WebOneResult newScheduleJob(@RequestBody ScheduleJob scheduleJob)
 	{
 		scheduleJob.setJobId(null);
 		storeDao.getScheduleJobDAO().save(scheduleJob);
-		return scheduleJob.getJobId();
+		
+		WebOneResult result = new WebOneResult();
+		result.setErrCode(null);
+		result.setMessage(null);
+		result.setSuccess(true);
+		result.setResult(scheduleJob);
+		return result;
 	}
 	
 	@RequestMapping(value="/saveScheduleJob", consumes="application/json")
-	public int saveScheduleJob(@RequestBody ScheduleJob scheduleJob)
+	public WebOneResult saveScheduleJob(@RequestBody ScheduleJob scheduleJob)
 	{
 		storeDao.getScheduleJobDAO().save(scheduleJob);
-		return scheduleJob.getJobId();
+		
+		WebOneResult result = new WebOneResult();
+		result.setErrCode(null);
+		result.setMessage(null);
+		result.setSuccess(true);
+		result.setResult(scheduleJob);
+		return result;
 	}
 }

@@ -27,6 +27,9 @@ public class RespositoryStore {
 	@Autowired
 	private IScheduleJob scheduleJobDAO;
 
+	@Autowired
+	private IScheduleJobHistory scheduleJobHistoryDAO;
+	
 	public IActionJobHistory getActionJobHistoryDAO() {
 		return actionJobHistoryDAO;
 	}
@@ -82,5 +85,12 @@ public class RespositoryStore {
 	public void setScheduleJobDAO(IScheduleJob scheduleJobDAO) {
 		this.scheduleJobDAO = scheduleJobDAO;
 	}
-	
+
+	public IScheduleJobHistory getScheduleJobHistoryDAO() {
+		return scheduleJobHistoryDAO;
+	}
+
+	public void setScheduleJobHistoryDAO(IScheduleJobHistory scheduleJobHistoryDAO) {
+		this.scheduleJobHistoryDAO = scheduleJobHistoryDAO;
+	}
 }

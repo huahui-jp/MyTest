@@ -1,6 +1,7 @@
 package works.processor.domain;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="schedule_job_info")
+@Table(name="schedule_job_history")
 public class ScheduleJobHistory {
 
 	@Id
@@ -51,6 +52,18 @@ public class ScheduleJobHistory {
 	public Timestamp getStartTime() {
 		return startTime;
 	}
+	
+	public String getStartTimeView() {
+		if( this.getStartTime() == null )
+		{
+			return "";
+		} else {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			
+			return dateFormat.format(this.getStartTime());
+		}	
+	}
+	
 
 	public void setStartTime(Timestamp startTime) {
 		this.startTime = startTime;
@@ -67,6 +80,17 @@ public class ScheduleJobHistory {
 	public Timestamp getEndTime() {
 		return endTime;
 	}
+	
+	public String getEndTimeView() {
+		if( this.getEndTime() == null )
+		{
+			return "";
+		} else {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			
+			return dateFormat.format(this.getEndTime());
+		}	
+	}	
 
 	public void setEndTime(Timestamp endTime) {
 		this.endTime = endTime;
