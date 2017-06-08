@@ -6,18 +6,14 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 
-import org.hibernate.ejb.HibernateEntityManager;
-import org.hibernate.jpa.HibernateEntityManagerFactory;
-import org.hibernate.jpa.boot.spi.EntityManagerFactoryBuilder;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import works.processor.data.ActionJobManager;
+import works.processor.dbutil.ConnectionUtil;
 import works.processor.domain.ActionJob;
 import works.processor.domain.ActionJobHistory;
 import works.processor.domain.ColumnMapping;
@@ -40,6 +37,7 @@ import works.processor.repository.RespositoryStore;
 import works.processor.utils.CommonTools;
 import works.processor.repository.IActionJobHistory;
 import works.processor.repository.RepositoryTools;
+import works.processor.web.domain.ColumnInfo;
 import works.processor.web.domain.JobHistroyListSearchPageCondition;
 import works.processor.web.domain.JobInfo;
 import works.processor.web.domain.QueryInfo;
@@ -236,7 +234,55 @@ public class ViewControl {
 		return view;
 	}
 
-	
+	@RequestMapping(value="/tableListView")
+	public WebResult tableList(@RequestParam("ResourceId") int resourceId) throws Throwable {
+		
+		Resource resource = storeDao.getResourceDAO().findOne(resourceId);
+		List<String> tableList = ConnectionUtil.getInstance().getDbHelper(resource.getDbLink()).getTableNameList(resource.getDbLink(), 
+				resource.getDbUser(), resource.getDbPasswd());
+		
+		List<TableMappingView> resultList = new ArrayList<TableMappingView>();
+
+		for( int i = 0; i < tableList.size(); i++ ) {
+			
+			TableMappingView oneResult = new TableMappingView();
+
+			List<TableMapping> mappingList = storeDao.getTableMappingDAO().findByTableName(tableList.get(i));
+			
+			if( mappingList == null || mappingList.size() == 0 || mappingList.size() == 1) {
+				if(mappingList == null || mappingList.size() == 0) {
+					oneResult.setTableMappingId(null);
+					oneResult.setDeleteFlg("0");
+					oneResult.setResourceId(resourceId);
+					oneResult.setTableName(tableList.get(i));
+					oneResult.setTableNameView(null);
+					oneResult.setChildren(null);
+				} else {
+					BeanUtils.copyProperties(mappingList.get(0), oneResult);
+					oneResult.setChildren(null);
+				}
+			} else {
+
+				BeanUtils.copyProperties(mappingList.get(0), oneResult);
+				oneResult.setTableNameView(null);
+				oneResult.setChildren(new ArrayList<TableMappingView>());
+				
+				for( int j = 0; j < mappingList.size(); j++ ) {
+					
+					TableMappingView childResult = new TableMappingView();
+					BeanUtils.copyProperties(mappingList.get(j), childResult);
+					childResult.setTableNameView(childResult.getTableNameView());
+					childResult.setTableNameView(null);
+					childResult.setChildren(null);
+					oneResult.getChildren().add(childResult);
+				}
+			}
+			resultList.add(oneResult);
+		}
+
+		return CommonTools.convertWebListResult(resultList);
+	}
+		
 	@RequestMapping("/tableMappingList")
 	public Iterable<TableMappingView> getTableMappingList(@RequestParam("WithNoValid") int validFlg)
 	{
