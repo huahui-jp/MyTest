@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import works.processor.utils.CommonTools;
+
 @Entity
 @Table(name="action_job_history")
 public class ActionJobHistory {
@@ -104,16 +106,10 @@ public class ActionJobHistory {
 	}
 	
 	public String getStartTimeStr() {
-		if(this.startTime == null){
-			return "";
-		}
-		return this.startTime.toGMTString();
+		return CommonTools.convertDataFormat(this.startTime);
 	}
 	
 	public String getEndTimeStr() {
-		if( this.endTime == null) {
-			return "";
-		}
-		return this.endTime.toGMTString();
+		return CommonTools.convertDataFormat(this.endTime);
 	}
 }

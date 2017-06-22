@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import works.processor.domain.ScheduleJob;
+import works.processor.utils.CommonTools;
 
 public class ScheduleJobView extends ScheduleJob {
 
@@ -31,14 +32,7 @@ public class ScheduleJobView extends ScheduleJob {
 	}
 	
 	public String getViewExcuteDate() {
-		if( this.getExecuteDate() == null )
-		{
-			return "";
-		} else {
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			
-			return dateFormat.format(this.getExecuteDate());
-		}
 		
+		return CommonTools.convertDataFormat(this.getExecuteDate());
 	}
 }

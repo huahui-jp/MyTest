@@ -27,6 +27,10 @@ public class ColumnMapping {
 	@Column(nullable=false, length=200)
 	private String columnNameView;
 	
+	// 数据来源
+	@Column(nullable=false, length=2)
+	private String dataFrom;
+	
 	// 列名
 	@Column(nullable=false, length=200)
 	private String columnName;
@@ -93,6 +97,14 @@ public class ColumnMapping {
 
 	public void setColumnType(String columnType) {
 		this.columnType = columnType;
+	}
+
+	public String getDataFrom() {
+		return dataFrom;
+	}
+
+	public void setDataFrom(String dataFrom) {
+		this.dataFrom = dataFrom;
 	}
 
 	public String getJasonName() {

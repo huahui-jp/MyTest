@@ -2,10 +2,14 @@ package works.processor.utils;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import works.processor.web.domain.WebListData;
+import works.processor.web.domain.WebOneResult;
 import works.processor.web.domain.WebResult;
 
 public class CommonTools {
@@ -52,5 +56,35 @@ public class CommonTools {
 		}
 		
 		return resultData;
+	}
+	
+	public static WebOneResult convertWebResult (Object resultObj, boolean success, String message) {
+		
+		WebOneResult result = new WebOneResult();
+		result.setErrCode(null);
+		result.setMessage(message);
+		result.setSuccess(success);
+		result.setResult(resultObj);
+		return result;		
+	}
+
+	public static String convertDataFormat(Timestamp date) {
+		
+		if (date == null) {
+			return "";
+		} else {
+			return convertDataFormat(new Date(date.getTime()));
+		}
+	}
+	
+	public static String convertDataFormat(Date date) {
+		if( date == null )
+		{
+			return "";
+		} else {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			
+			return dateFormat.format(date);
+		}
 	}
 }

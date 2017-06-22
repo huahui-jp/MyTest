@@ -1,74 +1,80 @@
-package works.processor.domain;
+package works.processor.web.domain;
 
 import java.sql.Timestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class ActionJobDbErrorHistoryView {
 
-@Entity
-@Table(name="action_job_db_error_history")
-public class ActionJobDbErrorHistory {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO) 
-	private Integer actionJobDbErrorHistoryId;
-
-	@Column(nullable=false)
-	private Integer actionJobHistoryId;
-
-	@Column(nullable=false)
-	private Integer opType;
+	private String resourceName;
 	
-	@Column(nullable=false)
+	private String tableNameView;
+
+	private String actionJobName;
+
+	private int actionJobId;
+	
+	private int actionJobHistoryId;
+	
+	private int actionJobDbErrorHistoryId;
+	
 	private String keyColumn1;
 	
-	@Column(nullable=true)
 	private String keyColumn2;
-
-	@Column(nullable=false)
-	private String keyColumn3;
-
-	@Column(nullable=false)
-	private String keyColumn4;
-
-	@Column(nullable=false)
-	private String keyColumn5;
-
-	@Column(nullable=false)
-	private String keyColumn6;
 	
-	@Column(nullable=false, length=1024)
+	private String keyColumn3;
+	private String keyColumn4;
+	private String keyColumn5;
+	private String keyColumn6;
+
 	private String data;
 	
-	@Column(nullable=false)
 	private Timestamp errorTime;
 
-	public Integer getActionJobDbErrorHistoryId() {
-		return actionJobDbErrorHistoryId;
+	public String getResourceName() {
+		return resourceName;
 	}
 
-	public void setActionJobDbErrorHistoryId(Integer actionJobDbErrorHistoryId) {
-		this.actionJobDbErrorHistoryId = actionJobDbErrorHistoryId;
+	public void setResourceName(String resourceName) {
+		this.resourceName = resourceName;
 	}
 
-	public Integer getActionJobHistoryId() {
+	public String getTableNameView() {
+		return tableNameView;
+	}
+
+	public void setTableNameView(String tableNameView) {
+		this.tableNameView = tableNameView;
+	}
+
+	public String getActionJobName() {
+		return actionJobName;
+	}
+
+	public void setActionJobName(String actionJobName) {
+		this.actionJobName = actionJobName;
+	}
+
+	public int getActionJobId() {
+		return actionJobId;
+	}
+
+	public void setActionJobId(int actionJobId) {
+		this.actionJobId = actionJobId;
+	}
+
+	public int getActionJobHistoryId() {
 		return actionJobHistoryId;
 	}
 
-	public void setActionJobHistoryId(Integer actionJobHistoryId) {
+	public void setActionJobHistoryId(int actionJobHistoryId) {
 		this.actionJobHistoryId = actionJobHistoryId;
 	}
 
-	public Integer getOpType() {
-		return opType;
+	public int getActionJobDbErrorHistoryId() {
+		return actionJobDbErrorHistoryId;
 	}
 
-	public void setOpType(Integer opType) {
-		this.opType = opType;
+	public void setActionJobDbErrorHistoryId(int actionJobDbErrorHistoryId) {
+		this.actionJobDbErrorHistoryId = actionJobDbErrorHistoryId;
 	}
 
 	public String getKeyColumn1() {
@@ -134,4 +140,7 @@ public class ActionJobDbErrorHistory {
 	public void setErrorTime(Timestamp errorTime) {
 		this.errorTime = errorTime;
 	}
+	
+	
+	
 }

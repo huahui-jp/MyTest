@@ -26,6 +26,7 @@ import works.processor.repository.RespositoryStore;
 import works.processor.utils.CommonTools;
 import works.processor.web.domain.ColumnInfo;
 import works.processor.web.domain.ConnectResult;
+import works.processor.web.domain.TableColumnMapping;
 import works.processor.web.domain.WebOneResult;
 
 @RestController
@@ -72,12 +73,7 @@ public class OperaterControl {
 		resource.setResourceId(null);
 		storeDao.getResourceDAO().save(resource);
 
-		WebOneResult result = new WebOneResult();
-		result.setErrCode(null);
-		result.setMessage(null);
-		result.setSuccess(true);
-		result.setResult(resource);
-		return result;
+		return CommonTools.convertWebResult(resource, true, null);
 	}
 
 	
@@ -87,12 +83,7 @@ public class OperaterControl {
 		resource.setDeleteFlg("0");
 		storeDao.getResourceDAO().save(resource);
 		
-		WebOneResult result = new WebOneResult();
-		result.setErrCode(null);
-		result.setMessage(null);
-		result.setSuccess(true);
-		result.setResult(resource);
-		return result;
+		return CommonTools.convertWebResult(resource, true, null);
 	}
 
 	@RequestMapping(value="/deleteResource", consumes="application/json")
@@ -124,12 +115,7 @@ public class OperaterControl {
 		datasource.setDataSourceId(null);
 		storeDao.getDataSourceDAO().save(datasource);
 
-		WebOneResult result = new WebOneResult();
-		result.setErrCode(null);
-		result.setMessage(null);
-		result.setSuccess(true);
-		result.setResult(datasource);
-		return result;
+		return CommonTools.convertWebResult(datasource, true, null);
 	}	
 	
 	@RequestMapping(value="/executeQuery", consumes="application/json")
@@ -223,15 +209,6 @@ public class OperaterControl {
 				resource.getDbUser(), resource.getDbPasswd());
 	}
 	
-	@RequestMapping(value="/columnList")
-	public List<ColumnInfo> columnList(@RequestParam("TableMappingId") int id) throws Throwable
-	{
-		TableMapping table = storeDao.getTableMappingDAO().findOne(id);
-		Resource resource = storeDao.getResourceDAO().findOne(table.getResourceId());
-		return ConnectionUtil.getInstance().getDbHelper(resource.getDbLink()).getColumnNameList(resource.getDbLink(), 
-				resource.getDbUser(), resource.getDbPasswd(), table.getTableName());
-	}
-
 	@RequestMapping(value="/columnListByName")
 	public List<ColumnInfo> columnListByName(@RequestParam("ResourceId") int resourceId, @RequestParam("TableName") String name) throws Throwable
 	{
@@ -240,6 +217,59 @@ public class OperaterControl {
 				resource.getDbUser(), resource.getDbPasswd(), name);
 	}
 
+	@RequestMapping(value="/newTableColumnMapping")
+	@Transactional()
+	public WebOneResult newTableColumnMapping(@RequestBody TableColumnMapping tableColumnMapping) throws Throwable {
+		
+		TableMapping tableMapping = new TableMapping();
+		ColumnMapping columnMapping = null;
+		tableMapping.setDeleteFlg("0");
+		tableMapping.setResourceId(tableColumnMapping.getResourceId());
+		tableMapping.setTableMappingId(null);
+		tableMapping.setTableName(tableColumnMapping.getTableName());
+		tableMapping.setTableNameView(tableColumnMapping.getTableNameView());
+		
+		storeDao.getTableMappingDAO().save(tableMapping);
+		
+		for(int i = 0; i < tableColumnMapping.getRows().size(); i++ ) {
+			columnMapping = tableColumnMapping.getRows().get(i);
+			columnMapping.setDeleteFlg("0");
+			columnMapping.setTableMappingId(tableMapping.getTableMappingId());
+			columnMapping.setColumnMappingId(null);
+			
+			storeDao.getColumnMappingDAO().save(columnMapping);
+		}
+
+		return CommonTools.convertWebResult(tableColumnMapping, true, null);
+	}
+
+	@RequestMapping(value="/saveTableColumnMapping")
+	@Transactional()
+	public WebOneResult saveTableColumnMapping(@RequestBody TableColumnMapping tableColumnMapping) throws Throwable {
+		
+		TableMapping tableMapping = new TableMapping();
+		ColumnMapping columnMapping = null;
+		tableMapping.setDeleteFlg("0");
+		tableMapping.setResourceId(tableColumnMapping.getResourceId());
+		tableMapping.setTableMappingId(tableColumnMapping.getTableMappingId());
+		tableMapping.setTableName(tableColumnMapping.getTableName());
+		tableMapping.setTableNameView(tableColumnMapping.getTableNameView());
+		
+		storeDao.getTableMappingDAO().save(tableMapping);
+		
+		for(int i = 0; i < tableColumnMapping.getRows().size(); i++ ) {
+			columnMapping = tableColumnMapping.getRows().get(i);
+			columnMapping.setDeleteFlg("0");
+			columnMapping.setTableMappingId(tableMapping.getTableMappingId());
+			
+			storeDao.getColumnMappingDAO().save(columnMapping);
+		}
+
+		return CommonTools.convertWebResult(tableColumnMapping, true, null);
+	}
+	
+	
+	
 	@RequestMapping(value="/autoGenTableMapping")
 	@Transactional()
 	public int autoGenTableMapping(@RequestParam("ResourceId") int resourceId, @RequestParam("WithColumn") int withColumn) throws Throwable {
@@ -317,18 +347,20 @@ public class OperaterControl {
 	}
 
 	@RequestMapping(value="/newActionJob", consumes="application/json")
-	public int newActionJob(@RequestBody ActionJob actionJob)
+	public WebOneResult newActionJob(@RequestBody ActionJob actionJob)
 	{
 		actionJob.setActionJobId(null);
 		storeDao.getActionJobDAO().save(actionJob);
-		return actionJob.getActionJobId();
+		
+		return CommonTools.convertWebResult(actionJob, true, null);
 	}
 	
 	@RequestMapping(value="/saveActionJob", consumes="application/json")
-	public int saveActionJob(@RequestBody ActionJob actionJob)
+	public WebOneResult saveActionJob(@RequestBody ActionJob actionJob)
 	{
 		storeDao.getActionJobDAO().save(actionJob);
-		return actionJob.getActionJobId();
+		
+		return CommonTools.convertWebResult(actionJob, true, null);
 	}
 
 	@RequestMapping(value="/saveDataSource", consumes="application/json")
@@ -342,12 +374,7 @@ public class OperaterControl {
 
 		storeDao.getDataSourceDAO().save(dataSourceOrg);
 		
-		WebOneResult result = new WebOneResult();
-		result.setErrCode(null);
-		result.setMessage(null);
-		result.setSuccess(true);
-		result.setResult(dataSourceOrg);
-		return result;		
+		return CommonTools.convertWebResult(dataSourceOrg, true, null);
 	}
 	
 	@RequestMapping(value="/newScheduleJob", consumes="application/json")
@@ -356,12 +383,7 @@ public class OperaterControl {
 		scheduleJob.setJobId(null);
 		storeDao.getScheduleJobDAO().save(scheduleJob);
 		
-		WebOneResult result = new WebOneResult();
-		result.setErrCode(null);
-		result.setMessage(null);
-		result.setSuccess(true);
-		result.setResult(scheduleJob);
-		return result;
+		return CommonTools.convertWebResult(scheduleJob, true, null);
 	}
 	
 	@RequestMapping(value="/saveScheduleJob", consumes="application/json")
@@ -369,11 +391,6 @@ public class OperaterControl {
 	{
 		storeDao.getScheduleJobDAO().save(scheduleJob);
 		
-		WebOneResult result = new WebOneResult();
-		result.setErrCode(null);
-		result.setMessage(null);
-		result.setSuccess(true);
-		result.setResult(scheduleJob);
-		return result;
+		return CommonTools.convertWebResult(scheduleJob, true, null);
 	}
 }

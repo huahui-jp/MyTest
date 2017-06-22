@@ -1,32 +1,26 @@
 package works.processor.web.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-
-@Entity
 public class JobInfo {
 
-	private Integer resourceId;
+	private int resourceId;
 
 	private String resourceName;
 	
-	private Integer dataSourceId;
+	private int dataSourceId;
 
 	private String dataSourceName;
 	
-	@Id
-	private Integer jobId;
+	private int jobId;
 	
 	private String jobName;
 
 	private int outputCnt;
 
-	public Integer getResourceId() {
+	public int getResourceId() {
 		return resourceId;
 	}
 
-	public void setResourceId(Integer resourceId) {
+	public void setResourceId(int resourceId) {
 		this.resourceId = resourceId;
 	}
 
@@ -38,11 +32,11 @@ public class JobInfo {
 		this.resourceName = resourceName;
 	}
 
-	public Integer getDataSourceId() {
+	public int getDataSourceId() {
 		return dataSourceId;
 	}
 
-	public void setDataSourceId(Integer dataSourceId) {
+	public void setDataSourceId(int dataSourceId) {
 		this.dataSourceId = dataSourceId;
 	}
 
@@ -54,11 +48,11 @@ public class JobInfo {
 		this.dataSourceName = dataSourceName;
 	}
 
-	public Integer getJobId() {
+	public int getJobId() {
 		return jobId;
 	}
 
-	public void setJobId(Integer jobId) {
+	public void setJobId(int jobId) {
 		this.jobId = jobId;
 	}
 
@@ -77,4 +71,5 @@ public class JobInfo {
 	public void setOutputCnt(int outputCnt) {
 		this.outputCnt = outputCnt;
 	}
+
 }

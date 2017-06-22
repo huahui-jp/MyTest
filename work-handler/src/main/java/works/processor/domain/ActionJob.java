@@ -26,6 +26,10 @@ public class ActionJob {
 	// 表MappingID
 	@Column(nullable=false, length=5)
 	private int tableMappingId;
+
+	// Job名称
+	@Column(nullable=false, length=100)
+	private String actionJobName;
 	
 	// JOB种类（常时， 定时）
 	@Column(nullable=false, length=1)
@@ -68,6 +72,14 @@ public class ActionJob {
 
 	public void setDeleteFlg(String deleteFlg) {
 		this.deleteFlg = deleteFlg;
+	}
+
+	public String getActionJobName() {
+		return actionJobName;
+	}
+
+	public void setActionJobName(String actionJobName) {
+		this.actionJobName = actionJobName;
 	}
 
 	public Integer getActionJobId() {

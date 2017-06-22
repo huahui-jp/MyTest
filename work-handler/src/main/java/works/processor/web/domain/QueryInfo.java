@@ -1,15 +1,9 @@
 package works.processor.web.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-
-@Entity
 public class QueryInfo {
 
 	private String resourceName;
 	
-	@Id
 	private Integer dataSourceId;
 
 	private Integer resourceId;
